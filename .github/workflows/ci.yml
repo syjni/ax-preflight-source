@@ -75,8 +75,19 @@ jobs:
             if capabilities="$(curl --fail --silent --show-error http://127.0.0.1:18000/api/capabilities)"; then
               break
             fi
+            test "$(docker inspect --format '{{.State.Running}}' "$container_id")" = "true"
             sleep 1
           done
           test -n "$capabilities"
           CAPABILITIES="$capabilities" python -c "import json, os; value=json.loads(os.environ['CAPABILITIES']); assert value['mode']=='LOCAL_REVIEW'; assert value['local_file_upload']; assert value['pdf_table_extraction']; assert value['ocr_available']; assert {'kor','eng'} <= set(value['ocr_languages'])"
           curl --fail --silent http://127.0.0.1:18000/ | grep --quiet "AX Preflight"
+
+          audit="$(curl --fail --silent --show-error \
+            --form 'files=@sample_data/mini_company/scans/invoice_scan.pdf;type=application/pdf' \
+            --form 'relative_paths=["review-files/invoice_scan.pdf"]' \
+            --form 'display_name=Docker OCR smoke test' \
+            --form 'source_root_name=review-files' \
+            http://127.0.0.1:18000/api/local-datasets/upload)"
+          profile="$(AUDIT="$audit" python -c "import json, os; value=json.loads(os.environ['AUDIT']); assert value['audit']['source_mode']=='UPLOAD'; assert value['audit']['files'][0]['ocr_status']=='COMPLETED'; print(value['dataset']['profile'])")"
+          deleted="$(curl --fail --silent --show-error --request DELETE "http://127.0.0.1:18000/api/local-datasets/$profile")"
+          DELETED="$deleted" python -c "import json, os; value=json.loads(os.environ['DELETED']); assert value['deleted']; assert value['managed_copy_deleted']; assert not value['source_files_deleted']"
