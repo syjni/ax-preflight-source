@@ -122,7 +122,7 @@ v4는 동일한 10개 후보 업무를 Before/After에서 각각 3회 실행한 
 | **05 / 업무 후보** | 제품 기본값인 업무 테스트 후보 10개 중 질문을 선택해 입력란에 채운다. (출처: `docs/ARCHITECTURE.md`, `results_console/src/components/TaskTable.tsx`) | 후보는 회사별 검증 과제나 customer-verified task가 아니다. 현재 dataset에 적용 가능한지는 사용자가 판단하며 `VERIFIED_BUSINESS_TASK`는 `NOT_ONBOARDED`다. (출처: `docs/ARCHITECTURE.md`, `docs/DATA_AND_PRIVACY.md`, `results_console/src/components/TaskTable.tsx`) |
 | **06 / 근거 검사** | 판정 라벨, 인용·일치·미확인 source ID, 계산 상세, 검사 응답, Delivery SHA-256, 검사 한계를 본다. (출처: `results_console/src/components/EvidenceCheckPanel.tsx`) | `DeliveryEnvelope.source_link_status`와 별개인 검사다. 404는 “근거 검사 결과 없음”이지 실행 실패·오답 판정이 아니며, Evidence Checker가 delivery를 수정하지도 않는다. (출처: `results_console/src/components/EvidenceCheckPanel.tsx`, `results_console/README.md`) |
 
-데이터셋 전환, 기존 run ID 조회, 새 질문 실행은 **07 / 조회와 실행**에서 한다. read-only 데모에서는 조회만 가능하고 실행 요청은 의도적으로 거부된다. (출처: `results_console/src/components/Sidebar.tsx`, `results_console/src/components/RunControls.tsx`, `SUBMISSION.md`)
+데이터셋 전환, 기존 run ID 조회, 새 질문 실행은 **07 / 조회와 실행**에서 한다. 로컬 reviewer mode에서는 **내 자료 직접 점검**에 폴더 경로를 입력해 정적 진단 결과를 즉시 추가할 수 있다. 원본은 업로드하거나 복사하지 않고 지정한 폴더에서 읽으며, 앱에는 민감정보 원문 대신 마스킹된 예시와 파일명·행 번호를 표시한다. Kiro를 통한 새 질문 실행은 별도로 opt-in하지 않는 한 의도적으로 거부된다. (출처: `results_console/src/components/Sidebar.tsx`, `results_console/src/components/LocalDatasetPanel.tsx`, `ax_product/local_datasets.py`, `SUBMISSION.md`)
 
 ## 8. 로컬 실행 방법
 
@@ -130,14 +130,16 @@ v4는 동일한 10개 후보 업무를 Before/After에서 각각 3회 실행한 
 
 최종 검증 환경은 **Windows 11 + PowerShell + Python 3.12 + Node.js**이며, 실행 요구 버전은 Python 3.12+와 Node.js 20+다. macOS/Linux/WSL 명령은 제공되지만 최종 감사에서 실행 검증되지는 않았다. (출처: `SUBMISSION.md`, `README.md`)
 
-### read-only frozen v4 데모
+### 로컬 자료 점검 + frozen v4 예시
 
-저장소 루트의 첫 번째 PowerShell에서 다음을 실행한다. (출처: `SUBMISSION.md`)
+Windows에서는 저장소 루트의 `start-local.cmd`를 더블클릭하는 방법이 가장 빠르다. 스크립트는 필요한 패키지를 확인하고 로컬 API와 Results Console을 시작한 뒤 브라우저를 연다. 앱의 **사용 방법 → 직접 해보기** 또는 사이드바의 **내 자료 직접 점검**에서 폴더 경로를 입력하면 된다. (출처: `README.md`, `docs/REVIEWER_QUICKSTART.md`)
+
+수동으로 실행하려면 첫 번째 PowerShell에서 다음을 실행한다. (출처: `SUBMISSION.md`)
 
 ```powershell
 python -m pip install -r requirements.txt
 $env:AX_PRODUCT_FROZEN_RESULTS_ROOT = "artifacts/phase6_product_demo_v4/runs"
-python -m uvicorn ax_product.api:create_read_only_app_from_env --factory --host 127.0.0.1 --port 8000
+python -m uvicorn ax_product.api:create_local_review_app_from_env --factory --host 127.0.0.1 --port 8000
 ```
 
 두 번째 PowerShell에서 다음을 실행한다. (출처: `SUBMISSION.md`)
@@ -148,7 +150,7 @@ npm ci
 npm run dev -- --port 5173
 ```
 
-브라우저에서 `http://127.0.0.1:5173/`을 연다. read-only factory는 frozen manifest를 검증하고 runner 없이 시작하므로 `POST /api/run`은 HTTP 503을 반환하며 동결 결과를 수정하지 않는다. (출처: `SUBMISSION.md`, `docs/ARCHITECTURE.md`)
+브라우저에서 `http://127.0.0.1:5173/`을 연다. local reviewer factory는 frozen manifest를 검증하고 폴더 점검 API만 활성화한다. 원본 파일을 수정하지 않으며 생성한 프로필과 마스킹된 진단 결과는 `artifacts/local_datasets/`에 저장된다. runner 없이 시작하므로 `POST /api/run`은 HTTP 503을 반환하며 동결 결과도 수정하지 않는다. (출처: `SUBMISSION.md`, `docs/ARCHITECTURE.md`, `docs/DATA_AND_PRIVACY.md`)
 
 ### 라이브 Kiro 실행
 
