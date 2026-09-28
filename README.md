@@ -2,12 +2,100 @@
 
 **AI Data Readiness Audit · AI 업무 도입 전 점검**
 
+[![Source verification](https://github.com/syjni/ax-preflight-source/actions/workflows/ci.yml/badge.svg)](https://github.com/syjni/ax-preflight-source/actions/workflows/ci.yml)
+
 AX Preflight (저장소·코드에서는 ax 접두어 사용)
 
 AX Preflight는 실제 AI 업무 테스트를 통해 **어떤 데이터·실행 신호가 어떤 업무를 막거나 흔드는지** 드러내며, 문서 접근과 결과 저장을 사용자가 통제하는 Data Readiness Audit 프로토타입입니다.
 
-- 공개 읽기 전용 데모: <https://syjni.github.io/ax-preflight/>
+- [공개 읽기 전용 데모](https://syjni.github.io/ax-preflight/) · [검증된 Release ZIP](https://github.com/syjni/ax-preflight-source/releases/tag/v0.1.0-submission) · [제출·심사 가이드](SUBMISSION.md) · [상세 문서](#상세-문서)
 - 테스트 가능한 소스 저장소: <https://github.com/syjni/ax-preflight-source>
+
+![AX Preflight 소개 화면 — 정적 Data Readiness 100점이어도 실제 AI 업무가 보류될 수 있음을 보여주는 첫 화면](results_console/artifacts/ax-preflight-brand/intro-1440x900.png)
+
+> **현재 단계:** 대회 심사와 제품 검증을 위한 프로토타입입니다. 공개 데모는 검증된
+> 동결 결과를 안전하게 탐색하는 읽기 전용 모드이며, 새로운 데이터로 AI 업무를
+> 실행하려면 Kiro CLI와 사용 가능한 모델 자격 증명이 필요합니다.
+
+## AX Preflight가 하는 일
+
+문서 파일이 빠짐없이 있고 정적 점검이 100점을 받아도, AI가 실제 업무 질문에
+안정적으로 답한다는 뜻은 아닙니다. 서로 다른 정책이 충돌하거나, 필요한 값이
+문서에 없거나, 자료가 있어도 검색 경로에서 밀리거나, 실행할 때마다 답이 달라질
+수 있기 때문입니다.
+
+AX Preflight는 도입하려는 **실제 업무 질문을 반복 실행**하고 그 과정을 실행 단위로
+기록합니다. 그런 다음 단순한 성공률 대신 다음을 구분해 보여줍니다.
+
+- **데이터 문제:** 충돌하는 출처, 근거 부족, 필요한 정보 부재
+- **검색 문제:** 자료는 존재하지만 검색 순위나 경로 때문에 도달하지 못한 경우
+- **실행 변동:** 같은 업무가 반복 실행에서 답변과 보류로 엇갈리거나 의미 값이 달라진 경우
+- **근거 상태:** 최종 답이 실제로 읽은 자료와 직접 연결되는지, 무엇을 인용했는지
+- **개선 효과:** 데이터를 정리하기 전과 후에 같은 실패가 재현되는지
+
+즉, “AI를 도입할 수 있는가?”를 하나의 점수로 단정하기보다 **어떤 업무가 준비됐고,
+어디를 먼저 고쳐야 하며, 고친 뒤 실제로 나아졌는지**를 감사 가능한 근거와 함께
+확인하는 서비스입니다.
+
+## 누구를 위한 서비스인가
+
+| 사용자 | AX Preflight로 확인하는 것 |
+|---|---|
+| AX·AI 도입 책임자 | 현재 자료로 자동화 가능한 업무와 먼저 보완할 업무 |
+| 현업·데이터 담당자 | 어느 문서의 충돌·공백·검색 한계가 실제 업무를 막는지 |
+| AI 제품·개발팀 | 실행별 검색, 읽기, 인용, 실패와 재시도 경로 |
+| 관리자·심사자 | Before → After 변화와 주장 범위를 한 페이지 보고서로 검토 |
+
+## 제품이 답하는 다섯 가지 질문
+
+| 질문 | 화면에서 보는 결과 |
+|---|---|
+| 이 데이터는 테스트할 준비가 됐는가? | 원본 무결성, 파싱 범위, 검색 가능 자료, 평가 정보 분리, 승인 업무를 확인하는 온보딩 프리플라이트 |
+| 실제 업무를 처리할 수 있는가? | 업무별 답변·보류 상태와 반복 안정·일관된 보류·혼재 분류 |
+| 처리하지 못했다면 왜인가? | 충돌, 근거 부족, 정보 부재, 검색 경로 한계를 분리한 Finding |
+| 답변은 무엇을 근거로 했는가? | 검색 후보 → 읽은 자료 → 최종 인용으로 이어지는 실행별 근거 경로 |
+| 데이터를 고치면 나아지는가? | 같은 업무의 검증된 Before → After 비교와 재현 여부 |
+
+## 사용 흐름
+
+1. **데이터셋을 연결합니다.** 문서·표 자료, scan 결과, 업무 후보와 승인 범위를 하나의 profile로 묶습니다.
+2. **실행 전 온보딩을 검사합니다.** 설정 오류나 데이터 부족이 있으면 모델을 호출하기 전에 차단합니다.
+3. **실제 업무를 실행합니다.** 승인된 질문, 업무 후보 또는 ad hoc 질문을 1회 혹은 반복 실행합니다.
+4. **결과와 근거를 읽습니다.** 답변·보류, Finding, Evidence Checker, 검색·근거 경로를 같은 run에서 확인합니다.
+5. **수정 전후를 비교합니다.** 데이터를 정리한 뒤 같은 업무를 다시 실행해 문제가 사라졌는지 검증합니다.
+
+```mermaid
+flowchart LR
+    D["데이터셋 연결"] --> P["온보딩 프리플라이트"]
+    P --> T["실제 업무 반복 실행"]
+    T --> X["Finding · 근거 경로"]
+    X --> I["데이터 보완"]
+    I --> R["Before → After 재검증"]
+```
+
+## 핵심 기능
+
+| 기능 | 제품에서 중요한 이유 |
+|---|---|
+| 검증된 Before → After 대표 흐름 | 심사자가 수정 전 실패와 수정 후 변화를 같은 업무에서 바로 확인할 수 있습니다. |
+| 원인별 실패 복구 UX | 오류를 보여주는 데서 끝나지 않고 원인, 현재 상태와 다음 행동을 안내합니다. |
+| 검색·근거 경로 추적 | 어떤 자료를 몇 순위로 찾고 무엇을 읽어 최종 인용했는지 실행 단위로 남깁니다. |
+| 고객 데이터 온보딩 검증 | 잘못된 경로·변조·파싱 실패·평가 정보 혼입·승인 부족을 실행 전에 진단합니다. |
+| 비동기 반복 실행 | 최대 50회를 영속적으로 예약하고 진행률, 부분 실패, 일시정지·재개·중단·실패 재시도를 관리합니다. |
+| 보수적인 결과 해석 | 검색 한계를 자료 부재로, 근거 일치를 정답률로 과장하지 않고 관측 범위를 명시합니다. |
+
+## 가장 빠르게 체험하는 방법
+
+| 목적 | 권장 경로 | 필요한 것 |
+|---|---|---|
+| 제품 화면과 대표 결과 확인 | [공개 읽기 전용 데모](https://syjni.github.io/ax-preflight/)에서 **소개 → 사용 방법 → 결과 콘솔** 순서로 확인 | 브라우저 |
+| 소스와 재현성 검증 | [Release ZIP](https://github.com/syjni/ax-preflight-source/releases/tag/v0.1.0-submission)을 받거나 저장소를 clone한 뒤 아래 검증 명령 실행 | Python 3.12+, Node.js 20+ |
+| 로컬 읽기 전용 데모 | [5분 안에 읽기 전용 데모 실행](#5분-안에-읽기-전용-데모-실행) 절차 사용 | Python, Node.js |
+| 새 데이터로 실제 실행 | [실제 Kiro runner 실행](#실제-kiro-runner-실행) 절차 사용 | 위 환경 + Kiro CLI + 모델 자격 증명 |
+
+처음 보는 사용자는 공개 데모에서 소개 탭의 문제 정의를 읽은 뒤, 결과 콘솔 상단의
+**검증된 대표 흐름**을 여는 것이 가장 빠릅니다. 개발자와 심사자는
+[SUBMISSION.md](SUBMISSION.md)의 5분 절차와 주장 경계를 함께 확인할 수 있습니다.
 
 ## GitHub에서 내려받아 검증하기
 
@@ -16,11 +104,30 @@ Python 3.12+와 Node.js 20+가 필요합니다. Git을 사용하는 경우 다�
 명령으로 검증할 수 있지만, `.git` 메타데이터가 없으므로 Git inventory 전용
 테스트 2개는 의도적으로 skip됩니다.
 
+Windows PowerShell:
+
 ```powershell
 git clone https://github.com/syjni/ax-preflight-source.git
 cd ax-preflight-source
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements-dev.txt
+python -m pytest -q
+
+cd results_console
+npm ci
+npm test
+npm run typecheck
+npm run build:static
+```
+
+macOS·Linux:
+
+```bash
+git clone https://github.com/syjni/ax-preflight-source.git
+cd ax-preflight-source
+python3 -m venv .venv
+source .venv/bin/activate
 python -m pip install -r requirements-dev.txt
 python -m pytest -q
 
@@ -179,7 +286,11 @@ cd ..
 
 Phase 6 verifier는 공식 run, source snapshot, manifest와 SHA-256을 검증합니다. 동결 결과를 수정하거나 재생성하지 마십시오.
 
-현재 최종 검증 환경은 **Windows 11 + PowerShell + Python 3.12 + Node.js**입니다. 이 환경에서 전체 테스트, frontend build, frozen verifier, 추출 ZIP 재검증을 수행했습니다. macOS/Linux/WSL 명령은 이식성을 고려해 제공하지만 이번 최종 감사에서는 실행하지 못했으므로 검증 완료로 주장하지 않습니다.
+최종 로컬 감사는 **Windows 11 + PowerShell + Python 3.12 + Node.js**에서 전체
+테스트, frontend build, frozen verifier와 추출 ZIP 재검증까지 수행했습니다. 공개
+저장소의 GitHub Actions는 깨끗한 **Ubuntu + Python 3.12 + Node.js 22** 환경에서
+백엔드·프런트엔드·동결 검증을 통과했습니다. macOS와 WSL은 이번 최종 감사에서
+별도로 실행하지 않았으므로 검증 완료로 주장하지 않습니다.
 
 ## 저장소 구조
 
@@ -212,6 +323,14 @@ Phase 6 verifier는 공식 run, source snapshot, manifest와 SHA-256을 검증�
 - [DIRECT_MATCH 6건 수동 감사](docs/PHASE6_V4_DIRECT_MATCH_AUDIT.md)
 - [제품 계약 상세](ax_product/README.md)
 - [Results Console 상세](results_console/README.md)
+
+## 문제 제보와 검증 도움
+
+설치·테스트·화면 동작에서 재현되는 문제가 있다면
+[GitHub Issues](https://github.com/syjni/ax-preflight-source/issues)에 실행 환경,
+재현 명령, 기대 결과와 실제 결과를 남겨 주십시오. 실행 결과와 관련된 문제는 가능한
+경우 run ID도 포함하되, 고객 문서 원문·모델 자격 증명·개인정보는 첨부하지 마십시오.
+심사 목적의 빠른 검증 순서는 [SUBMISSION.md](SUBMISSION.md)를 기준으로 합니다.
 
 ## 현재 제한사항
 
