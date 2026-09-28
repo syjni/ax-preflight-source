@@ -340,7 +340,7 @@ Phase 6 verifier는 공식 run, source snapshot, manifest와 SHA-256을 검증�
 - 단일 run API는 동기식이고 반복 실행 API는 단일 API 프로세스의 background thread에서 순차 처리합니다. 다중 worker lease, 자동 backoff, 동시성·비용 quota와 스케줄 실행은 구현되지 않았습니다.
 - 기본 `ax_product.api:app`과 read-only factory는 모두 POST에 503을 반환합니다. 실제 Kiro 실행은 opt-in factory가 필요합니다.
 - 현재 제품의 Evidence Checker v3는 frozen v2의 제한된 결정론적 규칙을 그대로 적용한 뒤, 명시적으로 폐기된 수량만 현재 직접 근거에서 제외합니다. frozen v1·v2 checker와 공식 산출물은 변경하지 않습니다. `UNCONFIRMED`는 오답을 뜻하지 않고, `DIRECT_MATCH`도 업무 정답률을 뜻하지 않습니다.
-- 최종 실행·패키지 검증은 Windows에서 완료했습니다. macOS/Linux/WSL은 이번 제출 전 감사에서 실행하지 못했습니다.
+- 최종 실행·패키지 검증은 Windows에서 완료했고, 공개 CI는 Ubuntu에서 통과했습니다. macOS·WSL은 이번 제출 전 감사에서 별도로 실행하지 못했습니다.
 - 민감정보 탐지는 readiness 신호이지 완전한 보안 통제가 아닙니다.
 - 공식 v4 Before/After는 10업무를 상태별 3회 실행한 탐색 snapshot입니다. 반복으로 변동성을 관측했지만 무작위 대조 실험은 아니므로 전체 차이의 인과 효과·일반 성능을 주장하지 않습니다. 실제 수정한 반품 충돌의 3/3 전환만 좁게 설명합니다.
 - 표 자료도 문서 검색 인덱스에 포함되지만 현재 BM25는 파일명 exact match를 별도 우선하지 않습니다. v4 주문 원장은 정상 파싱·인덱싱됐음에도 정책 기준명 검색에서 4위로 밀려, 실행별 검색어와 top-k에 따라 원장 발견 여부가 달라졌습니다. 두 주문 혼재 Finding은 자료 공백이 아니라 `RETRIEVAL_LIMITATION`으로 공개합니다.
