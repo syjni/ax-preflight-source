@@ -52,3 +52,31 @@ jobs:
         run: npm run typecheck
       - name: Build static demo
         run: npm run build:static
+
+  docker-reviewer:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Build reviewer image
+        run: docker build --tag ax-preflight:ci .
+      - name: Smoke test console, API, and bundled OCR
+        shell: bash
+        run: |
+          container_id="$(docker run --detach --publish 127.0.0.1:18000:8000 ax-preflight:ci)"
+          cleanup() {
+            docker logs "$container_id" || true
+            docker rm --force "$container_id" || true
+          }
+          trap cleanup EXIT
+
+          capabilities=""
+          for attempt in $(seq 1 90); do
+            if capabilities="$(curl --fail --silent --show-error http://127.0.0.1:18000/api/capabilities)"; then
+              break
+            fi
+            sleep 1
+          done
+          test -n "$capabilities"
+          CAPABILITIES="$capabilities" python -c "import json, os; value=json.loads(os.environ['CAPABILITIES']); assert value['mode']=='LOCAL_REVIEW'; assert value['local_file_upload']; assert value['pdf_table_extraction']; assert value['ocr_available']; assert {'kor','eng'} <= set(value['ocr_languages'])"
+          curl --fail --silent http://127.0.0.1:18000/ | grep --quiet "AX Preflight"

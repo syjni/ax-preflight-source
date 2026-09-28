@@ -1,0 +1,16 @@
+services:
+  ax-preflight:
+    build:
+      context: .
+    image: ax-preflight:local
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      AX_PRODUCT_OCR_MODE: auto
+      AX_PRODUCT_OCR_MAX_PAGES: "50"
+    volumes:
+      - ax-preflight-data:/data
+    restart: unless-stopped
+
+volumes:
+  ax-preflight-data:
