@@ -118,13 +118,21 @@ def _manifest(
 
 
 def _scan(source_root: Path):
-    return scan_folder(
-        source_root,
-        live_llm=LiveLLMStatus(
-            status="LIVE_LLM_PENDING",
-            reason="Static ax-exp-v2 variant generation; no live LLM is invoked.",
-        ),
-    )
+    previous = os.environ.get("AX_SCANNER_PDF_ENHANCEMENTS")
+    os.environ["AX_SCANNER_PDF_ENHANCEMENTS"] = "off"
+    try:
+        return scan_folder(
+            source_root,
+            live_llm=LiveLLMStatus(
+                status="LIVE_LLM_PENDING",
+                reason="Static ax-exp-v2 variant generation; no live LLM is invoked.",
+            ),
+        )
+    finally:
+        if previous is None:
+            os.environ.pop("AX_SCANNER_PDF_ENHANCEMENTS", None)
+        else:
+            os.environ["AX_SCANNER_PDF_ENHANCEMENTS"] = previous
 
 
 def _portable_scan_report(report: Any, source_root: Path, source_root_relative: Path):

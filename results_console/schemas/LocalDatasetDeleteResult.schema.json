@@ -7,6 +7,11 @@
       "title": "Deleted",
       "type": "boolean"
     },
+    "managed_copy_deleted": {
+      "default": false,
+      "title": "Managed Copy Deleted",
+      "type": "boolean"
+    },
     "profile": {
       "title": "Profile",
       "type": "string"

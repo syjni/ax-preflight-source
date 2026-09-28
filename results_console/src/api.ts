@@ -57,9 +57,10 @@ async function staticLookup<T>(group: 'readiness' | 'onboarding' | 'tasks' | 'fi
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   let response: Response;
   try {
+    const isForm = typeof FormData !== 'undefined' && init?.body instanceof FormData;
     response = await fetch(`${base}${path}`, {
       ...init,
-      headers: { 'Content-Type': 'application/json', ...init?.headers },
+      headers: isForm ? init?.headers : { 'Content-Type': 'application/json', ...init?.headers },
     });
   } catch {
     throw new ApiError(0, 'API_CONNECTION_FAILED');
@@ -83,10 +84,17 @@ export const api = {
     ? Promise.resolve({
         mode: 'STATIC_DEMO',
         local_dataset_scan: false,
+        local_file_upload: false,
         ai_task_execution: false,
         bundled_demo: true,
         source_files_stay_local: true,
         supported_extensions: ['.txt', '.pdf', '.docx', '.csv', '.xlsx'],
+        max_upload_files: 5000,
+        max_upload_bytes: 1073741824,
+        pdf_table_extraction: true,
+        ocr_available: false,
+        ocr_languages: [],
+        ocr_install_hint: '로컬 실행에서 OCR 사용 가능 여부를 확인할 수 있습니다.',
       })
     : request<ProductCapabilities>('/api/capabilities'),
   datasets: () => staticMode ? loadStaticSnapshot().then((snapshot) => snapshot.datasets) : request<DatasetsResponse>('/api/datasets'),
@@ -124,6 +132,19 @@ export const api = {
   createLocalDataset: (body: LocalDatasetRequest) => staticMode
     ? Promise.reject(new ApiError(403, 'LOCAL_SCAN_UNAVAILABLE'))
     : request<LocalDatasetScanResult>('/api/local-datasets', { method: 'POST', body: JSON.stringify(body) }),
+  uploadLocalDataset: (
+    files: Array<{ file: File; relativePath: string }>,
+    displayName: string | null,
+    sourceRootName: string,
+  ) => {
+    if (staticMode) return Promise.reject(new ApiError(403, 'LOCAL_SCAN_UNAVAILABLE'));
+    const body = new FormData();
+    files.forEach(({ file }) => body.append('files', file, file.name));
+    body.append('relative_paths', JSON.stringify(files.map(({ relativePath }) => relativePath)));
+    body.append('source_root_name', sourceRootName);
+    if (displayName) body.append('display_name', displayName);
+    return request<LocalDatasetScanResult>('/api/local-datasets/upload', { method: 'POST', body });
+  },
   localDataset: (profile: string) => staticMode
     ? Promise.reject(new ApiError(403, 'LOCAL_SCAN_UNAVAILABLE'))
     : request<LocalDatasetScanResult>(`/api/local-datasets/${encodeURIComponent(profile)}`),

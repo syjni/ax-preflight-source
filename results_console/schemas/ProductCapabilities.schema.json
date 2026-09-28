@@ -13,6 +13,20 @@
       "title": "Local Dataset Scan",
       "type": "boolean"
     },
+    "local_file_upload": {
+      "title": "Local File Upload",
+      "type": "boolean"
+    },
+    "max_upload_bytes": {
+      "minimum": 1,
+      "title": "Max Upload Bytes",
+      "type": "integer"
+    },
+    "max_upload_files": {
+      "minimum": 1,
+      "title": "Max Upload Files",
+      "type": "integer"
+    },
     "mode": {
       "enum": [
         "STATIC_DEMO",
@@ -23,9 +37,49 @@
       "title": "Mode",
       "type": "string"
     },
+    "ocr_available": {
+      "title": "Ocr Available",
+      "type": "boolean"
+    },
+    "ocr_engine": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Ocr Engine"
+    },
+    "ocr_install_hint": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Ocr Install Hint"
+    },
+    "ocr_languages": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Ocr Languages",
+      "type": "array"
+    },
+    "pdf_table_extraction": {
+      "default": true,
+      "title": "Pdf Table Extraction",
+      "type": "boolean"
+    },
     "schema_version": {
-      "const": "ax-product-capabilities-v1",
-      "default": "ax-product-capabilities-v1",
+      "const": "ax-product-capabilities-v2",
+      "default": "ax-product-capabilities-v2",
       "title": "Schema Version",
       "type": "string"
     },
@@ -46,9 +100,13 @@
   "required": [
     "mode",
     "local_dataset_scan",
+    "local_file_upload",
     "ai_task_execution",
     "bundled_demo",
-    "supported_extensions"
+    "supported_extensions",
+    "max_upload_files",
+    "max_upload_bytes",
+    "ocr_available"
   ],
   "title": "ProductCapabilities",
   "type": "object"

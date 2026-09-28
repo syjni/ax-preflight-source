@@ -830,7 +830,18 @@ def generate_ceiling_dataset(output_root: Path = ROOT) -> dict[str, Path]:
         "dataset_provenance": output_root / "dataset_provenance.md",
         "scan_report": output_root / "ceiling_scan_report.json",
     }
-    report = scan_folder(source_root, live_llm=detect_live_llm_status({}, local_runtime_available=False))
+    previous_pdf_mode = os.environ.get("AX_SCANNER_PDF_ENHANCEMENTS")
+    os.environ["AX_SCANNER_PDF_ENHANCEMENTS"] = "off"
+    try:
+        report = scan_folder(
+            source_root,
+            live_llm=detect_live_llm_status({}, local_runtime_available=False),
+        )
+    finally:
+        if previous_pdf_mode is None:
+            os.environ.pop("AX_SCANNER_PDF_ENHANCEMENTS", None)
+        else:
+            os.environ["AX_SCANNER_PDF_ENHANCEMENTS"] = previous_pdf_mode
     write_report(report, paths["scan_report"])
     control_sources = _control_sources(source_root, tasks)
     blind_samples, blind_schema = _runtime_blind_samples(tasks)

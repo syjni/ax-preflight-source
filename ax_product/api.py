@@ -4,17 +4,19 @@ from __future__ import annotations
 
 import math
 import os
+import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Literal, Protocol
 from uuid import uuid4
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from pydantic import Field, model_validator
 
 from ax_mcp.runtime_dataset import RuntimeDatasetError, resolve_runtime_dataset
 from ax_scanner.models import ScanReport
 from ax_scanner.parsers import SUPPORTED_EXTENSIONS
+from ax_scanner.ocr import detect_ocr_capability
 from readiness_score import score_scan_report_file
 
 from .batches import (
@@ -347,6 +349,7 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
 
     @app.get("/api/capabilities", response_model=ProductCapabilities)
     def capabilities() -> ProductCapabilities:
+        ocr = detect_ocr_capability()
         return ProductCapabilities(
             mode=(
                 "LIVE" if runner is not None
@@ -354,9 +357,23 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
                 else "API"
             ),
             local_dataset_scan=local_dataset_store is not None,
+            local_file_upload=local_dataset_store is not None,
             ai_task_execution=runner is not None,
             bundled_demo=frozen_results_root is not None,
             supported_extensions=list(SUPPORTED_EXTENSIONS),
+            max_upload_files=(
+                local_dataset_store.max_files if local_dataset_store else 5_000
+            ),
+            max_upload_bytes=(
+                local_dataset_store.max_bytes if local_dataset_store else 1_073_741_824
+            ),
+            ocr_available=ocr.available,
+            ocr_engine=ocr.engine,
+            ocr_languages=list(ocr.languages),
+            ocr_install_hint=(
+                None if ocr.available
+                else "Docker 실행에는 한국어·영어 OCR이 포함됩니다. Windows 직접 실행은 Tesseract OCR과 kor·eng 언어팩을 설치하세요."
+            ),
         )
 
     def local_scan_result(profile: str) -> LocalDatasetScanResult:
@@ -380,6 +397,72 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
             raise HTTPException(
                 status_code=422, detail=f"{exc.code} · {exc}"
             ) from exc
+
+    @app.post(
+        "/api/local-datasets/upload", response_model=LocalDatasetScanResult,
+        status_code=201,
+    )
+    async def upload_local_dataset(
+        files: list[UploadFile] = File(...),
+        relative_paths: str = Form(...),
+        display_name: str | None = Form(default=None),
+        source_root_name: str | None = Form(default=None),
+    ) -> LocalDatasetScanResult:
+        if local_dataset_store is None:
+            raise HTTPException(status_code=403, detail="LOCAL_SCAN_UNAVAILABLE")
+        try:
+            decoded = json.loads(relative_paths)
+            if (
+                not isinstance(decoded, list)
+                or not all(isinstance(value, str) for value in decoded)
+                or len(decoded) != len(files)
+            ):
+                raise LocalDatasetError(
+                    "INVALID_UPLOAD_MANIFEST",
+                    "선택한 파일 목록과 상대 경로 목록이 일치하지 않습니다.",
+                )
+            upload_root, destinations = local_dataset_store.prepare_upload(decoded)
+            total_bytes = 0
+            try:
+                for upload, destination in zip(files, destinations, strict=True):
+                    destination.parent.mkdir(parents=True, exist_ok=True)
+                    with destination.open("xb") as stream:
+                        while chunk := await upload.read(1024 * 1024):
+                            total_bytes += len(chunk)
+                            if total_bytes > local_dataset_store.max_bytes:
+                                raise LocalDatasetError(
+                                    "SIZE_LIMIT_EXCEEDED",
+                                    f"전체 파일 크기가 {local_dataset_store.max_bytes / 1_073_741_824:.1f} GiB를 초과합니다.",
+                                )
+                            stream.write(chunk)
+                    await upload.close()
+                profile = local_dataset_store.scan_upload(
+                    upload_root,
+                    display_name=display_name,
+                    source_root_name=source_root_name,
+                )
+            except Exception:
+                local_dataset_store.discard_upload(upload_root)
+                raise
+            return local_scan_result(profile)
+        except json.JSONDecodeError as exc:
+            raise HTTPException(
+                status_code=422,
+                detail="INVALID_UPLOAD_MANIFEST · 파일 경로 목록이 올바른 JSON이 아닙니다.",
+            ) from exc
+        except LocalDatasetError as exc:
+            raise HTTPException(status_code=422, detail=f"{exc.code} · {exc}") from exc
+        except OSError as exc:
+            raise HTTPException(
+                status_code=422,
+                detail=f"UPLOAD_WRITE_FAILED · 선택한 파일을 로컬 관리 폴더에 저장하지 못했습니다: {type(exc).__name__}",
+            ) from exc
+        finally:
+            for upload in files:
+                try:
+                    await upload.close()
+                except OSError:
+                    pass
 
     @app.get(
         "/api/local-datasets/{profile}", response_model=LocalDatasetScanResult

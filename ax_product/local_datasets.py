@@ -1,8 +1,9 @@
 """Persistent, local-only dataset onboarding for the reviewer console.
 
-The browser sends a directory path to the FastAPI process running on the same
-computer.  Source files are never copied.  A masked scanner report and a small
-registry are stored under the configured local-audit root so the review can be
+Reviewers can either let the local API read an existing directory in place or
+select files in the browser. Browser-selected files are copied only into a
+managed directory on the same computer. Masked scanner reports and a small
+registry are stored under the configured local-audit root so reviews can be
 reopened after a restart.
 """
 
@@ -13,10 +14,12 @@ import json
 import os
 import re
 import shutil
+import unicodedata
 from datetime import date, datetime
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from threading import RLock
 from typing import Literal
+from uuid import uuid4
 
 from pydantic import Field, field_validator
 
@@ -78,6 +81,16 @@ class LocalDatasetFile(StrictProductModel):
     text_char_count: int = Field(ge=0)
     pii_finding_count: int = Field(ge=0)
     requires_ocr: bool
+    ocr_status: Literal[
+        "NOT_APPLICABLE", "NOT_REQUIRED", "COMPLETED", "DISABLED",
+        "UNAVAILABLE", "PAGE_LIMIT_EXCEEDED", "FAILED",
+    ] = "NOT_APPLICABLE"
+    ocr_page_count: int = Field(default=0, ge=0)
+    ocr_mean_confidence: float | None = Field(default=None, ge=0, le=100)
+    pdf_table_count: int = Field(default=0, ge=0)
+    pdf_table_status: Literal["NOT_APPLICABLE", "COMPLETED", "ERROR"] = (
+        "NOT_APPLICABLE"
+    )
     issue: str | None = None
 
 
@@ -86,6 +99,7 @@ class LocalDatasetIssue(StrictProductModel):
         "PARSE_ERROR",
         "UNSUPPORTED_FORMAT",
         "OCR_REQUIRED",
+        "PDF_TABLE_EXTRACTION_FAILED",
         "EXACT_DUPLICATE",
         "PROBABLE_VERSION_GROUP",
         "PII_PATTERN",
@@ -109,12 +123,17 @@ class LocalDatasetAudit(StrictProductModel):
     scanned_at: datetime
     as_of_date: date
     local_only: Literal[True] = True
+    source_mode: Literal["PATH", "UPLOAD"] = "PATH"
+    source_files_copied: bool = False
+    managed_copy_deleted_with_record: bool = False
     supported_extensions: list[str]
     file_count: int = Field(ge=0)
     parsed_file_count: int = Field(ge=0)
     unsupported_file_count: int = Field(ge=0)
     error_file_count: int = Field(ge=0)
     table_count: int = Field(ge=0)
+    pdf_table_count: int = Field(default=0, ge=0)
+    ocr_completed_file_count: int = Field(default=0, ge=0)
     duplicate_group_count: int = Field(ge=0)
     probable_version_group_count: int = Field(ge=0)
     pii_finding_count: int = Field(ge=0)
@@ -139,18 +158,27 @@ class LocalDatasetDeleteResult(StrictProductModel):
     profile: str
     deleted: Literal[True] = True
     source_files_deleted: Literal[False] = False
+    managed_copy_deleted: bool = False
 
 
 class ProductCapabilities(StrictProductModel):
-    schema_version: Literal["ax-product-capabilities-v1"] = (
-        "ax-product-capabilities-v1"
+    schema_version: Literal["ax-product-capabilities-v2"] = (
+        "ax-product-capabilities-v2"
     )
     mode: Literal["STATIC_DEMO", "API", "LOCAL_REVIEW", "LIVE"]
     local_dataset_scan: bool
+    local_file_upload: bool
     ai_task_execution: bool
     bundled_demo: bool
     source_files_stay_local: Literal[True] = True
     supported_extensions: list[str]
+    max_upload_files: int = Field(ge=1)
+    max_upload_bytes: int = Field(ge=1)
+    pdf_table_extraction: bool = True
+    ocr_available: bool
+    ocr_engine: str | None = None
+    ocr_languages: list[str] = Field(default_factory=list)
+    ocr_install_hint: str | None = None
 
 
 def _positive_limit(name: str, default: int) -> int:
@@ -200,6 +228,7 @@ class LocalDatasetStore:
         self.root = Path(root).resolve()
         self.registry_path = self.root / "registry.json"
         self.config_path = self.root / "runtime_datasets.json"
+        self.upload_root = self.root / "uploads"
         self._lock = RLock()
         self.max_files = _positive_limit(LOCAL_SCAN_MAX_FILES_ENV, DEFAULT_MAX_FILES)
         self.max_bytes = _positive_limit(LOCAL_SCAN_MAX_BYTES_ENV, DEFAULT_MAX_BYTES)
@@ -314,11 +343,16 @@ class LocalDatasetStore:
         slug = re.sub(r"[^a-z0-9]+", "-", source.name.casefold()).strip("-")
         return f"local-{(slug or 'dataset')[:28]}-{digest}"
 
-    def scan(self, request: LocalDatasetRequest) -> str:
-        source = self._normalize_source(request.source_path)
+    def _scan_source(
+        self,
+        source: Path,
+        *,
+        display_name: str,
+        source_root_name: str,
+        source_mode: Literal["PATH", "UPLOAD"],
+    ) -> str:
         self._preflight_files(source)
         profile = self._profile(source)
-        display_name = request.display_name or source.name
         scanned_at = datetime.now().astimezone()
         report = scan_folder(source, live_llm=detect_live_llm_status())
         target_dir = self.root / profile
@@ -331,7 +365,8 @@ class LocalDatasetStore:
             "dataset_name": f"{source.name}-local-{profile[-10:]}",
             "display_label": f"내 자료 · {display_name}",
             "source_root": str(source),
-            "source_root_name": source.name,
+            "source_root_name": source_root_name,
+            "source_mode": source_mode,
             "scan_report": str(report_path),
             "scanned_at": scanned_at.isoformat(),
             "as_of_date": scanned_at.date().isoformat(),
@@ -342,6 +377,86 @@ class LocalDatasetStore:
             _atomic_json(self.registry_path, registry)
             self._sync_runtime_config(registry)
         return profile
+
+    def scan(self, request: LocalDatasetRequest) -> str:
+        source = self._normalize_source(request.source_path)
+        return self._scan_source(
+            source,
+            display_name=request.display_name or source.name,
+            source_root_name=source.name,
+            source_mode="PATH",
+        )
+
+    @staticmethod
+    def _upload_path(value: str) -> PurePosixPath:
+        normalized = unicodedata.normalize("NFC", value.strip())
+        path = PurePosixPath(normalized)
+        if (
+            not normalized
+            or "\\" in normalized
+            or path.is_absolute()
+            or any(part in {"", ".", ".."} for part in path.parts)
+            or any(":" in part or "\0" in part for part in path.parts)
+        ):
+            raise LocalDatasetError(
+                "INVALID_UPLOAD_PATH", "선택한 파일 중 안전하지 않은 상대 경로가 있습니다."
+            )
+        return path
+
+    def prepare_upload(self, relative_paths: list[str]) -> tuple[Path, list[Path]]:
+        if not relative_paths:
+            raise LocalDatasetError("EMPTY_UPLOAD", "점검할 파일을 하나 이상 선택하세요.")
+        if len(relative_paths) > self.max_files:
+            raise LocalDatasetError(
+                "FILE_LIMIT_EXCEEDED",
+                f"파일이 {self.max_files:,}개를 초과합니다. 점검 범위를 나눠 주세요.",
+            )
+        parsed = [self._upload_path(value) for value in relative_paths]
+        folded = [path.as_posix().casefold() for path in parsed]
+        if len(set(folded)) != len(folded):
+            raise LocalDatasetError(
+                "DUPLICATE_UPLOAD_PATH", "같은 상대 경로의 파일이 두 번 선택되었습니다."
+            )
+        upload_root = (self.upload_root / f"upload-{uuid4().hex}").resolve()
+        if not upload_root.is_relative_to(self.upload_root.resolve()):
+            raise RuntimeError("refusing to allocate an upload outside the managed root")
+        upload_root.mkdir(parents=True, exist_ok=False)
+        destinations = []
+        for relative in parsed:
+            destination = (upload_root / Path(*relative.parts)).resolve()
+            if not destination.is_relative_to(upload_root):
+                self.discard_upload(upload_root)
+                raise LocalDatasetError(
+                    "INVALID_UPLOAD_PATH", "선택한 파일 경로가 허용 범위를 벗어납니다."
+                )
+            destinations.append(destination)
+        return upload_root, destinations
+
+    def discard_upload(self, upload_root: Path) -> None:
+        candidate = Path(upload_root).resolve()
+        managed_root = self.upload_root.resolve()
+        if candidate == managed_root or not candidate.is_relative_to(managed_root):
+            raise RuntimeError("refusing to delete an unmanaged upload path")
+        if candidate.exists():
+            shutil.rmtree(candidate)
+
+    def scan_upload(
+        self,
+        upload_root: Path,
+        *,
+        display_name: str | None,
+        source_root_name: str | None,
+    ) -> str:
+        source = Path(upload_root).resolve()
+        if not source.is_relative_to(self.upload_root.resolve()):
+            raise LocalDatasetError("INVALID_UPLOAD_ROOT", "관리되지 않는 업로드 경로입니다.")
+        root_label = (source_root_name or "선택한 파일").strip()[:120] or "선택한 파일"
+        return self._scan_source(
+            source,
+            display_name=(display_name or root_label).strip()[:80] or root_label,
+            source_root_name=root_label,
+            source_mode="UPLOAD",
+        )
 
     def contains(self, profile: str) -> bool:
         with self._lock:
@@ -449,11 +564,32 @@ class LocalDatasetStore:
                 relative_paths=unsupported,
             ))
         if ocr_ids:
+            ocr_statuses = {
+                str(item.parser_metadata.get("ocr_status", "UNAVAILABLE"))
+                for item in report.files if item.file_id in ocr_ids
+            }
             issues.append(LocalDatasetIssue(
                 code="OCR_REQUIRED", severity="warning", count=len(ocr_ids),
                 title="OCR이 필요한 PDF",
-                action="텍스트 인식이 가능한 PDF로 변환하거나 OCR을 적용한 뒤 다시 점검하세요.",
+                action=(
+                    "Docker 실행을 사용하거나 Tesseract OCR과 kor·eng 언어팩을 설치한 뒤 다시 점검하세요."
+                    if "UNAVAILABLE" in ocr_statuses
+                    else "OCR 페이지 한도와 파일 품질을 확인한 뒤 다시 점검하세요."
+                ),
                 relative_paths=paths(ocr_ids),
+            ))
+        pdf_table_errors = [
+            item.relative_path
+            for item in report.files
+            if item.extension == ".pdf"
+            and item.parser_metadata.get("pdf_table_extraction_status") == "ERROR"
+        ]
+        if pdf_table_errors:
+            issues.append(LocalDatasetIssue(
+                code="PDF_TABLE_EXTRACTION_FAILED", severity="warning",
+                count=len(pdf_table_errors), title="PDF 표 구조를 읽지 못한 파일",
+                action="표가 이미지이거나 선이 없는 복잡한 배치인지 확인하고 XLSX·CSV 원본이 있으면 함께 점검하세요.",
+                relative_paths=pdf_table_errors,
             ))
         if report.duplicates:
             duplicate_paths = sorted({path for group in report.duplicates for path in group.relative_paths})
@@ -508,8 +644,20 @@ class LocalDatasetStore:
             text_char_count=item.text_char_count,
             pii_finding_count=item.pii_finding_count,
             requires_ocr=item.file_id in ocr_ids,
+            ocr_status=(
+                str(item.parser_metadata.get("ocr_status", "NOT_REQUIRED"))
+                if item.extension == ".pdf" else "NOT_APPLICABLE"
+            ),
+            ocr_page_count=len(item.parser_metadata.get("ocr_processed_page_numbers", [])),
+            ocr_mean_confidence=item.parser_metadata.get("ocr_mean_confidence"),
+            pdf_table_count=int(item.parser_metadata.get("pdf_table_count", 0)),
+            pdf_table_status=(
+                str(item.parser_metadata.get("pdf_table_extraction_status", "COMPLETED"))
+                if item.extension == ".pdf" else "NOT_APPLICABLE"
+            ),
             issue=item.parse_error,
         ) for item in report.files]
+        pdf_table_count = sum(file.pdf_table_count for file in files)
         return LocalDatasetAudit(
             profile=profile,
             dataset_name=entry["dataset_name"],
@@ -517,12 +665,17 @@ class LocalDatasetStore:
             source_root_name=entry["source_root_name"],
             scanned_at=datetime.fromisoformat(entry["scanned_at"]),
             as_of_date=date.fromisoformat(entry["as_of_date"]),
+            source_mode=entry.get("source_mode", "PATH"),
+            source_files_copied=entry.get("source_mode", "PATH") == "UPLOAD",
+            managed_copy_deleted_with_record=entry.get("source_mode", "PATH") == "UPLOAD",
             supported_extensions=list(report.scan_metadata.supported_extensions),
             file_count=report.scan_metadata.file_count,
             parsed_file_count=report.scan_metadata.parsed_file_count,
             unsupported_file_count=report.scan_metadata.unsupported_file_count,
             error_file_count=report.scan_metadata.error_file_count,
             table_count=len(report.tables),
+            pdf_table_count=pdf_table_count,
+            ocr_completed_file_count=sum(file.ocr_status == "COMPLETED" for file in files),
             duplicate_group_count=len(report.duplicates),
             probable_version_group_count=len(report.probable_version_groups),
             pii_finding_count=len(report.pii_findings),
@@ -534,16 +687,27 @@ class LocalDatasetStore:
     def delete(self, profile: str) -> LocalDatasetDeleteResult:
         with self._lock:
             registry = self._registry()
-            if profile not in registry["datasets"]:
+            entry = registry["datasets"].get(profile)
+            if entry is None:
                 raise LocalDatasetError(
                     "LOCAL_DATASET_NOT_FOUND", "로컬 점검 결과를 찾을 수 없습니다."
                 )
+            generated = (self.root / profile).resolve()
+            if not generated.is_relative_to(self.root) or generated == self.root:
+                raise RuntimeError(
+                    "refusing to delete a path outside the local dataset store"
+                )
+            # Remove managed data before hiding its registry record. If an I/O
+            # error occurs, the visible record remains so the reviewer can retry
+            # deletion instead of leaving an undiscoverable local copy behind.
+            if generated.exists():
+                shutil.rmtree(generated)
+            if entry.get("source_mode") == "UPLOAD":
+                self.discard_upload(Path(entry["source_root"]))
             del registry["datasets"][profile]
             _atomic_json(self.registry_path, registry)
             self._sync_runtime_config(registry)
-        generated = (self.root / profile).resolve()
-        if not generated.is_relative_to(self.root) or generated == self.root:
-            raise RuntimeError("refusing to delete a path outside the local dataset store")
-        if generated.exists():
-            shutil.rmtree(generated)
-        return LocalDatasetDeleteResult(profile=profile)
+        return LocalDatasetDeleteResult(
+            profile=profile,
+            managed_copy_deleted=entry.get("source_mode") == "UPLOAD",
+        )

@@ -7,8 +7,11 @@ import { LocalDatasetPanel } from '../src/components/LocalDatasetPanel.tsx';
 
 const capabilities = {
   mode: 'LOCAL_REVIEW', local_dataset_scan: true, ai_task_execution: false,
-  bundled_demo: true, source_files_stay_local: true,
+  local_file_upload: true, bundled_demo: true, source_files_stay_local: true,
   supported_extensions: ['.txt', '.pdf', '.docx', '.csv', '.xlsx'],
+  max_upload_files: 5000, max_upload_bytes: 1073741824,
+  pdf_table_extraction: true, ocr_available: false, ocr_languages: [],
+  ocr_install_hint: 'Docker 실행에는 OCR이 포함됩니다.',
 };
 
 const scanResult = {
@@ -22,8 +25,9 @@ const scanResult = {
     display_label: '내 자료 · 심사 자료', source_root_name: 'review-data',
     scanned_at: '2026-09-29T01:00:00+09:00', as_of_date: '2026-09-29',
     local_only: true, supported_extensions: capabilities.supported_extensions,
+    source_mode: 'PATH', source_files_copied: false, managed_copy_deleted_with_record: false,
     file_count: 3, parsed_file_count: 2, unsupported_file_count: 1,
-    error_file_count: 0, table_count: 1, duplicate_group_count: 0,
+    error_file_count: 0, table_count: 1, pdf_table_count: 0, ocr_completed_file_count: 0, duplicate_group_count: 0,
     probable_version_group_count: 0, pii_finding_count: 1, ocr_required_count: 0,
     issues: [{
       code: 'PII_PATTERN', severity: 'warning', count: 1,
@@ -46,6 +50,8 @@ let dom;
 let root;
 let container;
 let originalFetch;
+let originalFormData;
+let originalFile;
 
 beforeEach(() => {
   dom = new JSDOM('<!doctype html><html><body><div id="root"></div></body></html>', { url: 'http://127.0.0.1:5173/' });
@@ -54,6 +60,10 @@ beforeEach(() => {
   globalThis.location = dom.window.location;
   globalThis.IS_REACT_ACT_ENVIRONMENT = true;
   originalFetch = globalThis.fetch;
+  originalFormData = globalThis.FormData;
+  originalFile = globalThis.File;
+  globalThis.FormData = dom.window.FormData;
+  globalThis.File = dom.window.File;
   container = document.getElementById('root');
   root = createRoot(container);
 });
@@ -61,6 +71,8 @@ beforeEach(() => {
 afterEach(async () => {
   await act(async () => root.unmount());
   globalThis.fetch = originalFetch;
+  globalThis.FormData = originalFormData;
+  globalThis.File = originalFile;
   dom.window.close();
   delete globalThis.window;
   delete globalThis.document;
@@ -81,6 +93,10 @@ test('reviewer can scan a local folder and inspect actionable file results', asy
     capabilities, capabilitiesError: '', selectedDataset: null,
     onScanned: (result) => scanned.push(result), onDeleted: () => {},
   })));
+
+  await act(async () => {
+    [...container.querySelectorAll('[role="tab"]')].find((button) => /경로 입력/.test(button.textContent)).click();
+  });
 
   const pathInput = container.querySelector('#local-source-path');
   const nameInput = container.querySelector('#local-display-name');
@@ -106,7 +122,40 @@ test('reviewer can scan a local folder and inspect actionable file results', asy
   assert.match(container.textContent, /LOCAL AUDIT COMPLETE/);
   assert.match(container.textContent, /READINESS83/);
   assert.match(container.textContent, /개인정보 가능 패턴/);
-  assert.match(container.textContent, /원본을 복사·수정하지 않습니다/);
+  assert.match(container.textContent, /원본 파일을 복사하거나 수정하지 않습니다/);
+});
+
+test('reviewer can choose browser files and send them only to the local upload endpoint', async () => {
+  const requests = [];
+  const uploadedResult = {
+    ...scanResult,
+    audit: { ...scanResult.audit, source_mode: 'UPLOAD', source_files_copied: true, managed_copy_deleted_with_record: true },
+  };
+  globalThis.fetch = async (url, init = {}) => {
+    requests.push({ url: String(url), init });
+    return new Response(JSON.stringify(uploadedResult), {
+      status: 201, headers: { 'Content-Type': 'application/json' },
+    });
+  };
+  await act(async () => root.render(React.createElement(LocalDatasetPanel, {
+    capabilities, capabilitiesError: '', selectedDataset: null,
+    onScanned: () => {}, onDeleted: () => {},
+  })));
+
+  const picker = container.querySelectorAll('input[type="file"]')[1];
+  const chosen = new dom.window.File(['order_id,amount\nA-1,12000'], 'orders.csv', { type: 'text/csv' });
+  Object.defineProperty(picker, 'files', { configurable: true, value: [chosen] });
+  await act(async () => picker.dispatchEvent(new dom.window.Event('change', { bubbles: true })));
+  assert.match(container.textContent, /1개 파일 선택/);
+
+  await act(async () => container.querySelector('form').dispatchEvent(
+    new dom.window.Event('submit', { bubbles: true, cancelable: true }),
+  ));
+  assert.equal(requests.length, 1);
+  assert.equal(requests[0].url, '/api/local-datasets/upload');
+  assert.ok(requests[0].init.body instanceof dom.window.FormData);
+  assert.deepEqual(JSON.parse(requests[0].init.body.get('relative_paths')), ['orders.csv']);
+  assert.match(container.textContent, /로컬 관리 복사본/);
 });
 
 test('public demo preserves the example while clearly routing local review to source', async () => {

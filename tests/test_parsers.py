@@ -3,8 +3,13 @@ from __future__ import annotations
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
+
+from reportlab.lib import colors
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 
 from ax_scanner.models import DataType
+from ax_scanner.ocr import OcrCapability, OcrPageResult
 from ax_scanner.parsers import parse_file
 from scripts.create_mini_dataset import create_mini_dataset
 
@@ -31,6 +36,64 @@ class ParserTests(unittest.TestCase):
         self.assertFalse(readable.requires_ocr)
         self.assertTrue(scanned.requires_ocr)
         self.assertEqual(scanned.unreadable_reason, "PDF_TEXT_BELOW_OCR_THRESHOLD")
+        self.assertEqual(scanned.metadata["ocr_status"], "UNAVAILABLE")
+
+    def test_legacy_pdf_mode_preserves_frozen_scanner_metadata(self) -> None:
+        parsed = parse_file(
+            self.root / "docs" / "shipping_policy.pdf",
+            "FILE_pdf_legacy",
+            pdf_enhancements=False,
+        )
+        self.assertEqual(
+            set(parsed.metadata),
+            {"page_count", "non_whitespace_char_count", "ocr_threshold"},
+        )
+        self.assertEqual(parsed.tables, [])
+
+    def test_pdf_table_is_profiled_without_breaking_text_extraction(self) -> None:
+        path = self.root / "docs" / "orders-table.pdf"
+        document = SimpleDocTemplate(str(path))
+        table = Table([
+            ["order_id", "amount", "memo"],
+            ["A-1", "12000", "정상"],
+            ["A-2", "", "확인 필요"],
+        ])
+        table.setStyle(TableStyle([
+            ("GRID", (0, 0), (-1, -1), 1, colors.black),
+            ("BACKGROUND", (0, 0), (-1, 0), colors.lightgrey),
+        ]))
+        document.build([table])
+
+        parsed = parse_file(path, "FILE_pdf_table")
+        self.assertGreaterEqual(len(parsed.tables), 1)
+        profiled = parsed.tables[0]
+        self.assertEqual(profiled.sheet_name, "PDF p1 table 1")
+        self.assertEqual(profiled.column_names, ["order_id", "amount", "memo"])
+        self.assertEqual(profiled.row_count, 2)
+        self.assertAlmostEqual(
+            next(column for column in profiled.columns if column.name == "amount").null_ratio,
+            0.5,
+        )
+        self.assertEqual(parsed.metadata["pdf_table_extraction_status"], "COMPLETED")
+
+    def test_scanned_pdf_uses_optional_ocr_and_records_confidence(self) -> None:
+        scanned_path = self.root / "scans" / "invoice_scan.pdf"
+        with (
+            patch(
+                "ax_scanner.parsers.pdf.detect_ocr_capability",
+                return_value=OcrCapability(True, "Tesseract test", ("eng", "kor")),
+            ),
+            patch(
+                "ax_scanner.parsers.pdf.ocr_pdf_pages",
+                return_value=[OcrPageResult(1, "Invoice total amount is 12000 KRW", 91.4)],
+            ),
+        ):
+            parsed = parse_file(scanned_path, "FILE_scan_ocr")
+        self.assertFalse(parsed.requires_ocr)
+        self.assertIn("Invoice total amount", parsed.text)
+        self.assertEqual(parsed.metadata["ocr_status"], "COMPLETED")
+        self.assertEqual(parsed.metadata["ocr_processed_page_numbers"], [1])
+        self.assertEqual(parsed.metadata["ocr_mean_confidence"], 91.4)
 
     def test_docx_parser_reads_paragraphs_and_tables(self) -> None:
         parsed = parse_file(self.root / "docs" / "warehouse_guide.docx", "FILE_docx")
@@ -64,4 +127,3 @@ class ParserTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

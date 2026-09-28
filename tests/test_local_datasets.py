@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import json
 import tempfile
 import unittest
 from datetime import datetime, timezone
@@ -61,6 +62,8 @@ class LocalDatasetTests(unittest.TestCase):
         self.assertGreaterEqual(body["audit"]["pii_finding_count"], 1)
         self.assertGreaterEqual(body["audit"]["duplicate_group_count"], 1)
         self.assertTrue(body["audit"]["local_only"])
+        self.assertEqual(body["audit"]["source_mode"], "PATH")
+        self.assertFalse(body["audit"]["source_files_copied"])
         self.assertEqual(
             body["readiness"]["readiness"]["as_of_date"],
             body["audit"]["as_of_date"],
@@ -100,6 +103,7 @@ class LocalDatasetTests(unittest.TestCase):
         deleted = self.client.delete(f"/api/local-datasets/{profile}")
         self.assertEqual(deleted.status_code, 200)
         self.assertFalse(deleted.json()["source_files_deleted"])
+        self.assertFalse(deleted.json()["managed_copy_deleted"])
         self.assertTrue((self.source / "new.txt").exists())
         self.assertEqual(self.client.get(f"/api/local-datasets/{profile}").status_code, 404)
         self.assertNotIn(
@@ -111,7 +115,10 @@ class LocalDatasetTests(unittest.TestCase):
         capabilities = self.client.get("/api/capabilities").json()
         self.assertEqual(capabilities["mode"], "LOCAL_REVIEW")
         self.assertTrue(capabilities["local_dataset_scan"])
+        self.assertTrue(capabilities["local_file_upload"])
         self.assertFalse(capabilities["ai_task_execution"])
+        self.assertTrue(capabilities["pdf_table_extraction"])
+        self.assertEqual(capabilities["max_upload_files"], self.store.max_files)
         self.assertEqual(
             capabilities["supported_extensions"],
             [".txt", ".pdf", ".docx", ".csv", ".xlsx"],
@@ -137,6 +144,49 @@ class LocalDatasetTests(unittest.TestCase):
             ).status_code,
             403,
         )
+
+    def test_browser_upload_is_local_persistent_and_deleted_with_record(self) -> None:
+        response = self.client.post(
+            "/api/local-datasets/upload",
+            files=[
+                ("files", ("policy.txt", "반품 기간은 14일입니다.".encode("utf-8"), "text/plain")),
+                ("files", ("orders.csv", b"order_id,amount\nA-1,12000\n", "text/csv")),
+            ],
+            data={
+                "relative_paths": json.dumps(
+                    ["review-files/policy.txt", "review-files/tables/orders.csv"]
+                ),
+                "display_name": "브라우저 선택 자료",
+                "source_root_name": "review-files",
+            },
+        )
+        self.assertEqual(response.status_code, 201, response.text)
+        body = response.json()
+        profile = body["dataset"]["profile"]
+        self.assertEqual(body["audit"]["source_mode"], "UPLOAD")
+        self.assertTrue(body["audit"]["source_files_copied"])
+        self.assertTrue(body["audit"]["managed_copy_deleted_with_record"])
+        self.assertEqual(body["audit"]["source_root_name"], "review-files")
+        self.assertEqual(body["audit"]["file_count"], 2)
+        managed_roots = list((self.store_root / "uploads").iterdir())
+        self.assertEqual(len(managed_roots), 1)
+        self.assertTrue((managed_roots[0] / "review-files" / "policy.txt").is_file())
+
+        deleted = self.client.delete(f"/api/local-datasets/{profile}")
+        self.assertEqual(deleted.status_code, 200)
+        self.assertTrue(deleted.json()["managed_copy_deleted"])
+        self.assertFalse(managed_roots[0].exists())
+
+    def test_browser_upload_rejects_path_escape_and_cleans_allocation(self) -> None:
+        response = self.client.post(
+            "/api/local-datasets/upload",
+            files=[("files", ("secret.txt", b"secret", "text/plain"))],
+            data={"relative_paths": json.dumps(["../secret.txt"])},
+        )
+        self.assertEqual(response.status_code, 422)
+        self.assertIn("INVALID_UPLOAD_PATH", response.json()["detail"])
+        upload_root = self.store_root / "uploads"
+        self.assertFalse(upload_root.exists() and any(upload_root.iterdir()))
 
 
 if __name__ == "__main__":

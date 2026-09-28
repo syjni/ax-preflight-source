@@ -240,13 +240,18 @@ export type LocalDatasetAudit = {
   "files": Array<LocalDatasetFile>;
   "issues": Array<LocalDatasetIssue>;
   "local_only"?: true;
+  "managed_copy_deleted_with_record"?: boolean;
+  "ocr_completed_file_count"?: number;
   "ocr_required_count": number;
   "parsed_file_count": number;
+  "pdf_table_count"?: number;
   "pii_finding_count": number;
   "probable_version_group_count": number;
   "profile": string;
   "scanned_at": string;
   "schema_version"?: "ax-local-dataset-audit-v1";
+  "source_files_copied"?: boolean;
+  "source_mode"?: "PATH" | "UPLOAD";
   "source_root_name": string;
   "supported_extensions": Array<string>;
   "table_count": number;
@@ -255,6 +260,7 @@ export type LocalDatasetAudit = {
 
 export type LocalDatasetDeleteResult = {
   "deleted"?: true;
+  "managed_copy_deleted"?: boolean;
   "profile": string;
   "schema_version"?: "ax-local-dataset-delete-result-v1";
   "source_files_deleted"?: false;
@@ -264,8 +270,13 @@ export type LocalDatasetFile = {
   "extension": string;
   "issue"?: string | null;
   "modified_at": string;
+  "ocr_mean_confidence"?: number | null;
+  "ocr_page_count"?: number;
+  "ocr_status"?: "NOT_APPLICABLE" | "NOT_REQUIRED" | "COMPLETED" | "DISABLED" | "UNAVAILABLE" | "PAGE_LIMIT_EXCEEDED" | "FAILED";
   "parse_status": "PARSED" | "UNSUPPORTED" | "ERROR";
   "parser"?: string | null;
+  "pdf_table_count"?: number;
+  "pdf_table_status"?: "NOT_APPLICABLE" | "COMPLETED" | "ERROR";
   "pii_finding_count": number;
   "relative_path": string;
   "requires_ocr": boolean;
@@ -275,7 +286,7 @@ export type LocalDatasetFile = {
 
 export type LocalDatasetIssue = {
   "action": string;
-  "code": "PARSE_ERROR" | "UNSUPPORTED_FORMAT" | "OCR_REQUIRED" | "EXACT_DUPLICATE" | "PROBABLE_VERSION_GROUP" | "PII_PATTERN" | "STALE_FILE";
+  "code": "PARSE_ERROR" | "UNSUPPORTED_FORMAT" | "OCR_REQUIRED" | "PDF_TABLE_EXTRACTION_FAILED" | "EXACT_DUPLICATE" | "PROBABLE_VERSION_GROUP" | "PII_PATTERN" | "STALE_FILE";
   "count": number;
   "relative_paths"?: Array<string>;
   "severity": "info" | "warning" | "error";
@@ -316,8 +327,16 @@ export type ProductCapabilities = {
   "ai_task_execution": boolean;
   "bundled_demo": boolean;
   "local_dataset_scan": boolean;
+  "local_file_upload": boolean;
+  "max_upload_bytes": number;
+  "max_upload_files": number;
   "mode": "STATIC_DEMO" | "API" | "LOCAL_REVIEW" | "LIVE";
-  "schema_version"?: "ax-product-capabilities-v1";
+  "ocr_available": boolean;
+  "ocr_engine"?: string | null;
+  "ocr_install_hint"?: string | null;
+  "ocr_languages"?: Array<string>;
+  "pdf_table_extraction"?: boolean;
+  "schema_version"?: "ax-product-capabilities-v2";
   "source_files_stay_local"?: true;
   "supported_extensions": Array<string>;
 };
