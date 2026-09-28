@@ -138,7 +138,7 @@ export function LocalDatasetPanel({
         <div><span>03</span><p><strong>AI 실행</strong>{capabilities.ai_task_execution ? 'Kiro 실행이 활성화되어 점검 후 업무 질문도 실행할 수 있습니다.' : '현재는 정적 점검 모드이며 Kiro를 켤 때만 문서 일부가 모델 경계로 전달될 수 있습니다.'}</p></div>
       </div>
       <form className="local-audit__form" onSubmit={submit}>
-        <label htmlFor="local-source-path"><span>점검할 폴더의 전체 경로</span><small>Windows 예: C:\review-data · macOS/Linux 예: /Users/me/review-data</small></label>
+        <label htmlFor="local-source-path"><span>점검할 폴더의 전체 경로</span><small>Windows 예: C:\review-data · macOS/Linux 예: /tmp/ax-review-data</small></label>
         <div className="local-audit__path-row"><input id="local-source-path" value={sourcePath} onInput={(event) => setSourcePath(event.currentTarget.value)} placeholder="C:\회사자료" autoComplete="off" spellCheck={false} disabled={scanning} /><button className="primary-action" disabled={scanning || !sourcePath.trim()}>{scanning ? '파일 점검 중…' : '내 자료 점검 시작 →'}</button></div>
         <label className="local-audit__optional" htmlFor="local-display-name"><span>화면에 표시할 이름 <em>선택</em></span><input id="local-display-name" value={displayName} onInput={(event) => setDisplayName(event.currentTarget.value)} placeholder="예: 구매팀 업무 자료" maxLength={80} disabled={scanning} /></label>
       </form>
