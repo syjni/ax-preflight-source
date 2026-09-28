@@ -1,6 +1,7 @@
 .venv/
 .uv-review-cache/
 .pytest_cache/
+.pytest-tmp-*/
 **/__pycache__/
 *.py[cod]
 results_console/node_modules/

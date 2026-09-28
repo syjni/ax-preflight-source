@@ -127,6 +127,14 @@ npm run typecheck
 npm run build:static
 ```
 
+Windows에서 과거 실행이 만든 `%TEMP%\pytest-of-<사용자>` 폴더의 권한 때문에
+`PermissionError: [WinError 5]`가 나타나면, 저장소 안의 새 임시 폴더를 지정해 다시
+실행합니다.
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest -q --basetemp=.pytest-tmp-manual
+```
+
 GitHub Actions의
 [Source verification](https://github.com/syjni/ax-preflight-source/actions/workflows/ci.yml)도
 같은 백엔드·프런트엔드·검증 snapshot 검사를 깨끗한 Ubuntu 환경에서 실행합니다.

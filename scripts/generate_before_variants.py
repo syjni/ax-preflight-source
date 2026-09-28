@@ -14,6 +14,7 @@ import os
 import shutil
 import tempfile
 from collections import defaultdict
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -156,14 +157,38 @@ def _portable_scan_report(report: Any, source_root: Path, source_root_relative: 
     return report.model_copy(update={"files": files})
 
 
-def _copy_and_transform(ceiling_root: Path, target_root: Path, sources: list[str]) -> None:
+def _frozen_modified_time_ns(value: str) -> int:
+    parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    if parsed.tzinfo is None:
+        raise ValueError(f"frozen modified_at must include a timezone: {value}")
+    return int(parsed.timestamp() * 1_000_000_000)
+
+
+def _copy_and_transform(
+    ceiling_root: Path,
+    target_root: Path,
+    sources: list[str],
+    ceiling_report: dict[str, Any],
+) -> None:
     shutil.copytree(ceiling_root, target_root, copy_function=shutil.copy2)
+    frozen_times = {
+        record["relative_path"]: _frozen_modified_time_ns(record["modified_at"])
+        for record in ceiling_report["files"]
+    }
+    copied_paths = {
+        path.relative_to(target_root).as_posix()
+        for path in target_root.rglob("*")
+        if path.is_file()
+    }
+    if copied_paths != set(frozen_times):
+        raise ValueError("ceiling files and frozen scan timestamps do not match")
+    for relative, modified_ns in frozen_times.items():
+        os.utime(target_root / relative, ns=(modified_ns, modified_ns))
     for relative in sources:
-        source = ceiling_root / relative
         target = target_root / relative
-        stat = source.stat()
         target.write_bytes(_corrupt_bytes(relative))
-        os.utime(target, ns=(stat.st_atime_ns, stat.st_mtime_ns))
+        modified_ns = frozen_times[relative]
+        os.utime(target, ns=(modified_ns, modified_ns))
 
 
 def _validate_variant(
@@ -254,7 +279,12 @@ def generate(root: Path = ROOT) -> dict[str, Any]:
         source_root = root / source_rel
         if source_root.exists():
             shutil.rmtree(source_root)
-        _copy_and_transform(ceiling_root, source_root, variant["affected_sources"])
+        _copy_and_transform(
+            ceiling_root,
+            source_root,
+            variant["affected_sources"],
+            ceiling_report,
+        )
         report = _portable_scan_report(_scan(source_root), source_root, source_rel)
         _write(root / scan_rel, report.model_dump(mode="json"))
         manifest = _manifest(dataset_id, profile, source_root, source_rel)

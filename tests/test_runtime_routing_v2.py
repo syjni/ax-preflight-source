@@ -3,15 +3,41 @@ from __future__ import annotations
 import json
 import os
 import unittest
+from datetime import datetime
 from pathlib import Path
 
 from ax_mcp.runtime_dataset import resolve_runtime_dataset, runtime_identity
-from scripts.generate_before_variants import verify_deterministic
+from scripts.generate_before_variants import _copy_and_transform, verify_deterministic
 from scripts.runtime_binding import resolve_runtime_binding
 from scripts.validate_runtime_routing import validate_routing
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_before_copy_uses_frozen_scan_time_instead_of_archive_time(tmp_path: Path) -> None:
+    ceiling = tmp_path / "ceiling"
+    target = tmp_path / "before"
+    source = ceiling / "policy.txt"
+    source.parent.mkdir(parents=True)
+    source.write_text("current policy", encoding="utf-8")
+    archive_time_ns = 1_800_000_000_000_000_000
+    os.utime(source, ns=(archive_time_ns, archive_time_ns))
+    frozen_time = "2026-09-21T00:00:00Z"
+
+    _copy_and_transform(
+        ceiling,
+        target,
+        ["policy.txt"],
+        {"files": [{"relative_path": "policy.txt", "modified_at": frozen_time}]},
+    )
+
+    expected_ns = int(
+        datetime.fromisoformat(frozen_time.replace("Z", "+00:00")).timestamp()
+        * 1_000_000_000
+    )
+    copied_stat = (target / "policy.txt").stat()
+    assert copied_stat.st_mtime_ns == expected_ns
 
 
 class RuntimeRoutingV2Tests(unittest.TestCase):

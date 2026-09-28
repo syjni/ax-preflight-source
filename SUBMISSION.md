@@ -61,6 +61,13 @@ npm run typecheck
 npm run build:static
 ```
 
+Windows에서 `%TEMP%\pytest-of-<사용자>` 접근 권한 오류가 발생하면 저장소 안의 새
+임시 폴더를 지정해 테스트를 다시 실행합니다.
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest -q --basetemp=.pytest-tmp-manual
+```
+
 공개 저장소의
 [`Source verification`](https://github.com/syjni/ax-preflight-source/actions/workflows/ci.yml)
 워크플로도 위와 같은 백엔드·프런트엔드·v3/v4 검증을 Ubuntu에서 실행합니다. 이전
