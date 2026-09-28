@@ -86,6 +86,16 @@ shows that folder's readiness and file-level action list alongside the bundled
 verified example. Source files are read in place and are never copied or
 modified.
 
+The default panel also accepts browser file selection, folder selection, and
+drag-and-drop. Those bytes go only to the local `/api/local-datasets/upload`
+endpoint and are kept in a managed local copy until the reviewer removes the
+record. The result shows PDF table counts, OCR state, processed pages, and OCR
+confidence when available. The path tab remains available for an in-place scan.
+
+For the smallest reviewer setup, `start-docker.cmd` at the repository root
+builds and opens a single <http://127.0.0.1:8000/> app with Korean/English OCR
+included.
+
 To start the same mode manually, run this command from the repository root:
 
 ```powershell

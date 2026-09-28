@@ -69,6 +69,10 @@ as Uvicorn. The endpoints are `GET /api/findings/{dataset}`,
 `GET /api/batches/{batch_id}`, `GET /api/capabilities`, and the batch pause,
 resume, cancel, retry actions. When a `LocalDatasetStore` is attached, the API
 also exposes `POST /api/local-datasets` and matching `GET`/`DELETE` routes.
+Browser selection uses multipart `POST /api/local-datasets/upload`; it writes a
+managed local copy and returns the same scan result contract. `GET
+/api/capabilities` reports upload limits, PDF-table support, and the detected OCR
+engine and languages.
 `dataset` is a profile in
 `runtime_datasets.json`. The product-owned catalog returns ten generic
 `TASK_CANDIDATE` questions and never reads the research benchmark catalog.
@@ -266,10 +270,13 @@ dataset and run-ID pairs in the [representative README](../README.md).
 `create_local_review_app_from_env` combines the verified frozen example with a
 local-only dataset store. It has no model runner and leaves run and batch
 mutation disabled, while `POST /api/local-datasets` accepts an absolute folder
-path on the same computer. The scanner reads source files in place, writes a
-PII-masked report and registry below `artifacts/local_datasets/`, and exposes the
-new profile through the existing readiness, onboarding, tasks, and findings
-routes.
+path on the same computer. `POST /api/local-datasets/upload` accepts browser
+file selection at localhost and stores it under the managed `uploads/` root.
+The scanner writes a PII-masked report and registry below
+`artifacts/local_datasets/`, and exposes the new profile through the existing
+readiness, onboarding, tasks, and findings routes. Deleting an upload-backed
+profile removes its report and managed copy; path-backed source files are never
+deleted.
 
 ```powershell
 $env:AX_PRODUCT_FROZEN_RESULTS_ROOT = "artifacts/phase6_product_demo_v4/runs"
@@ -282,3 +289,9 @@ positive safety limits; the defaults are 5,000 files and 1 GiB. Drive roots,
 symlinks, missing directories, and paths overlapping the generated store are
 rejected before scanning. Deleting a local profile removes only generated
 records and reports, never source files.
+
+`AX_PRODUCT_OCR_MODE=auto` enables OCR only for low-text PDF pages when
+Tesseract is available. `AX_PRODUCT_OCR_MAX_PAGES` defaults to 50. PDF tables
+are profiled independently of OCR. The Docker image includes `kor` and `eng`
+language data and serves the built console together with this API through
+`ax_product.web:create_local_review_web_app_from_env`.

@@ -1,7 +1,7 @@
 # AX Preflight 검증 산출물 버전 이력
 
 이 문서는 README에서 분리한 내부 검증 계보를 보존합니다. 현재 심사 기준은 공개
-소스의 `main`과 `v0.2.0-submission` 릴리스이며, 화면의 대표 결과는 검증된 v4
+소스의 `main`과 `v0.3.0-submission` 릴리스이며, 화면의 대표 결과는 검증된 v4
 snapshot을 사용합니다.
 
 ## 현재 기준
@@ -9,8 +9,8 @@ snapshot을 사용합니다.
 | 구분 | 현재 기준 | 의미 |
 |---|---|---|
 | 제품 코드 | 공개 저장소 `main` | 신규 실행과 현재 Results Console의 기준 |
-| 제출 릴리스 | `v0.2.0-submission` | 심사자 로컬 폴더 점검까지 포함해 독립 검증한 제출 패키지 |
-| 로컬 자료 점검 | local reviewer mode | 사용자가 지정한 폴더를 읽기 전용으로 스캔하고 마스킹된 진단 결과를 Results Console에 표시 |
+| 제출 릴리스 | `v0.3.0-submission` | 브라우저 파일 선택, PDF 표·OCR와 Docker 실행까지 포함해 독립 검증한 제출 패키지 |
+| 로컬 자료 점검 | local reviewer mode | 파일·폴더 선택 또는 경로 입력으로 정적 scan을 실행하고 마스킹된 진단 결과를 Results Console에 표시 |
 | 읽기 전용 데모 | frozen v4 | 10업무 × 2상태 × 3회, 총 60회 실행 snapshot |
 | 반복 답 비교 | 의미 비교 v2 | 표현 차이와 실제 의미값 차이를 분리하는 현재 화면 기준 |
 | 신규 실행 근거 검사 | Evidence Checker v3 | 폐기된 수량을 현재 근거로 취급하지 않는 현재 제품 기준 |
@@ -20,7 +20,9 @@ snapshot을 사용합니다.
 
 `v0.1.0-submission`은 frozen v4 조회 중심의 최초 제출 후보로 보존합니다.
 `v0.2.0-submission`은 같은 검증 결과에 심사자 자신의 폴더를 점검하는 로컬
-reviewer mode와 Windows 원클릭 시작 경로를 추가한 현재 제출 기준입니다.
+reviewer mode와 Windows 원클릭 시작 경로를 추가했습니다. `v0.3.0-submission`은
+브라우저 파일·폴더 선택, PDF 표 추출, 선택적 OCR과 Docker reviewer image를 추가한
+현재 제출 기준입니다.
 
 ## Frozen snapshot 계보
 

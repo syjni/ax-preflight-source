@@ -4,31 +4,33 @@ AX Preflight의 심사에서 먼저 볼 제품 코드는 `ax_product/`, `ax_scan
 
 공개 소스의 기준 브랜치는
 [`main`](https://github.com/syjni/ax-preflight-source)이며, 심사용 고정본은
-[`v0.2.0-submission`](https://github.com/syjni/ax-preflight-source/releases/tag/v0.2.0-submission)입니다.
+[`v0.3.0-submission`](https://github.com/syjni/ax-preflight-source/releases/tag/v0.3.0-submission)입니다.
 Release의 `Source code (zip)` 또는 저장소의 **Code → Download ZIP**으로 같은 소스를
 받을 수 있습니다. 별도 제출 ZIP을 만들 때 생성되는 `SOURCE_MANIFEST.json`은 패키징한
 정확한 Git commit과 전체 파일 inventory를 기록합니다.
 
 > **검증 환경:** Windows 11, PowerShell, Python 3.12, Node.js에서 최종 로컬 감사를
-> 수행했습니다. 공개 저장소의 `Source verification`은 Ubuntu, Python 3.12,
-> Node.js 22에서 백엔드 테스트, 프런트엔드 테스트·typecheck·정적 build와 검증
-> snapshot 검사를 통과했습니다. macOS와 WSL은 별도로 검증하지 않았습니다.
+> 수행했습니다. 공개 저장소의 `Source verification`은 Ubuntu에서 백엔드,
+> 프런트엔드, 동결 snapshot과 Docker 이미지의 콘솔·API·한국어/영어 OCR smoke test를
+> 실행합니다. macOS와 WSL의 직접 실행 방식은 별도로 검증하지 않았습니다.
 >
 > **Windows ZIP 경로:** 동결 run의 감사 파일명은 의도적으로 길기 때문에 ZIP은 `C:\ax-preflight`처럼 짧은 경로에 푸십시오. 패키지 검사기는 긴 경로도 안전하게 추출·해시 검증하지만, 일반 Python 도구나 탐색기는 깊은 상위 폴더에서 Win32 기존 경로 제한에 걸릴 수 있습니다.
 
 ## 5분 심사 흐름
 
-Python 3.12+, Node.js 20+ 환경에서 다음 순서로 실행합니다.
+Docker Desktop을 실행한 뒤 다음 순서로 시작합니다. Docker 방식에는 Results Console,
+API, PDF 표 추출과 한국어·영어 OCR이 함께 들어 있습니다.
 
-Windows ZIP은 짧은 경로에 푼 뒤 `start-local.cmd`를 실행하는 것이 가장 빠릅니다.
+Windows ZIP은 짧은 경로에 푼 뒤 `start-docker.cmd`를 실행하는 것이 가장 빠릅니다.
 
 ```bat
 cd /d C:\ax-preflight
-start-local.cmd
+start-docker.cmd
 ```
 
-이 스크립트는 의존성을 설치하고 로컬 검토 API와 Results Console을 시작합니다.
-수동 실행이 필요하면 아래 명령을 사용합니다.
+브라우저에서 `http://127.0.0.1:8000/`을 엽니다. 종료는 `stop-docker.cmd`입니다.
+Docker를 사용할 수 없다면 Python 3.12+와 Node.js 20+ 환경에서 `start-local.cmd`를
+실행하거나 아래 명령을 사용합니다.
 
 ### Windows PowerShell
 
@@ -51,10 +53,11 @@ AX_PRODUCT_FROZEN_RESULTS_ROOT=artifacts/phase6_product_demo_v4/runs \
 
 새 터미널에서 `cd results_console && npm ci && npm run dev -- --port 5173`을 실행합니다.
 
-브라우저에서 `http://127.0.0.1:5173/`을 열고 다음 순서로 봅니다.
+직접 실행일 때는 `http://127.0.0.1:5173/`, Docker일 때는
+`http://127.0.0.1:8000/`을 열고 다음 순서로 봅니다.
 
-1. **내 자료 점검**에 심사자의 문서 폴더 경로를 입력합니다. 로컬 API가 원본을 수정하거나 외부 서버에 업로드하지 않고 정적 준비도와 파일별 보완 항목을 생성합니다.
-2. 생성된 로컬 데이터셋에서 파싱 범위, 표 결측, 중복, 최신성, 개인정보 가능 패턴, OCR 필요 여부와 온보딩 프리플라이트를 확인합니다.
+1. **내 자료 점검**에서 심사자의 문서 파일·폴더를 선택하거나 끌어 놓습니다. 선택 자료는 외부가 아닌 같은 컴퓨터의 localhost API에만 전달됩니다. 복사를 원하지 않으면 **폴더 경로 입력**을 선택합니다.
+2. 생성된 로컬 데이터셋에서 파싱 범위, 일반·PDF 표 결측, 중복, 최신성, 개인정보 가능 패턴, OCR 처리 상태와 온보딩 프리플라이트를 확인합니다.
 3. **검증된 대표 흐름**에서 `한빛유통 30개 파일 · Before`를 열어 정적 Readiness 100점과 반품 업무 3회 보류를 비교합니다.
 4. `한빛유통 30개 파일 · After`에서 충돌 문서를 정리한 뒤 같은 업무에 3회 모두 `30일`로 답하고 인용 근거가 직접 일치하는지 확인합니다.
 5. **검색·근거 경로**와 **관리자 1페이지**에서 추적 정보와 Before/After PDF를 확인합니다.
@@ -86,7 +89,7 @@ Windows에서 `%TEMP%\pytest-of-<사용자>` 접근 권한 오류가 발생하�
 
 공개 저장소의
 [`Source verification`](https://github.com/syjni/ax-preflight-source/actions/workflows/ci.yml)
-워크플로도 위와 같은 백엔드·프런트엔드·v3/v4 검증을 Ubuntu에서 실행합니다. 이전
+워크플로도 위와 같은 백엔드·프런트엔드·v3/v4 검증과 Docker smoke test를 Ubuntu에서 실행합니다. 이전
 snapshot과 검사 규칙의 관계는
 [검증 산출물 버전 이력](docs/VERIFICATION_HISTORY.md)에 분리해 보존합니다.
 

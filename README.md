@@ -8,7 +8,7 @@ AX Preflight는 실제 AI 업무를 반복 실행해 **어떤 데이터와 검�
 막거나 흔드는지** 찾고, 수정 전후의 변화를 근거와 함께 보여주는 서비스입니다.
 
 [공개 데모](https://syjni.github.io/ax-preflight-source/) ·
-[심사용 Release](https://github.com/syjni/ax-preflight-source/releases/tag/v0.2.0-submission) ·
+[심사용 Release](https://github.com/syjni/ax-preflight-source/releases/tag/v0.3.0-submission) ·
 [심사자 빠른 시작](docs/REVIEWER_QUICKSTART.md) ·
 [심사·제출 가이드](SUBMISSION.md) ·
 [소스 저장소](https://github.com/syjni/ax-preflight-source)
@@ -77,38 +77,57 @@ Results Console에 제공합니다.
 
 ## 빠른 실행
 
-필요 환경은 Python 3.12+와 Node.js 20+입니다.
+권장 실행에는 Docker Desktop만 필요합니다. Python 3.12+와 Node.js 20+를 이미
+사용한다면 기존 직접 실행 방식도 선택할 수 있습니다.
 
 ### 1. 내 자료로 점검하기
 
 GitHub의 **Code → Download ZIP**으로 소스를 내려받아 `C:\ax-preflight`처럼 짧은
-경로에 압축을 풉니다. Windows에서는 프로젝트 루트의 `start-local.cmd`를 더블클릭하면
-Python·Node 의존성을 설치하고 API와 Results Console을 함께 시작한 뒤 브라우저를
-엽니다. 명령 프롬프트에서 실행해도 됩니다.
+경로에 압축을 풉니다. Docker Desktop을 실행한 뒤 프로젝트 루트의
+`start-docker.cmd`를 더블클릭하면 Results Console, 로컬 API, 한국어·영어 OCR을
+하나의 컨테이너로 준비하고 브라우저를 엽니다.
+
+```bat
+cd /d C:\ax-preflight
+start-docker.cmd
+```
+
+브라우저가 <http://127.0.0.1:8000/>에서 열리면 다음 순서로 확인합니다.
+
+1. **결과 콘솔 → 내 자료 점검**에서 PDF·DOCX·XLSX·CSV·TXT 파일이나 폴더를
+   선택합니다. 파일을 점선 영역에 끌어 놓아도 됩니다.
+2. **내 자료 점검 시작**을 눌러 파일 접근성, 표 결측, 중복, 최신성, 개인정보 가능
+   패턴, PDF 표와 OCR 결과를 검사합니다.
+3. 결과의 **먼저 보완할 항목**에서 해당 파일과 권고 조치를 확인합니다.
+4. **전체 준비도 보기**로 이동해 다섯 점수 차원과 온보딩 프리플라이트를 확인합니다.
+5. **이 점검 기록 제거**를 누르면 점검 보고서와 앱의 로컬 관리 사본이 함께
+   삭제됩니다. 컴퓨터에서 선택했던 원본 파일은 삭제하지 않습니다.
+
+브라우저에서 선택한 파일은 인터넷 서비스가 아닌 같은 컴퓨터의 `localhost` API로만
+전달되어 앱의 로컬 관리 폴더에 복사됩니다. 경로 입력 방식을 선택하면 원본을 제자리에서
+읽고 복사하지 않습니다. 두 방식 모두 원본을 수정하지 않으며, 이 정적 점검은 모델을
+호출하지 않습니다. Docker 데이터는 `ax-preflight-data` 로컬 volume에, 직접 실행
+데이터는 Git에서 제외된 `artifacts/local_datasets/`에 저장됩니다. 기본 안전 한도는
+5,000개 파일·1 GiB이며
+`AX_PRODUCT_LOCAL_SCAN_MAX_FILES`, `AX_PRODUCT_LOCAL_SCAN_MAX_BYTES`로 조정할 수
+있습니다.
+
+종료할 때는 `stop-docker.cmd`를 실행합니다. 점검 데이터를 함께 지우려면 먼저 화면에서
+각 점검 기록을 제거하십시오. `docker compose down --volumes`는 AX Preflight Docker
+volume 전체를 삭제하는 별도 명령입니다.
+
+Docker를 사용하지 않는 Windows 환경에서는 기존 실행기도 유지됩니다.
 
 ```bat
 cd /d C:\ax-preflight
 start-local.cmd
 ```
 
-브라우저가 <http://127.0.0.1:5173/>에서 열리면 다음 순서로 확인합니다.
+이 방식은 Python·Node 의존성을 설치하고 <http://127.0.0.1:5173/>을 엽니다. Tesseract와
+`kor`, `eng` 언어팩이 없으면 스캔 PDF를 OCR하지 않고 화면에 설치 필요 상태와 다음
+행동을 표시합니다. 일반 텍스트 PDF의 표 추출은 OCR 설치 여부와 무관하게 동작합니다.
 
-1. **결과 콘솔 → 내 자료 점검**에서 PDF·DOCX·XLSX·CSV·TXT가 들어 있는 폴더의
-   전체 경로를 입력합니다.
-2. **내 자료 점검 시작**을 눌러 파일 접근성, 표 결측, 중복, 최신성, 개인정보 가능
-   패턴과 OCR 필요 여부를 검사합니다.
-3. 결과의 **먼저 보완할 항목**에서 해당 파일과 권고 조치를 확인합니다.
-4. **전체 준비도 보기**로 이동해 다섯 점수 차원과 온보딩 프리플라이트를 확인합니다.
-5. 같은 폴더를 다시 점검하면 기존 로컬 프로필이 갱신됩니다. **이 점검 기록 제거**는
-   생성된 보고서만 지우며 원본 파일은 삭제하지 않습니다.
-
-로컬 검토 모드는 원본을 입력 폴더에서 직접 읽고 수정·복사하지 않습니다. 마스킹된
-스캔 보고서와 로컬 registry는 Git에서 제외된 `artifacts/local_datasets/`에 저장됩니다.
-이 단계는 모델을 호출하지 않습니다. 기본 안전 한도는 5,000개 파일·1 GiB이며
-`AX_PRODUCT_LOCAL_SCAN_MAX_FILES`, `AX_PRODUCT_LOCAL_SCAN_MAX_BYTES`로 조정할 수
-있습니다.
-
-자동 실행 대신 직접 시작하려면 첫 번째 터미널에서 다음을 실행합니다.
+직접 실행 명령이 필요하면 첫 번째 터미널에서 다음을 실행합니다.
 
 ```bat
 cd /d C:\ax-preflight
@@ -126,7 +145,9 @@ npm.cmd ci
 npm.cmd run dev -- --port 5173
 ```
 
-macOS·Linux에서는 같은 의존성을 설치한 뒤 API를 다음처럼 시작하고, 별도 터미널에서
+macOS·Linux에서도 `docker compose up --build --detach` 후
+<http://127.0.0.1:8000/>을 열 수 있습니다. Python·Node 방식은 같은 의존성을 설치한
+뒤 API를 다음처럼 시작하고, 별도 터미널에서
 `cd results_console && npm ci && npm run dev -- --port 5173`을 실행합니다.
 
 ```bash
@@ -242,8 +263,10 @@ AX_PRODUCT_RUNNER=kiro AX_PRODUCT_RUN_TIMEOUT_SECONDS=300 \
 | `ax_product/` | FastAPI, Kiro runner, 제출 계약, 결과 저장과 진단·근거 검사 |
 | `results_console/` | React·TypeScript 기반 Results Console |
 | `runtime_datasets.json` | dataset profile과 source·scan 경로 연결 |
-| `start-local.cmd` | Windows 로컬 검토 모드 원클릭 실행 |
-| `artifacts/local_datasets/` | Git에서 제외되는 로컬 점검 registry와 마스킹 보고서 |
+| `Dockerfile`, `compose.yaml` | 콘솔·API·한국어/영어 OCR을 묶은 심사자 실행 환경 |
+| `start-docker.cmd`, `stop-docker.cmd` | Windows Docker 검토 모드 시작·종료 |
+| `start-local.cmd` | Python·Node 기반 Windows 직접 실행 |
+| `artifacts/local_datasets/` | 직접 실행의 로컬 registry·마스킹 보고서·브라우저 선택 관리 사본 |
 | `artifacts/product_runs/` | 새 실행의 결과와 근거 기록 |
 | `artifacts/product_batches/` | 반복 실행의 진행률과 제어 상태 |
 | `artifacts/phase6_product_demo_v4/runs/` | 현재 검증된 읽기 전용 snapshot |

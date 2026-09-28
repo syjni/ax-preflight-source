@@ -6,7 +6,8 @@
 
 `runtime_datasets.json`은 dataset profile을 로컬 source root와 scan report에 연결합니다. 문서와 실행 산출물은 로컬 경로에서 처리·저장됩니다.
 
-- 로컬 검토 모드의 `POST /api/local-datasets`는 브라우저에서 업로드를 받지 않습니다. 같은 컴퓨터에서 실행 중인 API가 사용자가 입력한 폴더 경로를 읽고, 원본 파일은 복사하거나 수정하지 않습니다.
+- 경로 방식의 `POST /api/local-datasets`는 같은 컴퓨터에서 실행 중인 API가 입력 폴더를 제자리에서 읽습니다. 원본 파일을 복사하거나 수정하지 않습니다.
+- 선택 방식의 `POST /api/local-datasets/upload`는 브라우저가 선택한 파일을 같은 컴퓨터의 `localhost` API에 multipart로 전송합니다. 파일은 앱이 관리하는 로컬 폴더에 복사되며 외부 서비스로 전송되지 않습니다. 화면에서 점검 기록을 제거하면 이 관리 사본도 함께 삭제되고 사용자가 선택한 원본은 그대로 유지됩니다.
 - 이 로컬 정적 점검은 모델을 호출하지 않습니다. 마스킹된 추출문과 구조화된 파일 메타데이터가 `artifacts/local_datasets/` 아래에 저장되며 해당 경로는 Git에서 제외됩니다.
 - scanner와 Readiness v1은 로컬 문서 집합에서 생성된 scan report를 읽습니다.
 - product MCP의 `search_documents`, `read_document`, `lookup_value`, `query_table`은 질의에 필요한 문서 내용 또는 구조화 값을 모델에 반환합니다.
@@ -24,7 +25,9 @@ Kiro CLI는 opt-in 라이브 실행을 오케스트레이션합니다. 요청 �
 
 | 데이터 | 기본 위치 | 현재 동작 |
 |---|---|---|
-| 로컬 폴더 점검 | `artifacts/local_datasets/<profile>/scan-report.json` | 원본은 입력 폴더에 유지하고 마스킹된 보고서만 저장; 화면에서 기록 제거 가능 |
+| 로컬 점검 보고서 | `artifacts/local_datasets/<profile>/scan-report.json` | 마스킹된 추출문·메타데이터 저장; 화면에서 기록 제거 가능 |
+| 브라우저 선택 관리 사본 | `artifacts/local_datasets/uploads/<upload-id>/` | localhost에서만 저장; 해당 점검 기록 제거 시 함께 삭제; 원본은 삭제하지 않음 |
+| Docker 로컬 데이터 | `ax-preflight-data` volume의 `/data/local-datasets/` | 보고서·registry·선택 관리 사본을 컨테이너 밖 로컬 volume에 보존 |
 | 일반 실행 상태와 결과 | `artifacts/product_runs/<run_id>/` | 쓰기 가능한 run별 저장 |
 | 반복 실행 상태 | `artifacts/product_batches/<batch_id>/batch.json` | 선택 업무 질문·상태·시도·run ID·구조화 오류 코드를 원자 저장 |
 | 실행 업무 context | `<run_id>/run-context.json` | 선택한 task ID·label 또는 ad hoc 질문을 run별로 저장 |

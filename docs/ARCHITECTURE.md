@@ -11,6 +11,7 @@ flowchart LR
 
     A --> RT["findings / readiness / tasks 조회"]
     A --> RE["run / evidence 조회"]
+    A --> LD["로컬 파일 선택·경로 점검<br/>PDF 표 · 선택적 OCR"]
     A --> B["bounded batch state machine<br/>pause / resume / cancel / retry"]
     A -. "선택적 opt-in 실행" .-> K["Kiro runner<br/>요청 모델 기본값: claude-sonnet-5"]
 
@@ -18,6 +19,7 @@ flowchart LR
     B -->|"배치 상태 원자 저장"| BW[("writable<br/>artifacts/product_batches")]
     B -->|"항목별 기존 run 계약"| K
     A -->|"공식 run 읽기 전용"| F[("frozen read-only<br/>artifacts/phase6_product_demo_v4/runs")]
+    LD --> L[("local-only registry · reports<br/>managed browser copies")]
 
     K --> T["실행별 임시 product agent"]
     T --> M["product MCP"]
@@ -53,6 +55,8 @@ FastAPI는 `runtime_datasets.json`의 profile을 기준으로 dataset을 해석�
 - `GET /api/runs/{run_id}`은 일반 저장소와 동결 저장소 중 해당 run의 `DeliveryEnvelope`를 반환합니다.
 - `GET /api/runs/{run_id}/evidence-check`은 동일한 저장소 origin의 별도 evidence 결과를 반환합니다.
 - `GET /api/batches/{batch_id}`는 영속 배치 상태, 진행률과 항목별 run ID·시도·결과를 반환합니다.
+- `POST /api/local-datasets/upload`는 브라우저에서 선택한 파일을 localhost의 관리 폴더에 저장하고 정적 scan을 실행합니다. `POST /api/local-datasets`는 입력한 로컬 경로를 복사 없이 읽습니다. 두 경로 모두 모델을 호출하지 않습니다.
+- PDF parser는 텍스트와 표를 분리해 추출합니다. 텍스트가 부족한 페이지만 선택적으로 OCR하고, 엔진·언어·페이지·평균 confidence와 미해결 상태를 결과에 기록합니다. OCR 미설치는 전체 점검 실패가 아니라 명시적인 보완 항목입니다.
 
 Failure→Finding 집계, Readiness 계산과 Evidence Checker 판정은 별도입니다. 집계기는 `DeliveryEnvelope`, 영속화된 업무 context와 같은 run의 구조화 응답만 읽고 새 모델 추론을 하지 않습니다. Readiness는 dataset의 scan report를 평가하고, Evidence Checker는 한 실행의 인용 구조화 응답만 평가합니다. 한쪽 결과가 다른 쪽을 수정하거나 대체하지 않습니다.
 
@@ -88,8 +92,14 @@ Failure→Finding 집계, Readiness 계산과 Evidence Checker 판정은 별도�
 | `artifacts/product_runs` | 일반 실행에서 읽기·쓰기 | run 예약 상태, `delivery.json`, 구조화 tool response, `evidence-check.json` |
 | `artifacts/product_batches` | 반복 실행에서 읽기·쓰기 | 배치 제어 상태, 항목별 진행률·시도·run ID·오류 코드 |
 | `artifacts/phase6_product_demo_v4/runs` | read-only factory에서 읽기 전용 | 검증·동결된 Phase 6 공식 60-run snapshot |
+| `artifacts/local_datasets` 또는 Docker `/data/local-datasets` | 로컬 검토에서 읽기·쓰기 | registry, 마스킹 scan 보고서, 브라우저 선택 파일의 로컬 관리 사본 |
 
 두 root는 겹치거나 중첩될 수 없으며 동일 run ID가 양쪽에 존재하면 구성이 거부됩니다. read-only factory는 시작할 때 `FROZEN_MANIFEST.json` 기반 Phase 6 검증을 수행하고 runner 없이 app을 만들기 때문에 POST가 503이며 동결 결과를 수정하지 않습니다.
+
+Docker reviewer image는 빌드된 Results Console과 local reviewer API를 한 프로세스 주소로
+제공하고 Tesseract `kor`·`eng` 언어팩을 포함합니다. `127.0.0.1:8000`에만 publish하며
+로컬 점검 데이터는 named volume에 보존합니다. 공개 정적 배포에는 로컬 파일 endpoint가
+없고 검증된 예시만 포함됩니다.
 
 ## 권위와 비권위 경계
 
