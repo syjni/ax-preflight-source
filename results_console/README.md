@@ -78,19 +78,24 @@ the verified flow. The exporter fails if the featured run,
 dataset, 0/3→3/3 comparison, or `DIRECT_MATCH` evidence drifts. The GitHub Pages
 workflow in `.github/workflows/deploy-pages.yml` runs this build from `main`.
 
-### Phase 6B frozen read-only demo
+### Local reviewer mode
 
-For the submission demo, replace the default API command above with this command
-from the repository root:
+On Windows, `start-local.cmd` at the repository root installs dependencies and
+starts both processes. The console then accepts an absolute folder path and
+shows that folder's readiness and file-level action list alongside the bundled
+verified example. Source files are read in place and are never copied or
+modified.
+
+To start the same mode manually, run this command from the repository root:
 
 ```powershell
-$env:AX_PRODUCT_FROZEN_RESULTS_ROOT = "artifacts/phase6_product_demo/runs"
-python -m uvicorn ax_product.api:create_read_only_app_from_env --factory --host 127.0.0.1 --port 8000
+$env:AX_PRODUCT_FROZEN_RESULTS_ROOT = "artifacts/phase6_product_demo_v4/runs"
+python -m uvicorn ax_product.api:create_local_review_app_from_env --factory --host 127.0.0.1 --port 8000
 ```
 
-Then start this console in another terminal with `npm install` and
-`npm run dev -- --port 5173`. The read-only API verifies and reads official
-snapshot runs; `POST /api/run` remains unavailable with HTTP 503.
+Then start this console in another terminal with `npm ci` and
+`npm run dev -- --port 5173`. The API verifies and reads official snapshot runs
+and permits local static scans; AI task and batch mutations remain unavailable.
 
 ## Generate types
 

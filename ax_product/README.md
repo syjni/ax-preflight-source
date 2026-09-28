@@ -66,7 +66,10 @@ Install `requirements.txt` and serve `ax_product.api:app` with an ASGI server su
 as Uvicorn. The endpoints are `GET /api/findings/{dataset}`,
 `GET /api/readiness/{dataset}`, `GET /api/tasks/{dataset}`,
 `GET /api/runs/{run_id}`, `POST /api/run`, `POST /api/batches`,
-`GET /api/batches/{batch_id}`, and the batch pause, resume, cancel, retry actions. `dataset` is a profile in
+`GET /api/batches/{batch_id}`, `GET /api/capabilities`, and the batch pause,
+resume, cancel, retry actions. When a `LocalDatasetStore` is attached, the API
+also exposes `POST /api/local-datasets` and matching `GET`/`DELETE` routes.
+`dataset` is a profile in
 `runtime_datasets.json`. The product-owned catalog returns ten generic
 `TASK_CANDIDATE` questions and never reads the research benchmark catalog.
 These candidates are not customer-verified business tasks. Readiness uses the
@@ -196,8 +199,8 @@ python -m uvicorn --factory ax_product.api:create_app_from_env --host 127.0.0.1 
 
 `AX_KIRO_CLI` is optional when `kiro-cli` is on `PATH`; the runner resolves it
 with `shutil.which`. `AX_RUNTIME_DATASET_CONFIG` may optionally select another
-runtime dataset registry. The factory uses the same registry for API validation
-and MCP routing.
+runtime dataset registry. The factory merges locally scanned profiles into a
+generated registry and uses it for both API validation and MCP routing.
 
 Each accepted ad-hoc or catalog-matched candidate request creates a unique
 temporary agent file based on `.kiro/agents/ax-product.json`. The generated agent
@@ -257,3 +260,25 @@ python -m uvicorn ax_product.api:create_read_only_app_from_env --factory --host 
 The factory verifies the frozen manifest at startup. It has no runner, returns
 HTTP 503 for `POST /api/run`, and does not modify official results. Use the exact
 dataset and run-ID pairs in the [representative README](../README.md).
+
+## Local reviewer mode
+
+`create_local_review_app_from_env` combines the verified frozen example with a
+local-only dataset store. It has no model runner and leaves run and batch
+mutation disabled, while `POST /api/local-datasets` accepts an absolute folder
+path on the same computer. The scanner reads source files in place, writes a
+PII-masked report and registry below `artifacts/local_datasets/`, and exposes the
+new profile through the existing readiness, onboarding, tasks, and findings
+routes.
+
+```powershell
+$env:AX_PRODUCT_FROZEN_RESULTS_ROOT = "artifacts/phase6_product_demo_v4/runs"
+python -m uvicorn ax_product.api:create_local_review_app_from_env --factory --host 127.0.0.1 --port 8000
+```
+
+`AX_PRODUCT_LOCAL_DATASETS_ROOT` changes the generated store location.
+`AX_PRODUCT_LOCAL_SCAN_MAX_FILES` and `AX_PRODUCT_LOCAL_SCAN_MAX_BYTES` set
+positive safety limits; the defaults are 5,000 files and 1 GiB. Drive roots,
+symlinks, missing directories, and paths overlapping the generated store are
+rejected before scanning. Deleting a local profile removes only generated
+records and reports, never source files.

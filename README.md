@@ -7,8 +7,8 @@
 AX Preflight는 실제 AI 업무를 반복 실행해 **어떤 데이터와 검색 경로가 업무를
 막거나 흔드는지** 찾고, 수정 전후의 변화를 근거와 함께 보여주는 서비스입니다.
 
-[공개 데모](https://syjni.github.io/ax-preflight/) ·
-[검증된 Release](https://github.com/syjni/ax-preflight-source/releases/tag/v0.1.0-submission) ·
+[공개 데모](https://syjni.github.io/ax-preflight-source/) ·
+[심사자 빠른 시작](docs/REVIEWER_QUICKSTART.md) ·
 [심사·제출 가이드](SUBMISSION.md) ·
 [소스 저장소](https://github.com/syjni/ax-preflight-source)
 
@@ -78,9 +78,65 @@ Results Console에 제공합니다.
 
 필요 환경은 Python 3.12+와 Node.js 20+입니다.
 
-### 1. 공개 데모 보기
+### 1. 내 자료로 점검하기
 
-[공개 데모](https://syjni.github.io/ax-preflight/)에서 다음 순서로 확인하면 핵심 흐름을
+GitHub의 **Code → Download ZIP**으로 소스를 내려받아 `C:\ax-preflight`처럼 짧은
+경로에 압축을 풉니다. Windows에서는 프로젝트 루트의 `start-local.cmd`를 더블클릭하면
+Python·Node 의존성을 설치하고 API와 Results Console을 함께 시작한 뒤 브라우저를
+엽니다. 명령 프롬프트에서 실행해도 됩니다.
+
+```bat
+cd /d C:\ax-preflight
+start-local.cmd
+```
+
+브라우저가 <http://127.0.0.1:5173/>에서 열리면 다음 순서로 확인합니다.
+
+1. **결과 콘솔 → 내 자료 점검**에서 PDF·DOCX·XLSX·CSV·TXT가 들어 있는 폴더의
+   전체 경로를 입력합니다.
+2. **내 자료 점검 시작**을 눌러 파일 접근성, 표 결측, 중복, 최신성, 개인정보 가능
+   패턴과 OCR 필요 여부를 검사합니다.
+3. 결과의 **먼저 보완할 항목**에서 해당 파일과 권고 조치를 확인합니다.
+4. **전체 준비도 보기**로 이동해 다섯 점수 차원과 온보딩 프리플라이트를 확인합니다.
+5. 같은 폴더를 다시 점검하면 기존 로컬 프로필이 갱신됩니다. **이 점검 기록 제거**는
+   생성된 보고서만 지우며 원본 파일은 삭제하지 않습니다.
+
+로컬 검토 모드는 원본을 입력 폴더에서 직접 읽고 수정·복사하지 않습니다. 마스킹된
+스캔 보고서와 로컬 registry는 Git에서 제외된 `artifacts/local_datasets/`에 저장됩니다.
+이 단계는 모델을 호출하지 않습니다. 기본 안전 한도는 5,000개 파일·1 GiB이며
+`AX_PRODUCT_LOCAL_SCAN_MAX_FILES`, `AX_PRODUCT_LOCAL_SCAN_MAX_BYTES`로 조정할 수
+있습니다.
+
+자동 실행 대신 직접 시작하려면 첫 번째 터미널에서 다음을 실행합니다.
+
+```bat
+cd /d C:\ax-preflight
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+set "AX_PRODUCT_FROZEN_RESULTS_ROOT=artifacts\phase6_product_demo_v4\runs"
+.venv\Scripts\python.exe -m uvicorn ax_product.api:create_local_review_app_from_env --factory --host 127.0.0.1 --port 8000
+```
+
+두 번째 터미널에서는 다음을 실행합니다.
+
+```bat
+cd /d C:\ax-preflight\results_console
+npm.cmd ci
+npm.cmd run dev -- --port 5173
+```
+
+macOS·Linux에서는 같은 의존성을 설치한 뒤 API를 다음처럼 시작하고, 별도 터미널에서
+`cd results_console && npm ci && npm run dev -- --port 5173`을 실행합니다.
+
+```bash
+AX_PRODUCT_FROZEN_RESULTS_ROOT=artifacts/phase6_product_demo_v4/runs \
+  python -m uvicorn ax_product.api:create_local_review_app_from_env \
+  --factory --host 127.0.0.1 --port 8000
+```
+
+### 2. 검증된 공개 예시 보기
+
+[공개 데모](https://syjni.github.io/ax-preflight-source/)에서 다음 순서로 확인하면 핵심 흐름을
 3분 안에 볼 수 있습니다.
 
 1. **소개**에서 정적 점수와 실제 업무 결과의 차이를 확인합니다.
@@ -89,7 +145,10 @@ Results Console에 제공합니다.
 4. **검색·근거 경로**에서 검색 후보, 읽은 자료와 최종 인용의 연결을 따라갑니다.
 5. **관리자 1페이지**에서 수정 대상과 Before → After 요약을 확인합니다.
 
-### 2. 소스 내려받아 검증하기
+공개 예시는 파일 업로드 기능이 없는 정적 페이지입니다. 로컬 소스를 실행하면 같은
+예시를 유지하면서 **내 자료 점검**이 활성화됩니다.
+
+### 3. 소스와 검증 결과 재현하기
 
 GitHub의 **Code → Download ZIP**을 사용하거나 저장소를 clone합니다. ZIP에는 `.git`
 메타데이터가 없으므로 Git inventory 전용 테스트 2개만 의도적으로 건너뜁니다.
@@ -139,34 +198,7 @@ GitHub Actions의
 [Source verification](https://github.com/syjni/ax-preflight-source/actions/workflows/ci.yml)도
 같은 백엔드·프런트엔드·검증 snapshot 검사를 깨끗한 Ubuntu 환경에서 실행합니다.
 
-### 3. 로컬 읽기 전용 데모 실행
-
-위 설치를 마친 뒤 첫 번째 터미널에서 API를 시작합니다.
-
-```powershell
-# Windows PowerShell
-$env:AX_PRODUCT_FROZEN_RESULTS_ROOT = "artifacts/phase6_product_demo_v4/runs"
-python -m uvicorn ax_product.api:create_read_only_app_from_env --factory --host 127.0.0.1 --port 8000
-```
-
-```bash
-# macOS · Linux
-AX_PRODUCT_FROZEN_RESULTS_ROOT=artifacts/phase6_product_demo_v4/runs \
-  python -m uvicorn ax_product.api:create_read_only_app_from_env \
-  --factory --host 127.0.0.1 --port 8000
-```
-
-두 번째 터미널에서 Results Console을 시작합니다.
-
-```bash
-cd results_console
-npm run dev -- --port 5173
-```
-
-브라우저에서 <http://127.0.0.1:5173/>를 엽니다. 이 모드는 검증된 결과만 읽으며
-새 실행 요청은 받지 않습니다.
-
-### 4. 새 데이터로 실제 업무 실행
+### 4. 내 자료로 실제 AI 업무 실행
 
 Kiro CLI가 `PATH`에 있고 모델 자격 증명이 설정된 환경에서 라이브 API를 시작합니다.
 
@@ -184,8 +216,9 @@ AX_PRODUCT_RUNNER=kiro AX_PRODUCT_RUN_TIMEOUT_SECONDS=300 \
   --factory --host 127.0.0.1 --port 8000
 ```
 
-Results Console은 위와 같은 명령으로 실행합니다. 데이터셋을 선택하면 온보딩 검사가
-먼저 실행되고, 통과한 경우 승인 업무·업무 후보·직접 질문을 실행할 수 있습니다.
+이 라이브 factory에도 **내 자료 점검**이 포함됩니다. Results Console은 위와 같은
+명령으로 실행합니다. 로컬 폴더를 점검한 뒤 데이터셋을 선택하면 온보딩 검사가 먼저
+실행되고, 통과한 경우 승인 업무·업무 후보·직접 질문을 실행할 수 있습니다.
 구성 형식과 실행 계약은 [제품 기술 문서](ax_product/README.md)에 설명되어 있습니다.
 
 ## 현재 범위와 제한사항
@@ -208,6 +241,8 @@ Results Console은 위와 같은 명령으로 실행합니다. 데이터셋을 �
 | `ax_product/` | FastAPI, Kiro runner, 제출 계약, 결과 저장과 진단·근거 검사 |
 | `results_console/` | React·TypeScript 기반 Results Console |
 | `runtime_datasets.json` | dataset profile과 source·scan 경로 연결 |
+| `start-local.cmd` | Windows 로컬 검토 모드 원클릭 실행 |
+| `artifacts/local_datasets/` | Git에서 제외되는 로컬 점검 registry와 마스킹 보고서 |
 | `artifacts/product_runs/` | 새 실행의 결과와 근거 기록 |
 | `artifacts/product_batches/` | 반복 실행의 진행률과 제어 상태 |
 | `artifacts/phase6_product_demo_v4/runs/` | 현재 검증된 읽기 전용 snapshot |
@@ -219,6 +254,7 @@ Results Console은 위와 같은 명령으로 실행합니다. 데이터셋을 �
 ## 상세 문서
 
 - [심사·제출 가이드](SUBMISSION.md)
+- [심사자 빠른 시작](docs/REVIEWER_QUICKSTART.md)
 - [시스템 구조와 데이터 흐름](docs/ARCHITECTURE.md)
 - [데이터 처리와 개인정보 경계](docs/DATA_AND_PRIVACY.md)
 - [3분 시연 대본](docs/DEMO_SCRIPT.md)

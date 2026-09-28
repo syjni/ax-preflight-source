@@ -1,35 +1,44 @@
 # AX Preflight 3분 시연 대본
 
-30개 회사 파일의 10개 업무를 Before/After에서 각 3회 실행한 frozen v4를 읽기 전용으로 조회한다. 라이브 Kiro 실행은 발표의 필수 경로가 아니다.
+심사자의 폴더를 로컬에서 직접 점검할 수 있음을 먼저 보여 주고, 30개 회사 파일의
+10개 업무를 Before/After에서 각 3회 실행한 검증 결과로 핵심 가치를 설명한다. 라이브
+Kiro 실행은 발표의 필수 경로가 아니다.
 
 ## 시작 전
 
-PowerShell:
+Windows에서는 저장소 루트에서 다음 파일을 실행한다.
 
-```powershell
-$env:AX_PRODUCT_FROZEN_RESULTS_ROOT = "artifacts/phase6_product_demo_v4/runs"
-python -m uvicorn ax_product.api:create_read_only_app_from_env --factory --host 127.0.0.1 --port 8000
+```bat
+start-local.cmd
 ```
 
-macOS / Linux:
+macOS / Linux에서는 API를 로컬 검토 factory로 시작한다.
 
 ```bash
 AX_PRODUCT_FROZEN_RESULTS_ROOT=artifacts/phase6_product_demo_v4/runs \
-  python -m uvicorn ax_product.api:create_read_only_app_from_env \
+  python -m uvicorn ax_product.api:create_local_review_app_from_env \
   --factory --host 127.0.0.1 --port 8000
 ```
 
 두 번째 터미널에서 `cd results_console && npm run dev -- --port 5173`을 실행하고 `http://127.0.0.1:5173/`을 연다.
 
-## 0:00–0:20 — 문제
+## 0:00–0:20 — 직접 실행 가능성
+
+“공개 주소에서는 검증된 예시를 바로 볼 수 있고, 내려받은 소스에서는 여러분의 문서
+폴더를 업로드 없이 이 화면에서 점검할 수 있습니다.”
+
+**내 자료 점검**의 경로 입력과 준비도·보완 항목 화면을 짧게 보여 준다. 실제 심사
+폴더가 없다면 이 단계는 설명만 하고 검증된 대표 흐름으로 이동한다.
+
+## 0:20–0:35 — 문제
 
 “문서가 있어도 기준이 충돌하면 AI 업무는 실패합니다. 문제는 도입 전에 어떤 업무가 왜 막힐지 알기 어렵다는 것입니다.”
 
-## 0:20–0:40 — 해법
+## 0:35–0:50 — 해법
 
 “AX Preflight는 실제 업무를 반복 실행하고, 구조화 제출과 같은 실행의 근거만으로 막히거나 흔들린 업무와 다음 검토 지점을 보여 줍니다.”
 
-## 0:40–1:25 — Before
+## 0:50–1:30 — Before
 
 “한빛유통 30개 파일의 정적 Readiness는 100점입니다. 하지만 반품 업무는 세 번 모두 답하지 못했습니다.”
 
@@ -42,7 +51,7 @@ AX_PRODUCT_FROZEN_RESULTS_ROOT=artifacts/phase6_product_demo_v4/runs \
 
 “FAQ는 14일, 공식 정책은 30일입니다. AX Preflight는 충돌한 두 문서와 다음 조치를 지목합니다.”
 
-## 1:25–2:10 — After
+## 1:30–2:10 — After
 
 “FAQ의 14일 문장을 제거한 뒤 반품 업무는 세 번 모두 30일로 답했고, 인용 응답에서도 그 값이 확인됐습니다. 기존 충돌은 ‘After에서 재현되지 않음’이 됐습니다.”
 
