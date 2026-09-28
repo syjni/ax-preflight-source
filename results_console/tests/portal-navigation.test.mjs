@@ -61,6 +61,23 @@ test('primary tabs switch when the URL hash changes', async () => {
   assert.doesNotMatch(container.textContent, /파일 점검은 100점이었지만/);
 });
 
+test('hands-on guide is expanded by default and remains collapsible', async () => {
+  window.history.replaceState(null, '', '/#guide');
+  await renderPortal();
+
+  const toggle = container.querySelector('.guide-run-toggle');
+  assert.equal(toggle.getAttribute('aria-expanded'), 'true');
+  assert.match(toggle.textContent, /접기/);
+  assert.ok(container.querySelector('.guide-run'));
+  assert.match(container.textContent, /TERMINAL 1 · 읽기 전용 API/);
+
+  await act(async () => toggle.click());
+
+  assert.equal(toggle.getAttribute('aria-expanded'), 'false');
+  assert.match(toggle.textContent, /펼치기/);
+  assert.equal(container.querySelector('.guide-run'), null);
+});
+
 test('hash parsing defaults to intro while existing section anchors stay on the console tab', async () => {
   assert.equal(tabFromHash(''), 'intro');
   assert.equal(tabFromHash('#summary'), 'console');

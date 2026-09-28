@@ -173,7 +173,7 @@ function IntroPage() {
 }
 
 function GuidePage() {
-  const [runOpen, setRunOpen] = useState(false);
+  const [runOpen, setRunOpen] = useState(true);
   return <div className="portal-page" data-screen-label="사용 방법">
     <div className="guide-heading"><div className="portal-eyebrow"><span>AX Preflight</span><span>사용 방법</span></div><h1>결과 콘솔 읽는 법</h1></div>
     <section className="portal-section guide-section" data-screen-label="사용 방법 01 순서">
