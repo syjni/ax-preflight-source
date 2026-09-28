@@ -178,7 +178,7 @@ python -m uvicorn ax_product.api:create_app_from_env --factory --host 127.0.0.1 
 | “제품 기본 업무 10개는 고객이 검증한 업무 catalog다.” | 10개는 제품이 제공하는 일반 업무 후보이고 `VERIFIED_BUSINESS_TASK`는 `NOT_ONBOARDED`다. (출처: `docs/ARCHITECTURE.md`, `docs/DATA_AND_PRIVACY.md`) |
 | “개인정보 패턴 탐지가 완전한 마스킹·유출 방지·접근 통제를 제공한다.” | 개인정보 패턴 탐지는 readiness 신호일 뿐 완전한 탐지나 보안 통제가 아니다. (출처: `docs/DATA_AND_PRIVACY.md`) |
 | “현재 구현은 프로덕션 보안과 규제 준수를 보장한다.” | API 인증, 사용자별 접근 제어, tenant 격리, 역할 기반 권한, retention·삭제·복구, TLS, secret manager, 중앙 감사 로그 등이 아직 제품화되지 않았다. (출처: `docs/DATA_AND_PRIVACY.md`) |
-| “read-only 데모에서 새 Kiro 실행이 가능하다.” | read-only factory는 runner 없이 frozen 결과만 조회하며 `POST /api/run`을 의도적으로 503으로 거부한다. (출처: `SUBMISSION.md`, `docs/ARCHITECTURE.md`) |
+| “로컬 검토 모드에서 새 Kiro 실행이 가능하다.” | local reviewer factory는 내 폴더의 정적 점검과 frozen 결과 조회만 제공하며, runner가 없어 `POST /api/run`을 의도적으로 503으로 거부한다. (출처: `SUBMISSION.md`, `docs/ARCHITECTURE.md`) |
 | “macOS/Linux/WSL에서도 최종 검증이 끝났다.” | 이식용 명령은 제공되지만 최종 감사에서 검증된 OS는 Windows 11이다. (출처: `SUBMISSION.md`, `README.md`) |
 
 ## 10. 현재 `results_console`의 디자인 토큰
