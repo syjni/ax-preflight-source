@@ -54,6 +54,12 @@ def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _sha256_canonical_crlf_text(path: Path) -> str:
+    """Hash text using the CRLF bytes recorded by the Windows v4 freeze."""
+    canonical = path.read_text(encoding="utf-8").replace("\n", "\r\n")
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+
+
 def _load_json(path: Path) -> dict[str, Any]:
     try:
         value = json.loads(path.read_text(encoding="utf-8"))
@@ -299,7 +305,9 @@ def create_phase6_demo_v4(
             "checker_v2_path": "ax_product/evidence_v2.py",
             "checker_v2_sha256": _sha256(selected_root / "ax_product/evidence_v2.py"),
             "task_catalog_sha256": _sha256(selected_root / "business_task_catalog.json"),
-            "runtime_dataset_config_sha256": _sha256(selected_root / "runtime_datasets.json"),
+            "runtime_dataset_config_sha256": _sha256_canonical_crlf_text(
+                selected_root / "runtime_datasets.json"
+            ),
             "runtime_identities": identities,
             "policy": "NEW_60_RUN_SNAPSHOT_WITHOUT_OVERWRITING_V3",
             "run_count": EXPECTED_RUN_COUNT,
@@ -337,7 +345,11 @@ def verify_phase6_demo_v4(*, root: str | Path = ROOT) -> dict[str, Any]:
     _require(manifest.get("parent_tree_sha256") == _tree_sha256(v3_root), "v3 tree changed")
     _require(manifest.get("checker_v2_sha256") == _sha256(selected_root / "ax_product/evidence_v2.py"), "checker v2 changed")
     _require(manifest.get("task_catalog_sha256") == _sha256(selected_root / "business_task_catalog.json"), "task catalog changed")
-    _require(manifest.get("runtime_dataset_config_sha256") == _sha256(selected_root / "runtime_datasets.json"), "runtime dataset config changed")
+    _require(
+        manifest.get("runtime_dataset_config_sha256")
+        == _sha256_canonical_crlf_text(selected_root / "runtime_datasets.json"),
+        "runtime dataset config changed",
+    )
     _require(manifest.get("artifacts", {}).get("files") == _file_records(v4_root), "v4 file inventory changed")
     _require(not list(v4_root.rglob("state.json")), "v4 contains mutable run state")
     _validate_pilot_summary(summary)

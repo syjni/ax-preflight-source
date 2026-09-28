@@ -5,6 +5,7 @@ from scripts.run_phase6_demo_v4 import PROFILES
 from scripts.verify_phase6_demo_v4 import (
     Phase6V4VerificationError,
     _pilot_evidence_reproducible,
+    _sha256_canonical_crlf_text,
     _validate_pilot_summary,
 )
 from ax_product.evidence import EvidenceCheckResult
@@ -17,6 +18,15 @@ def test_v4_estimate_uses_all_v3_portfolio_durations() -> None:
     assert result["planned_run_count"] == EXPECTED_RUN_COUNT == 60
     assert result["estimated_minutes"] > 0
     assert result["planning_minutes_with_25_percent_buffer"] > result["estimated_minutes"]
+
+
+def test_v4_runtime_config_hash_is_portable_across_newlines(tmp_path) -> None:
+    lf = tmp_path / "lf.json"
+    crlf = tmp_path / "crlf.json"
+    lf.write_bytes(b'{\n  "profile": "demo"\n}\n')
+    crlf.write_bytes(b'{\r\n  "profile": "demo"\r\n}\r\n')
+
+    assert _sha256_canonical_crlf_text(lf) == _sha256_canonical_crlf_text(crlf)
 
 
 def test_v4_freeze_requires_exact_three_by_two_by_ten_matrix() -> None:
