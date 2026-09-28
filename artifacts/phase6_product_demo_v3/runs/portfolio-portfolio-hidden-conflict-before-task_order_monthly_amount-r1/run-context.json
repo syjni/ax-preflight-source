@@ -1,0 +1,1 @@
+{"dataset": "portfolio-hidden-conflict-before", "request_type": "TASK_CANDIDATE", "run_id": "portfolio-portfolio-hidden-conflict-before-task_order_monthly_amount-r1", "schema_version": "ax-run-context-v1", "task_id": "TASK_ORDER_MONTHLY_AMOUNT", "task_label": "이번 달 주문금액은 얼마인가요?"}

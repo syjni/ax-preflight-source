@@ -1,0 +1,7 @@
+{
+  "experiment_id": "ax-exp-v5-development-only",
+  "model": "claude-sonnet-5",
+  "kiro_cli_version": "kiro-cli-chat 2.23.0",
+  "runtime_profile": "v5-development",
+  "backend": "AUTOMATED_FRESH_PROCESS_V2_AGGREGATE_VALIDATED"
+}

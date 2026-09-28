@@ -1,0 +1,58 @@
+{
+  "$defs": {
+    "DatasetOption": {
+      "additionalProperties": false,
+      "properties": {
+        "dataset_name": {
+          "minLength": 1,
+          "title": "Dataset Name",
+          "type": "string"
+        },
+        "display_label": {
+          "minLength": 1,
+          "title": "Display Label",
+          "type": "string"
+        },
+        "profile": {
+          "enum": [
+            "mini",
+            "demo-return-before",
+            "demo-return-after",
+            "portfolio-hidden-conflict-before",
+            "portfolio-ceiling-after"
+          ],
+          "title": "Profile",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile",
+        "dataset_name",
+        "display_label"
+      ],
+      "title": "DatasetOption",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "datasets": {
+      "items": {
+        "$ref": "#/$defs/DatasetOption"
+      },
+      "title": "Datasets",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "ax-datasets-response-v1",
+      "default": "ax-datasets-response-v1",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "datasets"
+  ],
+  "title": "DatasetsResponse",
+  "type": "object"
+}

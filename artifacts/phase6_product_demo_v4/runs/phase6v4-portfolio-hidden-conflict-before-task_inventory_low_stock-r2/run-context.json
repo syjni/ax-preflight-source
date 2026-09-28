@@ -1,0 +1,1 @@
+{"dataset": "portfolio-hidden-conflict-before", "request_type": "TASK_CANDIDATE", "run_id": "phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r2", "schema_version": "ax-run-context-v1", "task_id": "TASK_INVENTORY_LOW_STOCK", "task_label": "안전재고 기준보다 부족한 품목은 무엇인가요?"}

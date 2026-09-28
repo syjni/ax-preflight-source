@@ -1,0 +1,66 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "dataset": {
+      "minLength": 1,
+      "title": "Dataset",
+      "type": "string"
+    },
+    "model": {
+      "default": "claude-sonnet-5",
+      "title": "Model",
+      "type": "string"
+    },
+    "question": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Question"
+    },
+    "request_type": {
+      "enum": [
+        "VERIFIED_BUSINESS_TASK",
+        "TASK_CANDIDATE",
+        "AD_HOC_QUESTION"
+      ],
+      "title": "Request Type",
+      "type": "string"
+    },
+    "run_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Run Id"
+    },
+    "task_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Task Id"
+    }
+  },
+  "required": [
+    "dataset",
+    "request_type"
+  ],
+  "title": "RunRequest",
+  "type": "object"
+}

@@ -1,0 +1,27 @@
+{
+  "schema_version": "ax-before-generation-summary-v2",
+  "experiment_version": "ax-exp-v2",
+  "passed": true,
+  "treated_task_count": 12,
+  "control_task_count": 4,
+  "unique_defect_variant_count": 8,
+  "deterministic_operator": true,
+  "all_variant_checks_passed": true,
+  "runtime_leakage_violations": 0,
+  "ceiling_identity_unchanged": true,
+  "ceiling_runtime_identity": {
+    "schema_version": "ax-runtime-identity-v1",
+    "dataset_profile": "ceiling",
+    "dataset_name": "hanbit-distribution-ceiling-v1",
+    "source_root_name": "ceiling_company",
+    "dataset_manifest_sha256": "bcf60e523ee55951b8bb58fdc9049c667c8902154baab02d745ea7262a44a804",
+    "file_count": 30,
+    "parsed_file_count": 30,
+    "scan_report_sha256": "588c304b97a141a9259f9bd54d02c98c67116e6e58474b90b86f7889a2c5fc52",
+    "search_index_document_count": 30,
+    "search_index_sha256": "242b279069440cbe09ad47749e232b2d95eec0a325e2174360744f9f952babea",
+    "table_count": 11,
+    "table_registry_sha256": "ea5466ef0c7bf58698bc6f009a54b56eb95ff1584063648c444aabca0620b740",
+    "corpus_registry_sha256": "48faec8a16736c2dedebdbaabbc2efba9b83184d491fb987b971cc88cd150909"
+  }
+}

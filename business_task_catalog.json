@@ -1,0 +1,75 @@
+{
+  "schema_version": "ax-business-task-catalog-v1",
+  "tasks": [
+    {
+      "task_id": "TASK_CUSTOMER_COUNT",
+      "category": "고객관리",
+      "question": "등록된 거래처는 몇 곳인가요?",
+      "description": "거래처 마스터 또는 고객 목록이 있는 데이터셋에 적용할 후보입니다.",
+      "status": "CANDIDATE"
+    },
+    {
+      "task_id": "TASK_CUSTOMER_LATEST_REGISTRATION",
+      "category": "고객관리",
+      "question": "가장 최근 거래처 등록일은 언제인가요?",
+      "description": "등록일 필드를 가진 거래처 데이터에 적용할 후보입니다.",
+      "status": "CANDIDATE"
+    },
+    {
+      "task_id": "TASK_ORDER_MONTHLY_AMOUNT",
+      "category": "주문",
+      "question": "이번 달 주문금액은 얼마인가요?",
+      "description": "주문일과 금액 필드를 가진 주문 원장에 적용할 후보입니다.",
+      "status": "CANDIDATE"
+    },
+    {
+      "task_id": "TASK_ORDER_LATEST",
+      "category": "주문",
+      "question": "가장 최근 주문은 언제인가요?",
+      "description": "주문 시각을 기록한 데이터에 적용할 후보입니다.",
+      "status": "CANDIDATE"
+    },
+    {
+      "task_id": "TASK_INVENTORY_MOST_AVAILABLE",
+      "category": "재고",
+      "question": "현재 가용재고가 가장 많은 품목은 무엇인가요?",
+      "description": "품목별 가용재고가 있는 데이터셋에 적용할 후보입니다.",
+      "status": "CANDIDATE"
+    },
+    {
+      "task_id": "TASK_INVENTORY_LOW_STOCK",
+      "category": "재고",
+      "question": "안전재고 기준보다 부족한 품목은 무엇인가요?",
+      "description": "현재고와 안전재고 기준이 함께 있는 데이터에 적용할 후보입니다.",
+      "status": "CANDIDATE"
+    },
+    {
+      "task_id": "TASK_POLICY_RETURN_WINDOW",
+      "category": "정책",
+      "question": "현재 반품 가능 기간은 며칠인가요?",
+      "description": "반품 정책의 현행 기준을 확인할 수 있는 문서 묶음에 적용할 후보입니다.",
+      "status": "CANDIDATE"
+    },
+    {
+      "task_id": "TASK_POLICY_APPROVAL_PROCEDURE",
+      "category": "정책",
+      "question": "예외 승인 절차는 어떻게 되나요?",
+      "description": "승인 단계와 책임자가 명시된 규정 문서에 적용할 후보입니다.",
+      "status": "CANDIDATE"
+    },
+    {
+      "task_id": "TASK_BILLING_INVOICE_DEADLINE",
+      "category": "정산",
+      "question": "세금계산서 처리 마감일은 언제인가요?",
+      "description": "정산 일정 또는 세금계산서 지침이 있는 데이터셋에 적용할 후보입니다.",
+      "status": "CANDIDATE"
+    },
+    {
+      "task_id": "TASK_SUPPORT_RESPONSIBLE_TEAM",
+      "category": "고객지원",
+      "question": "고객 불만 유형별 책임팀은 어디인가요?",
+      "description": "문의 유형과 담당 조직 매핑이 있는 데이터에 적용할 후보입니다.",
+      "status": "CANDIDATE"
+    }
+  ]
+}

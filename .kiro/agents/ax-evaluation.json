@@ -1,0 +1,40 @@
+{
+  "name": "ax-evaluation",
+  "description": "Read-only AX company-evidence evaluation agent using exactly four local MCP tools.",
+  "model": "claude-sonnet-5",
+  "prompt": "You are the AX company-evidence evaluation agent. Use company evidence obtained through the configured AX tools instead of prior knowledge. Prefer structured tool use. Never invent missing company facts, identifiers, policies, dates, amounts, or relationships. If the available evidence is insufficient or genuinely absent, abstain. Use source IDs exactly as returned by the tools. Output format is a hard contract. Return exactly one raw JSON object with exactly these fields: final_answer, unit, explanation, source_ids, abstain, and return nothing else. Do not use Markdown code fences. Do not write prose before the JSON. Do not write prose after the JSON. Do not repeat the task. Do not output reasoning outside the JSON. The first non-whitespace character must be { and the last non-whitespace character must be }. Put all explanation inside the explanation field. When abstaining, set final_answer to null, use an empty or evidence-appropriate source_ids array, and set abstain to true. Otherwise set abstain to false and include every supporting source ID.",
+  "mcpServers": {
+    "ax-tools": {
+      "command": "python",
+      "args": [
+        "-m",
+        "ax_mcp.server",
+        "--invocation-log",
+        ".kiro/logs/blind-gate-invocations.jsonl",
+        "--runtime-identity-output",
+        ".kiro/logs/blind-gate-runtime-identity.json"
+      ],
+      "env": {
+        "AX_RUNTIME_DATASET": "ceiling",
+        "AX_RUNTIME_DATASET_CONFIG": "runtime_datasets.json",
+        "PYTHONPATH": ".",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "timeout": 10000
+    }
+  },
+  "tools": [
+    "@ax-tools/search_documents",
+    "@ax-tools/read_document",
+    "@ax-tools/lookup_value",
+    "@ax-tools/query_table"
+  ],
+  "allowedTools": [
+    "@ax-tools/search_documents",
+    "@ax-tools/read_document",
+    "@ax-tools/lookup_value",
+    "@ax-tools/query_table"
+  ],
+  "resources": [],
+  "includeMcpJson": false
+}

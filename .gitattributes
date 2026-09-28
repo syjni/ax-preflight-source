@@ -1,0 +1,5 @@
+# Frozen mixed-format demo corpus must retain exact fixture bytes.
+sample_data/product_demo/hanbit_portfolio_before/** binary
+
+# Keep the registry diffable without treating Windows checkout CRLF as content.
+runtime_datasets.json text eol=lf

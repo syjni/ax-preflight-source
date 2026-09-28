@@ -1,0 +1,44 @@
+{
+  "after": {
+    "current_policy_source_id": "FILE_5587cb5d2ae64ba9",
+    "policy_state": "30-day current policy; 14-day policy explicitly retired and replaced",
+    "probable_version_group_count": 0,
+    "profile": "demo-return-after",
+    "retired_policy_source_id": "FILE_bac911e84aac7c01"
+  },
+  "before": {
+    "policy_state": "two unresolved current-looking claims: 14 days and 30 days",
+    "probable_version_group_count": 1,
+    "profile": "demo-return-before",
+    "source_ids": [
+      "FILE_0190582b04c0b44a",
+      "FILE_afb4c3a0cc53d8c8"
+    ]
+  },
+  "claim_scope": "PRODUCT_SANITY_DEMO_NOT_RESEARCH_BENCHMARK",
+  "controlled_modified_at": "2026-09-01T00:00:00+00:00",
+  "readiness_comparison": {
+    "after_dimensions": {
+      "accessibility": 1.0,
+      "completeness": 1.0,
+      "redundancy": 1.0,
+      "safety": 1.0,
+      "timeliness": 1.0
+    },
+    "after_total": 100.0,
+    "before_dimensions": {
+      "accessibility": 1.0,
+      "completeness": 1.0,
+      "redundancy": 1.0,
+      "safety": 1.0,
+      "timeliness": 1.0
+    },
+    "before_total": 100.0,
+    "same_dimensions": true,
+    "same_total": true
+  },
+  "schema_version": "ax-phase6-remediation-receipt-v1",
+  "source_file_count_after": 2,
+  "source_file_count_before": 2,
+  "unscored_observation_policy": "PROBABLE_VERSION_GROUP is reported separately and is not an input to frozen Readiness Score v1."
+}

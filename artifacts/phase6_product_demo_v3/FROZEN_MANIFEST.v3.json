@@ -1,0 +1,851 @@
+{
+  "artifacts": {
+    "files": [
+      {
+        "path": "before-scan-report.json",
+        "sha256": "e68480f5ede99d32e229f510e9589ccd742a52fea3ee43db9501e63dc41e331e",
+        "size_bytes": 62252
+      },
+      {
+        "path": "README.md",
+        "sha256": "e845348267ab3433f9e6bbde9f5cc905848f97aba65706ffd79d9b72518aa747",
+        "size_bytes": 610
+      },
+      {
+        "path": "runs/phase6demo-official-official-001-01-before-489834b1/delivery.json",
+        "sha256": "5cb9ced15ed36b5f2771d26ba17bdd470910ccb5956c22526b33f1830242c099",
+        "size_bytes": 942
+      },
+      {
+        "path": "runs/phase6demo-official-official-001-01-before-489834b1/evidence-check.json",
+        "sha256": "0fe6a95fa81f46eed859d2b43b784b3827f27a2d19a32c81e7edfabb13d1ba88",
+        "size_bytes": 1289
+      },
+      {
+        "path": "runs/phase6demo-official-official-001-01-before-489834b1/tool-responses/000001.json",
+        "sha256": "32606530e2fc57e1a1e5500b02794a5c227495f7c8331a2a2b5a8f21e0965683",
+        "size_bytes": 1288
+      },
+      {
+        "path": "runs/phase6demo-official-official-001-01-before-489834b1/tool-responses/000002.json",
+        "sha256": "96631c07e9056a16833ccebeae89d002232d561f75cd7ea755deac16f5682182",
+        "size_bytes": 665
+      },
+      {
+        "path": "runs/phase6demo-official-official-001-01-before-489834b1/tool-responses/000003.json",
+        "sha256": "a5f9496dce7284a25f3195561574c377904e01ddb4289e3e6c75dc1aa082170d",
+        "size_bytes": 665
+      },
+      {
+        "path": "runs/phase6demo-official-official-001-02-after-02d170f8/delivery.json",
+        "sha256": "1637215744b8d60f9267758fe011b70ab2a02d9531d552391d05e56f8c904701",
+        "size_bytes": 716
+      },
+      {
+        "path": "runs/phase6demo-official-official-001-02-after-02d170f8/evidence-check.json",
+        "sha256": "9b3cc9ff2a496da779cbdce8bed886c703b2463c3309d42ed223432e6e5bd7f8",
+        "size_bytes": 948
+      },
+      {
+        "path": "runs/phase6demo-official-official-001-02-after-02d170f8/tool-responses/000001.json",
+        "sha256": "7af6eff8aa5cc882c82135e4c71d7eef11dd39963d5a7bc031f5b47e05a5de0e",
+        "size_bytes": 1567
+      },
+      {
+        "path": "runs/phase6demo-official-official-001-03-before-1c3baf2d/delivery.json",
+        "sha256": "79bbbb591ccc379764f85705ab290f58e7b242db4fc496faebef5b85ca237cce",
+        "size_bytes": 883
+      },
+      {
+        "path": "runs/phase6demo-official-official-001-03-before-1c3baf2d/evidence-check.json",
+        "sha256": "d440b39221e172636cdd1701419f4b04fc082af434c4850f2c3cd6581c2d6958",
+        "size_bytes": 1289
+      },
+      {
+        "path": "runs/phase6demo-official-official-001-03-before-1c3baf2d/tool-responses/000001.json",
+        "sha256": "c082e3786e49175d284ded7387e0a40b2514dcc04f215c59dbae139b084786b8",
+        "size_bytes": 1288
+      },
+      {
+        "path": "runs/phase6demo-official-official-001-03-before-1c3baf2d/tool-responses/000002.json",
+        "sha256": "2e70b60eefa14d4d0e4721ac4760ae7817c1a7e2bc98d0a230cb14f2034f4568",
+        "size_bytes": 665
+      },
+      {
+        "path": "runs/phase6demo-official-official-001-03-before-1c3baf2d/tool-responses/000003.json",
+        "sha256": "08697af8911fc2592efc59fd0ccfc6a825c2e3219ea60e45ab024a1b5c313747",
+        "size_bytes": 665
+      },
+      {
+        "path": "runs/phase6demo-official-official-001-04-after-7b4095d7/delivery.json",
+        "sha256": "8740772e48e7c5f419d00d1dc075d4d19b4b6b84c7c551172c347bcfa6164338",
+        "size_bytes": 674
+      },
+      {
+        "path": "runs/phase6demo-official-official-001-04-after-7b4095d7/evidence-check.json",
+        "sha256": "fb6b4e6709e06ca90b3ab9876b2a1bbd0086b7a3e83dc50d6c609ace7ff7ac49",
+        "size_bytes": 873
+      },
+      {
+        "path": "runs/phase6demo-official-official-001-04-after-7b4095d7/tool-responses/000001.json",
+        "sha256": "bef7c4cee4f3883469d52d5544e6a39cdb14875640dcb3a5536172884a750779",
+        "size_bytes": 1567
+      },
+      {
+        "path": "runs/phase6demo-official-official-001-05-before-2e03fdf6/delivery.json",
+        "sha256": "5a143a59ade9692edf0be411962916e9a78f77aa2fbac913c257a142bd2752f1",
+        "size_bytes": 973
+      },
+      {
+        "path": "runs/phase6demo-official-official-001-05-before-2e03fdf6/evidence-check.json",
+        "sha256": "d45e6d994b870a196063c1d3468f70cc362a0242be266968977f92c45124cd45",
+        "size_bytes": 1289
+      },
+      {
+        "path": "runs/phase6demo-official-official-001-05-before-2e03fdf6/tool-responses/000001.json",
+        "sha256": "2d7d5279c575f62e8c7e40cd1d0ee8e008b323fe56fc2b875172a3d8764de3ca",
+        "size_bytes": 1288
+      },
+      {
+        "path": "runs/phase6demo-official-official-001-05-before-2e03fdf6/tool-responses/000002.json",
+        "sha256": "a3ba5b8231f77e4a3d732844be81e592d5ee292484c4b4706c0d0dd4f859912e",
+        "size_bytes": 665
+      },
+      {
+        "path": "runs/phase6demo-official-official-001-05-before-2e03fdf6/tool-responses/000003.json",
+        "sha256": "5853786573bdd4ccee00a4c43a0e69a166e6b18fe21801ff415a713dde0d9bfc",
+        "size_bytes": 665
+      },
+      {
+        "path": "runs/phase6demo-official-official-001-06-after-233af967/delivery.json",
+        "sha256": "07fa10ce7756f540b33f6a1d976759c48c028085d1ffa1d2f7d49e4203779523",
+        "size_bytes": 775
+      },
+      {
+        "path": "runs/phase6demo-official-official-001-06-after-233af967/evidence-check.json",
+        "sha256": "e82269b5118b846c3e6c247d6b1e026ad81bdafa25a6f5d571c1dbef65dc82e2",
+        "size_bytes": 873
+      },
+      {
+        "path": "runs/phase6demo-official-official-001-06-after-233af967/tool-responses/000001.json",
+        "sha256": "de565aedb03292751dd13bf15290b11a24d09cf7b17cd83c1a49847d0ea6d2e4",
+        "size_bytes": 1567
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_billing_invoice_deadline-r1/delivery.json",
+        "sha256": "29c4f0ceb5bf98a7f46f140c4fc97634baf4496ee6ea1c1d4647fc9ac33ac7a4",
+        "size_bytes": 1009
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_billing_invoice_deadline-r1/evidence-check.json",
+        "sha256": "be26314f27f98e75fa581ff18ae1bdab8805bd144a55f3ded82dca3a4ee7ac49",
+        "size_bytes": 1284
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_billing_invoice_deadline-r1/run-context.json",
+        "sha256": "81132d6b64559a33e94595755e65b85d0a3c089ba5b860b42900d5785aebefa2",
+        "size_bytes": 306
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_billing_invoice_deadline-r1/tool-responses/000001.json",
+        "sha256": "d888d2975a67613e075f36ca11092aaec088235e2ef35c4d5ea7c96812898984",
+        "size_bytes": 769
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_billing_invoice_deadline-r1/tool-responses/000002.json",
+        "sha256": "4adc0cf5ae44ce7a71a2bf8e0b2b98c4206d84e6816fe6bf12a51ec19115cddd",
+        "size_bytes": 631
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_billing_invoice_deadline-r1/tool-responses/000003.json",
+        "sha256": "36e42d2398fb0ae87a412d82ed027078ee765347d1d0023590fd7b6e5ef67eab",
+        "size_bytes": 2804
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_customer_count-r1/delivery.json",
+        "sha256": "ea5d6da56009bbf822e0038e3e2b76f20e276054dc489378083ca9ca46e7d18c",
+        "size_bytes": 776
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_customer_count-r1/evidence-check.json",
+        "sha256": "158a04e2205d1f4067ab31121225338791b04638de1b8be7b3a690254056c407",
+        "size_bytes": 1277
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_customer_count-r1/run-context.json",
+        "sha256": "184f2ffa1da376df6eff1be9433ad144160971fae06f972a4a07a6941f89baee",
+        "size_bytes": 274
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_customer_count-r1/tool-responses/000001.json",
+        "sha256": "ee2f2dc85fc93611f047589b65d80b923b0ebfec7e0fdf9d74bee770c55d1421",
+        "size_bytes": 2974
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_customer_count-r1/tool-responses/000002.json",
+        "sha256": "4e64098a5c6769ab504d1a3b07c2918119586ead1a295c37e3753a9566312b2c",
+        "size_bytes": 3285
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_customer_count-r1/tool-responses/000003.json",
+        "sha256": "d35acde53c4077b199238b0c82e592a3a994a683c845553fe05b672c65333bcf",
+        "size_bytes": 3204
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_customer_count-r1/tool-responses/000004.json",
+        "sha256": "4907213645984ed2369c477b72559f8a65d4827cc427227a0e761041fdbcc6b4",
+        "size_bytes": 485
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_customer_latest_registration-r1/delivery.json",
+        "sha256": "8ebad0cba18c30f22d7483c551417c37e9acd66272c10e7ed494ddc0fef7bd35",
+        "size_bytes": 1002
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_customer_latest_registration-r1/evidence-check.json",
+        "sha256": "cc4e4fb991513cbb9a74ae24c4d05bc230cb616bdfead6fdef181907003e47fa",
+        "size_bytes": 1271
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_customer_latest_registration-r1/run-context.json",
+        "sha256": "42da56f3a8f6154c15048542e0ad895e4a2e48a68aed4de0c5453d384addc14b",
+        "size_bytes": 315
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_customer_latest_registration-r1/tool-responses/000001.json",
+        "sha256": "aa2365508d37638620e39100267a8a45ef83d8146af89be11b0364870983abac",
+        "size_bytes": 2988
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_customer_latest_registration-r1/tool-responses/000002.json",
+        "sha256": "deed1a8e0afb8a6b06c621be3b7c2d9627901e56fc83ddff3af3705b952e42a8",
+        "size_bytes": 3299
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_inventory_low_stock-r1/delivery.json",
+        "sha256": "b74771d049a623f86c6f61d1b9c5f0f0bb9f21a4d868571bec36df05dc277533",
+        "size_bytes": 1248
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_inventory_low_stock-r1/evidence-check.json",
+        "sha256": "eac7ba5ff83711266d1d59f7e6da1cb7d86352bcbc586f4f6b0c92e6c99ff83b",
+        "size_bytes": 1570
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_inventory_low_stock-r1/run-context.json",
+        "sha256": "0d0010069224412c26607cb8a77b8d97528b3dbdb2ec50adb1086a440d05007e",
+        "size_bytes": 306
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_inventory_low_stock-r1/tool-responses/000001.json",
+        "sha256": "1c69ae5ec8f4fd801aef7aebb427a229dfaf79cb7c4b414a1a663ae77a99735e",
+        "size_bytes": 2971
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_inventory_low_stock-r1/tool-responses/000002.json",
+        "sha256": "d831eed88e7672f38b4a6971b6d67b9309b5b80a53c637b92a31936b2e043d21",
+        "size_bytes": 3361
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_inventory_low_stock-r1/tool-responses/000003.json",
+        "sha256": "fc1c85cd06232cd95831fcc28c2cdb8a01d6082506d6fed53f35e04a9d2819b7",
+        "size_bytes": 1442
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_inventory_low_stock-r1/tool-responses/000004.json",
+        "sha256": "64e2e2bd90af6cd657f0652f676c51f005c388bf741a28cc310d7da060703bb5",
+        "size_bytes": 1048
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_inventory_most_available-r1/delivery.json",
+        "sha256": "80b6738a62ae94f2432bfcda5f15d509ca7ae77a5bdd8cd5f7872c8c25240389",
+        "size_bytes": 717
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_inventory_most_available-r1/evidence-check.json",
+        "sha256": "9c7e828de634b820199ccb2ebaf4006492a21a2bda0cc794f542d9371ea2b508",
+        "size_bytes": 1153
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_inventory_most_available-r1/run-context.json",
+        "sha256": "a5b1218d66fe67b7b007ef00e18a20cb0a810f81ec7b6592c71a0268147fcb0b",
+        "size_bytes": 317
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_inventory_most_available-r1/tool-responses/000001.json",
+        "sha256": "d1014472549da337796ce1761bbcaab02300edb957b4fb9d779cdf37aebdd22c",
+        "size_bytes": 3406
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_inventory_most_available-r1/tool-responses/000002.json",
+        "sha256": "9480c6342575baee42adf87ad60b62b5d0f0b8d1a4d83da51fc7a7d9a8c6b5c0",
+        "size_bytes": 1331
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_order_latest-r1/delivery.json",
+        "sha256": "a45b8097cfa078074ae5f58f965ae39d62e562d3a246119fd4f82d3455417fcd",
+        "size_bytes": 820
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_order_latest-r1/evidence-check.json",
+        "sha256": "630e57243e5fd1f8a9ac055a9ea0c9e11782a258a4cad0056234859a3af8e6ca",
+        "size_bytes": 1255
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_order_latest-r1/run-context.json",
+        "sha256": "3374baeba9f595f69a12ca5280bd424cece399b69469a71fdd40e782771c2566",
+        "size_bytes": 270
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_order_latest-r1/tool-responses/000001.json",
+        "sha256": "070f24137d7e7f68d57761b92e49e8fdb0467f030aace0ba768bdeea18cc4867",
+        "size_bytes": 3074
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_order_latest-r1/tool-responses/000002.json",
+        "sha256": "6a237d7493b6ecc70767a4953ef8bd42df3c01c9e7f186e852f020c9b3ffac01",
+        "size_bytes": 2743
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_order_latest-r1/tool-responses/000003.json",
+        "sha256": "7794b987878a0e0f3b5ec2f562111f0007cca60b754e36f12aa06fd363ce557d",
+        "size_bytes": 3028
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_order_latest-r1/tool-responses/000004.json",
+        "sha256": "239ec0ababfd9ea754a972719753a8a70e4eaff068d24565eeb8926d837eeb93",
+        "size_bytes": 4158
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_order_latest-r1/tool-responses/000005.json",
+        "sha256": "d120cbc70fd8761915ac1f2d0155483d5e3b8e8408c43c01c1c4f8f1e341a236",
+        "size_bytes": 3235
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_order_latest-r1/tool-responses/000006.json",
+        "sha256": "a415a8eff500164134e071d2cb06628b9ed9059087eb88d397f6738f400a16c3",
+        "size_bytes": 497
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_order_latest-r1/tool-responses/000007.json",
+        "sha256": "e91568762e2add3cf5f6235de79d98a78bbd27d4e1a55be274a94a6b744ab63a",
+        "size_bytes": 825
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_order_monthly_amount-r1/delivery.json",
+        "sha256": "0acf5e5be06b3b1221a1740e9cfc3abb038a6c8226b0470f43074fd8bc0cc9dd",
+        "size_bytes": 812
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_order_monthly_amount-r1/evidence-check.json",
+        "sha256": "348f8e7aff21f28091e1e28ec3dbe718cce51d7a3991ee76a74c79cd835df680",
+        "size_bytes": 1137
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_order_monthly_amount-r1/run-context.json",
+        "sha256": "f1406f60b8fca16e83a706d9836958b8127b562c1d977beb1ee5d228e94a07f1",
+        "size_bytes": 289
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_order_monthly_amount-r1/tool-responses/000001.json",
+        "sha256": "7353a4151155706941ed51802e2433f6ba83bd72af1571f18d5b53b548ce45ff",
+        "size_bytes": 3447
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_order_monthly_amount-r1/tool-responses/000002.json",
+        "sha256": "d4846dce45a86e11d7498cd5476c57e14310e449ac104fc6867fdc6dd82eeb58",
+        "size_bytes": 4166
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_order_monthly_amount-r1/tool-responses/000003.json",
+        "sha256": "eb04ef34dcd378cff0f9becd2671eb7c50d85613dfa916b968b1745459444674",
+        "size_bytes": 495
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_policy_approval_procedure-r1/delivery.json",
+        "sha256": "324dfa42ba02654a4cb674862076531d00144e57e78094a1bb93cd5a29c8f5cf",
+        "size_bytes": 1119
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_policy_approval_procedure-r1/evidence-check.json",
+        "sha256": "cd5941ad54988ca2697d0b0e95b25393d08d7af7e363be2cb77edd34d58cf45e",
+        "size_bytes": 802
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_policy_approval_procedure-r1/run-context.json",
+        "sha256": "b1ba2e1ad79d2091961424853ba7ea625c60e32ef2a48db7ad944eb2c50cded8",
+        "size_bytes": 300
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_policy_approval_procedure-r1/tool-responses/000001.json",
+        "sha256": "13a517b7327fa642df91702208a29f6e8a1715dec6d7d942207fd8a2574f4127",
+        "size_bytes": 2877
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_policy_approval_procedure-r1/tool-responses/000002.json",
+        "sha256": "345395e120a4905fe9664628ceae861c277f49c03ee76d7aa7f896c8f3daa36f",
+        "size_bytes": 2743
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_policy_approval_procedure-r1/tool-responses/000003.json",
+        "sha256": "2fcbd7c3f49195471ea45e882aa2b7ddc9c47de6d4a9d8362c5b47190393b33f",
+        "size_bytes": 2745
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_policy_return_window-r1/delivery.json",
+        "sha256": "26d2bac3259b8fb59d23daccb12e0c6b3d5ca8af6e82e9f1d7d805899f7736ae",
+        "size_bytes": 664
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_policy_return_window-r1/evidence-check.json",
+        "sha256": "e5d7d0f7de8c39d99e5d73395f89149437412f9879c321b744cbad31b6f3cfa0",
+        "size_bytes": 885
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_policy_return_window-r1/run-context.json",
+        "sha256": "cc32d800beb84d5306d1de23111c2c2822105b3934418de2905d4df2709876e0",
+        "size_bytes": 293
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_policy_return_window-r1/tool-responses/000001.json",
+        "sha256": "62a2c9221bbdc0cf976b115552428976b36b11b68ee52aaf12abfae068a62f91",
+        "size_bytes": 2890
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_support_responsible_team-r1/delivery.json",
+        "sha256": "327a863cf75d601c819cc01c5d2bff14ab518002008f8035159cf681c941f94f",
+        "size_bytes": 829
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_support_responsible_team-r1/evidence-check.json",
+        "sha256": "181d1f9617ebdf7b60718c339cca3efa9d21be43a19fcd80ba56879602d48b3f",
+        "size_bytes": 1129
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_support_responsible_team-r1/run-context.json",
+        "sha256": "245e5dcd3d178c3c39d6735e285511ea1ff9e56e94531444921381b8b53f9208",
+        "size_bytes": 307
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_support_responsible_team-r1/tool-responses/000001.json",
+        "sha256": "958f5136946b9ec0c2ea53e237537cfa92a977b132baaeed221df21df5a330ab",
+        "size_bytes": 2803
+      },
+      {
+        "path": "runs/portfolio-portfolio-ceiling-after-task_support_responsible_team-r1/tool-responses/000002.json",
+        "sha256": "70bc18fe40b3f979e3e27d18de103265019472e33eca1bdfb7af14f14003547d",
+        "size_bytes": 722
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r1/delivery.json",
+        "sha256": "8a8cfbeb858715191b88e47e552e2b2a212ace1b37b365526c0a7a31c399b676",
+        "size_bytes": 898
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r1/evidence-check.json",
+        "sha256": "18a98658d222dc209088de2f89070db4356e3648249d4e5620a24c892f8abd31",
+        "size_bytes": 1293
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r1/run-context.json",
+        "sha256": "870d65fac8b541954fde01aad3a98ba1379230c3fa1800ec7013fabaafa8fb92",
+        "size_bytes": 324
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r1/tool-responses/000001.json",
+        "sha256": "106a7aaddc3f245f48d9301d6ce43cadac93a6c88c380d93f70c7c1b96c19c9a",
+        "size_bytes": 778
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r1/tool-responses/000002.json",
+        "sha256": "af0e3b9a1ae71e388758636502dda16698da284809e8072ddf1406f02074b4f4",
+        "size_bytes": 640
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r1/tool-responses/000003.json",
+        "sha256": "b74e91ecd874059a30e12b90709cc5daaae467785e534efcea2191fc5d8a1a35",
+        "size_bytes": 2813
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_customer_count-r1/delivery.json",
+        "sha256": "0d071abbbd4746388202c4914165730c0f99d4af7681b1a3179ff3e8bc7bba5f",
+        "size_bytes": 576
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_customer_count-r1/evidence-check.json",
+        "sha256": "07e94e7b95891c022a8bc8558ccc818f7a3040156448f038f87fe9ad3564de92",
+        "size_bytes": 1152
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_customer_count-r1/run-context.json",
+        "sha256": "37e320dddece526b99ee0d0f6972566492393aaa44371d9b9e6e73bb0f191bbd",
+        "size_bytes": 292
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_customer_count-r1/tool-responses/000001.json",
+        "sha256": "c707ee52fad7f52b6dbe4ede737055f23d6075c8d7bf508dfd0fc814bae14ed5",
+        "size_bytes": 2983
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_customer_count-r1/tool-responses/000002.json",
+        "sha256": "5a75c66083f6fbfb85fa8f404e5fe3d4ae8b7f9d826e9382cefa5c4274711b8a",
+        "size_bytes": 3295
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_customer_count-r1/tool-responses/000003.json",
+        "sha256": "6fad55c40bd12ae9d673dbbbb33cf529400dd04b3174c434b0630a206cff057f",
+        "size_bytes": 494
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_customer_latest_registration-r1/delivery.json",
+        "sha256": "7783ac3efc9d46b8eeb12c5718797cc73c8aa1f0f2392ed4df72f3ad5a72c766",
+        "size_bytes": 992
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_customer_latest_registration-r1/evidence-check.json",
+        "sha256": "989b2e4c0f54003b308933634978b7a0b4c8ff25266ff4fa3ff4eeb034025e00",
+        "size_bytes": 1087
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_customer_latest_registration-r1/run-context.json",
+        "sha256": "71993f5a2bff53c9072222cf45f65d3bbef21d60f5d6eb07bb569d14ff543c8f",
+        "size_bytes": 333
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_customer_latest_registration-r1/tool-responses/000001.json",
+        "sha256": "f5a030a0abb25dde2b1082a3d7a74934af8c6849c49720c49bcc70a2b5034616",
+        "size_bytes": 5026
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_inventory_low_stock-r1/delivery.json",
+        "sha256": "713e172e07615b6d931ff219a9c2b2b9604761ca2ea6058f1af704d734719215",
+        "size_bytes": 1507
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_inventory_low_stock-r1/evidence-check.json",
+        "sha256": "02782aa4eccd862c9064f7db6ad18d2de1e86f18f9c5579f972e9a8e948ecf2d",
+        "size_bytes": 1941
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_inventory_low_stock-r1/run-context.json",
+        "sha256": "a3087edf60e2be66e0846357ebb29a6ad49174b630dbb46b4466a983e96147a8",
+        "size_bytes": 324
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_inventory_low_stock-r1/tool-responses/000001.json",
+        "sha256": "d395c15942c8cb62d30153235a265e4165ed05df71454904bed1a19de01614ac",
+        "size_bytes": 3068
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_inventory_low_stock-r1/tool-responses/000002.json",
+        "sha256": "72a7ae9d54cdbc3435cd57212e1efe5b095723d09a5ed3499565fbbc5c243895",
+        "size_bytes": 3360
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_inventory_low_stock-r1/tool-responses/000003.json",
+        "sha256": "ee813783efd09c4a44ed6fe6b905504d227c1518c9e59c55329752bcff3303ec",
+        "size_bytes": 1451
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_inventory_low_stock-r1/tool-responses/000004.json",
+        "sha256": "ff3aea6101d2526e64b2e85a5e3d2990c2ddde5d47bbada5f4910c0a6e6b2d16",
+        "size_bytes": 960
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_inventory_low_stock-r1/tool-responses/000005.json",
+        "sha256": "9e80cbfdc33ad30dc6bf80b7b2c385d7cef5f3386d8905f5736b20be0d9ac24a",
+        "size_bytes": 3707
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_inventory_low_stock-r1/tool-responses/000006.json",
+        "sha256": "4d33344daa75f447f91c0242ac6eb81add7459ff853b321142da77ed714f24e4",
+        "size_bytes": 713
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_inventory_low_stock-r1/tool-responses/000007.json",
+        "sha256": "26a100a8c15f6eba1355c02511ad50de5f80a758baa2444e3b1aeb662202f215",
+        "size_bytes": 732
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_inventory_low_stock-r1/tool-responses/000008.json",
+        "sha256": "9843d9cf7d589bc96a268a0f7fa7ec8f68699e79124759ac5fa367fe3466dd76",
+        "size_bytes": 615
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_inventory_most_available-r1/delivery.json",
+        "sha256": "2b9c89f9e6887c57796ed5780922f41090ac27e7ecbd639290a21275061999ce",
+        "size_bytes": 691
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_inventory_most_available-r1/evidence-check.json",
+        "sha256": "05e2b8bc9a92c52c3e383a82c66dc1cf31299a2b3c6a9a313d45352e298f778a",
+        "size_bytes": 1162
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_inventory_most_available-r1/run-context.json",
+        "sha256": "005c40aac0a4bca7f942f68c0fa0e4db9ab3e92e59f46b72a7b42c9863e440a9",
+        "size_bytes": 335
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_inventory_most_available-r1/tool-responses/000001.json",
+        "sha256": "3109b3531d2dd3bca7c61bb3618877c4195d18f2c4f162e49ade6e78b1ad3c7a",
+        "size_bytes": 3415
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_inventory_most_available-r1/tool-responses/000002.json",
+        "sha256": "0d202fc07f0a1d3514471423be731c7f39d327250d002b44cb015a07695af596",
+        "size_bytes": 1340
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_order_latest-r1/delivery.json",
+        "sha256": "90a33f7f9f0a52bcb8489a4f4fd570f2ea3f95905cc7db7d93a5434ad4025c23",
+        "size_bytes": 770
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_order_latest-r1/evidence-check.json",
+        "sha256": "13387be40c2e5de369550672b4ee8ec831e28101d351f2c5d428cc5cd7937a54",
+        "size_bytes": 1264
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_order_latest-r1/run-context.json",
+        "sha256": "5052b4c0d063a881ed17e671c3a3bd4c443404efda1c9c5f2ce9b2c5b004f92f",
+        "size_bytes": 288
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_order_latest-r1/tool-responses/000001.json",
+        "sha256": "5fbd628fd07fc8cd1d6afbee7dee9a949c073abd79d33acb706f5af6460cdc0d",
+        "size_bytes": 6649
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_order_latest-r1/tool-responses/000002.json",
+        "sha256": "e39681b82d4cf9b1090915beef2e6c981b56c57a094217adda6f7f034183ebca",
+        "size_bytes": 6450
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_order_latest-r1/tool-responses/000003.json",
+        "sha256": "26ca6f98fa9fbb1c0ae193f6820fc9fe5e54593617b5a2c4dd2bb27ba2755b7a",
+        "size_bytes": 6667
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_order_latest-r1/tool-responses/000004.json",
+        "sha256": "3ffc5bb6613563fdd3579b891ffbf2e6f4bb66b05eeb74674e5c64e8339b908f",
+        "size_bytes": 7757
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_order_latest-r1/tool-responses/000005.json",
+        "sha256": "9d82a6e337ff92c960f3e6ed7d372a9ecc7a5a170519b711737a80c9eb19b2b8",
+        "size_bytes": 506
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_order_latest-r1/tool-responses/000006.json",
+        "sha256": "a6c7f16d7475c191b197b1733a77ff1223d210375eb1671edb985f9c96780180",
+        "size_bytes": 834
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_order_monthly_amount-r1/delivery.json",
+        "sha256": "b31c96b82c1da1610dc421ae875c7ee431d6521c8a6248bd4a6868f437fbd5d4",
+        "size_bytes": 890
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_order_monthly_amount-r1/evidence-check.json",
+        "sha256": "743cdb10a9b004e2fbd31a41de1ac43944fc70ff045582a2827c87f70ed5ffdc",
+        "size_bytes": 1272
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_order_monthly_amount-r1/run-context.json",
+        "sha256": "a1352e06c9d5f4ecee89cb07d5b761963ea32174f80d93d18ebeeae988c01f41",
+        "size_bytes": 307
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_order_monthly_amount-r1/tool-responses/000001.json",
+        "sha256": "7fed2164203e05316389c36bfd5956264aba2f03a38d479b2fc0ce2d3669399c",
+        "size_bytes": 6084
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_order_monthly_amount-r1/tool-responses/000002.json",
+        "sha256": "e31e3a7a04a3c8978fe40203b4b59e70c03ebb2379771616d23665446aa7e480",
+        "size_bytes": 7102
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_order_monthly_amount-r1/tool-responses/000003.json",
+        "sha256": "8ea3f1b1453e9f8f9be9419b1007b4c4a2fe4b3c84a718cdf9f867ba398b5eab",
+        "size_bytes": 504
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_order_monthly_amount-r1/tool-responses/000004.json",
+        "sha256": "1281082a58994964af6f348bd3cffba4a9bab2a316fd8f001d001d922fe30803",
+        "size_bytes": 593
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_policy_approval_procedure-r1/delivery.json",
+        "sha256": "4a066a9b77072cb08107ed6442252cd8535582abe8d25d58421b494558dbe0be",
+        "size_bytes": 1023
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_policy_approval_procedure-r1/evidence-check.json",
+        "sha256": "bea56d2206f85c27898c3babf80f2c30b0868807cd329a061b5782ad7e3a3419",
+        "size_bytes": 811
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_policy_approval_procedure-r1/run-context.json",
+        "sha256": "60c01073cc20235716aa7decd3223355511e4a4476e7e9f6d43138b6ec49344a",
+        "size_bytes": 318
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_policy_approval_procedure-r1/tool-responses/000001.json",
+        "sha256": "a917d33ffd5eb9651af3ad192e68de1c3ff229ace7b72075c203011b5e049552",
+        "size_bytes": 2886
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_policy_approval_procedure-r1/tool-responses/000002.json",
+        "sha256": "2d254f80530a3576c8f75a55237f4ceca4b22054868577cf5e82015b1dd68a49",
+        "size_bytes": 2929
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_policy_approval_procedure-r1/tool-responses/000003.json",
+        "sha256": "5c315a7fa22a689fb3f94ecba105f884c59e29fe82c6ea4f73aae280563e659b",
+        "size_bytes": 2950
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_policy_return_window-r1/delivery.json",
+        "sha256": "f9c5ce8eedbfd306892f533e67691e0180e5577144dcad05660a8830e80ae363",
+        "size_bytes": 1259
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_policy_return_window-r1/evidence-check.json",
+        "sha256": "7146b02918619992aec6ae98a822b54d7c712dad84ef55ac161cfeae586f1869",
+        "size_bytes": 1384
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_policy_return_window-r1/run-context.json",
+        "sha256": "ac4cd84d7d57eb74f87f063283e3075153cd98208d1672a21056d12db491b19c",
+        "size_bytes": 311
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_policy_return_window-r1/tool-responses/000001.json",
+        "sha256": "acc84e3968918cbb58573e87fe37c6e10c78a1abfa53c2caa0bf169e86127e9f",
+        "size_bytes": 3000
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_policy_return_window-r1/tool-responses/000002.json",
+        "sha256": "955143ba0cb9bdee41938399248ec10ec9f2ab4a83c7df50a699f9050dbc13ba",
+        "size_bytes": 768
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_policy_return_window-r1/tool-responses/000003.json",
+        "sha256": "a369937e32d716ccaabf797b416fc03ffe48ac632fb472e7281d943efe09a2e1",
+        "size_bytes": 757
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_support_responsible_team-r1/delivery.json",
+        "sha256": "984abac44f914c3bb5e59b0b31651a573aa07d1c38761be4c12768079c50a89b",
+        "size_bytes": 1092
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_support_responsible_team-r1/evidence-check.json",
+        "sha256": "a2ee93058afe710444cc9a8cba7d5b833497e31f2bf0981500b978be9c8b624c",
+        "size_bytes": 1138
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_support_responsible_team-r1/run-context.json",
+        "sha256": "62c4cdd1c5c9671ce033ea540435d5ae7f434bc08df845b6378207d63617edb4",
+        "size_bytes": 325
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_support_responsible_team-r1/tool-responses/000001.json",
+        "sha256": "9a2431e6d8ffadced71ade13a8d8a890066ddc6d363f7260e53377b6109b3e53",
+        "size_bytes": 2912
+      },
+      {
+        "path": "runs/portfolio-portfolio-hidden-conflict-before-task_support_responsible_team-r1/tool-responses/000002.json",
+        "sha256": "fee8daf2ef7e5e5c2e1d7f5730dfaf33d191be7e34c663fd9a5782a02c642a53",
+        "size_bytes": 731
+      },
+      {
+        "path": "STATIC_COMPARISON.json",
+        "sha256": "5c828e8785bd6058b04ad064dd4750fb9185a235238a17fe6dd9e8a1ef53660a",
+        "size_bytes": 4225
+      },
+      {
+        "path": "SUMMARY.json",
+        "sha256": "1b082d91fa14f736e36d378791474a272ff114134450bb6626f113aacd655d63",
+        "size_bytes": 15717
+      }
+    ]
+  },
+  "combined_run_count": 26,
+  "hash_algorithm": "SHA-256",
+  "parent_manifest_path": "artifacts/phase6_product_demo_v2/FROZEN_MANIFEST.v2.json",
+  "parent_manifest_sha256": "c4343e33a65946518b5684529b7fbf3d1571d4768e5dd67a7bce96dcbf856209",
+  "parent_run_ids": [
+    "phase6demo-official-official-001-01-before-489834b1",
+    "phase6demo-official-official-001-02-after-02d170f8",
+    "phase6demo-official-official-001-03-before-1c3baf2d",
+    "phase6demo-official-official-001-04-after-7b4095d7",
+    "phase6demo-official-official-001-05-before-2e03fdf6",
+    "phase6demo-official-official-001-06-after-233af967"
+  ],
+  "parent_tree_sha256": "0243fe5082d585c4f5e6ea2c50c770a25900d17f8a17f246df38fe77394ca33b",
+  "policy": "COPY_V2_AND_REVIEWED_PORTFOLIO_RUNS_WITHOUT_OVERWRITING_V1_OR_V2",
+  "portfolio_run_ids": [
+    "portfolio-portfolio-hidden-conflict-before-task_customer_count-r1",
+    "portfolio-portfolio-hidden-conflict-before-task_customer_latest_registration-r1",
+    "portfolio-portfolio-hidden-conflict-before-task_order_monthly_amount-r1",
+    "portfolio-portfolio-hidden-conflict-before-task_order_latest-r1",
+    "portfolio-portfolio-hidden-conflict-before-task_inventory_most_available-r1",
+    "portfolio-portfolio-hidden-conflict-before-task_inventory_low_stock-r1",
+    "portfolio-portfolio-hidden-conflict-before-task_policy_return_window-r1",
+    "portfolio-portfolio-hidden-conflict-before-task_policy_approval_procedure-r1",
+    "portfolio-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r1",
+    "portfolio-portfolio-hidden-conflict-before-task_support_responsible_team-r1",
+    "portfolio-portfolio-ceiling-after-task_customer_count-r1",
+    "portfolio-portfolio-ceiling-after-task_customer_latest_registration-r1",
+    "portfolio-portfolio-ceiling-after-task_order_monthly_amount-r1",
+    "portfolio-portfolio-ceiling-after-task_order_latest-r1",
+    "portfolio-portfolio-ceiling-after-task_inventory_most_available-r1",
+    "portfolio-portfolio-ceiling-after-task_inventory_low_stock-r1",
+    "portfolio-portfolio-ceiling-after-task_policy_return_window-r1",
+    "portfolio-portfolio-ceiling-after-task_policy_approval_procedure-r1",
+    "portfolio-portfolio-ceiling-after-task_billing_invoice_deadline-r1",
+    "portfolio-portfolio-ceiling-after-task_support_responsible_team-r1"
+  ],
+  "portfolio_summary": {
+    "portfolio-ceiling-after": {
+      "abstention_reasons": {
+        "NOT_FOUND": 2
+      },
+      "evidence_verdicts": {
+        "DIRECT_MATCH": 1,
+        "UNCONFIRMED": 9
+      },
+      "outcomes": {
+        "ABSTAINED": 2,
+        "ANSWERED": 8
+      },
+      "run_count": 10
+    },
+    "portfolio-hidden-conflict-before": {
+      "abstention_reasons": {
+        "CONFLICTING_EVIDENCE": 1,
+        "INSUFFICIENT_EVIDENCE": 1,
+        "NOT_FOUND": 2
+      },
+      "evidence_verdicts": {
+        "UNCONFIRMED": 10
+      },
+      "outcomes": {
+        "ABSTAINED": 4,
+        "ANSWERED": 6
+      },
+      "run_count": 10
+    }
+  },
+  "schema_version": "ax-phase6-product-demo-freeze-v3",
+  "tracked_before_dataset_path": "sample_data/product_demo/hanbit_portfolio_before",
+  "tracked_before_dataset_tree_sha256": "5240f9aaeb25aa5c0ec2a0604d8bd5002705df7b3dc746ce56cd956157f67e8e",
+  "verification": {
+    "passed": true,
+    "v1_v2_preserved": true,
+    "write_once": true
+  }
+}

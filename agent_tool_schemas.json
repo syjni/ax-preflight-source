@@ -1,0 +1,612 @@
+{
+  "search_documents": {
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "query": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Query",
+          "type": "string"
+        },
+        "top_k": {
+          "default": 5,
+          "maximum": 10,
+          "minimum": 1,
+          "title": "Top K",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "title": "SearchDocumentsInput",
+      "type": "object"
+    },
+    "output_schema": {
+      "$defs": {
+        "SearchHit": {
+          "additionalProperties": false,
+          "properties": {
+            "document_id": {
+              "title": "Document Id",
+              "type": "string"
+            },
+            "title": {
+              "title": "Title",
+              "type": "string"
+            },
+            "document_type": {
+              "description": "tabular when this source has one or more queryable tables.",
+              "enum": [
+                "document",
+                "tabular"
+              ],
+              "title": "Document Type",
+              "type": "string"
+            },
+            "tables": {
+              "description": "Queryable table references; empty for non-tabular documents.",
+              "items": {
+                "$ref": "#/$defs/SearchTableReference"
+              },
+              "title": "Tables",
+              "type": "array"
+            },
+            "metadata": {
+              "additionalProperties": true,
+              "title": "Metadata",
+              "type": "object"
+            },
+            "snippet": {
+              "maxLength": 500,
+              "title": "Snippet",
+              "type": "string"
+            },
+            "score": {
+              "minimum": 0.0,
+              "title": "Score",
+              "type": "number"
+            }
+          },
+          "required": [
+            "document_id",
+            "title",
+            "document_type",
+            "tables",
+            "metadata",
+            "snippet",
+            "score"
+          ],
+          "title": "SearchHit",
+          "type": "object"
+        },
+        "SearchTableReference": {
+          "additionalProperties": false,
+          "properties": {
+            "table_id": {
+              "description": "Exact identifier accepted by both lookup_value and query_table. Never guess a table_id. Obtain it from search_documents metadata.",
+              "title": "Table Id",
+              "type": "string"
+            },
+            "sheet_name": {
+              "description": "Scanner sheet or logical table name.",
+              "title": "Sheet Name",
+              "type": "string"
+            },
+            "column_names": {
+              "description": "Available column names for selecting lookup/query arguments.",
+              "items": {
+                "type": "string"
+              },
+              "title": "Column Names",
+              "type": "array"
+            }
+          },
+          "required": [
+            "table_id",
+            "sheet_name",
+            "column_names"
+          ],
+          "title": "SearchTableReference",
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "properties": {
+        "results": {
+          "items": {
+            "$ref": "#/$defs/SearchHit"
+          },
+          "title": "Results",
+          "type": "array"
+        },
+        "results_returned": {
+          "maximum": 10,
+          "minimum": 0,
+          "title": "Results Returned",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "results",
+        "results_returned"
+      ],
+      "title": "SearchDocumentsOutput",
+      "type": "object"
+    }
+  },
+  "read_document": {
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "document_id": {
+          "title": "Document Id",
+          "type": "string"
+        },
+        "section": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Section"
+        }
+      },
+      "required": [
+        "document_id"
+      ],
+      "title": "ReadDocumentInput",
+      "type": "object"
+    },
+    "output_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "document_id": {
+          "title": "Document Id",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "section": {
+          "minimum": 0,
+          "title": "Section",
+          "type": "integer"
+        },
+        "content": {
+          "maxLength": 2500,
+          "title": "Content",
+          "type": "string"
+        },
+        "characters_returned": {
+          "maximum": 2500,
+          "minimum": 0,
+          "title": "Characters Returned",
+          "type": "integer"
+        },
+        "total_characters": {
+          "minimum": 0,
+          "title": "Total Characters",
+          "type": "integer"
+        },
+        "next_section": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Next Section"
+        },
+        "truncated": {
+          "title": "Truncated",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "document_id",
+        "title",
+        "section",
+        "content",
+        "characters_returned",
+        "total_characters",
+        "truncated"
+      ],
+      "title": "ReadDocumentOutput",
+      "type": "object"
+    }
+  },
+  "lookup_value": {
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "table_id": {
+          "description": "Exact tables[].table_id returned by search_documents. Never guess a table_id. Obtain it from search_documents metadata.",
+          "title": "Table Id",
+          "type": "string"
+        },
+        "match_column": {
+          "title": "Match Column",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            }
+          ],
+          "title": "Value"
+        },
+        "return_column": {
+          "title": "Return Column",
+          "type": "string"
+        }
+      },
+      "required": [
+        "table_id",
+        "match_column",
+        "value",
+        "return_column"
+      ],
+      "title": "LookupValueInput",
+      "type": "object"
+    },
+    "output_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "table_id": {
+          "title": "Table Id",
+          "type": "string"
+        },
+        "value": {
+          "default": null,
+          "title": "Value"
+        },
+        "matched_rows": {
+          "minimum": 0,
+          "title": "Matched Rows",
+          "type": "integer"
+        },
+        "ambiguous": {
+          "default": false,
+          "title": "Ambiguous",
+          "type": "boolean"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "table_id",
+        "matched_rows",
+        "source_ids"
+      ],
+      "title": "LookupValueOutput",
+      "type": "object"
+    }
+  },
+  "query_table": {
+    "input_schema": {
+      "$defs": {
+        "AggregationOperator": {
+          "enum": [
+            "sum",
+            "avg",
+            "count",
+            "min",
+            "max",
+            "rate"
+          ],
+          "title": "AggregationOperator",
+          "type": "string"
+        },
+        "AggregationSpec": {
+          "additionalProperties": false,
+          "properties": {
+            "op": {
+              "$ref": "#/$defs/AggregationOperator"
+            },
+            "field": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Field"
+            },
+            "numerator_field": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Numerator Field"
+            },
+            "denominator_field": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Denominator Field"
+            },
+            "alias": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Alias"
+            }
+          },
+          "required": [
+            "op"
+          ],
+          "title": "AggregationSpec",
+          "type": "object"
+        },
+        "FilterClause": {
+          "additionalProperties": false,
+          "properties": {
+            "field": {
+              "title": "Field",
+              "type": "string"
+            },
+            "op": {
+              "$ref": "#/$defs/FilterOperator",
+              "default": "eq"
+            },
+            "value": {
+              "title": "Value"
+            }
+          },
+          "required": [
+            "field",
+            "value"
+          ],
+          "title": "FilterClause",
+          "type": "object"
+        },
+        "FilterOperator": {
+          "enum": [
+            "eq",
+            "ne",
+            "gt",
+            "gte",
+            "lt",
+            "lte",
+            "contains",
+            "prefix",
+            "in"
+          ],
+          "title": "FilterOperator",
+          "type": "string"
+        },
+        "OrderByClause": {
+          "additionalProperties": false,
+          "properties": {
+            "field": {
+              "title": "Field",
+              "type": "string"
+            },
+            "direction": {
+              "$ref": "#/$defs/SortDirection",
+              "default": "asc"
+            }
+          },
+          "required": [
+            "field"
+          ],
+          "title": "OrderByClause",
+          "type": "object"
+        },
+        "SortDirection": {
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "title": "SortDirection",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "properties": {
+        "table_id": {
+          "description": "Exact tables[].table_id returned by search_documents. Never guess a table_id. Obtain it from search_documents metadata.",
+          "title": "Table Id",
+          "type": "string"
+        },
+        "filters": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/FilterClause"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Filters"
+        },
+        "select": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 20,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Select"
+        },
+        "aggregation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AggregationSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "group_by": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 10,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Group By"
+        },
+        "order_by": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/OrderByClause"
+              },
+              "maxItems": 10,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Order By"
+        },
+        "limit": {
+          "anyOf": [
+            {
+              "maximum": 10,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Limit"
+        }
+      },
+      "required": [
+        "table_id"
+      ],
+      "title": "QueryTableInput",
+      "type": "object"
+    },
+    "output_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "table_id": {
+          "title": "Table Id",
+          "type": "string"
+        },
+        "rows": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "maxItems": 10,
+          "title": "Rows",
+          "type": "array"
+        },
+        "rows_returned": {
+          "maximum": 10,
+          "minimum": 0,
+          "title": "Rows Returned",
+          "type": "integer"
+        },
+        "result_rows_before_limit": {
+          "minimum": 0,
+          "title": "Result Rows Before Limit",
+          "type": "integer"
+        },
+        "source_rows_matched": {
+          "minimum": 0,
+          "title": "Source Rows Matched",
+          "type": "integer"
+        },
+        "truncated": {
+          "title": "Truncated",
+          "type": "boolean"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "table_id",
+        "rows",
+        "rows_returned",
+        "result_rows_before_limit",
+        "source_rows_matched",
+        "truncated",
+        "source_ids"
+      ],
+      "title": "QueryTableOutput",
+      "type": "object"
+    }
+  }
+}

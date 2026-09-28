@@ -1,0 +1,256 @@
+{
+  "abstention_reasons": [
+    {
+      "reason": "CONFLICTING_EVIDENCE",
+      "run_id": "phase6demo-official-official-001-01-before-489834b1"
+    },
+    {
+      "reason": "CONFLICTING_EVIDENCE",
+      "run_id": "phase6demo-official-official-001-03-before-1c3baf2d"
+    },
+    {
+      "reason": "CONFLICTING_EVIDENCE",
+      "run_id": "phase6demo-official-official-001-05-before-2e03fdf6"
+    }
+  ],
+  "citation_checks": {
+    "after_answered_runs_with_current_source": 3,
+    "before_conflict_runs_with_both_sources": 3
+  },
+  "claim_scope": "PRODUCT_SANITY_DEMO_NOT_RESEARCH_BENCHMARK",
+  "frequencies": {
+    "demo-return-after": {
+      "ABSTAINED": 0,
+      "ANSWERED": 3,
+      "REJECTED": 0
+    },
+    "demo-return-before": {
+      "ABSTAINED": 3,
+      "ANSWERED": 0,
+      "REJECTED": 0
+    }
+  },
+  "mode": "official",
+  "run_count": 6,
+  "run_ids": [
+    "phase6demo-official-official-001-01-before-489834b1",
+    "phase6demo-official-official-001-02-after-02d170f8",
+    "phase6demo-official-official-001-03-before-1c3baf2d",
+    "phase6demo-official-official-001-04-after-7b4095d7",
+    "phase6demo-official-official-001-05-before-2e03fdf6",
+    "phase6demo-official-official-001-06-after-233af967"
+  ],
+  "runs": [
+    {
+      "abstention_reason": "CONFLICTING_EVIDENCE",
+      "dataset_profile": "demo-return-before",
+      "delivery_sha256": "5cb9ced15ed36b5f2771d26ba17bdd470910ccb5956c22526b33f1830242c099",
+      "delivery_status": "DELIVERED",
+      "ended_at": "2026-09-23T12:23:20.092487Z",
+      "evidence_check_sha256": "0fe6a95fa81f46eed859d2b43b784b3827f27a2d19a32c81e7edfabb13d1ba88",
+      "evidence_verdict": "UNCONFIRMED",
+      "execution_order": 1,
+      "kiro_cli_version": "kiro-cli-chat 2.23.0",
+      "model": "claude-sonnet-5",
+      "payload_status": "ABSTAINED",
+      "question_utf8_sha256": "7eda629cb6294c42f13b514539b2205da4335f220a24227963786409edb8c48e",
+      "readiness_dimensions": {
+        "accessibility": 1.0,
+        "completeness": 1.0,
+        "redundancy": 1.0,
+        "safety": 1.0,
+        "timeliness": 1.0
+      },
+      "readiness_total": 100.0,
+      "repetition": 1,
+      "run_artifact_directory": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-01-before-489834b1",
+      "run_id": "phase6demo-official-official-001-01-before-489834b1",
+      "source_ids": [
+        "FILE_0190582b04c0b44a",
+        "FILE_afb4c3a0cc53d8c8"
+      ],
+      "started_at": "2026-09-23T12:22:55.789628Z",
+      "tool_response_count": 3,
+      "unscored_observation_codes": [
+        "PROBABLE_VERSION_GROUP"
+      ],
+      "unscored_observation_count": 1
+    },
+    {
+      "abstention_reason": null,
+      "dataset_profile": "demo-return-after",
+      "delivery_sha256": "1637215744b8d60f9267758fe011b70ab2a02d9531d552391d05e56f8c904701",
+      "delivery_status": "DELIVERED",
+      "ended_at": "2026-09-23T12:23:37.488790Z",
+      "evidence_check_sha256": "9b3cc9ff2a496da779cbdce8bed886c703b2463c3309d42ed223432e6e5bd7f8",
+      "evidence_verdict": "DIRECT_MATCH",
+      "execution_order": 2,
+      "kiro_cli_version": "kiro-cli-chat 2.23.0",
+      "model": "claude-sonnet-5",
+      "payload_status": "ANSWERED",
+      "question_utf8_sha256": "7eda629cb6294c42f13b514539b2205da4335f220a24227963786409edb8c48e",
+      "readiness_dimensions": {
+        "accessibility": 1.0,
+        "completeness": 1.0,
+        "redundancy": 1.0,
+        "safety": 1.0,
+        "timeliness": 1.0
+      },
+      "readiness_total": 100.0,
+      "repetition": 1,
+      "run_artifact_directory": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-02-after-02d170f8",
+      "run_id": "phase6demo-official-official-001-02-after-02d170f8",
+      "source_ids": [
+        "FILE_5587cb5d2ae64ba9",
+        "FILE_bac911e84aac7c01"
+      ],
+      "started_at": "2026-09-23T12:23:20.097030Z",
+      "tool_response_count": 1,
+      "unscored_observation_codes": [],
+      "unscored_observation_count": 0
+    },
+    {
+      "abstention_reason": "CONFLICTING_EVIDENCE",
+      "dataset_profile": "demo-return-before",
+      "delivery_sha256": "79bbbb591ccc379764f85705ab290f58e7b242db4fc496faebef5b85ca237cce",
+      "delivery_status": "DELIVERED",
+      "ended_at": "2026-09-23T12:24:02.443381Z",
+      "evidence_check_sha256": "d440b39221e172636cdd1701419f4b04fc082af434c4850f2c3cd6581c2d6958",
+      "evidence_verdict": "UNCONFIRMED",
+      "execution_order": 3,
+      "kiro_cli_version": "kiro-cli-chat 2.23.0",
+      "model": "claude-sonnet-5",
+      "payload_status": "ABSTAINED",
+      "question_utf8_sha256": "7eda629cb6294c42f13b514539b2205da4335f220a24227963786409edb8c48e",
+      "readiness_dimensions": {
+        "accessibility": 1.0,
+        "completeness": 1.0,
+        "redundancy": 1.0,
+        "safety": 1.0,
+        "timeliness": 1.0
+      },
+      "readiness_total": 100.0,
+      "repetition": 2,
+      "run_artifact_directory": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-03-before-1c3baf2d",
+      "run_id": "phase6demo-official-official-001-03-before-1c3baf2d",
+      "source_ids": [
+        "FILE_0190582b04c0b44a",
+        "FILE_afb4c3a0cc53d8c8"
+      ],
+      "started_at": "2026-09-23T12:23:37.494405Z",
+      "tool_response_count": 3,
+      "unscored_observation_codes": [
+        "PROBABLE_VERSION_GROUP"
+      ],
+      "unscored_observation_count": 1
+    },
+    {
+      "abstention_reason": null,
+      "dataset_profile": "demo-return-after",
+      "delivery_sha256": "8740772e48e7c5f419d00d1dc075d4d19b4b6b84c7c551172c347bcfa6164338",
+      "delivery_status": "DELIVERED",
+      "ended_at": "2026-09-23T12:24:20.306944Z",
+      "evidence_check_sha256": "651a00d8a98adde72fe06e0121dd64eb97d3b667e0ebc8b78a12b324e8d91cbc",
+      "evidence_verdict": "UNCONFIRMED",
+      "execution_order": 4,
+      "kiro_cli_version": "kiro-cli-chat 2.23.0",
+      "model": "claude-sonnet-5",
+      "payload_status": "ANSWERED",
+      "question_utf8_sha256": "7eda629cb6294c42f13b514539b2205da4335f220a24227963786409edb8c48e",
+      "readiness_dimensions": {
+        "accessibility": 1.0,
+        "completeness": 1.0,
+        "redundancy": 1.0,
+        "safety": 1.0,
+        "timeliness": 1.0
+      },
+      "readiness_total": 100.0,
+      "repetition": 2,
+      "run_artifact_directory": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-04-after-7b4095d7",
+      "run_id": "phase6demo-official-official-001-04-after-7b4095d7",
+      "source_ids": [
+        "FILE_5587cb5d2ae64ba9"
+      ],
+      "started_at": "2026-09-23T12:24:02.447397Z",
+      "tool_response_count": 1,
+      "unscored_observation_codes": [],
+      "unscored_observation_count": 0
+    },
+    {
+      "abstention_reason": "CONFLICTING_EVIDENCE",
+      "dataset_profile": "demo-return-before",
+      "delivery_sha256": "5a143a59ade9692edf0be411962916e9a78f77aa2fbac913c257a142bd2752f1",
+      "delivery_status": "DELIVERED",
+      "ended_at": "2026-09-23T12:24:46.670937Z",
+      "evidence_check_sha256": "d45e6d994b870a196063c1d3468f70cc362a0242be266968977f92c45124cd45",
+      "evidence_verdict": "UNCONFIRMED",
+      "execution_order": 5,
+      "kiro_cli_version": "kiro-cli-chat 2.23.0",
+      "model": "claude-sonnet-5",
+      "payload_status": "ABSTAINED",
+      "question_utf8_sha256": "7eda629cb6294c42f13b514539b2205da4335f220a24227963786409edb8c48e",
+      "readiness_dimensions": {
+        "accessibility": 1.0,
+        "completeness": 1.0,
+        "redundancy": 1.0,
+        "safety": 1.0,
+        "timeliness": 1.0
+      },
+      "readiness_total": 100.0,
+      "repetition": 3,
+      "run_artifact_directory": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-05-before-2e03fdf6",
+      "run_id": "phase6demo-official-official-001-05-before-2e03fdf6",
+      "source_ids": [
+        "FILE_0190582b04c0b44a",
+        "FILE_afb4c3a0cc53d8c8"
+      ],
+      "started_at": "2026-09-23T12:24:20.311275Z",
+      "tool_response_count": 3,
+      "unscored_observation_codes": [
+        "PROBABLE_VERSION_GROUP"
+      ],
+      "unscored_observation_count": 1
+    },
+    {
+      "abstention_reason": null,
+      "dataset_profile": "demo-return-after",
+      "delivery_sha256": "07fa10ce7756f540b33f6a1d976759c48c028085d1ffa1d2f7d49e4203779523",
+      "delivery_status": "DELIVERED",
+      "ended_at": "2026-09-23T12:25:02.436983Z",
+      "evidence_check_sha256": "6ed3570d2381b855fff43ecd012938986fced46dea13a2e51ca0e16b6987256e",
+      "evidence_verdict": "UNCONFIRMED",
+      "execution_order": 6,
+      "kiro_cli_version": "kiro-cli-chat 2.23.0",
+      "model": "claude-sonnet-5",
+      "payload_status": "ANSWERED",
+      "question_utf8_sha256": "7eda629cb6294c42f13b514539b2205da4335f220a24227963786409edb8c48e",
+      "readiness_dimensions": {
+        "accessibility": 1.0,
+        "completeness": 1.0,
+        "redundancy": 1.0,
+        "safety": 1.0,
+        "timeliness": 1.0
+      },
+      "readiness_total": 100.0,
+      "repetition": 3,
+      "run_artifact_directory": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-06-after-233af967",
+      "run_id": "phase6demo-official-official-001-06-after-233af967",
+      "source_ids": [
+        "FILE_5587cb5d2ae64ba9"
+      ],
+      "started_at": "2026-09-23T12:24:46.675943Z",
+      "tool_response_count": 1,
+      "unscored_observation_codes": [],
+      "unscored_observation_count": 0
+    }
+  ],
+  "sanity_criteria": {
+    "after_answered_count": 3,
+    "after_passed": true,
+    "before_conflicting_abstention_count": 3,
+    "before_passed": true,
+    "passed": true,
+    "threshold": 2
+  },
+  "schema_version": "ax-phase6-product-demo-summary-v1"
+}

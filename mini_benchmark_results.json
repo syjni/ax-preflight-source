@@ -1,0 +1,881 @@
+{
+  "schema_version": "feasibility-2026-09-18-v1",
+  "run_id": "2026-09-18T14:23:20.459898+00:00",
+  "scope": "9/18 feasibility test only",
+  "execution_mode": "deterministic_task_driver_no_llm",
+  "retrieval": {
+    "ground_truth": "required_sources",
+    "methods": {
+      "whitespace_bm25": {
+        "recall@1": 0.5,
+        "recall@3": 0.5,
+        "recall@5": 0.5,
+        "cases": [
+          {
+            "query": "현재 반품 기간",
+            "required_sources": [
+              "DOC_007"
+            ],
+            "ranked_ids": [
+              "DOC_007",
+              "DOC_006",
+              "DOC_001",
+              "DOC_002",
+              "DOC_003"
+            ],
+            "recall@1": 1.0,
+            "recall@3": 1.0,
+            "recall@5": 1.0
+          },
+          {
+            "query": "배송 지연 보상",
+            "required_sources": [
+              "DOC_008"
+            ],
+            "ranked_ids": [
+              "DOC_001",
+              "DOC_002",
+              "DOC_003",
+              "DOC_004",
+              "DOC_005"
+            ],
+            "recall@1": 0.0,
+            "recall@3": 0.0,
+            "recall@5": 0.0
+          },
+          {
+            "query": "프리미엄 홍차 세트",
+            "required_sources": [
+              "DOC_009"
+            ],
+            "ranked_ids": [
+              "DOC_001",
+              "DOC_002",
+              "DOC_003",
+              "DOC_004",
+              "DOC_005"
+            ],
+            "recall@1": 0.0,
+            "recall@3": 0.0,
+            "recall@5": 0.0
+          },
+          {
+            "query": "고객 식별자 조회 절차",
+            "required_sources": [
+              "DOC_005"
+            ],
+            "ranked_ids": [
+              "DOC_005",
+              "DOC_003",
+              "DOC_001",
+              "DOC_002",
+              "DOC_004"
+            ],
+            "recall@1": 1.0,
+            "recall@3": 1.0,
+            "recall@5": 1.0
+          }
+        ]
+      },
+      "char_2_3gram_bm25": {
+        "recall@1": 1.0,
+        "recall@3": 1.0,
+        "recall@5": 1.0,
+        "cases": [
+          {
+            "query": "현재 반품 기간",
+            "required_sources": [
+              "DOC_007"
+            ],
+            "ranked_ids": [
+              "DOC_007",
+              "DOC_006",
+              "DOC_001",
+              "DOC_002",
+              "DOC_003"
+            ],
+            "recall@1": 1.0,
+            "recall@3": 1.0,
+            "recall@5": 1.0
+          },
+          {
+            "query": "배송 지연 보상",
+            "required_sources": [
+              "DOC_008"
+            ],
+            "ranked_ids": [
+              "DOC_008",
+              "DOC_001",
+              "DOC_002",
+              "DOC_003",
+              "DOC_004"
+            ],
+            "recall@1": 1.0,
+            "recall@3": 1.0,
+            "recall@5": 1.0
+          },
+          {
+            "query": "프리미엄 홍차 세트",
+            "required_sources": [
+              "DOC_009"
+            ],
+            "ranked_ids": [
+              "DOC_009",
+              "DOC_001",
+              "DOC_002",
+              "DOC_003",
+              "DOC_004"
+            ],
+            "recall@1": 1.0,
+            "recall@3": 1.0,
+            "recall@5": 1.0
+          },
+          {
+            "query": "고객 식별자 조회 절차",
+            "required_sources": [
+              "DOC_005"
+            ],
+            "ranked_ids": [
+              "DOC_005",
+              "DOC_003",
+              "DOC_001",
+              "DOC_002",
+              "DOC_004"
+            ],
+            "recall@1": 1.0,
+            "recall@3": 1.0,
+            "recall@5": 1.0
+          }
+        ]
+      }
+    },
+    "comparison": {
+      "recall@5_delta_char_minus_whitespace": 0.5
+    }
+  },
+  "task_results": [
+    {
+      "task": {
+        "task_id": "K_VERSION",
+        "category": "knowledge",
+        "question": "현재 반품 가능 기간과 조건은?",
+        "scoring": {
+          "type": "keyword",
+          "expected_keywords": [
+            "30일",
+            "미개봉",
+            "영수증"
+          ],
+          "minimum_matches": 3,
+          "forbidden_keywords": [
+            "14일"
+          ]
+        },
+        "required_sources": [
+          "DOC_006",
+          "DOC_007"
+        ],
+        "expects_absent": false
+      },
+      "answer": {
+        "final_answer": "30일, 미개봉 상품, 영수증 필요",
+        "unit": "days",
+        "explanation": "두 정책의 effective_date를 비교해 현재본을 선택했습니다.",
+        "source_ids": [
+          "DOC_007",
+          "DOC_006"
+        ],
+        "abstain": false,
+        "selected_source": "DOC_007"
+      },
+      "tool_trace": [
+        {
+          "sequence": 1,
+          "tool": "search_documents",
+          "arguments": {
+            "query": "현재 반품 기간",
+            "top_k": 5
+          },
+          "latency_ms": 0.09,
+          "source_ids": [
+            "DOC_007",
+            "DOC_006",
+            "DOC_001",
+            "DOC_002",
+            "DOC_003"
+          ],
+          "result_summary": {
+            "rows_or_results": 5
+          }
+        },
+        {
+          "sequence": 2,
+          "tool": "read_document",
+          "arguments": {
+            "document_id": "DOC_007",
+            "section": null
+          },
+          "latency_ms": 0.004,
+          "source_ids": [
+            "DOC_007"
+          ],
+          "result_summary": {
+            "document_id": "DOC_007"
+          }
+        },
+        {
+          "sequence": 3,
+          "tool": "read_document",
+          "arguments": {
+            "document_id": "DOC_006",
+            "section": null
+          },
+          "latency_ms": 0.002,
+          "source_ids": [
+            "DOC_006"
+          ],
+          "result_summary": {
+            "document_id": "DOC_006"
+          }
+        }
+      ],
+      "measurements": {
+        "tool_calls": 3,
+        "tool_budget": 6,
+        "budget_exceeded": false,
+        "llm_calls": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "llm_latency_ms": 0.0,
+        "task_latency_ms": 0.111,
+        "llm_provider_status": "NOT_RUN_MISSING_PROVIDER"
+      },
+      "score": {
+        "correct": true,
+        "matched_keywords": [
+          "30일",
+          "미개봉",
+          "영수증"
+        ],
+        "forbidden_matches": [],
+        "minimum_matches": 3
+      },
+      "state": "CORRECT"
+    },
+    {
+      "task": {
+        "task_id": "K_SHIPPING",
+        "category": "knowledge",
+        "question": "배송 지연 보상 기준은?",
+        "scoring": {
+          "type": "keyword",
+          "expected_keywords": [
+            "3일",
+            "적립금"
+          ],
+          "minimum_matches": 2,
+          "forbidden_keywords": []
+        },
+        "required_sources": [
+          "DOC_008"
+        ],
+        "expects_absent": false
+      },
+      "answer": {
+        "final_answer": "3일 지연 시 적립금 보상",
+        "unit": null,
+        "explanation": "배송지연보상은 예정일보다 3일 늦을 때 적립금으로 제공합니다.",
+        "source_ids": [
+          "DOC_008"
+        ],
+        "abstain": false
+      },
+      "tool_trace": [
+        {
+          "sequence": 1,
+          "tool": "search_documents",
+          "arguments": {
+            "query": "배송 지연 보상",
+            "top_k": 5
+          },
+          "latency_ms": 0.088,
+          "source_ids": [
+            "DOC_008",
+            "DOC_001",
+            "DOC_002",
+            "DOC_003",
+            "DOC_004"
+          ],
+          "result_summary": {
+            "rows_or_results": 5
+          }
+        },
+        {
+          "sequence": 2,
+          "tool": "read_document",
+          "arguments": {
+            "document_id": "DOC_008",
+            "section": null
+          },
+          "latency_ms": 0.002,
+          "source_ids": [
+            "DOC_008"
+          ],
+          "result_summary": {
+            "document_id": "DOC_008"
+          }
+        }
+      ],
+      "measurements": {
+        "tool_calls": 2,
+        "tool_budget": 6,
+        "budget_exceeded": false,
+        "llm_calls": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "llm_latency_ms": 0.0,
+        "task_latency_ms": 0.094,
+        "llm_provider_status": "NOT_RUN_MISSING_PROVIDER"
+      },
+      "score": {
+        "correct": true,
+        "matched_keywords": [
+          "3일",
+          "적립금"
+        ],
+        "forbidden_matches": [],
+        "minimum_matches": 2
+      },
+      "state": "CORRECT"
+    },
+    {
+      "task": {
+        "task_id": "O_LAST_ORDER",
+        "category": "operations",
+        "question": "C013의 마지막 주문일은?",
+        "scoring": {
+          "type": "exact",
+          "expected": "2026-08-29"
+        },
+        "required_sources": [
+          "TABLE_orders"
+        ],
+        "expects_absent": false
+      },
+      "answer": {
+        "final_answer": "2026-08-29",
+        "unit": null,
+        "explanation": "orders의 최대 주문일",
+        "source_ids": [
+          "TABLE_orders"
+        ],
+        "abstain": false
+      },
+      "tool_trace": [
+        {
+          "sequence": 1,
+          "tool": "query_table",
+          "arguments": {
+            "table_id": "orders",
+            "filters": {
+              "customer_id": "C013"
+            },
+            "select": null,
+            "aggregation": {
+              "op": "max",
+              "field": "order_date"
+            },
+            "group_by": null,
+            "order_by": null,
+            "limit": null
+          },
+          "latency_ms": 0.017,
+          "source_ids": [
+            "TABLE_orders"
+          ],
+          "result_summary": {
+            "rows_returned": 1
+          }
+        }
+      ],
+      "measurements": {
+        "tool_calls": 1,
+        "tool_budget": 8,
+        "budget_exceeded": false,
+        "llm_calls": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "llm_latency_ms": 0.0,
+        "task_latency_ms": 0.021,
+        "llm_provider_status": "NOT_RUN_MISSING_PROVIDER"
+      },
+      "score": {
+        "correct": true,
+        "normalized_actual": "2026-08-29",
+        "normalized_expected": "2026-08-29"
+      },
+      "state": "CORRECT"
+    },
+    {
+      "task": {
+        "task_id": "C_MONTHLY_SUM",
+        "category": "cross_file",
+        "question": "한빛상사의 2026년 8월 주문액은?",
+        "scoring": {
+          "type": "numeric",
+          "expected": 200000,
+          "relative_tolerance": 0.001
+        },
+        "required_sources": [
+          "DOC_005",
+          "TABLE_customers",
+          "TABLE_orders"
+        ],
+        "expects_absent": false
+      },
+      "answer": {
+        "final_answer": 200000,
+        "unit": "KRW",
+        "explanation": "고객명을 ID로 변환한 뒤 월 주문액을 합산했습니다.",
+        "source_ids": [
+          "DOC_005",
+          "TABLE_customers",
+          "TABLE_orders"
+        ],
+        "abstain": false
+      },
+      "tool_trace": [
+        {
+          "sequence": 1,
+          "tool": "search_documents",
+          "arguments": {
+            "query": "고객 식별자 조회 절차",
+            "top_k": 5
+          },
+          "latency_ms": 0.112,
+          "source_ids": [
+            "DOC_005",
+            "DOC_003",
+            "DOC_001",
+            "DOC_002",
+            "DOC_004"
+          ],
+          "result_summary": {
+            "rows_or_results": 5
+          }
+        },
+        {
+          "sequence": 2,
+          "tool": "read_document",
+          "arguments": {
+            "document_id": "DOC_005",
+            "section": null
+          },
+          "latency_ms": 0.002,
+          "source_ids": [
+            "DOC_005"
+          ],
+          "result_summary": {
+            "document_id": "DOC_005"
+          }
+        },
+        {
+          "sequence": 3,
+          "tool": "lookup_value",
+          "arguments": {
+            "table_id": "customers",
+            "match_column": "customer_name",
+            "value": "한빛상사",
+            "return_column": "customer_id"
+          },
+          "latency_ms": 0.018,
+          "source_ids": [
+            "TABLE_customers"
+          ],
+          "result_summary": {
+            "value": "C013"
+          }
+        },
+        {
+          "sequence": 4,
+          "tool": "query_table",
+          "arguments": {
+            "table_id": "orders",
+            "filters": {
+              "customer_id": "C013",
+              "month": "2026-08"
+            },
+            "select": null,
+            "aggregation": {
+              "op": "sum",
+              "field": "amount"
+            },
+            "group_by": null,
+            "order_by": null,
+            "limit": null
+          },
+          "latency_ms": 0.015,
+          "source_ids": [
+            "TABLE_orders"
+          ],
+          "result_summary": {
+            "rows_returned": 1
+          }
+        }
+      ],
+      "measurements": {
+        "tool_calls": 4,
+        "tool_budget": 12,
+        "budget_exceeded": false,
+        "llm_calls": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "llm_latency_ms": 0.0,
+        "task_latency_ms": 0.157,
+        "llm_provider_status": "NOT_RUN_MISSING_PROVIDER"
+      },
+      "score": {
+        "correct": true,
+        "relative_error": 0.0,
+        "tolerance": 0.001
+      },
+      "state": "CORRECT"
+    },
+    {
+      "task": {
+        "task_id": "K_ABSENT",
+        "category": "knowledge",
+        "question": "제주 지역 추가 배송비는 얼마인가?",
+        "scoring": {
+          "type": "exact",
+          "expected": null
+        },
+        "required_sources": [],
+        "expects_absent": true
+      },
+      "answer": {
+        "final_answer": null,
+        "unit": null,
+        "explanation": "현재 자료에서 제주 추가 배송비를 확인할 수 없습니다.",
+        "source_ids": [],
+        "abstain": true
+      },
+      "tool_trace": [
+        {
+          "sequence": 1,
+          "tool": "search_documents",
+          "arguments": {
+            "query": "제주 지역 추가 배송비",
+            "top_k": 5
+          },
+          "latency_ms": 0.061,
+          "source_ids": [
+            "DOC_008",
+            "DOC_001",
+            "DOC_002",
+            "DOC_003",
+            "DOC_004"
+          ],
+          "result_summary": {
+            "rows_or_results": 5
+          }
+        }
+      ],
+      "measurements": {
+        "tool_calls": 1,
+        "tool_budget": 6,
+        "budget_exceeded": false,
+        "llm_calls": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "llm_latency_ms": 0.0,
+        "task_latency_ms": 0.063,
+        "llm_provider_status": "NOT_RUN_MISSING_PROVIDER"
+      },
+      "score": {
+        "correct": false,
+        "reason": "abstained_before_answer_scoring"
+      },
+      "state": "CORRECT_ABSTENTION"
+    },
+    {
+      "task": {
+        "task_id": "K_HALLUCINATION_PROBE",
+        "category": "knowledge",
+        "question": "자료에 없는 부산 물류센터 코드는?",
+        "scoring": {
+          "type": "exact",
+          "expected": null
+        },
+        "required_sources": [],
+        "expects_absent": true
+      },
+      "answer": {
+        "final_answer": "B-WH-02",
+        "unit": null,
+        "explanation": "근거 없이 생성된 의도적 음성 대조군입니다.",
+        "source_ids": [],
+        "abstain": false
+      },
+      "tool_trace": [
+        {
+          "sequence": 1,
+          "tool": "search_documents",
+          "arguments": {
+            "query": "부산 물류센터 코드",
+            "top_k": 5
+          },
+          "latency_ms": 0.053,
+          "source_ids": [
+            "DOC_009",
+            "DOC_001",
+            "DOC_002",
+            "DOC_003",
+            "DOC_004"
+          ],
+          "result_summary": {
+            "rows_or_results": 5
+          }
+        }
+      ],
+      "measurements": {
+        "tool_calls": 1,
+        "tool_budget": 6,
+        "budget_exceeded": false,
+        "llm_calls": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "llm_latency_ms": 0.0,
+        "task_latency_ms": 0.055,
+        "llm_provider_status": "NOT_RUN_MISSING_PROVIDER"
+      },
+      "score": {
+        "correct": false,
+        "normalized_actual": "b-wh-02",
+        "normalized_expected": "none"
+      },
+      "state": "HALLUCINATION"
+    }
+  ],
+  "category_metrics": {
+    "knowledge": {
+      "task_count": 4,
+      "tool_calls": {
+        "mean": 1.75,
+        "median": 1.5,
+        "p95_nearest_rank": 3,
+        "max": 3
+      },
+      "llm_calls_total": 0,
+      "input_tokens_total": 0,
+      "output_tokens_total": 0,
+      "task_latency_ms_mean": 0.08075
+    },
+    "operations": {
+      "task_count": 1,
+      "tool_calls": {
+        "mean": 1,
+        "median": 1,
+        "p95_nearest_rank": 1,
+        "max": 1
+      },
+      "llm_calls_total": 0,
+      "input_tokens_total": 0,
+      "output_tokens_total": 0,
+      "task_latency_ms_mean": 0.021
+    },
+    "cross_file": {
+      "task_count": 1,
+      "tool_calls": {
+        "mean": 4,
+        "median": 4,
+        "p95_nearest_rank": 4,
+        "max": 4
+      },
+      "llm_calls_total": 0,
+      "input_tokens_total": 0,
+      "output_tokens_total": 0,
+      "task_latency_ms_mean": 0.157
+    }
+  },
+  "tool_chain_validation": {
+    "task_id": "C_MONTHLY_SUM",
+    "expected": [
+      "search_documents",
+      "read_document",
+      "lookup_value",
+      "query_table"
+    ],
+    "observed": [
+      "search_documents",
+      "read_document",
+      "lookup_value",
+      "query_table"
+    ],
+    "passed": true
+  },
+  "scorer_validation": [
+    {
+      "case": "numeric_pass",
+      "expected_pass": true,
+      "observed_pass": true,
+      "test_pass": true,
+      "detail": {
+        "correct": true,
+        "relative_error": 0.0005,
+        "tolerance": 0.001
+      }
+    },
+    {
+      "case": "numeric_fail",
+      "expected_pass": false,
+      "observed_pass": false,
+      "test_pass": true,
+      "detail": {
+        "correct": false,
+        "relative_error": 0.05,
+        "tolerance": 0.001
+      }
+    },
+    {
+      "case": "exact_pass",
+      "expected_pass": true,
+      "observed_pass": true,
+      "test_pass": true,
+      "detail": {
+        "correct": true,
+        "normalized_actual": "2026-08-29",
+        "normalized_expected": "2026-08-29"
+      }
+    },
+    {
+      "case": "exact_fail",
+      "expected_pass": false,
+      "observed_pass": false,
+      "test_pass": true,
+      "detail": {
+        "correct": false,
+        "normalized_actual": "2026-08-28",
+        "normalized_expected": "2026-08-29"
+      }
+    },
+    {
+      "case": "keyword_pass",
+      "expected_pass": true,
+      "observed_pass": true,
+      "test_pass": true,
+      "detail": {
+        "correct": true,
+        "matched_keywords": [
+          "30일",
+          "미개봉",
+          "영수증"
+        ],
+        "forbidden_matches": [],
+        "minimum_matches": 3
+      }
+    },
+    {
+      "case": "keyword_forbidden_fail",
+      "expected_pass": false,
+      "observed_pass": false,
+      "test_pass": true,
+      "detail": {
+        "correct": false,
+        "matched_keywords": [
+          "30일",
+          "미개봉",
+          "영수증"
+        ],
+        "forbidden_matches": [
+          "14일"
+        ],
+        "minimum_matches": 3
+      }
+    }
+  ],
+  "provenance_validation": [
+    {
+      "case": "old_document_wrong_answer",
+      "expected": "INCORRECT_SUPPORTED",
+      "observed": "INCORRECT_SUPPORTED",
+      "test_pass": true
+    },
+    {
+      "case": "no_source_wrong_answer",
+      "expected": "HALLUCINATION",
+      "observed": "HALLUCINATION",
+      "test_pass": true
+    },
+    {
+      "case": "irrelevant_source_wrong_answer",
+      "expected": "HALLUCINATION",
+      "observed": "HALLUCINATION",
+      "test_pass": true
+    },
+    {
+      "case": "unjustified_abstention",
+      "expected": "UNJUSTIFIED_ABSTENTION",
+      "observed": "UNJUSTIFIED_ABSTENTION",
+      "test_pass": true
+    },
+    {
+      "case": "absent_correct_abstention",
+      "expected": "CORRECT_ABSTENTION",
+      "observed": "CORRECT_ABSTENTION",
+      "test_pass": true
+    }
+  ],
+  "state_counts": {
+    "CORRECT": 4,
+    "CORRECT_ABSTENTION": 1,
+    "HALLUCINATION": 1
+  },
+  "feasibility_assertions": [
+    {
+      "id": "retrieval_char_recall_at_5_not_worse",
+      "passed": true,
+      "detail": "char=1.000, whitespace=0.500"
+    },
+    {
+      "id": "four_tool_chain",
+      "passed": true,
+      "detail": "observed=['search_documents', 'read_document', 'lookup_value', 'query_table']"
+    },
+    {
+      "id": "tool_counts_recorded",
+      "passed": true,
+      "detail": "per-task traces equal measured counts"
+    },
+    {
+      "id": "live_llm_telemetry",
+      "passed": false,
+      "detail": "NOT_RUN_MISSING_PROVIDER; calls/tokens/latency remain zero"
+    },
+    {
+      "id": "three_deterministic_scorers",
+      "passed": true,
+      "detail": "6/6 scorer cases passed"
+    },
+    {
+      "id": "version_conflict_14_vs_30",
+      "passed": true,
+      "detail": "old=14 days, current=30 days"
+    },
+    {
+      "id": "correct_abstention",
+      "passed": true,
+      "detail": "state=CORRECT_ABSTENTION"
+    },
+    {
+      "id": "provenance_classification",
+      "passed": true,
+      "detail": "5/5 provenance cases passed"
+    }
+  ],
+  "summary": {
+    "passed": 7,
+    "failed": 1,
+    "total": 8
+  }
+}

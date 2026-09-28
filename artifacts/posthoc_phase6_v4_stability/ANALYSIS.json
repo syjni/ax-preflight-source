@@ -1,0 +1,1409 @@
+{
+  "after_file_count": 30,
+  "all_lost_tasks_exclude_changed_file_from_citations": true,
+  "before_file_count": 30,
+  "changed_files": [
+    {
+      "after_sha256": "8892c3a043fc20bbe96898fdbe30ba7c7c124cf569608b0dfe5662e34157fa0c",
+      "before_sha256": "14d06a97e2337d9702828fc9b4815e18f2c4c06b14906550df57e609c251b672",
+      "change": "MODIFIED",
+      "relative_path": "06_고객지원/FAQ_2026.txt"
+    }
+  ],
+  "interpretation_guardrail": "DATA_CAUSE_NOT_ESTABLISHED means the frozen observations do not justify attributing the change to source documents; it does not prove a model-only cause.",
+  "lost_stability_task_count": 3,
+  "lost_stability_task_ids": [
+    "TASK_BILLING_INVOICE_DEADLINE",
+    "TASK_INVENTORY_MOST_AVAILABLE",
+    "TASK_ORDER_MONTHLY_AMOUNT"
+  ],
+  "schema_version": "ax-phase6-v4-stability-review-v1",
+  "snapshot": "artifacts/phase6_product_demo_v4/SUMMARY.json",
+  "tasks": [
+    {
+      "after": {
+        "runs": [
+          {
+            "answer": "매월 세금계산서(인보이스)는 다음 달 5영업일에 마감됩니다.",
+            "evidence_verdict": "UNCONFIRMED",
+            "normalized_signature": [
+              "number",
+              "5",
+              "영업일 (매월 5일)"
+            ],
+            "repetition": 1,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_billing_invoice_deadline-r1",
+            "source_ids": [
+              "FILE_9b04d01aea38a735",
+              "TABLE_FILE_6ac6f3026a34d94f_SettlementCalendar"
+            ],
+            "source_paths": [
+              "07_정산/세금계산서_처리_안내.pdf",
+              "07_정산/정산_캘린더_2026.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": "영업일 (매월 5일)"
+          },
+          {
+            "answer": "매월 세금계산서(월간 인보이스)는 다음 달 5번째 영업일에 마감됩니다.",
+            "evidence_verdict": "UNCONFIRMED",
+            "normalized_signature": [
+              "number",
+              "5",
+              "business_day_of_month"
+            ],
+            "repetition": 2,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_billing_invoice_deadline-r2",
+            "source_ids": [
+              "FILE_9b04d01aea38a735",
+              "FILE_6ac6f3026a34d94f"
+            ],
+            "source_paths": [
+              "07_정산/세금계산서_처리_안내.pdf",
+              "07_정산/정산_캘린더_2026.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": "business_day_of_month"
+          },
+          {
+            "answer": "매월 세금계산서 마감일은 다음 달 5번째 영업일입니다.",
+            "evidence_verdict": "UNCONFIRMED",
+            "normalized_signature": [
+              "text",
+              "매월 세금계산서 마감일은 다음 달 5번째 영업일입니다.",
+              null
+            ],
+            "repetition": 3,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_billing_invoice_deadline-r3",
+            "source_ids": [
+              "FILE_9b04d01aea38a735"
+            ],
+            "source_paths": [
+              "07_정산/세금계산서_처리_안내.pdf"
+            ],
+            "status": "ANSWERED",
+            "unit": null
+          }
+        ],
+        "state": "INCONCLUSIVE"
+      },
+      "attribution": "DATA_CAUSE_NOT_ESTABLISHED",
+      "before": {
+        "runs": [
+          {
+            "answer": "매월 세금계산서(월간 인보이스)는 익월 5영업일까지 마감 처리해야 합니다.",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "number",
+              "5",
+              "business_day_next_month"
+            ],
+            "repetition": 1,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r1",
+            "source_ids": [
+              "FILE_9b04d01aea38a735",
+              "TABLE_FILE_6ac6f3026a34d94f_SettlementCalendar"
+            ],
+            "source_paths": [
+              "07_정산/세금계산서_처리_안내.pdf",
+              "07_정산/정산_캘린더_2026.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": "business_day_of_next_month"
+          },
+          {
+            "answer": "매월 세금계산서(월간 인보이스)는 다음 달 영업일 기준 5일째(5영업일)까지 마감 처리합니다.",
+            "evidence_verdict": "UNCONFIRMED",
+            "normalized_signature": [
+              "number",
+              "5",
+              "business_day_next_month"
+            ],
+            "repetition": 2,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r2",
+            "source_ids": [
+              "FILE_9b04d01aea38a735",
+              "TABLE_FILE_6ac6f3026a34d94f_SettlementCalendar"
+            ],
+            "source_paths": [
+              "07_정산/세금계산서_처리_안내.pdf",
+              "07_정산/정산_캘린더_2026.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": "business_days_of_next_month"
+          },
+          {
+            "answer": "월별 세금계산서는 익월 5번째 영업일에 마감합니다.",
+            "evidence_verdict": "UNCONFIRMED",
+            "normalized_signature": [
+              "number",
+              "5",
+              "business_day_next_month"
+            ],
+            "repetition": 3,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r3",
+            "source_ids": [
+              "FILE_9b04d01aea38a735"
+            ],
+            "source_paths": [
+              "07_정산/세금계산서_처리_안내.pdf"
+            ],
+            "status": "ANSWERED",
+            "unit": "영업일 (익월 5일)"
+          }
+        ],
+        "state": "STABLE"
+      },
+      "changed_cited_paths": [],
+      "cited_paths": [
+        "07_정산/세금계산서_처리_안내.pdf",
+        "07_정산/정산_캘린더_2026.xlsx"
+      ],
+      "lost_stability": true,
+      "task_id": "TASK_BILLING_INVOICE_DEADLINE"
+    },
+    {
+      "after": {
+        "runs": [
+          {
+            "answer": "10곳",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "number",
+              "10",
+              "count"
+            ],
+            "repetition": 1,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_customer_count-r1",
+            "source_ids": [
+              "TABLE_FILE_79c849b8a094119f_Customers"
+            ],
+            "source_paths": [
+              "03_영업/거래처_마스터.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": "거래처 수"
+          },
+          {
+            "answer": "10곳",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "number",
+              "10",
+              "count"
+            ],
+            "repetition": 2,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_customer_count-r2",
+            "source_ids": [
+              "TABLE_FILE_79c849b8a094119f_Customers"
+            ],
+            "source_paths": [
+              "03_영업/거래처_마스터.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": "거래처 수"
+          },
+          {
+            "answer": "10곳",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "number",
+              "10",
+              "count"
+            ],
+            "repetition": 3,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_customer_count-r3",
+            "source_ids": [
+              "TABLE_FILE_79c849b8a094119f_Customers"
+            ],
+            "source_paths": [
+              "03_영업/거래처_마스터.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": "거래처 수"
+          }
+        ],
+        "state": "STABLE"
+      },
+      "attribution": "NOT_APPLICABLE",
+      "before": {
+        "runs": [
+          {
+            "answer": "10곳",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "number",
+              "10",
+              "count"
+            ],
+            "repetition": 1,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_customer_count-r1",
+            "source_ids": [
+              "TABLE_FILE_79c849b8a094119f_Customers"
+            ],
+            "source_paths": [
+              "03_영업/거래처_마스터.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": "거래처 수"
+          },
+          {
+            "answer": 10,
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "number",
+              "10",
+              "count"
+            ],
+            "repetition": 2,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_customer_count-r2",
+            "source_ids": [
+              "TABLE_FILE_79c849b8a094119f_Customers"
+            ],
+            "source_paths": [
+              "03_영업/거래처_마스터.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": "거래처"
+          },
+          {
+            "answer": 10,
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "number",
+              "10",
+              "count"
+            ],
+            "repetition": 3,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_customer_count-r3",
+            "source_ids": [
+              "TABLE_FILE_79c849b8a094119f_Customers"
+            ],
+            "source_paths": [
+              "03_영업/거래처_마스터.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": "거래처"
+          }
+        ],
+        "state": "STABLE"
+      },
+      "changed_cited_paths": [],
+      "cited_paths": [
+        "03_영업/거래처_마스터.xlsx"
+      ],
+      "lost_stability": false,
+      "task_id": "TASK_CUSTOMER_COUNT"
+    },
+    {
+      "after": {
+        "runs": [
+          {
+            "answer": null,
+            "evidence_verdict": "UNCONFIRMED",
+            "normalized_signature": null,
+            "repetition": 1,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_customer_latest_registration-r1",
+            "source_ids": [
+              "FILE_79c849b8a094119f",
+              "FILE_2e83f1278d225ef5",
+              "FILE_f4883661ccd5ae02"
+            ],
+            "source_paths": [
+              "01_경영관리/거래처_관리기준.pdf",
+              "02_정책/신규거래처_등록_절차.docx",
+              "03_영업/거래처_마스터.xlsx"
+            ],
+            "status": "ABSTAINED",
+            "unit": null
+          },
+          {
+            "answer": null,
+            "evidence_verdict": "UNCONFIRMED",
+            "normalized_signature": null,
+            "repetition": 2,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_customer_latest_registration-r2",
+            "source_ids": [
+              "FILE_79c849b8a094119f",
+              "FILE_2e83f1278d225ef5",
+              "FILE_f4883661ccd5ae02"
+            ],
+            "source_paths": [
+              "01_경영관리/거래처_관리기준.pdf",
+              "02_정책/신규거래처_등록_절차.docx",
+              "03_영업/거래처_마스터.xlsx"
+            ],
+            "status": "ABSTAINED",
+            "unit": null
+          },
+          {
+            "answer": null,
+            "evidence_verdict": "UNCONFIRMED",
+            "normalized_signature": null,
+            "repetition": 3,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_customer_latest_registration-r3",
+            "source_ids": [
+              "FILE_79c849b8a094119f",
+              "FILE_2e83f1278d225ef5",
+              "FILE_f4883661ccd5ae02"
+            ],
+            "source_paths": [
+              "01_경영관리/거래처_관리기준.pdf",
+              "02_정책/신규거래처_등록_절차.docx",
+              "03_영업/거래처_마스터.xlsx"
+            ],
+            "status": "ABSTAINED",
+            "unit": null
+          }
+        ],
+        "state": "BLOCKED"
+      },
+      "attribution": "NOT_APPLICABLE",
+      "before": {
+        "runs": [
+          {
+            "answer": null,
+            "evidence_verdict": "UNCONFIRMED",
+            "normalized_signature": null,
+            "repetition": 1,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_customer_latest_registration-r1",
+            "source_ids": [
+              "FILE_79c849b8a094119f",
+              "FILE_2e83f1278d225ef5",
+              "FILE_f4883661ccd5ae02"
+            ],
+            "source_paths": [
+              "01_경영관리/거래처_관리기준.pdf",
+              "02_정책/신규거래처_등록_절차.docx",
+              "03_영업/거래처_마스터.xlsx"
+            ],
+            "status": "ABSTAINED",
+            "unit": null
+          },
+          {
+            "answer": null,
+            "evidence_verdict": "UNCONFIRMED",
+            "normalized_signature": null,
+            "repetition": 2,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_customer_latest_registration-r2",
+            "source_ids": [
+              "FILE_79c849b8a094119f",
+              "FILE_2e83f1278d225ef5",
+              "FILE_f4883661ccd5ae02"
+            ],
+            "source_paths": [
+              "01_경영관리/거래처_관리기준.pdf",
+              "02_정책/신규거래처_등록_절차.docx",
+              "03_영업/거래처_마스터.xlsx"
+            ],
+            "status": "ABSTAINED",
+            "unit": null
+          },
+          {
+            "answer": null,
+            "evidence_verdict": "UNCONFIRMED",
+            "normalized_signature": null,
+            "repetition": 3,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_customer_latest_registration-r3",
+            "source_ids": [
+              "FILE_79c849b8a094119f",
+              "FILE_2e83f1278d225ef5"
+            ],
+            "source_paths": [
+              "02_정책/신규거래처_등록_절차.docx",
+              "03_영업/거래처_마스터.xlsx"
+            ],
+            "status": "ABSTAINED",
+            "unit": null
+          }
+        ],
+        "state": "BLOCKED"
+      },
+      "changed_cited_paths": [],
+      "cited_paths": [
+        "01_경영관리/거래처_관리기준.pdf",
+        "02_정책/신규거래처_등록_절차.docx",
+        "03_영업/거래처_마스터.xlsx"
+      ],
+      "lost_stability": false,
+      "task_id": "TASK_CUSTOMER_LATEST_REGISTRATION"
+    },
+    {
+      "after": {
+        "runs": [
+          {
+            "answer": "없음 (해당 품목 없음)",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "text",
+              "없음 (해당 품목 없음)",
+              null
+            ],
+            "repetition": 1,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_inventory_low_stock-r1",
+            "source_ids": [
+              "TABLE_FILE_1c3edebcf446bef5_Inventory",
+              "FILE_2b32039c2c5d02a2"
+            ],
+            "source_paths": [
+              "02_정책/재고_조정_절차.txt",
+              "05_물류/재고_현황_2026-09.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": null
+          },
+          {
+            "answer": "해당 품목 없음 (전 품목이 안전재고 기준을 충족함)",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "text",
+              "해당 품목 없음 (전 품목이 안전재고 기준을 충족함)",
+              null
+            ],
+            "repetition": 2,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_inventory_low_stock-r2",
+            "source_ids": [
+              "TABLE_FILE_1c3edebcf446bef5_Inventory",
+              "FILE_2b32039c2c5d02a2"
+            ],
+            "source_paths": [
+              "02_정책/재고_조정_절차.txt",
+              "05_물류/재고_현황_2026-09.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": null
+          },
+          {
+            "answer": "없음 (안전재고 기준보다 부족한 품목 없음)",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "text",
+              "없음 (안전재고 기준보다 부족한 품목 없음)",
+              null
+            ],
+            "repetition": 3,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_inventory_low_stock-r3",
+            "source_ids": [
+              "TABLE_FILE_1c3edebcf446bef5_Inventory",
+              "FILE_2b32039c2c5d02a2"
+            ],
+            "source_paths": [
+              "02_정책/재고_조정_절차.txt",
+              "05_물류/재고_현황_2026-09.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": null
+          }
+        ],
+        "state": "INCONCLUSIVE"
+      },
+      "attribution": "NOT_APPLICABLE",
+      "before": {
+        "runs": [
+          {
+            "answer": "현재 안전재고(reorder_point) 기준보다 부족한 품목은 없습니다.",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "text",
+              "현재 안전재고(reorder_point) 기준보다 부족한 품목은 없습니다.",
+              null
+            ],
+            "repetition": 1,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r1",
+            "source_ids": [
+              "TABLE_FILE_1c3edebcf446bef5_Inventory",
+              "FILE_2b32039c2c5d02a2"
+            ],
+            "source_paths": [
+              "02_정책/재고_조정_절차.txt",
+              "05_물류/재고_현황_2026-09.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": null
+          },
+          {
+            "answer": null,
+            "evidence_verdict": "UNCONFIRMED",
+            "normalized_signature": null,
+            "repetition": 2,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r2",
+            "source_ids": [
+              "FILE_2b32039c2c5d02a2",
+              "FILE_04ee2b4a75691e45",
+              "TABLE_FILE_1c3edebcf446bef5_Inventory"
+            ],
+            "source_paths": [
+              "02_정책/재고_조정_절차.txt",
+              "05_물류/월간_재고_점검.pdf",
+              "05_물류/재고_현황_2026-09.xlsx"
+            ],
+            "status": "ABSTAINED",
+            "unit": null
+          },
+          {
+            "answer": "없음 (해당 품목 없음)",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "text",
+              "없음 (해당 품목 없음)",
+              null
+            ],
+            "repetition": 3,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r3",
+            "source_ids": [
+              "TABLE_FILE_1c3edebcf446bef5_Inventory"
+            ],
+            "source_paths": [
+              "05_물류/재고_현황_2026-09.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": null
+          }
+        ],
+        "state": "BLOCKED"
+      },
+      "changed_cited_paths": [],
+      "cited_paths": [
+        "02_정책/재고_조정_절차.txt",
+        "05_물류/월간_재고_점검.pdf",
+        "05_물류/재고_현황_2026-09.xlsx"
+      ],
+      "lost_stability": false,
+      "task_id": "TASK_INVENTORY_LOW_STOCK"
+    },
+    {
+      "after": {
+        "runs": [
+          {
+            "answer": "유기농 그래놀라 (product_id: P005)",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "text",
+              "유기농 그래놀라 (product_id: p005)",
+              "개(available_qty)"
+            ],
+            "repetition": 1,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_inventory_most_available-r1",
+            "source_ids": [
+              "TABLE_FILE_1c3edebcf446bef5_Inventory",
+              "TABLE_FILE_b13eb6275d0074df_CSV"
+            ],
+            "source_paths": [
+              "03_영업/품목_마스터.csv",
+              "05_물류/재고_현황_2026-09.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": "개(available_qty)"
+          },
+          {
+            "answer": "유기농 그래놀라 (P005) — 가용재고 281개",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "number",
+              "281",
+              "count"
+            ],
+            "repetition": 2,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_inventory_most_available-r2",
+            "source_ids": [
+              "TABLE_FILE_1c3edebcf446bef5_Inventory",
+              "TABLE_FILE_b13eb6275d0074df_CSV"
+            ],
+            "source_paths": [
+              "03_영업/품목_마스터.csv",
+              "05_물류/재고_현황_2026-09.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": "개"
+          },
+          {
+            "answer": "유기농 그래놀라 (product_id: P005), 가용재고 281개 (창고: WH-SEOUL)",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "number",
+              "281",
+              "count"
+            ],
+            "repetition": 3,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_inventory_most_available-r3",
+            "source_ids": [
+              "TABLE_FILE_1c3edebcf446bef5_Inventory",
+              "TABLE_FILE_b13eb6275d0074df_CSV"
+            ],
+            "source_paths": [
+              "03_영업/품목_마스터.csv",
+              "05_물류/재고_현황_2026-09.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": "개"
+          }
+        ],
+        "state": "INCONCLUSIVE"
+      },
+      "attribution": "DATA_CAUSE_NOT_ESTABLISHED",
+      "before": {
+        "runs": [
+          {
+            "answer": "P005",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "identifier",
+              "p005",
+              "count"
+            ],
+            "repetition": 1,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_inventory_most_available-r1",
+            "source_ids": [
+              "TABLE_FILE_1c3edebcf446bef5_Inventory"
+            ],
+            "source_paths": [
+              "05_물류/재고_현황_2026-09.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": "개"
+          },
+          {
+            "answer": "P005 - 유기농 그래놀라 (WH-SEOUL 창고, 가용재고 281개)",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "identifier",
+              "p005",
+              "count"
+            ],
+            "repetition": 2,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_inventory_most_available-r2",
+            "source_ids": [
+              "TABLE_FILE_1c3edebcf446bef5_Inventory",
+              "TABLE_FILE_b13eb6275d0074df_CSV"
+            ],
+            "source_paths": [
+              "03_영업/품목_마스터.csv",
+              "05_물류/재고_현황_2026-09.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": "개"
+          },
+          {
+            "answer": "P005 (WH-SEOUL 창고, 가용재고 281)",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "identifier",
+              "p005",
+              "count"
+            ],
+            "repetition": 3,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_inventory_most_available-r3",
+            "source_ids": [
+              "TABLE_FILE_1c3edebcf446bef5_Inventory",
+              "FILE_91428d0d2d6d15c7"
+            ],
+            "source_paths": [
+              "05_물류/재고_현황_2026-09.xlsx",
+              "05_물류/창고_운영_매뉴얼.docx"
+            ],
+            "status": "ANSWERED",
+            "unit": "available_qty"
+          }
+        ],
+        "state": "STABLE"
+      },
+      "changed_cited_paths": [],
+      "cited_paths": [
+        "03_영업/품목_마스터.csv",
+        "05_물류/재고_현황_2026-09.xlsx",
+        "05_물류/창고_운영_매뉴얼.docx"
+      ],
+      "lost_stability": true,
+      "task_id": "TASK_INVENTORY_MOST_AVAILABLE"
+    },
+    {
+      "after": {
+        "runs": [
+          {
+            "answer": null,
+            "evidence_verdict": "UNCONFIRMED",
+            "normalized_signature": null,
+            "repetition": 1,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_order_latest-r1",
+            "source_ids": [
+              "FILE_d5094868d77c1778",
+              "FILE_b6c224f007768417",
+              "FILE_66a46d7e2186df99"
+            ],
+            "source_paths": [
+              "01_경영관리/2026_사업운영방침.docx",
+              "04_주문/반품_원장_2026.csv",
+              "04_주문/출고_요청_2026.xlsx"
+            ],
+            "status": "ABSTAINED",
+            "unit": null
+          },
+          {
+            "answer": null,
+            "evidence_verdict": "UNCONFIRMED",
+            "normalized_signature": null,
+            "repetition": 2,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_order_latest-r2",
+            "source_ids": [
+              "FILE_d5094868d77c1778",
+              "FILE_b6c224f007768417",
+              "FILE_2ffce1c25d807d62"
+            ],
+            "source_paths": [
+              "01_경영관리/2026_사업운영방침.docx",
+              "04_주문/8월_주문_검토.pdf",
+              "04_주문/출고_요청_2026.xlsx"
+            ],
+            "status": "ABSTAINED",
+            "unit": null
+          },
+          {
+            "answer": "2026-09-21",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "date",
+              "2026-09-21",
+              "date"
+            ],
+            "repetition": 3,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_order_latest-r3",
+            "source_ids": [
+              "TABLE_FILE_950a2b2ed909ef4c_Orders"
+            ],
+            "source_paths": [
+              "04_주문/주문_원장_2026.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": "date"
+          }
+        ],
+        "state": "BLOCKED"
+      },
+      "attribution": "NOT_APPLICABLE",
+      "before": {
+        "runs": [
+          {
+            "answer": null,
+            "evidence_verdict": "UNCONFIRMED",
+            "normalized_signature": null,
+            "repetition": 1,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_order_latest-r1",
+            "source_ids": [
+              "FILE_2ffce1c25d807d62"
+            ],
+            "source_paths": [
+              "04_주문/8월_주문_검토.pdf"
+            ],
+            "status": "ABSTAINED",
+            "unit": null
+          },
+          {
+            "answer": "2026-09-21",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "date",
+              "2026-09-21",
+              "date"
+            ],
+            "repetition": 2,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_order_latest-r2",
+            "source_ids": [
+              "TABLE_FILE_950a2b2ed909ef4c_Orders",
+              "FILE_d5094868d77c1778"
+            ],
+            "source_paths": [
+              "01_경영관리/2026_사업운영방침.docx",
+              "04_주문/주문_원장_2026.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": "date"
+          },
+          {
+            "answer": "2026-09-21",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "date",
+              "2026-09-21",
+              "date"
+            ],
+            "repetition": 3,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_order_latest-r3",
+            "source_ids": [
+              "TABLE_FILE_950a2b2ed909ef4c_Orders"
+            ],
+            "source_paths": [
+              "04_주문/주문_원장_2026.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": "date"
+          }
+        ],
+        "state": "BLOCKED"
+      },
+      "changed_cited_paths": [],
+      "cited_paths": [
+        "01_경영관리/2026_사업운영방침.docx",
+        "04_주문/8월_주문_검토.pdf",
+        "04_주문/반품_원장_2026.csv",
+        "04_주문/주문_원장_2026.xlsx",
+        "04_주문/출고_요청_2026.xlsx"
+      ],
+      "lost_stability": false,
+      "task_id": "TASK_ORDER_LATEST"
+    },
+    {
+      "after": {
+        "runs": [
+          {
+            "answer": "4,980,700원",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "number",
+              "4980700",
+              "krw"
+            ],
+            "repetition": 1,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r1",
+            "source_ids": [
+              "TABLE_FILE_950a2b2ed909ef4c_Orders"
+            ],
+            "source_paths": [
+              "04_주문/주문_원장_2026.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": "KRW"
+          },
+          {
+            "answer": "4,980,700원",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "number",
+              "4980700",
+              "krw"
+            ],
+            "repetition": 2,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r2",
+            "source_ids": [
+              "TABLE_FILE_950a2b2ed909ef4c_Orders"
+            ],
+            "source_paths": [
+              "04_주문/주문_원장_2026.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": "KRW"
+          },
+          {
+            "answer": null,
+            "evidence_verdict": "UNCONFIRMED",
+            "normalized_signature": null,
+            "repetition": 3,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r3",
+            "source_ids": [
+              "FILE_2ffce1c25d807d62",
+              "FILE_0a1b067e7c4c082a",
+              "FILE_d5094868d77c1778"
+            ],
+            "source_paths": [
+              "01_경영관리/2026_사업운영방침.docx",
+              "03_영업/월별_매출목표_2026.xlsx",
+              "04_주문/8월_주문_검토.pdf"
+            ],
+            "status": "ABSTAINED",
+            "unit": null
+          }
+        ],
+        "state": "BLOCKED"
+      },
+      "attribution": "DATA_CAUSE_NOT_ESTABLISHED",
+      "before": {
+        "runs": [
+          {
+            "answer": "4,980,700원",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "number",
+              "4980700",
+              "krw"
+            ],
+            "repetition": 1,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r1",
+            "source_ids": [
+              "TABLE_FILE_950a2b2ed909ef4c_Orders",
+              "FILE_d5094868d77c1778"
+            ],
+            "source_paths": [
+              "01_경영관리/2026_사업운영방침.docx",
+              "04_주문/주문_원장_2026.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": "KRW"
+          },
+          {
+            "answer": "4,980,700원",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "number",
+              "4980700",
+              "krw"
+            ],
+            "repetition": 2,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r2",
+            "source_ids": [
+              "TABLE_FILE_950a2b2ed909ef4c_Orders"
+            ],
+            "source_paths": [
+              "04_주문/주문_원장_2026.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": "KRW"
+          },
+          {
+            "answer": "4,980,700원",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "number",
+              "4980700",
+              "krw"
+            ],
+            "repetition": 3,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r3",
+            "source_ids": [
+              "TABLE_FILE_950a2b2ed909ef4c_Orders",
+              "FILE_d5094868d77c1778"
+            ],
+            "source_paths": [
+              "01_경영관리/2026_사업운영방침.docx",
+              "04_주문/주문_원장_2026.xlsx"
+            ],
+            "status": "ANSWERED",
+            "unit": "KRW"
+          }
+        ],
+        "state": "STABLE"
+      },
+      "changed_cited_paths": [],
+      "cited_paths": [
+        "01_경영관리/2026_사업운영방침.docx",
+        "03_영업/월별_매출목표_2026.xlsx",
+        "04_주문/8월_주문_검토.pdf",
+        "04_주문/주문_원장_2026.xlsx"
+      ],
+      "lost_stability": true,
+      "task_id": "TASK_ORDER_MONTHLY_AMOUNT"
+    },
+    {
+      "after": {
+        "runs": [
+          {
+            "answer": null,
+            "evidence_verdict": "UNCONFIRMED",
+            "normalized_signature": null,
+            "repetition": 1,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_policy_approval_procedure-r1",
+            "source_ids": [
+              "FILE_0e78131fc8789e0c",
+              "FILE_d527640c55b31252",
+              "FILE_ad3f3bc4e0042cdf",
+              "FILE_2b32039c2c5d02a2"
+            ],
+            "source_paths": [
+              "02_정책/반품_교환_정책_2026.docx",
+              "02_정책/배송_지연_보상_2026.docx",
+              "02_정책/재고_조정_절차.txt",
+              "02_정책/할인_승인_규정.docx"
+            ],
+            "status": "ABSTAINED",
+            "unit": null
+          },
+          {
+            "answer": null,
+            "evidence_verdict": "UNCONFIRMED",
+            "normalized_signature": null,
+            "repetition": 2,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_policy_approval_procedure-r2",
+            "source_ids": [
+              "FILE_0e78131fc8789e0c",
+              "FILE_2b32039c2c5d02a2",
+              "FILE_d527640c55b31252",
+              "FILE_ad3f3bc4e0042cdf"
+            ],
+            "source_paths": [
+              "02_정책/반품_교환_정책_2026.docx",
+              "02_정책/배송_지연_보상_2026.docx",
+              "02_정책/재고_조정_절차.txt",
+              "02_정책/할인_승인_규정.docx"
+            ],
+            "status": "ABSTAINED",
+            "unit": null
+          },
+          {
+            "answer": null,
+            "evidence_verdict": "UNCONFIRMED",
+            "normalized_signature": null,
+            "repetition": 3,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_policy_approval_procedure-r3",
+            "source_ids": [],
+            "source_paths": [],
+            "status": "ABSTAINED",
+            "unit": null
+          }
+        ],
+        "state": "BLOCKED"
+      },
+      "attribution": "NOT_APPLICABLE",
+      "before": {
+        "runs": [
+          {
+            "answer": null,
+            "evidence_verdict": "UNCONFIRMED",
+            "normalized_signature": null,
+            "repetition": 1,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_policy_approval_procedure-r1",
+            "source_ids": [
+              "FILE_0e78131fc8789e0c",
+              "FILE_f19d3fff977e4a04",
+              "FILE_2b32039c2c5d02a2",
+              "FILE_ad3f3bc4e0042cdf"
+            ],
+            "source_paths": [
+              "01_경영관리/조직_연락망.txt",
+              "02_정책/배송_지연_보상_2026.docx",
+              "02_정책/재고_조정_절차.txt",
+              "02_정책/할인_승인_규정.docx"
+            ],
+            "status": "ABSTAINED",
+            "unit": null
+          },
+          {
+            "answer": null,
+            "evidence_verdict": "UNCONFIRMED",
+            "normalized_signature": null,
+            "repetition": 2,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_policy_approval_procedure-r2",
+            "source_ids": [
+              "FILE_0e78131fc8789e0c",
+              "FILE_2b32039c2c5d02a2",
+              "FILE_2e83f1278d225ef5"
+            ],
+            "source_paths": [
+              "02_정책/신규거래처_등록_절차.docx",
+              "02_정책/재고_조정_절차.txt",
+              "02_정책/할인_승인_규정.docx"
+            ],
+            "status": "ABSTAINED",
+            "unit": null
+          },
+          {
+            "answer": null,
+            "evidence_verdict": "UNCONFIRMED",
+            "normalized_signature": null,
+            "repetition": 3,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_policy_approval_procedure-r3",
+            "source_ids": [
+              "FILE_0e78131fc8789e0c",
+              "FILE_ad3f3bc4e0042cdf",
+              "FILE_2b32039c2c5d02a2",
+              "FILE_f19d3fff977e4a04"
+            ],
+            "source_paths": [
+              "01_경영관리/조직_연락망.txt",
+              "02_정책/배송_지연_보상_2026.docx",
+              "02_정책/재고_조정_절차.txt",
+              "02_정책/할인_승인_규정.docx"
+            ],
+            "status": "ABSTAINED",
+            "unit": null
+          }
+        ],
+        "state": "BLOCKED"
+      },
+      "changed_cited_paths": [],
+      "cited_paths": [
+        "01_경영관리/조직_연락망.txt",
+        "02_정책/반품_교환_정책_2026.docx",
+        "02_정책/배송_지연_보상_2026.docx",
+        "02_정책/신규거래처_등록_절차.docx",
+        "02_정책/재고_조정_절차.txt",
+        "02_정책/할인_승인_규정.docx"
+      ],
+      "lost_stability": false,
+      "task_id": "TASK_POLICY_APPROVAL_PROCEDURE"
+    },
+    {
+      "after": {
+        "runs": [
+          {
+            "answer": "30일",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "number",
+              "30",
+              "day"
+            ],
+            "repetition": 1,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_policy_return_window-r1",
+            "source_ids": [
+              "FILE_d527640c55b31252"
+            ],
+            "source_paths": [
+              "02_정책/반품_교환_정책_2026.docx"
+            ],
+            "status": "ANSWERED",
+            "unit": "일"
+          },
+          {
+            "answer": "30일",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "number",
+              "30",
+              "day"
+            ],
+            "repetition": 2,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_policy_return_window-r2",
+            "source_ids": [
+              "FILE_d527640c55b31252"
+            ],
+            "source_paths": [
+              "02_정책/반품_교환_정책_2026.docx"
+            ],
+            "status": "ANSWERED",
+            "unit": "일"
+          },
+          {
+            "answer": "30일",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "number",
+              "30",
+              "day"
+            ],
+            "repetition": 3,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_policy_return_window-r3",
+            "source_ids": [
+              "FILE_d527640c55b31252"
+            ],
+            "source_paths": [
+              "02_정책/반품_교환_정책_2026.docx"
+            ],
+            "status": "ANSWERED",
+            "unit": "일"
+          }
+        ],
+        "state": "STABLE"
+      },
+      "attribution": "NOT_APPLICABLE",
+      "before": {
+        "runs": [
+          {
+            "answer": null,
+            "evidence_verdict": "UNCONFIRMED",
+            "normalized_signature": null,
+            "repetition": 1,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_policy_return_window-r1",
+            "source_ids": [
+              "FILE_d527640c55b31252",
+              "FILE_016dff0726eea674"
+            ],
+            "source_paths": [
+              "02_정책/반품_교환_정책_2026.docx",
+              "06_고객지원/FAQ_2026.txt"
+            ],
+            "status": "ABSTAINED",
+            "unit": null
+          },
+          {
+            "answer": null,
+            "evidence_verdict": "UNCONFIRMED",
+            "normalized_signature": null,
+            "repetition": 2,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_policy_return_window-r2",
+            "source_ids": [
+              "FILE_d527640c55b31252",
+              "FILE_016dff0726eea674"
+            ],
+            "source_paths": [
+              "02_정책/반품_교환_정책_2026.docx",
+              "06_고객지원/FAQ_2026.txt"
+            ],
+            "status": "ABSTAINED",
+            "unit": null
+          },
+          {
+            "answer": null,
+            "evidence_verdict": "UNCONFIRMED",
+            "normalized_signature": null,
+            "repetition": 3,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_policy_return_window-r3",
+            "source_ids": [
+              "FILE_d527640c55b31252",
+              "FILE_016dff0726eea674"
+            ],
+            "source_paths": [
+              "02_정책/반품_교환_정책_2026.docx",
+              "06_고객지원/FAQ_2026.txt"
+            ],
+            "status": "ABSTAINED",
+            "unit": null
+          }
+        ],
+        "state": "BLOCKED"
+      },
+      "changed_cited_paths": [
+        "06_고객지원/FAQ_2026.txt"
+      ],
+      "cited_paths": [
+        "02_정책/반품_교환_정책_2026.docx",
+        "06_고객지원/FAQ_2026.txt"
+      ],
+      "lost_stability": false,
+      "task_id": "TASK_POLICY_RETURN_WINDOW"
+    },
+    {
+      "after": {
+        "runs": [
+          {
+            "answer": "CS01 배송문의: 고객지원팀 / CS02 반품문의: 고객지원팀 / CS03 상품문의: 영업운영팀",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "identifier",
+              "cs01",
+              null
+            ],
+            "repetition": 1,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_support_responsible_team-r1",
+            "source_ids": [
+              "TABLE_FILE_7038ab76eb30cb43_CSV"
+            ],
+            "source_paths": [
+              "06_고객지원/CS_유형_코드.csv"
+            ],
+            "status": "ANSWERED",
+            "unit": null
+          },
+          {
+            "answer": "배송문의(CS01): 고객지원팀 / 반품문의(CS02): 고객지원팀 / 상품문의(CS03): 영업운영팀",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "text",
+              "배송문의(cs01): 고객지원팀 / 반품문의(cs02): 고객지원팀 / 상품문의(cs03): 영업운영팀",
+              null
+            ],
+            "repetition": 2,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_support_responsible_team-r2",
+            "source_ids": [
+              "TABLE_FILE_7038ab76eb30cb43_CSV"
+            ],
+            "source_paths": [
+              "06_고객지원/CS_유형_코드.csv"
+            ],
+            "status": "ANSWERED",
+            "unit": null
+          },
+          {
+            "answer": "배송문의(CS01) → 고객지원팀 | 반품문의(CS02) → 고객지원팀 | 상품문의(CS03) → 영업운영팀",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "text",
+              "배송문의(cs01) → 고객지원팀 | 반품문의(cs02) → 고객지원팀 | 상품문의(cs03) → 영업운영팀",
+              null
+            ],
+            "repetition": 3,
+            "run_id": "phase6v4-portfolio-ceiling-after-task_support_responsible_team-r3",
+            "source_ids": [
+              "TABLE_FILE_7038ab76eb30cb43_CSV"
+            ],
+            "source_paths": [
+              "06_고객지원/CS_유형_코드.csv"
+            ],
+            "status": "ANSWERED",
+            "unit": null
+          }
+        ],
+        "state": "INCONCLUSIVE"
+      },
+      "attribution": "NOT_APPLICABLE",
+      "before": {
+        "runs": [
+          {
+            "answer": [
+              "CS01 배송문의: 고객지원팀",
+              "CS02 반품문의: 고객지원팀",
+              "CS03 상품문의: 영업운영팀"
+            ],
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "list",
+              "[\"cs01 배송문의: 고객지원팀\", \"cs02 반품문의: 고객지원팀\", \"cs03 상품문의: 영업운영팀\"]",
+              null
+            ],
+            "repetition": 1,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_support_responsible_team-r1",
+            "source_ids": [
+              "TABLE_FILE_7038ab76eb30cb43_CSV",
+              "FILE_f19d3fff977e4a04"
+            ],
+            "source_paths": [
+              "01_경영관리/조직_연락망.txt",
+              "06_고객지원/CS_유형_코드.csv"
+            ],
+            "status": "ANSWERED",
+            "unit": null
+          },
+          {
+            "answer": "배송문의(CS01)와 반품문의(CS02)는 고객지원팀이 담당하고, 상품문의(CS03)는 영업운영팀이 담당합니다.",
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "text",
+              "배송문의(cs01)와 반품문의(cs02)는 고객지원팀이 담당하고, 상품문의(cs03)는 영업운영팀이 담당합니다.",
+              null
+            ],
+            "repetition": 2,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_support_responsible_team-r2",
+            "source_ids": [
+              "TABLE_FILE_7038ab76eb30cb43_CSV",
+              "FILE_f19d3fff977e4a04"
+            ],
+            "source_paths": [
+              "01_경영관리/조직_연락망.txt",
+              "06_고객지원/CS_유형_코드.csv"
+            ],
+            "status": "ANSWERED",
+            "unit": null
+          },
+          {
+            "answer": [
+              "배송문의(CS01): 고객지원팀",
+              "반품문의(CS02): 고객지원팀",
+              "상품문의(CS03): 영업운영팀"
+            ],
+            "evidence_verdict": "DIRECT_MATCH",
+            "normalized_signature": [
+              "list",
+              "[\"반품문의(cs02): 고객지원팀\", \"배송문의(cs01): 고객지원팀\", \"상품문의(cs03): 영업운영팀\"]",
+              null
+            ],
+            "repetition": 3,
+            "run_id": "phase6v4-portfolio-hidden-conflict-before-task_support_responsible_team-r3",
+            "source_ids": [
+              "TABLE_FILE_7038ab76eb30cb43_CSV"
+            ],
+            "source_paths": [
+              "06_고객지원/CS_유형_코드.csv"
+            ],
+            "status": "ANSWERED",
+            "unit": null
+          }
+        ],
+        "state": "INCONCLUSIVE"
+      },
+      "changed_cited_paths": [],
+      "cited_paths": [
+        "01_경영관리/조직_연락망.txt",
+        "06_고객지원/CS_유형_코드.csv"
+      ],
+      "lost_stability": false,
+      "task_id": "TASK_SUPPORT_RESPONSIBLE_TEAM"
+    }
+  ]
+}

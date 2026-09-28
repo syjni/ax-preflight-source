@@ -1,0 +1,266 @@
+{
+  "claim_scope": "PRODUCT_SANITY_DEMO_NOT_RESEARCH_BENCHMARK",
+  "profiles": {
+    "demo-return-after": {
+      "dataset_name": "product-demo-return-after-v1",
+      "file_count": 2,
+      "files": [
+        {
+          "modified_at": "2026-09-01T00:00:00+00:00",
+          "relative_path": "policies/반품_정책_변경기록.txt",
+          "sha256": "ccc889d759d4cab96eb10365bc90b6c16642cbbe510aaf02b23a5ff5c7b77d26",
+          "size_bytes": 373
+        },
+        {
+          "modified_at": "2026-09-01T00:00:00+00:00",
+          "relative_path": "policies/반품_정책_운영기준.txt",
+          "sha256": "97054b24e9bc6c906798796ce04cfd5856d430eb31756b0890a80b44f6e1afe0",
+          "size_bytes": 299
+        }
+      ],
+      "readiness": {
+        "as_of_date": "2026-09-21",
+        "counts": {
+          "accessibility": {
+            "accessible_files": 2,
+            "ocr_required_files": 0,
+            "parsed_files": 2,
+            "total_files": 2
+          },
+          "completeness": {
+            "eligible_tables": 0,
+            "estimated_missing_cells": 0.0,
+            "total_cells": 0
+          },
+          "redundancy": {
+            "exact_duplicate_groups": 0,
+            "redundant_files": 0,
+            "total_files": 2
+          },
+          "safety": {
+            "files_without_detected_pii": 2,
+            "pii_affected_files": 0,
+            "total_files": 2
+          },
+          "timeliness": {
+            "files_with_valid_modified_at": 2,
+            "future_timestamp_files": 0,
+            "invalid_timestamp_files": 0,
+            "missing_timestamp_files": 0,
+            "non_stale_files": 2,
+            "stale_files": 0
+          }
+        },
+        "dimension_weights": {
+          "accessibility": 0.2,
+          "completeness": 0.2,
+          "redundancy": 0.2,
+          "safety": 0.2,
+          "timeliness": 0.2
+        },
+        "dimensions": {
+          "accessibility": 1.0,
+          "completeness": 1.0,
+          "redundancy": 1.0,
+          "safety": 1.0,
+          "timeliness": 1.0
+        },
+        "flags": {
+          "completeness_not_applicable": true,
+          "empty_file_set": false,
+          "future_modified_at_count": 0,
+          "invalid_modified_at_count": 0,
+          "missing_modified_at_count": 0,
+          "no_valid_modified_at": false,
+          "scan_metadata_file_count_mismatch": false,
+          "unknown_ocr_file_id_count": 0,
+          "unknown_pii_file_id_count": 0
+        },
+        "readiness_score": 100.0,
+        "schema_version": "ax-readiness-score-v1",
+        "stale_threshold_days": 365
+      },
+      "runtime_identity": {
+        "corpus_registry_sha256": "336fc0255a4da9b1535807b3e6ae13a13c07d8836f05bfbca929c285c6cc285c",
+        "dataset_manifest_sha256": null,
+        "dataset_name": "product-demo-return-after-v1",
+        "dataset_profile": "demo-return-after",
+        "file_count": 2,
+        "parsed_file_count": 2,
+        "scan_report_sha256": "f060535931bfc62523725f02817d92e0c137ec413500bf167ad7b84f09b4d74a",
+        "schema_version": "ax-runtime-identity-v1",
+        "search_index_document_count": 2,
+        "search_index_sha256": "5a89f54988b7f5c73d8334879412dd6072a179aef9a4635ef99ee667dcee4b72",
+        "source_root_name": "return_policy_after",
+        "table_count": 0,
+        "table_registry_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "runtime_leakage": {
+        "forbidden_markers": [
+          "expected_answer",
+          "primary_blocker",
+          "required_sources",
+          "tool_plan",
+          "defect ground truth",
+          "defect_ground_truth"
+        ],
+        "passed": true,
+        "runtime_resource_count": 3,
+        "violations": []
+      },
+      "scan_report": "artifacts/phase6_product_demo/after-scan-report.json",
+      "scan_report_sha256": "f060535931bfc62523725f02817d92e0c137ec413500bf167ad7b84f09b4d74a",
+      "source_root": "sample_data/product_demo/return_policy_after",
+      "unscored_observations": []
+    },
+    "demo-return-before": {
+      "dataset_name": "product-demo-return-before-v1",
+      "file_count": 2,
+      "files": [
+        {
+          "modified_at": "2026-09-01T00:00:00+00:00",
+          "relative_path": "policies/반품_정책_v1.txt",
+          "sha256": "bdf767fda752671ebe064633f1e7a80cfa2fac1051bf55f2fbaa1d6e1ca4bde0",
+          "size_bytes": 217
+        },
+        {
+          "modified_at": "2026-09-01T00:00:00+00:00",
+          "relative_path": "policies/반품_정책_v2.txt",
+          "sha256": "66915441eed960d023e8891f7bbb927d689ea9b59b04633c31285d191e07d9d3",
+          "size_bytes": 217
+        }
+      ],
+      "readiness": {
+        "as_of_date": "2026-09-21",
+        "counts": {
+          "accessibility": {
+            "accessible_files": 2,
+            "ocr_required_files": 0,
+            "parsed_files": 2,
+            "total_files": 2
+          },
+          "completeness": {
+            "eligible_tables": 0,
+            "estimated_missing_cells": 0.0,
+            "total_cells": 0
+          },
+          "redundancy": {
+            "exact_duplicate_groups": 0,
+            "redundant_files": 0,
+            "total_files": 2
+          },
+          "safety": {
+            "files_without_detected_pii": 2,
+            "pii_affected_files": 0,
+            "total_files": 2
+          },
+          "timeliness": {
+            "files_with_valid_modified_at": 2,
+            "future_timestamp_files": 0,
+            "invalid_timestamp_files": 0,
+            "missing_timestamp_files": 0,
+            "non_stale_files": 2,
+            "stale_files": 0
+          }
+        },
+        "dimension_weights": {
+          "accessibility": 0.2,
+          "completeness": 0.2,
+          "redundancy": 0.2,
+          "safety": 0.2,
+          "timeliness": 0.2
+        },
+        "dimensions": {
+          "accessibility": 1.0,
+          "completeness": 1.0,
+          "redundancy": 1.0,
+          "safety": 1.0,
+          "timeliness": 1.0
+        },
+        "flags": {
+          "completeness_not_applicable": true,
+          "empty_file_set": false,
+          "future_modified_at_count": 0,
+          "invalid_modified_at_count": 0,
+          "missing_modified_at_count": 0,
+          "no_valid_modified_at": false,
+          "scan_metadata_file_count_mismatch": false,
+          "unknown_ocr_file_id_count": 0,
+          "unknown_pii_file_id_count": 0
+        },
+        "readiness_score": 100.0,
+        "schema_version": "ax-readiness-score-v1",
+        "stale_threshold_days": 365
+      },
+      "runtime_identity": {
+        "corpus_registry_sha256": "0c788a7483b34e7bda78267de65345514be70245e9f0ce45ab6c1e4d0cebfad6",
+        "dataset_manifest_sha256": null,
+        "dataset_name": "product-demo-return-before-v1",
+        "dataset_profile": "demo-return-before",
+        "file_count": 2,
+        "parsed_file_count": 2,
+        "scan_report_sha256": "5c8d6ad1d8a2fed14ca1706b7aa6ab4f2e5fcdbee65fef7ba169d81d940db920",
+        "schema_version": "ax-runtime-identity-v1",
+        "search_index_document_count": 2,
+        "search_index_sha256": "244784a9294197e62b4b3f843afe4aa942c2d5311d8be0740de0ebe268eabfd4",
+        "source_root_name": "return_policy_before",
+        "table_count": 0,
+        "table_registry_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "runtime_leakage": {
+        "forbidden_markers": [
+          "expected_answer",
+          "primary_blocker",
+          "required_sources",
+          "tool_plan",
+          "defect ground truth",
+          "defect_ground_truth"
+        ],
+        "passed": true,
+        "runtime_resource_count": 3,
+        "violations": []
+      },
+      "scan_report": "artifacts/phase6_product_demo/before-scan-report.json",
+      "scan_report_sha256": "5c8d6ad1d8a2fed14ca1706b7aa6ab4f2e5fcdbee65fef7ba169d81d940db920",
+      "source_root": "sample_data/product_demo/return_policy_before",
+      "unscored_observations": [
+        {
+          "code": "PROBABLE_VERSION_GROUP",
+          "file_ids": [
+            "FILE_0190582b04c0b44a",
+            "FILE_afb4c3a0cc53d8c8"
+          ],
+          "normalized_name": "반품 정책",
+          "version_group_id": "VERSION_fe9c085f7181a9ae"
+        }
+      ]
+    }
+  },
+  "question": "현재 반품 가능 기간은 며칠인가요?",
+  "question_utf8_sha256": "7eda629cb6294c42f13b514539b2205da4335f220a24227963786409edb8c48e",
+  "scanner_invocations": [
+    {
+      "duplicates": 0,
+      "files": 2,
+      "live_llm_status": "LIVE_LLM_PENDING",
+      "ocr_required": 0,
+      "output": "artifacts/phase6_product_demo/before-scan-report.json",
+      "parsed": 2,
+      "pii_findings": 0,
+      "tables": 0,
+      "version_groups": 1
+    },
+    {
+      "duplicates": 0,
+      "files": 2,
+      "live_llm_status": "LIVE_LLM_PENDING",
+      "ocr_required": 0,
+      "output": "artifacts/phase6_product_demo/after-scan-report.json",
+      "parsed": 2,
+      "pii_findings": 0,
+      "tables": 0,
+      "version_groups": 0
+    }
+  ],
+  "schema_version": "ax-phase6-product-demo-dataset-manifest-v1"
+}

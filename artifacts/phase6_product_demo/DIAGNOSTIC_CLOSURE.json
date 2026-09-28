@@ -1,0 +1,47 @@
+{
+  "active_process_count": 0,
+  "claim_scope": "PRODUCT_SANITY_DEMO_NOT_RESEARCH_BENCHMARK",
+  "created_at": "2026-09-23T13:24:58.069679Z",
+  "process_check_at": "2026-09-23T13:14:16.944824Z",
+  "process_check_scope": [
+    "phase6demo-diagnostic-after-001",
+    "phase6demo-diagnostic-after-002"
+  ],
+  "runs": [
+    {
+      "closure_reason": "The persisted RUNNING reservation had no matching live process; the ResultStore contract requires a terminal RUNTIME_ERROR rejection.",
+      "dataset": "demo-return-after",
+      "delivery_path": "artifacts/phase6_product_demo/pilots/diagnostic-001/runs/phase6demo-diagnostic-after-001/delivery.json",
+      "delivery_sha256": "b75ba29da3b4661c4bc35328426452c6fb4db21324212abdf802d9a2b8b6fc05",
+      "delivery_status": "REJECTED",
+      "evidence_check_path": "artifacts/phase6_product_demo/pilots/diagnostic-001/runs/phase6demo-diagnostic-after-001/evidence-check.json",
+      "evidence_check_sha256": "4d80c8833001d6da753126087f2ef9a3bdc29a07ebd2988d109a2a301cb2c628",
+      "previous_state": {
+        "dataset": "demo-return-after",
+        "run_id": "phase6demo-diagnostic-after-001",
+        "run_status": "RUNNING"
+      },
+      "reject_reason": "RUNTIME_ERROR",
+      "run_id": "phase6demo-diagnostic-after-001",
+      "stale_running_state_observed": true
+    },
+    {
+      "closure_reason": "The persisted RUNNING reservation had no matching live process; the ResultStore contract requires a terminal RUNTIME_ERROR rejection.",
+      "dataset": "demo-return-after",
+      "delivery_path": "artifacts/phase6_product_demo/pilots/diagnostic-002/runs/phase6demo-diagnostic-after-002/delivery.json",
+      "delivery_sha256": "46e2f19ac1f789d1618df0d11610edf671636119195e10decd068c44abbfa50d",
+      "delivery_status": "REJECTED",
+      "evidence_check_path": "artifacts/phase6_product_demo/pilots/diagnostic-002/runs/phase6demo-diagnostic-after-002/evidence-check.json",
+      "evidence_check_sha256": "75b042aa6254dcf8a56a649ccb33123562f2b3512d836eb60e0601228b761fce",
+      "previous_state": {
+        "dataset": "demo-return-after",
+        "run_id": "phase6demo-diagnostic-after-002",
+        "run_status": "RUNNING"
+      },
+      "reject_reason": "RUNTIME_ERROR",
+      "run_id": "phase6demo-diagnostic-after-002",
+      "stale_running_state_observed": true
+    }
+  ],
+  "schema_version": "ax-phase6-diagnostic-closure-v1"
+}

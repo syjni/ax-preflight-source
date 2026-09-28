@@ -1,0 +1,129 @@
+{
+  "$defs": {
+    "FeaturedCase": {
+      "additionalProperties": false,
+      "properties": {
+        "after": {
+          "$ref": "#/$defs/FeaturedRunReference"
+        },
+        "before": {
+          "$ref": "#/$defs/FeaturedRunReference"
+        },
+        "case_id": {
+          "minLength": 1,
+          "title": "Case Id",
+          "type": "string"
+        },
+        "question": {
+          "minLength": 1,
+          "title": "Question",
+          "type": "string"
+        },
+        "summary": {
+          "minLength": 1,
+          "title": "Summary",
+          "type": "string"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "case_id",
+        "title",
+        "question",
+        "summary",
+        "before",
+        "after"
+      ],
+      "title": "FeaturedCase",
+      "type": "object"
+    },
+    "FeaturedRunReference": {
+      "additionalProperties": false,
+      "properties": {
+        "action_label": {
+          "minLength": 1,
+          "title": "Action Label",
+          "type": "string"
+        },
+        "dataset": {
+          "minLength": 1,
+          "title": "Dataset",
+          "type": "string"
+        },
+        "detail": {
+          "minLength": 1,
+          "title": "Detail",
+          "type": "string"
+        },
+        "label": {
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "phase": {
+          "enum": [
+            "BEFORE",
+            "AFTER"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "result": {
+          "minLength": 1,
+          "title": "Result",
+          "type": "string"
+        },
+        "run_id": {
+          "minLength": 1,
+          "title": "Run Id",
+          "type": "string"
+        },
+        "target": {
+          "enum": [
+            "summary",
+            "evidence"
+          ],
+          "title": "Target",
+          "type": "string"
+        }
+      },
+      "required": [
+        "phase",
+        "label",
+        "dataset",
+        "run_id",
+        "result",
+        "detail",
+        "action_label",
+        "target"
+      ],
+      "title": "FeaturedRunReference",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "featured_cases": {
+      "items": {
+        "$ref": "#/$defs/FeaturedCase"
+      },
+      "title": "Featured Cases",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "ax-featured-cases-response-v1",
+      "default": "ax-featured-cases-response-v1",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "featured_cases"
+  ],
+  "title": "FeaturedCasesResponse",
+  "type": "object"
+}

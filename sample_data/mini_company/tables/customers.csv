@@ -1,0 +1,3 @@
+customer_id,customer_name,email,active
+C013,한빛상사,sales@hanbit.example,true
+C021,새봄마트,,false

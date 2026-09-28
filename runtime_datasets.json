@@ -1,0 +1,89 @@
+{
+  "schema_version": "ax-runtime-datasets-v1",
+  "profiles": {
+    "mini": {
+      "dataset_name": "mini-company-smoke",
+      "source_root": "sample_data/mini_company",
+      "scan_report": "scan_report.json",
+      "dataset_manifest": null
+    },
+    "ceiling": {
+      "dataset_name": "hanbit-distribution-ceiling-v1",
+      "source_root": "sample_data/ceiling_company",
+      "scan_report": "ceiling_scan_report.json",
+      "dataset_manifest": "dataset_manifest.json"
+    },
+    "demo-return-before": {
+      "dataset_name": "product-demo-return-before-v1",
+      "source_root": "sample_data/product_demo/return_policy_before",
+      "scan_report": "artifacts/phase6_product_demo/before-scan-report.json",
+      "dataset_manifest": null
+    },
+    "demo-return-after": {
+      "dataset_name": "product-demo-return-after-v1",
+      "source_root": "sample_data/product_demo/return_policy_after",
+      "scan_report": "artifacts/phase6_product_demo/after-scan-report.json",
+      "dataset_manifest": null
+    },
+    "portfolio-hidden-conflict-before": {
+      "dataset_name": "hanbit-portfolio-hidden-conflict-before-v1",
+      "source_root": "sample_data/product_demo/hanbit_portfolio_before",
+      "scan_report": "artifacts/phase6_product_demo_v3/before-scan-report.json",
+      "dataset_manifest": null
+    },
+    "portfolio-ceiling-after": {
+      "dataset_name": "hanbit-distribution-ceiling-v1",
+      "source_root": "sample_data/ceiling_company",
+      "scan_report": "ceiling_scan_report.json",
+      "dataset_manifest": "dataset_manifest.json"
+    },
+    "before-accessibility-d527640c55b3": {
+      "dataset_name": "hanbit-distribution-before-accessibility-d527640c55b3-v2",
+      "source_root": "sample_data/before_variants/before-accessibility-d527640c55b3",
+      "scan_report": "experiment/v2/runtime/before-accessibility-d527640c55b3-scan-report.json",
+      "dataset_manifest": "experiment/v2/runtime/before-accessibility-d527640c55b3-dataset-manifest.json"
+    },
+    "before-accessibility-0e78131fc878": {
+      "dataset_name": "hanbit-distribution-before-accessibility-0e78131fc878-v2",
+      "source_root": "sample_data/before_variants/before-accessibility-0e78131fc878",
+      "scan_report": "experiment/v2/runtime/before-accessibility-0e78131fc878-scan-report.json",
+      "dataset_manifest": "experiment/v2/runtime/before-accessibility-0e78131fc878-dataset-manifest.json"
+    },
+    "before-accessibility-7497b2824ba3": {
+      "dataset_name": "hanbit-distribution-before-accessibility-7497b2824ba3-v2",
+      "source_root": "sample_data/before_variants/before-accessibility-7497b2824ba3",
+      "scan_report": "experiment/v2/runtime/before-accessibility-7497b2824ba3-scan-report.json",
+      "dataset_manifest": "experiment/v2/runtime/before-accessibility-7497b2824ba3-dataset-manifest.json"
+    },
+    "before-accessibility-a534444afe03": {
+      "dataset_name": "hanbit-distribution-before-accessibility-a534444afe03-v2",
+      "source_root": "sample_data/before_variants/before-accessibility-a534444afe03",
+      "scan_report": "experiment/v2/runtime/before-accessibility-a534444afe03-scan-report.json",
+      "dataset_manifest": "experiment/v2/runtime/before-accessibility-a534444afe03-dataset-manifest.json"
+    },
+    "before-accessibility-66a46d7e2186": {
+      "dataset_name": "hanbit-distribution-before-accessibility-66a46d7e2186-v2",
+      "source_root": "sample_data/before_variants/before-accessibility-66a46d7e2186",
+      "scan_report": "experiment/v2/runtime/before-accessibility-66a46d7e2186-scan-report.json",
+      "dataset_manifest": "experiment/v2/runtime/before-accessibility-66a46d7e2186-dataset-manifest.json"
+    },
+    "before-accessibility-950a2b2ed909": {
+      "dataset_name": "hanbit-distribution-before-accessibility-950a2b2ed909-v2",
+      "source_root": "sample_data/before_variants/before-accessibility-950a2b2ed909",
+      "scan_report": "experiment/v2/runtime/before-accessibility-950a2b2ed909-scan-report.json",
+      "dataset_manifest": "experiment/v2/runtime/before-accessibility-950a2b2ed909-dataset-manifest.json"
+    },
+    "before-accessibility-f1d1804d1aa6": {
+      "dataset_name": "hanbit-distribution-before-accessibility-f1d1804d1aa6-v2",
+      "source_root": "sample_data/before_variants/before-accessibility-f1d1804d1aa6",
+      "scan_report": "experiment/v2/runtime/before-accessibility-f1d1804d1aa6-scan-report.json",
+      "dataset_manifest": "experiment/v2/runtime/before-accessibility-f1d1804d1aa6-dataset-manifest.json"
+    },
+    "before-accessibility-91428d0d2d6d": {
+      "dataset_name": "hanbit-distribution-before-accessibility-91428d0d2d6d-v2",
+      "source_root": "sample_data/before_variants/before-accessibility-91428d0d2d6d",
+      "scan_report": "experiment/v2/runtime/before-accessibility-91428d0d2d6d-scan-report.json",
+      "dataset_manifest": "experiment/v2/runtime/before-accessibility-91428d0d2d6d-dataset-manifest.json"
+    }
+  }
+}

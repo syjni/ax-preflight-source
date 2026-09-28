@@ -1,0 +1,143 @@
+{
+  "after_profile": "portfolio-ceiling-after",
+  "after_readiness": {
+    "as_of_date": "2026-09-21",
+    "counts": {
+      "accessibility": {
+        "accessible_files": 30,
+        "ocr_required_files": 0,
+        "parsed_files": 30,
+        "total_files": 30
+      },
+      "completeness": {
+        "eligible_tables": 11,
+        "estimated_missing_cells": 0.0,
+        "total_cells": 2391
+      },
+      "redundancy": {
+        "exact_duplicate_groups": 0,
+        "redundant_files": 0,
+        "total_files": 30
+      },
+      "safety": {
+        "files_without_detected_pii": 30,
+        "pii_affected_files": 0,
+        "total_files": 30
+      },
+      "timeliness": {
+        "files_with_valid_modified_at": 30,
+        "future_timestamp_files": 0,
+        "invalid_timestamp_files": 0,
+        "missing_timestamp_files": 0,
+        "non_stale_files": 30,
+        "stale_files": 0
+      }
+    },
+    "dimension_weights": {
+      "accessibility": 0.2,
+      "completeness": 0.2,
+      "redundancy": 0.2,
+      "safety": 0.2,
+      "timeliness": 0.2
+    },
+    "dimensions": {
+      "accessibility": 1.0,
+      "completeness": 1.0,
+      "redundancy": 1.0,
+      "safety": 1.0,
+      "timeliness": 1.0
+    },
+    "flags": {
+      "completeness_not_applicable": false,
+      "empty_file_set": false,
+      "future_modified_at_count": 0,
+      "invalid_modified_at_count": 0,
+      "missing_modified_at_count": 0,
+      "no_valid_modified_at": false,
+      "scan_metadata_file_count_mismatch": false,
+      "unknown_ocr_file_id_count": 0,
+      "unknown_pii_file_id_count": 0
+    },
+    "readiness_score": 100.0,
+    "schema_version": "ax-readiness-score-v1",
+    "stale_threshold_days": 365
+  },
+  "before_probable_version_group_count": 0,
+  "before_profile": "portfolio-hidden-conflict-before",
+  "before_readiness": {
+    "as_of_date": "2026-09-21",
+    "counts": {
+      "accessibility": {
+        "accessible_files": 30,
+        "ocr_required_files": 0,
+        "parsed_files": 30,
+        "total_files": 30
+      },
+      "completeness": {
+        "eligible_tables": 11,
+        "estimated_missing_cells": 0.0,
+        "total_cells": 2391
+      },
+      "redundancy": {
+        "exact_duplicate_groups": 0,
+        "redundant_files": 0,
+        "total_files": 30
+      },
+      "safety": {
+        "files_without_detected_pii": 30,
+        "pii_affected_files": 0,
+        "total_files": 30
+      },
+      "timeliness": {
+        "files_with_valid_modified_at": 30,
+        "future_timestamp_files": 0,
+        "invalid_timestamp_files": 0,
+        "missing_timestamp_files": 0,
+        "non_stale_files": 30,
+        "stale_files": 0
+      }
+    },
+    "dimension_weights": {
+      "accessibility": 0.2,
+      "completeness": 0.2,
+      "redundancy": 0.2,
+      "safety": 0.2,
+      "timeliness": 0.2
+    },
+    "dimensions": {
+      "accessibility": 1.0,
+      "completeness": 1.0,
+      "redundancy": 1.0,
+      "safety": 1.0,
+      "timeliness": 1.0
+    },
+    "flags": {
+      "completeness_not_applicable": false,
+      "empty_file_set": false,
+      "future_modified_at_count": 0,
+      "invalid_modified_at_count": 0,
+      "missing_modified_at_count": 0,
+      "no_valid_modified_at": false,
+      "scan_metadata_file_count_mismatch": false,
+      "unknown_ocr_file_id_count": 0,
+      "unknown_pii_file_id_count": 0
+    },
+    "readiness_score": 100.0,
+    "schema_version": "ax-readiness-score-v1",
+    "stale_threshold_days": 365
+  },
+  "claim_scope": "PRODUCT_DEMO_FIXTURE_NOT_CUSTOMER_DATA",
+  "file_count": 30,
+  "mutation": {
+    "after_sha256": "8892c3a043fc20bbe96898fdbe30ba7c7c124cf569608b0dfe5662e34157fa0c",
+    "before_sha256": "14d06a97e2337d9702828fc9b4815e18f2c4c06b14906550df57e609c251b672",
+    "before_statement": "온라인몰 고객 문의에는 상품 수령 후 14일 이내 반품 가능하다고 안내한다.",
+    "conflicting_policy_statement": "반품 가능 기간은 구매일로부터 30일입니다.",
+    "relationship_visible_in_filename": false,
+    "relative_path": "06_고객지원/FAQ_2026.txt"
+  },
+  "parsed_file_count": 30,
+  "same_readiness_dimensions": true,
+  "same_readiness_total": true,
+  "schema_version": "ax-phase6-product-demo-static-comparison-v3"
+}

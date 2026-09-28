@@ -1,0 +1,500 @@
+{
+  "$defs": {
+    "AffectedTask": {
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "task_id": {
+          "minLength": 1,
+          "title": "Task Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "task_id",
+        "label"
+      ],
+      "title": "AffectedTask",
+      "type": "object"
+    },
+    "DataFinding": {
+      "additionalProperties": false,
+      "properties": {
+        "abstained_run_count": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Abstained Run Count",
+          "type": "integer"
+        },
+        "abstention_variants": {
+          "items": {
+            "$ref": "#/$defs/FindingAbstentionVariant"
+          },
+          "title": "Abstention Variants",
+          "type": "array"
+        },
+        "affected_run_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Affected Run Ids",
+          "type": "array"
+        },
+        "affected_task_count": {
+          "minimum": 0,
+          "title": "Affected Task Count",
+          "type": "integer"
+        },
+        "affected_task_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Affected Task Ids",
+          "type": "array"
+        },
+        "affected_tasks": {
+          "items": {
+            "$ref": "#/$defs/AffectedTask"
+          },
+          "title": "Affected Tasks",
+          "type": "array"
+        },
+        "answer_variants": {
+          "items": {
+            "$ref": "#/$defs/FindingAnswerVariant"
+          },
+          "title": "Answer Variants",
+          "type": "array"
+        },
+        "answered_run_count": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Answered Run Count",
+          "type": "integer"
+        },
+        "attribution_status": {
+          "default": "DATA_SIGNAL",
+          "enum": [
+            "DATA_SIGNAL",
+            "CAUSE_UNCONFIRMED",
+            "RETRIEVAL_LIMITATION"
+          ],
+          "title": "Attribution Status",
+          "type": "string"
+        },
+        "comparison": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FindingComparison"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "comparison_status": {
+          "default": "OPEN",
+          "enum": [
+            "OPEN",
+            "NOT_REPRODUCED_AFTER",
+            "UNKNOWN"
+          ],
+          "title": "Comparison Status",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/FindingEvidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "finding_id": {
+          "minLength": 1,
+          "title": "Finding Id",
+          "type": "string"
+        },
+        "finding_type": {
+          "$ref": "#/$defs/FindingType"
+        },
+        "observed_run_count": {
+          "minimum": 1,
+          "title": "Observed Run Count",
+          "type": "integer"
+        },
+        "recommended_action": {
+          "minLength": 1,
+          "title": "Recommended Action",
+          "type": "string"
+        },
+        "rejected_run_count": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Rejected Run Count",
+          "type": "integer"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Ids",
+          "type": "array"
+        },
+        "summary": {
+          "minLength": 1,
+          "title": "Summary",
+          "type": "string"
+        }
+      },
+      "required": [
+        "finding_id",
+        "finding_type",
+        "source_ids",
+        "affected_task_ids",
+        "affected_tasks",
+        "affected_run_ids",
+        "affected_task_count",
+        "observed_run_count",
+        "evidence",
+        "summary",
+        "recommended_action"
+      ],
+      "title": "DataFinding",
+      "type": "object"
+    },
+    "FindingAbstentionVariant": {
+      "additionalProperties": false,
+      "properties": {
+        "explanation": {
+          "minLength": 1,
+          "title": "Explanation",
+          "type": "string"
+        },
+        "reason": {
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        },
+        "run_count": {
+          "minimum": 1,
+          "title": "Run Count",
+          "type": "integer"
+        },
+        "run_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Run Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "reason",
+        "explanation",
+        "run_ids",
+        "run_count"
+      ],
+      "title": "FindingAbstentionVariant",
+      "type": "object"
+    },
+    "FindingAnswerVariant": {
+      "additionalProperties": false,
+      "properties": {
+        "answer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ],
+          "title": "Answer"
+        },
+        "normalized_unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Normalized Unit"
+        },
+        "normalized_value": {
+          "minLength": 1,
+          "title": "Normalized Value",
+          "type": "string"
+        },
+        "run_count": {
+          "minimum": 1,
+          "title": "Run Count",
+          "type": "integer"
+        },
+        "run_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Run Ids",
+          "type": "array"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Ids",
+          "type": "array"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        }
+      },
+      "required": [
+        "answer",
+        "normalized_value",
+        "source_ids",
+        "run_ids",
+        "run_count"
+      ],
+      "title": "FindingAnswerVariant",
+      "type": "object"
+    },
+    "FindingComparison": {
+      "additionalProperties": false,
+      "properties": {
+        "after_answered_run_count": {
+          "minimum": 0,
+          "title": "After Answered Run Count",
+          "type": "integer"
+        },
+        "after_dataset": {
+          "minLength": 1,
+          "title": "After Dataset",
+          "type": "string"
+        },
+        "after_observed_run_count": {
+          "minimum": 0,
+          "title": "After Observed Run Count",
+          "type": "integer"
+        },
+        "before_abstained_run_count": {
+          "minimum": 0,
+          "title": "Before Abstained Run Count",
+          "type": "integer"
+        },
+        "before_dataset": {
+          "minLength": 1,
+          "title": "Before Dataset",
+          "type": "string"
+        },
+        "before_observed_run_count": {
+          "minimum": 0,
+          "title": "Before Observed Run Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "before_dataset",
+        "after_dataset",
+        "before_abstained_run_count",
+        "before_observed_run_count",
+        "after_answered_run_count",
+        "after_observed_run_count"
+      ],
+      "title": "FindingComparison",
+      "type": "object"
+    },
+    "FindingEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "excerpt": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Excerpt"
+        },
+        "source_id": {
+          "minLength": 1,
+          "title": "Source Id",
+          "type": "string"
+        },
+        "source_title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Title"
+        },
+        "tool_name": {
+          "minLength": 1,
+          "title": "Tool Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_id",
+        "tool_name"
+      ],
+      "title": "FindingEvidence",
+      "type": "object"
+    },
+    "FindingType": {
+      "enum": [
+        "CONFLICTING_SOURCES",
+        "INCONSISTENT_ANSWERS",
+        "MIXED_OUTCOMES",
+        "INSUFFICIENT_EVIDENCE",
+        "MISSING_INFORMATION"
+      ],
+      "title": "FindingType",
+      "type": "string"
+    },
+    "TaskDiagnostics": {
+      "additionalProperties": false,
+      "properties": {
+        "abstained_run_count": {
+          "minimum": 0,
+          "title": "Abstained Run Count",
+          "type": "integer"
+        },
+        "answered_run_count": {
+          "minimum": 0,
+          "title": "Answered Run Count",
+          "type": "integer"
+        },
+        "blocked_task_count": {
+          "minimum": 0,
+          "title": "Blocked Task Count",
+          "type": "integer"
+        },
+        "inconclusive_task_count": {
+          "minimum": 0,
+          "title": "Inconclusive Task Count",
+          "type": "integer"
+        },
+        "observed_run_count": {
+          "minimum": 0,
+          "title": "Observed Run Count",
+          "type": "integer"
+        },
+        "processable_task_count": {
+          "minimum": 0,
+          "title": "Processable Task Count",
+          "type": "integer"
+        },
+        "rejected_run_count": {
+          "minimum": 0,
+          "title": "Rejected Run Count",
+          "type": "integer"
+        },
+        "task_count": {
+          "minimum": 0,
+          "title": "Task Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "task_count",
+        "processable_task_count",
+        "blocked_task_count",
+        "inconclusive_task_count",
+        "observed_run_count",
+        "answered_run_count",
+        "abstained_run_count",
+        "rejected_run_count"
+      ],
+      "title": "TaskDiagnostics",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "comparison_version": {
+      "default": "v1",
+      "enum": [
+        "v1",
+        "v2"
+      ],
+      "title": "Comparison Version",
+      "type": "string"
+    },
+    "dataset": {
+      "minLength": 1,
+      "title": "Dataset",
+      "type": "string"
+    },
+    "diagnostics": {
+      "$ref": "#/$defs/TaskDiagnostics"
+    },
+    "findings": {
+      "items": {
+        "$ref": "#/$defs/DataFinding"
+      },
+      "title": "Findings",
+      "type": "array"
+    },
+    "legacy_diagnostics": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/TaskDiagnostics"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "schema_version": {
+      "const": "ax-data-findings-v1",
+      "default": "ax-data-findings-v1",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "dataset",
+    "diagnostics",
+    "findings"
+  ],
+  "title": "FindingsResponse",
+  "type": "object"
+}

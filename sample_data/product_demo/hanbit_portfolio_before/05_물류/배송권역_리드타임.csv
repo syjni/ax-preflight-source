@@ -1,0 +1,5 @@
+﻿zone_code,zone_name,standard_lead_days,carrier
+Z01,서울,1,한빛택배
+Z02,경기,2,한빛택배
+Z03,인천,2,한빛택배
+Z04,강원,3,한빛택배

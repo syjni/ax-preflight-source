@@ -1,0 +1,351 @@
+{
+  "schema_version": "ax-task-to-defect-v1",
+  "dataset_id": "hanbit-distribution-ceiling-v1",
+  "status": "PLANNING_ONLY_NO_DEFECTS_INJECTED",
+  "task_defects": [
+    {
+      "task_id": "K01_RETURN_WINDOW",
+      "primary_defect_id": "DEF_K01_RETURN_WINDOW_SOURCE_READINESS",
+      "primary_defect_type": "source_readiness",
+      "affected_sources": [
+        "02_정책/반품_교환_정책_2026.docx"
+      ],
+      "protected_dependencies": [
+        "02_정책/배송_지연_보상_2026.docx",
+        "03_영업/품목_마스터.csv",
+        "05_물류/재고_현황_2026-09.xlsx",
+        "06_고객지원/고객응대_매뉴얼.docx"
+      ],
+      "control_task_ids_excluded": [
+        "K03_DELAY_COMPENSATION_THRESHOLD",
+        "K06_FIRST_RESPONSE_TARGET",
+        "O04_PRODUCT_MASTER_COUNT",
+        "O05_HIGHEST_AVAILABLE_STOCK",
+        "C03_TEA_STOCK"
+      ]
+    },
+    {
+      "task_id": "K02_RETURN_REQUIREMENTS",
+      "primary_defect_id": "DEF_K02_RETURN_REQUIREMENTS_SOURCE_READINESS",
+      "primary_defect_type": "source_readiness",
+      "affected_sources": [
+        "02_정책/반품_교환_정책_2026.docx"
+      ],
+      "protected_dependencies": [
+        "02_정책/배송_지연_보상_2026.docx",
+        "03_영업/품목_마스터.csv",
+        "05_물류/재고_현황_2026-09.xlsx",
+        "06_고객지원/고객응대_매뉴얼.docx"
+      ],
+      "control_task_ids_excluded": [
+        "K03_DELAY_COMPENSATION_THRESHOLD",
+        "K06_FIRST_RESPONSE_TARGET",
+        "O04_PRODUCT_MASTER_COUNT",
+        "O05_HIGHEST_AVAILABLE_STOCK",
+        "C03_TEA_STOCK"
+      ]
+    },
+    {
+      "task_id": "K04_DISCOUNT_APPROVER",
+      "primary_defect_id": "DEF_K04_DISCOUNT_APPROVER_SOURCE_READINESS",
+      "primary_defect_type": "source_readiness",
+      "affected_sources": [
+        "02_정책/할인_승인_규정.docx"
+      ],
+      "protected_dependencies": [
+        "02_정책/배송_지연_보상_2026.docx",
+        "03_영업/품목_마스터.csv",
+        "05_물류/재고_현황_2026-09.xlsx",
+        "06_고객지원/고객응대_매뉴얼.docx"
+      ],
+      "control_task_ids_excluded": [
+        "K03_DELAY_COMPENSATION_THRESHOLD",
+        "K06_FIRST_RESPONSE_TARGET",
+        "O04_PRODUCT_MASTER_COUNT",
+        "O05_HIGHEST_AVAILABLE_STOCK",
+        "C03_TEA_STOCK"
+      ]
+    },
+    {
+      "task_id": "K05_STOCK_REFERENCE_FIELD",
+      "primary_defect_id": "DEF_K05_STOCK_REFERENCE_FIELD_SOURCE_READINESS",
+      "primary_defect_type": "source_readiness",
+      "affected_sources": [
+        "05_물류/창고_운영_매뉴얼.docx"
+      ],
+      "protected_dependencies": [
+        "02_정책/배송_지연_보상_2026.docx",
+        "03_영업/품목_마스터.csv",
+        "05_물류/재고_현황_2026-09.xlsx",
+        "06_고객지원/고객응대_매뉴얼.docx"
+      ],
+      "control_task_ids_excluded": [
+        "K03_DELAY_COMPENSATION_THRESHOLD",
+        "K06_FIRST_RESPONSE_TARGET",
+        "O04_PRODUCT_MASTER_COUNT",
+        "O05_HIGHEST_AVAILABLE_STOCK",
+        "C03_TEA_STOCK"
+      ]
+    },
+    {
+      "task_id": "O01_CUSTOMER_COUNT",
+      "primary_defect_id": "DEF_O01_CUSTOMER_COUNT_SOURCE_READINESS",
+      "primary_defect_type": "source_readiness",
+      "affected_sources": [
+        "03_영업/거래처_마스터.xlsx"
+      ],
+      "protected_dependencies": [
+        "02_정책/배송_지연_보상_2026.docx",
+        "03_영업/품목_마스터.csv",
+        "05_물류/재고_현황_2026-09.xlsx",
+        "06_고객지원/고객응대_매뉴얼.docx"
+      ],
+      "control_task_ids_excluded": [
+        "K03_DELAY_COMPENSATION_THRESHOLD",
+        "K06_FIRST_RESPONSE_TARGET",
+        "O04_PRODUCT_MASTER_COUNT",
+        "O05_HIGHEST_AVAILABLE_STOCK",
+        "C03_TEA_STOCK"
+      ]
+    },
+    {
+      "task_id": "O02_SEPTEMBER_ORDER_TOTAL",
+      "primary_defect_id": "DEF_O02_SEPTEMBER_ORDER_TOTAL_SOURCE_READINESS",
+      "primary_defect_type": "source_readiness",
+      "affected_sources": [
+        "04_주문/주문_원장_2026.xlsx"
+      ],
+      "protected_dependencies": [
+        "02_정책/배송_지연_보상_2026.docx",
+        "03_영업/품목_마스터.csv",
+        "05_물류/재고_현황_2026-09.xlsx",
+        "06_고객지원/고객응대_매뉴얼.docx"
+      ],
+      "control_task_ids_excluded": [
+        "K03_DELAY_COMPENSATION_THRESHOLD",
+        "K06_FIRST_RESPONSE_TARGET",
+        "O04_PRODUCT_MASTER_COUNT",
+        "O05_HIGHEST_AVAILABLE_STOCK",
+        "C03_TEA_STOCK"
+      ]
+    },
+    {
+      "task_id": "O03_GREEN_TABLE_LAST_ORDER",
+      "primary_defect_id": "DEF_O03_GREEN_TABLE_LAST_ORDER_SOURCE_READINESS",
+      "primary_defect_type": "source_readiness",
+      "affected_sources": [
+        "03_영업/거래처_마스터.xlsx",
+        "04_주문/주문_원장_2026.xlsx"
+      ],
+      "protected_dependencies": [
+        "02_정책/배송_지연_보상_2026.docx",
+        "03_영업/품목_마스터.csv",
+        "05_물류/재고_현황_2026-09.xlsx",
+        "06_고객지원/고객응대_매뉴얼.docx"
+      ],
+      "control_task_ids_excluded": [
+        "K03_DELAY_COMPENSATION_THRESHOLD",
+        "K06_FIRST_RESPONSE_TARGET",
+        "O04_PRODUCT_MASTER_COUNT",
+        "O05_HIGHEST_AVAILABLE_STOCK",
+        "C03_TEA_STOCK"
+      ]
+    },
+    {
+      "task_id": "O06_RETURN_RATE",
+      "primary_defect_id": "DEF_O06_RETURN_RATE_SOURCE_READINESS",
+      "primary_defect_type": "source_readiness",
+      "affected_sources": [
+        "04_주문/반품_원장_2026.csv"
+      ],
+      "protected_dependencies": [
+        "02_정책/배송_지연_보상_2026.docx",
+        "03_영업/품목_마스터.csv",
+        "05_물류/재고_현황_2026-09.xlsx",
+        "06_고객지원/고객응대_매뉴얼.docx"
+      ],
+      "control_task_ids_excluded": [
+        "K03_DELAY_COMPENSATION_THRESHOLD",
+        "K06_FIRST_RESPONSE_TARGET",
+        "O04_PRODUCT_MASTER_COUNT",
+        "O05_HIGHEST_AVAILABLE_STOCK",
+        "C03_TEA_STOCK"
+      ]
+    },
+    {
+      "task_id": "O07_SEOUL_LEAD_TIME",
+      "primary_defect_id": "DEF_O07_SEOUL_LEAD_TIME_SOURCE_READINESS",
+      "primary_defect_type": "source_readiness",
+      "affected_sources": [
+        "05_물류/배송권역_리드타임.csv"
+      ],
+      "protected_dependencies": [
+        "02_정책/배송_지연_보상_2026.docx",
+        "03_영업/품목_마스터.csv",
+        "05_물류/재고_현황_2026-09.xlsx",
+        "06_고객지원/고객응대_매뉴얼.docx"
+      ],
+      "control_task_ids_excluded": [
+        "K03_DELAY_COMPENSATION_THRESHOLD",
+        "K06_FIRST_RESPONSE_TARGET",
+        "O04_PRODUCT_MASTER_COUNT",
+        "O05_HIGHEST_AVAILABLE_STOCK",
+        "C03_TEA_STOCK"
+      ]
+    },
+    {
+      "task_id": "C01_HANBIT_AUGUST_TOTAL",
+      "primary_defect_id": "DEF_C01_HANBIT_AUGUST_TOTAL_SOURCE_READINESS",
+      "primary_defect_type": "source_readiness",
+      "affected_sources": [
+        "03_영업/거래처_마스터.xlsx",
+        "04_주문/주문_원장_2026.xlsx"
+      ],
+      "protected_dependencies": [
+        "02_정책/배송_지연_보상_2026.docx",
+        "03_영업/품목_마스터.csv",
+        "05_물류/재고_현황_2026-09.xlsx",
+        "06_고객지원/고객응대_매뉴얼.docx"
+      ],
+      "control_task_ids_excluded": [
+        "K03_DELAY_COMPENSATION_THRESHOLD",
+        "K06_FIRST_RESPONSE_TARGET",
+        "O04_PRODUCT_MASTER_COUNT",
+        "O05_HIGHEST_AVAILABLE_STOCK",
+        "C03_TEA_STOCK"
+      ]
+    },
+    {
+      "task_id": "C02_DONGHAE_SEPTEMBER_TOTAL",
+      "primary_defect_id": "DEF_C02_DONGHAE_SEPTEMBER_TOTAL_SOURCE_READINESS",
+      "primary_defect_type": "source_readiness",
+      "affected_sources": [
+        "03_영업/거래처_마스터.xlsx",
+        "04_주문/주문_원장_2026.xlsx"
+      ],
+      "protected_dependencies": [
+        "02_정책/배송_지연_보상_2026.docx",
+        "03_영업/품목_마스터.csv",
+        "05_물류/재고_현황_2026-09.xlsx",
+        "06_고객지원/고객응대_매뉴얼.docx"
+      ],
+      "control_task_ids_excluded": [
+        "K03_DELAY_COMPENSATION_THRESHOLD",
+        "K06_FIRST_RESPONSE_TARGET",
+        "O04_PRODUCT_MASTER_COUNT",
+        "O05_HIGHEST_AVAILABLE_STOCK",
+        "C03_TEA_STOCK"
+      ]
+    },
+    {
+      "task_id": "C04_YUNSEONG_LAST_ORDER",
+      "primary_defect_id": "DEF_C04_YUNSEONG_LAST_ORDER_SOURCE_READINESS",
+      "primary_defect_type": "source_readiness",
+      "affected_sources": [
+        "03_영업/거래처_마스터.xlsx",
+        "04_주문/주문_원장_2026.xlsx"
+      ],
+      "protected_dependencies": [
+        "02_정책/배송_지연_보상_2026.docx",
+        "03_영업/품목_마스터.csv",
+        "05_물류/재고_현황_2026-09.xlsx",
+        "06_고객지원/고객응대_매뉴얼.docx"
+      ],
+      "control_task_ids_excluded": [
+        "K03_DELAY_COMPENSATION_THRESHOLD",
+        "K06_FIRST_RESPONSE_TARGET",
+        "O04_PRODUCT_MASTER_COUNT",
+        "O05_HIGHEST_AVAILABLE_STOCK",
+        "C03_TEA_STOCK"
+      ]
+    },
+    {
+      "task_id": "C05_SAEBOM_JULY_TOTAL",
+      "primary_defect_id": "DEF_C05_SAEBOM_JULY_TOTAL_SOURCE_READINESS",
+      "primary_defect_type": "source_readiness",
+      "affected_sources": [
+        "03_영업/거래처_마스터.xlsx",
+        "04_주문/주문_원장_2026.xlsx"
+      ],
+      "protected_dependencies": [
+        "02_정책/배송_지연_보상_2026.docx",
+        "03_영업/품목_마스터.csv",
+        "05_물류/재고_현황_2026-09.xlsx",
+        "06_고객지원/고객응대_매뉴얼.docx"
+      ],
+      "control_task_ids_excluded": [
+        "K03_DELAY_COMPENSATION_THRESHOLD",
+        "K06_FIRST_RESPONSE_TARGET",
+        "O04_PRODUCT_MASTER_COUNT",
+        "O05_HIGHEST_AVAILABLE_STOCK",
+        "C03_TEA_STOCK"
+      ]
+    },
+    {
+      "task_id": "C06_ARAM_AUGUST_RETURNS",
+      "primary_defect_id": "DEF_C06_ARAM_AUGUST_RETURNS_SOURCE_READINESS",
+      "primary_defect_type": "source_readiness",
+      "affected_sources": [
+        "03_영업/거래처_마스터.xlsx",
+        "04_주문/반품_원장_2026.csv"
+      ],
+      "protected_dependencies": [
+        "02_정책/배송_지연_보상_2026.docx",
+        "03_영업/품목_마스터.csv",
+        "05_물류/재고_현황_2026-09.xlsx",
+        "06_고객지원/고객응대_매뉴얼.docx"
+      ],
+      "control_task_ids_excluded": [
+        "K03_DELAY_COMPENSATION_THRESHOLD",
+        "K06_FIRST_RESPONSE_TARGET",
+        "O04_PRODUCT_MASTER_COUNT",
+        "O05_HIGHEST_AVAILABLE_STOCK",
+        "C03_TEA_STOCK"
+      ]
+    },
+    {
+      "task_id": "C07_DAON_TOP_ORDER_PRODUCT",
+      "primary_defect_id": "DEF_C07_DAON_TOP_ORDER_PRODUCT_SOURCE_READINESS",
+      "primary_defect_type": "source_readiness",
+      "affected_sources": [
+        "03_영업/거래처_마스터.xlsx",
+        "04_주문/주문_원장_2026.xlsx"
+      ],
+      "protected_dependencies": [
+        "02_정책/배송_지연_보상_2026.docx",
+        "03_영업/품목_마스터.csv",
+        "05_물류/재고_현황_2026-09.xlsx",
+        "06_고객지원/고객응대_매뉴얼.docx"
+      ],
+      "control_task_ids_excluded": [
+        "K03_DELAY_COMPENSATION_THRESHOLD",
+        "K06_FIRST_RESPONSE_TARGET",
+        "O04_PRODUCT_MASTER_COUNT",
+        "O05_HIGHEST_AVAILABLE_STOCK",
+        "C03_TEA_STOCK"
+      ]
+    },
+    {
+      "task_id": "K07_VENDOR_FORECAST_ABSTAIN",
+      "primary_defect_id": "DEF_K07_VENDOR_FORECAST_ABSTAIN_SOURCE_READINESS",
+      "primary_defect_type": "source_readiness",
+      "affected_sources": [
+        "03_영업/거래처_마스터.xlsx",
+        "04_주문/주문_원장_2026.xlsx"
+      ],
+      "protected_dependencies": [
+        "02_정책/배송_지연_보상_2026.docx",
+        "03_영업/품목_마스터.csv",
+        "05_물류/재고_현황_2026-09.xlsx",
+        "06_고객지원/고객응대_매뉴얼.docx"
+      ],
+      "control_task_ids_excluded": [
+        "K03_DELAY_COMPENSATION_THRESHOLD",
+        "K06_FIRST_RESPONSE_TARGET",
+        "O04_PRODUCT_MASTER_COUNT",
+        "O05_HIGHEST_AVAILABLE_STOCK",
+        "C03_TEA_STOCK"
+      ]
+    }
+  ]
+}

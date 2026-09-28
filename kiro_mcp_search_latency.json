@@ -1,0 +1,57 @@
+{
+  "measured_at": "2026-09-19T05:38:15.316517Z",
+  "clock": "time.perf_counter_ns",
+  "scope": "in-process direct ToolSession call versus AxMcpAdapter.call_tool",
+  "adapter_logging": "JSONL file sink enabled",
+  "iterations": 100,
+  "warmup": 5,
+  "comparisons": [
+    {
+      "query": "반품 가능 기간",
+      "query_length": 8,
+      "top_k": 5,
+      "direct": {
+        "iterations": 100,
+        "min_ms": 0.084,
+        "mean_ms": 0.098,
+        "median_ms": 0.089,
+        "p95_nearest_rank_ms": 0.134,
+        "max_ms": 0.385
+      },
+      "mcp_adapter": {
+        "iterations": 100,
+        "min_ms": 0.495,
+        "mean_ms": 0.67,
+        "median_ms": 0.565,
+        "p95_nearest_rank_ms": 1.014,
+        "max_ms": 4.891
+      },
+      "adapter_minus_direct_mean_ms": 0.572,
+      "results_identical": true
+    },
+    {
+      "query": "return policy period days",
+      "query_length": 25,
+      "top_k": 5,
+      "direct": {
+        "iterations": 100,
+        "min_ms": 0.181,
+        "mean_ms": 0.214,
+        "median_ms": 0.19,
+        "p95_nearest_rank_ms": 0.392,
+        "max_ms": 0.588
+      },
+      "mcp_adapter": {
+        "iterations": 100,
+        "min_ms": 0.59,
+        "mean_ms": 0.699,
+        "median_ms": 0.659,
+        "p95_nearest_rank_ms": 0.994,
+        "max_ms": 1.712
+      },
+      "adapter_minus_direct_mean_ms": 0.485,
+      "results_identical": true
+    }
+  ],
+  "interpretation_limit": "Does not include Kiro model inference, scheduling, pre-dispatch stdio waiting, or client rendering after the MCP response."
+}

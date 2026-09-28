@@ -1,0 +1,1068 @@
+{
+  "schema_version": "ax-benchmark-tasks-v1",
+  "dataset_id": "hanbit-distribution-ceiling-v1",
+  "condition": "ceiling",
+  "task_count": 21,
+  "tasks": [
+    {
+      "task_id": "K01_RETURN_WINDOW",
+      "category": "knowledge",
+      "question": "현재 반품 가능 기간은 며칠인가요?",
+      "expected_answer": 30,
+      "scoring_method": {
+        "type": "numeric",
+        "relative_tolerance": 0.0
+      },
+      "required_sources": [
+        "02_정책/반품_교환_정책_2026.docx"
+      ],
+      "primary_blocker": "none",
+      "control": false,
+      "tool_plan": {
+        "table_id_policy": "No table ID is needed; discover the document through search_documents.",
+        "steps": [
+          {
+            "tool": "search_documents",
+            "query": "반품 교환 정책 반품 가능 기간",
+            "required_source": "02_정책/반품_교환_정책_2026.docx"
+          },
+          {
+            "tool": "read_document",
+            "source": "02_정책/반품_교환_정책_2026.docx"
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "K02_RETURN_REQUIREMENTS",
+      "category": "knowledge",
+      "question": "반품 접수 시 함께 확인해야 할 상품 상태 요건을 모두 답하세요.",
+      "expected_answer": [
+        "미개봉",
+        "미사용",
+        "재판매 가능 상태",
+        "원본 영수증"
+      ],
+      "scoring_method": {
+        "type": "set",
+        "required_items": [
+          "미개봉",
+          "미사용",
+          "재판매 가능 상태",
+          "원본 영수증"
+        ],
+        "reject_negated_items": true
+      },
+      "required_sources": [
+        "02_정책/반품_교환_정책_2026.docx"
+      ],
+      "primary_blocker": "none",
+      "control": false,
+      "tool_plan": {
+        "table_id_policy": "No table ID is needed; discover the document through search_documents.",
+        "steps": [
+          {
+            "tool": "search_documents",
+            "query": "반품 접수 미개봉 미사용 재판매 가능 상태 원본 영수증",
+            "required_source": "02_정책/반품_교환_정책_2026.docx"
+          },
+          {
+            "tool": "read_document",
+            "source": "02_정책/반품_교환_정책_2026.docx"
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "K03_DELAY_COMPENSATION_THRESHOLD",
+      "category": "knowledge",
+      "question": "배송 지연 보상은 지연 후 몇 영업일부터 시작되나요?",
+      "expected_answer": 3,
+      "scoring_method": {
+        "type": "numeric",
+        "relative_tolerance": 0.0
+      },
+      "required_sources": [
+        "02_정책/배송_지연_보상_2026.docx"
+      ],
+      "primary_blocker": "none",
+      "control": true,
+      "tool_plan": {
+        "table_id_policy": "No table ID is needed; discover the document through search_documents.",
+        "steps": [
+          {
+            "tool": "search_documents",
+            "query": "배송 지연 보상 영업일",
+            "required_source": "02_정책/배송_지연_보상_2026.docx"
+          },
+          {
+            "tool": "read_document",
+            "source": "02_정책/배송_지연_보상_2026.docx"
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "K04_DISCOUNT_APPROVER",
+      "category": "knowledge",
+      "question": "주문금액 100만원 이상 개별 할인 요청의 승인 담당자는 누구인가요?",
+      "expected_answer": "영업운영팀장",
+      "scoring_method": {
+        "type": "exact"
+      },
+      "required_sources": [
+        "02_정책/할인_승인_규정.docx"
+      ],
+      "primary_blocker": "none",
+      "control": false,
+      "tool_plan": {
+        "table_id_policy": "No table ID is needed; discover the document through search_documents.",
+        "steps": [
+          {
+            "tool": "search_documents",
+            "query": "할인 승인 주문금액 영업운영팀장",
+            "required_source": "02_정책/할인_승인_규정.docx"
+          },
+          {
+            "tool": "read_document",
+            "source": "02_정책/할인_승인_규정.docx"
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "K05_STOCK_REFERENCE_FIELD",
+      "category": "knowledge",
+      "question": "재고 조회의 기준 수량 필드는 무엇인가요?",
+      "expected_answer": "available_qty",
+      "scoring_method": {
+        "type": "exact"
+      },
+      "required_sources": [
+        "05_물류/창고_운영_매뉴얼.docx"
+      ],
+      "primary_blocker": "none",
+      "control": false,
+      "tool_plan": {
+        "table_id_policy": "No table ID is needed; discover the document through search_documents.",
+        "steps": [
+          {
+            "tool": "search_documents",
+            "query": "창고 운영 매뉴얼 available_qty",
+            "required_source": "05_물류/창고_운영_매뉴얼.docx"
+          },
+          {
+            "tool": "read_document",
+            "source": "05_물류/창고_운영_매뉴얼.docx"
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "K06_FIRST_RESPONSE_TARGET",
+      "category": "knowledge",
+      "question": "일반 문의의 최초 응답 목표는 영업일 기준 몇 시간 이내인가요?",
+      "expected_answer": 4,
+      "scoring_method": {
+        "type": "numeric",
+        "relative_tolerance": 0.0
+      },
+      "required_sources": [
+        "06_고객지원/고객응대_매뉴얼.docx"
+      ],
+      "primary_blocker": "none",
+      "control": true,
+      "tool_plan": {
+        "table_id_policy": "No table ID is needed; discover the document through search_documents.",
+        "steps": [
+          {
+            "tool": "search_documents",
+            "query": "고객응대 매뉴얼 최초 응답 시간",
+            "required_source": "06_고객지원/고객응대_매뉴얼.docx"
+          },
+          {
+            "tool": "read_document",
+            "source": "06_고객지원/고객응대_매뉴얼.docx"
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "O01_CUSTOMER_COUNT",
+      "category": "operations",
+      "question": "등록된 거래처는 총 몇 곳인가요?",
+      "expected_answer": 10,
+      "scoring_method": {
+        "type": "numeric",
+        "relative_tolerance": 0.0
+      },
+      "required_sources": [
+        "03_영업/거래처_마스터.xlsx"
+      ],
+      "primary_blocker": "none",
+      "control": false,
+      "tool_plan": {
+        "table_id_policy": "Use the exact table ID returned by search_documents metadata; never guess or hard-code it.",
+        "steps": [
+          {
+            "tool": "search_documents",
+            "query": "거래처 마스터 customer_id customer_name",
+            "required_source": "03_영업/거래처_마스터.xlsx"
+          },
+          {
+            "tool": "query_table",
+            "source": "03_영업/거래처_마스터.xlsx",
+            "required_columns": [
+              "customer_id"
+            ],
+            "arguments": {
+              "aggregation": {
+                "op": "count",
+                "field": "customer_id",
+                "alias": "customer_count"
+              },
+              "select": [
+                "customer_count"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "O02_SEPTEMBER_ORDER_TOTAL",
+      "category": "operations",
+      "question": "2026년 9월 전체 주문금액은 얼마인가요?",
+      "expected_answer": 4980700,
+      "scoring_method": {
+        "type": "numeric",
+        "relative_tolerance": 0.0
+      },
+      "required_sources": [
+        "04_주문/주문_원장_2026.xlsx"
+      ],
+      "primary_blocker": "none",
+      "control": false,
+      "tool_plan": {
+        "table_id_policy": "Use the exact table ID returned by search_documents metadata; never guess or hard-code it.",
+        "steps": [
+          {
+            "tool": "search_documents",
+            "query": "주문 원장 order_date amount",
+            "required_source": "04_주문/주문_원장_2026.xlsx"
+          },
+          {
+            "tool": "query_table",
+            "source": "04_주문/주문_원장_2026.xlsx",
+            "required_columns": [
+              "order_date",
+              "amount"
+            ],
+            "arguments": {
+              "filters": [
+                {
+                  "field": "order_date",
+                  "op": "prefix",
+                  "value": "2026-09"
+                }
+              ],
+              "aggregation": {
+                "op": "sum",
+                "field": "amount",
+                "alias": "total_amount"
+              },
+              "select": [
+                "total_amount"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "O03_GREEN_TABLE_LAST_ORDER",
+      "category": "cross_file",
+      "question": "그린테이블의 마지막 주문일은 언제인가요?",
+      "expected_answer": "2026-09-08",
+      "scoring_method": {
+        "type": "exact"
+      },
+      "required_sources": [
+        "03_영업/거래처_마스터.xlsx",
+        "04_주문/주문_원장_2026.xlsx"
+      ],
+      "primary_blocker": "none",
+      "control": false,
+      "tool_plan": {
+        "table_id_policy": "Discover exact table IDs from search_documents metadata; benchmark plans contain no internal table IDs.",
+        "steps": [
+          {
+            "tool": "search_documents",
+            "query": "거래처 마스터 주문 원장 customer_id 그린테이블",
+            "required_source": "03_영업/거래처_마스터.xlsx"
+          },
+          {
+            "tool": "lookup_value",
+            "source": "03_영업/거래처_마스터.xlsx",
+            "required_columns": [
+              "customer_id",
+              "customer_name"
+            ],
+            "match_column": "customer_name",
+            "value": "그린테이블",
+            "return_column": "customer_id",
+            "save_as": "customer_id"
+          },
+          {
+            "tool": "search_documents",
+            "query": "주문 원장 order_id customer_id product_id order_date amount",
+            "required_source": "04_주문/주문_원장_2026.xlsx"
+          },
+          {
+            "tool": "query_table",
+            "source": "04_주문/주문_원장_2026.xlsx",
+            "required_columns": [
+              "order_id",
+              "customer_id",
+              "product_id",
+              "order_date",
+              "amount"
+            ],
+            "arguments": {
+              "filters": [
+                {
+                  "field": "customer_id",
+                  "op": "eq",
+                  "value_from": "customer_id"
+                }
+              ],
+              "aggregation": {
+                "op": "max",
+                "field": "order_date",
+                "alias": "last_order_date"
+              },
+              "select": [
+                "last_order_date"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "O04_PRODUCT_MASTER_COUNT",
+      "category": "operations",
+      "question": "품목마스터에 등록된 상품은 총 몇 개인가요?",
+      "expected_answer": 12,
+      "scoring_method": {
+        "type": "numeric",
+        "relative_tolerance": 0.0
+      },
+      "required_sources": [
+        "03_영업/품목_마스터.csv"
+      ],
+      "primary_blocker": "none",
+      "control": true,
+      "tool_plan": {
+        "table_id_policy": "Use the exact table ID returned by search_documents metadata; never guess or hard-code it.",
+        "steps": [
+          {
+            "tool": "search_documents",
+            "query": "품목 마스터 product_id product_name",
+            "required_source": "03_영업/품목_마스터.csv"
+          },
+          {
+            "tool": "query_table",
+            "source": "03_영업/품목_마스터.csv",
+            "required_columns": [
+              "product_id"
+            ],
+            "arguments": {
+              "aggregation": {
+                "op": "count",
+                "field": "product_id",
+                "alias": "product_count"
+              },
+              "select": [
+                "product_count"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "O05_HIGHEST_AVAILABLE_STOCK",
+      "category": "operations",
+      "question": "현재 가용재고가 가장 많은 품목 ID는 무엇인가요?",
+      "expected_answer": "P005",
+      "scoring_method": {
+        "type": "exact"
+      },
+      "required_sources": [
+        "05_물류/재고_현황_2026-09.xlsx"
+      ],
+      "primary_blocker": "none",
+      "control": true,
+      "tool_plan": {
+        "table_id_policy": "Use the exact table ID returned by search_documents metadata; never guess or hard-code it.",
+        "steps": [
+          {
+            "tool": "search_documents",
+            "query": "재고 현황 product_id available_qty",
+            "required_source": "05_물류/재고_현황_2026-09.xlsx"
+          },
+          {
+            "tool": "query_table",
+            "source": "05_물류/재고_현황_2026-09.xlsx",
+            "required_columns": [
+              "product_id",
+              "available_qty"
+            ],
+            "arguments": {
+              "select": [
+                "product_id",
+                "available_qty"
+              ],
+              "order_by": [
+                {
+                  "field": "available_qty",
+                  "direction": "desc"
+                }
+              ],
+              "limit": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "O06_RETURN_RATE",
+      "category": "operations",
+      "question": "반품원장에서 반품수량 합계를 분자로, 출고수량 합계를 분모로 계산한 반품률은 얼마인가요?",
+      "expected_answer": 0.15028901734104047,
+      "scoring_method": {
+        "type": "numeric",
+        "relative_tolerance": 1e-06
+      },
+      "required_sources": [
+        "04_주문/반품_원장_2026.csv"
+      ],
+      "primary_blocker": "none",
+      "control": false,
+      "tool_plan": {
+        "table_id_policy": "Use the exact table ID returned by search_documents metadata; never guess or hard-code it.",
+        "steps": [
+          {
+            "tool": "search_documents",
+            "query": "반품 원장 returned_qty shipped_qty",
+            "required_source": "04_주문/반품_원장_2026.csv"
+          },
+          {
+            "tool": "query_table",
+            "source": "04_주문/반품_원장_2026.csv",
+            "required_columns": [
+              "returned_qty",
+              "shipped_qty"
+            ],
+            "arguments": {
+              "aggregation": {
+                "op": "rate",
+                "numerator_field": "returned_qty",
+                "denominator_field": "shipped_qty",
+                "alias": "return_rate"
+              },
+              "select": [
+                "return_rate"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "O07_SEOUL_LEAD_TIME",
+      "category": "operations",
+      "question": "서울 권역의 표준 배송 리드타임은 며칠인가요?",
+      "expected_answer": 1,
+      "scoring_method": {
+        "type": "numeric",
+        "relative_tolerance": 0.0
+      },
+      "required_sources": [
+        "05_물류/배송권역_리드타임.csv"
+      ],
+      "primary_blocker": "none",
+      "control": false,
+      "tool_plan": {
+        "table_id_policy": "Use the exact table ID returned by search_documents metadata; never guess or hard-code it.",
+        "steps": [
+          {
+            "tool": "search_documents",
+            "query": "배송 권역 리드타임 서울 standard_lead_days",
+            "required_source": "05_물류/배송권역_리드타임.csv"
+          },
+          {
+            "tool": "query_table",
+            "source": "05_물류/배송권역_리드타임.csv",
+            "required_columns": [
+              "zone_name",
+              "standard_lead_days"
+            ],
+            "arguments": {
+              "filters": [
+                {
+                  "field": "zone_name",
+                  "op": "eq",
+                  "value": "서울"
+                }
+              ],
+              "select": [
+                "standard_lead_days"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "C01_HANBIT_AUGUST_TOTAL",
+      "category": "cross_file",
+      "question": "한빛상사의 2026년 8월 주문금액은 얼마인가요?",
+      "expected_answer": 642000,
+      "scoring_method": {
+        "type": "numeric",
+        "relative_tolerance": 0.0
+      },
+      "required_sources": [
+        "03_영업/거래처_마스터.xlsx",
+        "04_주문/주문_원장_2026.xlsx"
+      ],
+      "primary_blocker": "none",
+      "control": false,
+      "tool_plan": {
+        "table_id_policy": "Discover exact table IDs from search_documents metadata; benchmark plans contain no internal table IDs.",
+        "steps": [
+          {
+            "tool": "search_documents",
+            "query": "거래처 마스터 주문 원장 customer_id 한빛상사",
+            "required_source": "03_영업/거래처_마스터.xlsx"
+          },
+          {
+            "tool": "lookup_value",
+            "source": "03_영업/거래처_마스터.xlsx",
+            "required_columns": [
+              "customer_id",
+              "customer_name"
+            ],
+            "match_column": "customer_name",
+            "value": "한빛상사",
+            "return_column": "customer_id",
+            "save_as": "customer_id"
+          },
+          {
+            "tool": "search_documents",
+            "query": "주문 원장 order_id customer_id product_id order_date amount",
+            "required_source": "04_주문/주문_원장_2026.xlsx"
+          },
+          {
+            "tool": "query_table",
+            "source": "04_주문/주문_원장_2026.xlsx",
+            "required_columns": [
+              "order_id",
+              "customer_id",
+              "product_id",
+              "order_date",
+              "amount"
+            ],
+            "arguments": {
+              "filters": [
+                {
+                  "field": "customer_id",
+                  "op": "eq",
+                  "value_from": "customer_id"
+                },
+                {
+                  "field": "order_date",
+                  "op": "prefix",
+                  "value": "2026-08"
+                }
+              ],
+              "aggregation": {
+                "op": "sum",
+                "field": "amount",
+                "alias": "total_amount"
+              },
+              "select": [
+                "total_amount"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "C02_DONGHAE_SEPTEMBER_TOTAL",
+      "category": "cross_file",
+      "question": "주식회사 동해상사의 2026년 9월 주문금액은 얼마인가요?",
+      "expected_answer": 591300,
+      "scoring_method": {
+        "type": "numeric",
+        "relative_tolerance": 0.0
+      },
+      "required_sources": [
+        "03_영업/거래처_마스터.xlsx",
+        "04_주문/주문_원장_2026.xlsx"
+      ],
+      "primary_blocker": "none",
+      "control": false,
+      "tool_plan": {
+        "table_id_policy": "Discover exact table IDs from search_documents metadata; benchmark plans contain no internal table IDs.",
+        "steps": [
+          {
+            "tool": "search_documents",
+            "query": "거래처 마스터 주문 원장 customer_id 동해상사",
+            "required_source": "03_영업/거래처_마스터.xlsx"
+          },
+          {
+            "tool": "lookup_value",
+            "source": "03_영업/거래처_마스터.xlsx",
+            "required_columns": [
+              "customer_id",
+              "customer_name"
+            ],
+            "match_column": "customer_name",
+            "value": "주식회사 동해상사",
+            "return_column": "customer_id",
+            "save_as": "customer_id"
+          },
+          {
+            "tool": "search_documents",
+            "query": "주문 원장 order_id customer_id product_id order_date amount",
+            "required_source": "04_주문/주문_원장_2026.xlsx"
+          },
+          {
+            "tool": "query_table",
+            "source": "04_주문/주문_원장_2026.xlsx",
+            "required_columns": [
+              "order_id",
+              "customer_id",
+              "product_id",
+              "order_date",
+              "amount"
+            ],
+            "arguments": {
+              "filters": [
+                {
+                  "field": "customer_id",
+                  "op": "eq",
+                  "value_from": "customer_id"
+                },
+                {
+                  "field": "order_date",
+                  "op": "prefix",
+                  "value": "2026-09"
+                }
+              ],
+              "aggregation": {
+                "op": "sum",
+                "field": "amount",
+                "alias": "total_amount"
+              },
+              "select": [
+                "total_amount"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "C03_TEA_STOCK",
+      "category": "cross_file",
+      "question": "프리미엄 홍차 세트의 현재 가용재고는 몇 개인가요?",
+      "expected_answer": 105,
+      "scoring_method": {
+        "type": "numeric",
+        "relative_tolerance": 0.0
+      },
+      "required_sources": [
+        "03_영업/품목_마스터.csv",
+        "05_물류/재고_현황_2026-09.xlsx"
+      ],
+      "primary_blocker": "none",
+      "control": true,
+      "tool_plan": {
+        "table_id_policy": "Discover exact table IDs from search_documents metadata; benchmark plans contain no internal table IDs.",
+        "steps": [
+          {
+            "tool": "search_documents",
+            "query": "품목 마스터 product_id product_name",
+            "required_source": "03_영업/품목_마스터.csv"
+          },
+          {
+            "tool": "lookup_value",
+            "source": "03_영업/품목_마스터.csv",
+            "required_columns": [
+              "product_id",
+              "product_name"
+            ],
+            "match_column": "product_name",
+            "value": "프리미엄 홍차 세트",
+            "return_column": "product_id",
+            "save_as": "product_id"
+          },
+          {
+            "tool": "search_documents",
+            "query": "재고 현황 product_id available_qty warehouse",
+            "required_source": "05_물류/재고_현황_2026-09.xlsx"
+          },
+          {
+            "tool": "query_table",
+            "source": "05_물류/재고_현황_2026-09.xlsx",
+            "required_columns": [
+              "product_id",
+              "available_qty"
+            ],
+            "arguments": {
+              "filters": [
+                {
+                  "field": "product_id",
+                  "op": "eq",
+                  "value_from": "product_id"
+                }
+              ],
+              "aggregation": {
+                "op": "sum",
+                "field": "available_qty",
+                "alias": "available_qty"
+              },
+              "select": [
+                "available_qty"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "C04_YUNSEONG_LAST_ORDER",
+      "category": "cross_file",
+      "question": "윤성마트의 마지막 주문일은 언제인가요?",
+      "expected_answer": "2026-09-16",
+      "scoring_method": {
+        "type": "exact"
+      },
+      "required_sources": [
+        "03_영업/거래처_마스터.xlsx",
+        "04_주문/주문_원장_2026.xlsx"
+      ],
+      "primary_blocker": "none",
+      "control": false,
+      "tool_plan": {
+        "table_id_policy": "Discover exact table IDs from search_documents metadata; benchmark plans contain no internal table IDs.",
+        "steps": [
+          {
+            "tool": "search_documents",
+            "query": "거래처 마스터 주문 원장 customer_id 윤성마트",
+            "required_source": "03_영업/거래처_마스터.xlsx"
+          },
+          {
+            "tool": "lookup_value",
+            "source": "03_영업/거래처_마스터.xlsx",
+            "required_columns": [
+              "customer_id",
+              "customer_name"
+            ],
+            "match_column": "customer_name",
+            "value": "윤성마트",
+            "return_column": "customer_id",
+            "save_as": "customer_id"
+          },
+          {
+            "tool": "search_documents",
+            "query": "주문 원장 order_id customer_id product_id order_date amount",
+            "required_source": "04_주문/주문_원장_2026.xlsx"
+          },
+          {
+            "tool": "query_table",
+            "source": "04_주문/주문_원장_2026.xlsx",
+            "required_columns": [
+              "order_id",
+              "customer_id",
+              "product_id",
+              "order_date",
+              "amount"
+            ],
+            "arguments": {
+              "filters": [
+                {
+                  "field": "customer_id",
+                  "op": "eq",
+                  "value_from": "customer_id"
+                }
+              ],
+              "aggregation": {
+                "op": "max",
+                "field": "order_date",
+                "alias": "last_order_date"
+              },
+              "select": [
+                "last_order_date"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "C05_SAEBOM_JULY_TOTAL",
+      "category": "cross_file",
+      "question": "새봄마트의 2026년 7월 주문금액은 얼마인가요?",
+      "expected_answer": 201300,
+      "scoring_method": {
+        "type": "numeric",
+        "relative_tolerance": 0.0
+      },
+      "required_sources": [
+        "03_영업/거래처_마스터.xlsx",
+        "04_주문/주문_원장_2026.xlsx"
+      ],
+      "primary_blocker": "none",
+      "control": false,
+      "tool_plan": {
+        "table_id_policy": "Discover exact table IDs from search_documents metadata; benchmark plans contain no internal table IDs.",
+        "steps": [
+          {
+            "tool": "search_documents",
+            "query": "거래처 마스터 주문 원장 customer_id 새봄마트",
+            "required_source": "03_영업/거래처_마스터.xlsx"
+          },
+          {
+            "tool": "lookup_value",
+            "source": "03_영업/거래처_마스터.xlsx",
+            "required_columns": [
+              "customer_id",
+              "customer_name"
+            ],
+            "match_column": "customer_name",
+            "value": "새봄마트",
+            "return_column": "customer_id",
+            "save_as": "customer_id"
+          },
+          {
+            "tool": "search_documents",
+            "query": "주문 원장 order_id customer_id product_id order_date amount",
+            "required_source": "04_주문/주문_원장_2026.xlsx"
+          },
+          {
+            "tool": "query_table",
+            "source": "04_주문/주문_원장_2026.xlsx",
+            "required_columns": [
+              "order_id",
+              "customer_id",
+              "product_id",
+              "order_date",
+              "amount"
+            ],
+            "arguments": {
+              "filters": [
+                {
+                  "field": "customer_id",
+                  "op": "eq",
+                  "value_from": "customer_id"
+                },
+                {
+                  "field": "order_date",
+                  "op": "prefix",
+                  "value": "2026-07"
+                }
+              ],
+              "aggregation": {
+                "op": "sum",
+                "field": "amount",
+                "alias": "total_amount"
+              },
+              "select": [
+                "total_amount"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "C06_ARAM_AUGUST_RETURNS",
+      "category": "cross_file",
+      "question": "아람리빙의 2026년 8월 반품 수량은 몇 개인가요?",
+      "expected_answer": 0,
+      "scoring_method": {
+        "type": "numeric",
+        "relative_tolerance": 0.0
+      },
+      "required_sources": [
+        "03_영업/거래처_마스터.xlsx",
+        "04_주문/반품_원장_2026.csv"
+      ],
+      "primary_blocker": "none",
+      "control": false,
+      "tool_plan": {
+        "table_id_policy": "Discover exact table IDs from search_documents metadata; benchmark plans contain no internal table IDs.",
+        "steps": [
+          {
+            "tool": "search_documents",
+            "query": "거래처 마스터 customer_id 아람리빙",
+            "required_source": "03_영업/거래처_마스터.xlsx"
+          },
+          {
+            "tool": "lookup_value",
+            "source": "03_영업/거래처_마스터.xlsx",
+            "required_columns": [
+              "customer_id",
+              "customer_name"
+            ],
+            "match_column": "customer_name",
+            "value": "아람리빙",
+            "return_column": "customer_id",
+            "save_as": "customer_id"
+          },
+          {
+            "tool": "search_documents",
+            "query": "반품 원장 customer_id return_date returned_qty",
+            "required_source": "04_주문/반품_원장_2026.csv"
+          },
+          {
+            "tool": "query_table",
+            "source": "04_주문/반품_원장_2026.csv",
+            "required_columns": [
+              "customer_id",
+              "return_date",
+              "returned_qty"
+            ],
+            "arguments": {
+              "filters": [
+                {
+                  "field": "customer_id",
+                  "op": "eq",
+                  "value_from": "customer_id"
+                },
+                {
+                  "field": "return_date",
+                  "op": "prefix",
+                  "value": "2026-08"
+                }
+              ],
+              "aggregation": {
+                "op": "sum",
+                "field": "returned_qty",
+                "alias": "returned_qty"
+              },
+              "select": [
+                "returned_qty"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "C07_DAON_TOP_ORDER_PRODUCT",
+      "category": "cross_file",
+      "question": "다온유통의 주문 중 금액이 가장 큰 주문의 품목 ID는 무엇인가요?",
+      "expected_answer": "P010",
+      "scoring_method": {
+        "type": "exact"
+      },
+      "required_sources": [
+        "03_영업/거래처_마스터.xlsx",
+        "04_주문/주문_원장_2026.xlsx"
+      ],
+      "primary_blocker": "none",
+      "control": false,
+      "tool_plan": {
+        "table_id_policy": "Discover exact table IDs from search_documents metadata; benchmark plans contain no internal table IDs.",
+        "steps": [
+          {
+            "tool": "search_documents",
+            "query": "거래처 마스터 주문 원장 customer_id 다온유통",
+            "required_source": "03_영업/거래처_마스터.xlsx"
+          },
+          {
+            "tool": "lookup_value",
+            "source": "03_영업/거래처_마스터.xlsx",
+            "required_columns": [
+              "customer_id",
+              "customer_name"
+            ],
+            "match_column": "customer_name",
+            "value": "다온유통",
+            "return_column": "customer_id",
+            "save_as": "customer_id"
+          },
+          {
+            "tool": "search_documents",
+            "query": "주문 원장 order_id customer_id product_id order_date amount",
+            "required_source": "04_주문/주문_원장_2026.xlsx"
+          },
+          {
+            "tool": "query_table",
+            "source": "04_주문/주문_원장_2026.xlsx",
+            "required_columns": [
+              "order_id",
+              "customer_id",
+              "product_id",
+              "order_date",
+              "amount"
+            ],
+            "arguments": {
+              "filters": [
+                {
+                  "field": "customer_id",
+                  "op": "eq",
+                  "value_from": "customer_id"
+                }
+              ],
+              "select": [
+                "product_id",
+                "amount"
+              ],
+              "order_by": [
+                {
+                  "field": "amount",
+                  "direction": "desc"
+                }
+              ],
+              "limit": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "K07_VENDOR_FORECAST_ABSTAIN",
+      "category": "knowledge",
+      "question": "한빛상사의 2027년 1분기 주문금액 전망은 얼마인가요?",
+      "expected_answer": null,
+      "scoring_method": {
+        "type": "exact"
+      },
+      "required_sources": [
+        "03_영업/거래처_마스터.xlsx",
+        "04_주문/주문_원장_2026.xlsx"
+      ],
+      "primary_blocker": "missing_data",
+      "control": false,
+      "expects_abstention": true,
+      "tool_plan": {
+        "table_id_policy": "No forecast field exists in the discoverable company evidence; abstain after searching the available sources.",
+        "steps": [
+          {
+            "tool": "search_documents",
+            "query": "한빛상사 2027년 1분기 주문금액 전망",
+            "required_source": "03_영업/거래처_마스터.xlsx"
+          }
+        ]
+      }
+    }
+  ]
+}

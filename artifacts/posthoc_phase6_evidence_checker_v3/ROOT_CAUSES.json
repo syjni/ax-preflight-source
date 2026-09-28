@@ -1,0 +1,201 @@
+{
+  "schema_version": "ax-phase6-evidence-gap-analysis-v1",
+  "scope": "POSTHOC_FROZEN_V3_ANALYSIS_NOT_AGENT_PERFORMANCE_METRIC",
+  "source_snapshot": "artifacts/phase6_product_demo_v3",
+  "source_manifest_sha256": "0292532cdc28fff71f77a3e1609744d97949fe3fceaf8826286fe5d9e93b9ce6",
+  "source_snapshot_modified": false,
+  "stored_unconfirmed_run_count": 19,
+  "current_verdicts_for_stored_unconfirmed": {
+    "DIRECT_MATCH": 11,
+    "UNCONFIRMED": 8
+  },
+  "newly_direct_match_count": 11,
+  "remaining_unconfirmed_count": 8,
+  "root_cause_counts": {
+    "ABSTENTION_EXPLANATION_NOT_LEXICALLY_PRESENT": 4,
+    "COMPLETE_TABLE_MAPPING": 2,
+    "COMPLETE_TABLE_PREDICATE": 1,
+    "CROSS_LANGUAGE_OR_SEMANTIC_PARAPHRASE": 2,
+    "QUERY_AGGREGATE_VALUE": 6,
+    "STRUCTURED_SCALAR_VALUE": 2,
+    "UNCITED_ABSTENTION": 2
+  },
+  "rows": [
+    {
+      "run_id": "portfolio-portfolio-ceiling-after-task_billing_invoice_deadline-r1",
+      "dataset": "portfolio-ceiling-after",
+      "task_id": "TASK_BILLING_INVOICE_DEADLINE",
+      "payload_status": "ANSWERED",
+      "stored_verdict": "UNCONFIRMED",
+      "current_verdict": "UNCONFIRMED",
+      "root_cause": "CROSS_LANGUAGE_OR_SEMANTIC_PARAPHRASE"
+    },
+    {
+      "run_id": "portfolio-portfolio-ceiling-after-task_customer_count-r1",
+      "dataset": "portfolio-ceiling-after",
+      "task_id": "TASK_CUSTOMER_COUNT",
+      "payload_status": "ANSWERED",
+      "stored_verdict": "UNCONFIRMED",
+      "current_verdict": "DIRECT_MATCH",
+      "root_cause": "QUERY_AGGREGATE_VALUE"
+    },
+    {
+      "run_id": "portfolio-portfolio-ceiling-after-task_customer_latest_registration-r1",
+      "dataset": "portfolio-ceiling-after",
+      "task_id": "TASK_CUSTOMER_LATEST_REGISTRATION",
+      "payload_status": "ABSTAINED",
+      "stored_verdict": "UNCONFIRMED",
+      "current_verdict": "UNCONFIRMED",
+      "root_cause": "ABSTENTION_EXPLANATION_NOT_LEXICALLY_PRESENT"
+    },
+    {
+      "run_id": "portfolio-portfolio-ceiling-after-task_inventory_low_stock-r1",
+      "dataset": "portfolio-ceiling-after",
+      "task_id": "TASK_INVENTORY_LOW_STOCK",
+      "payload_status": "ANSWERED",
+      "stored_verdict": "UNCONFIRMED",
+      "current_verdict": "DIRECT_MATCH",
+      "root_cause": "COMPLETE_TABLE_PREDICATE"
+    },
+    {
+      "run_id": "portfolio-portfolio-ceiling-after-task_inventory_most_available-r1",
+      "dataset": "portfolio-ceiling-after",
+      "task_id": "TASK_INVENTORY_MOST_AVAILABLE",
+      "payload_status": "ANSWERED",
+      "stored_verdict": "UNCONFIRMED",
+      "current_verdict": "DIRECT_MATCH",
+      "root_cause": "STRUCTURED_SCALAR_VALUE"
+    },
+    {
+      "run_id": "portfolio-portfolio-ceiling-after-task_order_latest-r1",
+      "dataset": "portfolio-ceiling-after",
+      "task_id": "TASK_ORDER_LATEST",
+      "payload_status": "ANSWERED",
+      "stored_verdict": "UNCONFIRMED",
+      "current_verdict": "DIRECT_MATCH",
+      "root_cause": "QUERY_AGGREGATE_VALUE"
+    },
+    {
+      "run_id": "portfolio-portfolio-ceiling-after-task_order_monthly_amount-r1",
+      "dataset": "portfolio-ceiling-after",
+      "task_id": "TASK_ORDER_MONTHLY_AMOUNT",
+      "payload_status": "ANSWERED",
+      "stored_verdict": "UNCONFIRMED",
+      "current_verdict": "DIRECT_MATCH",
+      "root_cause": "QUERY_AGGREGATE_VALUE"
+    },
+    {
+      "run_id": "portfolio-portfolio-ceiling-after-task_policy_approval_procedure-r1",
+      "dataset": "portfolio-ceiling-after",
+      "task_id": "TASK_POLICY_APPROVAL_PROCEDURE",
+      "payload_status": "ABSTAINED",
+      "stored_verdict": "UNCONFIRMED",
+      "current_verdict": "UNCONFIRMED",
+      "root_cause": "UNCITED_ABSTENTION"
+    },
+    {
+      "run_id": "portfolio-portfolio-ceiling-after-task_support_responsible_team-r1",
+      "dataset": "portfolio-ceiling-after",
+      "task_id": "TASK_SUPPORT_RESPONSIBLE_TEAM",
+      "payload_status": "ANSWERED",
+      "stored_verdict": "UNCONFIRMED",
+      "current_verdict": "DIRECT_MATCH",
+      "root_cause": "COMPLETE_TABLE_MAPPING"
+    },
+    {
+      "run_id": "portfolio-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r1",
+      "dataset": "portfolio-hidden-conflict-before",
+      "task_id": "TASK_BILLING_INVOICE_DEADLINE",
+      "payload_status": "ANSWERED",
+      "stored_verdict": "UNCONFIRMED",
+      "current_verdict": "UNCONFIRMED",
+      "root_cause": "CROSS_LANGUAGE_OR_SEMANTIC_PARAPHRASE"
+    },
+    {
+      "run_id": "portfolio-portfolio-hidden-conflict-before-task_customer_count-r1",
+      "dataset": "portfolio-hidden-conflict-before",
+      "task_id": "TASK_CUSTOMER_COUNT",
+      "payload_status": "ANSWERED",
+      "stored_verdict": "UNCONFIRMED",
+      "current_verdict": "DIRECT_MATCH",
+      "root_cause": "QUERY_AGGREGATE_VALUE"
+    },
+    {
+      "run_id": "portfolio-portfolio-hidden-conflict-before-task_customer_latest_registration-r1",
+      "dataset": "portfolio-hidden-conflict-before",
+      "task_id": "TASK_CUSTOMER_LATEST_REGISTRATION",
+      "payload_status": "ABSTAINED",
+      "stored_verdict": "UNCONFIRMED",
+      "current_verdict": "UNCONFIRMED",
+      "root_cause": "ABSTENTION_EXPLANATION_NOT_LEXICALLY_PRESENT"
+    },
+    {
+      "run_id": "portfolio-portfolio-hidden-conflict-before-task_inventory_low_stock-r1",
+      "dataset": "portfolio-hidden-conflict-before",
+      "task_id": "TASK_INVENTORY_LOW_STOCK",
+      "payload_status": "ABSTAINED",
+      "stored_verdict": "UNCONFIRMED",
+      "current_verdict": "UNCONFIRMED",
+      "root_cause": "ABSTENTION_EXPLANATION_NOT_LEXICALLY_PRESENT"
+    },
+    {
+      "run_id": "portfolio-portfolio-hidden-conflict-before-task_inventory_most_available-r1",
+      "dataset": "portfolio-hidden-conflict-before",
+      "task_id": "TASK_INVENTORY_MOST_AVAILABLE",
+      "payload_status": "ANSWERED",
+      "stored_verdict": "UNCONFIRMED",
+      "current_verdict": "DIRECT_MATCH",
+      "root_cause": "STRUCTURED_SCALAR_VALUE"
+    },
+    {
+      "run_id": "portfolio-portfolio-hidden-conflict-before-task_order_latest-r1",
+      "dataset": "portfolio-hidden-conflict-before",
+      "task_id": "TASK_ORDER_LATEST",
+      "payload_status": "ANSWERED",
+      "stored_verdict": "UNCONFIRMED",
+      "current_verdict": "DIRECT_MATCH",
+      "root_cause": "QUERY_AGGREGATE_VALUE"
+    },
+    {
+      "run_id": "portfolio-portfolio-hidden-conflict-before-task_order_monthly_amount-r1",
+      "dataset": "portfolio-hidden-conflict-before",
+      "task_id": "TASK_ORDER_MONTHLY_AMOUNT",
+      "payload_status": "ANSWERED",
+      "stored_verdict": "UNCONFIRMED",
+      "current_verdict": "DIRECT_MATCH",
+      "root_cause": "QUERY_AGGREGATE_VALUE"
+    },
+    {
+      "run_id": "portfolio-portfolio-hidden-conflict-before-task_policy_approval_procedure-r1",
+      "dataset": "portfolio-hidden-conflict-before",
+      "task_id": "TASK_POLICY_APPROVAL_PROCEDURE",
+      "payload_status": "ABSTAINED",
+      "stored_verdict": "UNCONFIRMED",
+      "current_verdict": "UNCONFIRMED",
+      "root_cause": "UNCITED_ABSTENTION"
+    },
+    {
+      "run_id": "portfolio-portfolio-hidden-conflict-before-task_policy_return_window-r1",
+      "dataset": "portfolio-hidden-conflict-before",
+      "task_id": "TASK_POLICY_RETURN_WINDOW",
+      "payload_status": "ABSTAINED",
+      "stored_verdict": "UNCONFIRMED",
+      "current_verdict": "UNCONFIRMED",
+      "root_cause": "ABSTENTION_EXPLANATION_NOT_LEXICALLY_PRESENT"
+    },
+    {
+      "run_id": "portfolio-portfolio-hidden-conflict-before-task_support_responsible_team-r1",
+      "dataset": "portfolio-hidden-conflict-before",
+      "task_id": "TASK_SUPPORT_RESPONSIBLE_TEAM",
+      "payload_status": "ANSWERED",
+      "stored_verdict": "UNCONFIRMED",
+      "current_verdict": "DIRECT_MATCH",
+      "root_cause": "COMPLETE_TABLE_MAPPING"
+    }
+  ],
+  "limitations": [
+    "UNCONFIRMED means the checker did not verify the claim, not that the answer is incorrect.",
+    "The analysis reuses frozen deliveries and same-run structured responses; it does not rerun the model.",
+    "Cross-language and broader semantic entailment remain outside the deterministic checker."
+  ]
+}

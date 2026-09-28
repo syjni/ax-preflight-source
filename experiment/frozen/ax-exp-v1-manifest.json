@@ -1,0 +1,1270 @@
+{
+  "schema_version": "ax-experiment-freeze-manifest-v1",
+  "experiment_version": "ax-exp-v1",
+  "freeze_timestamp_utc": "2026-09-19T12:27:02.417142Z",
+  "status": "FROZEN",
+  "ready_for_heldout": true,
+  "git_commit": null,
+  "official_agent": "Kiro ax-evaluation",
+  "model": "claude-sonnet-5",
+  "execution_backend": "INTERACTIVE_FRESH_PROCESS",
+  "headless_status": "UNAVAILABLE",
+  "kiro_cli_version": "kiro-cli-chat 2.22.1",
+  "retrieval_status": "FROZEN",
+  "agent_config_hash": "7977a1da0361a54f9be5d2b3bb91c25b7944e9185403b72f767c0806b5f61844",
+  "prompt_version": "2",
+  "prompt_hash": "dc783a41a5b06eb871ada33be7dd21aec2e4106757a40921ddf59fcf81176fc8",
+  "mcp_implementation_hashes": {
+    "aggregate_sha256": "93dfbbff21e48c4a0aeaaceaf33ca8943c98d28d6f720e2c321a7ec99e317ed0",
+    "schema_aggregate_sha256": "2ca1ee0a76ab92d8e7a9bab770bc47c82ecd0a65c9f565e53b315b0245aae1d4"
+  },
+  "retriever_hashes_config": {
+    "aggregate_sha256": "a4b615310131e152a798cf18acc54f1987fc30e2e216f537a4d6838a44c9153a",
+    "configuration": "frozen read-only AX retrieval/tool layer"
+  },
+  "scanner_hash_config": {
+    "aggregate_sha256": "429c5bf403c3bf5d2b9a2d3ba785faec096a7e2a8e46d366b3b380b27686aee3",
+    "configuration": "local deterministic Scanner v1 behavior and schemas"
+  },
+  "runtime_dataset_config_hash": "8be9fa1ec5a50aad74dca0c65bf4e37a1c7d03f7007758080942b22936119d71",
+  "ceiling_dataset_manifest_hash": "bcf60e523ee55951b8bb58fdc9049c667c8902154baab02d745ea7262a44a804",
+  "benchmark_hash": "3fd63ca0b06bb3901238726f3c156372ad768c49c366321cd23c2da470bc2555",
+  "ground_truth_hash": "5efcd216b98b2b31edf5bfd9e2fb3411e1027b74d4b08abb8043b2d15dc58e5d",
+  "task_to_defect_manifest_hash": "e3dda8ea81859de0a5c38321e89152ee459f231f20cf4ab883400cac241e227a",
+  "control_source_manifest_hash": "9c8f8a76c5c945a6d86f786c987d927c5712e49c7cd8f5cd713179ed1a5ede0f",
+  "scorer_hash": "c8c5db3e400db0c19832c2b624f0da2bba303f146f2079fa5b22f566fca3f077",
+  "output_contract_parser_hash": "cb009fa3d89c92f05862394897ead5152b92cb7210d8f76940826b4965d683e1",
+  "semantic_extractor_hash": "cb009fa3d89c92f05862394897ead5152b92cb7210d8f76940826b4965d683e1",
+  "failure_taxonomy_hash": "f6ebc193597e393139564bf64378df3d3b096893196dd4e547e573abdb001281",
+  "runtime_prompt_hash": "15f4382da8daaec6aa33ab29e97041efdf7e5efb424f253da2bc1152583f9a23",
+  "leakage_validator_hash": "b94562fbe6546f75fd8c319eefa2e1488c5c928e1025508770768af159e3c6b2",
+  "run_recorder_hash": "4943f3dc12a5b05d61c10cf8871f47e5ac914618d88c56d325011ff8da213cc7",
+  "readiness_score_py_hash": "5b3dd7e7b94d230b855981f1b487b35efc655ed11a3d84d02be7278ba3fc8319",
+  "readiness_score_spec_hash": "4212c2314136f3c42b828717588e01952d882e392feb9f37e41558438cc07c44",
+  "readiness_score": {
+    "version": "ax-readiness-score-v1",
+    "formula": "100 × Σ(dimension × 0.20)",
+    "dimensions": [
+      "accessibility",
+      "completeness",
+      "redundancy",
+      "timeliness",
+      "safety"
+    ],
+    "weights": {
+      "accessibility": 0.2,
+      "completeness": 0.2,
+      "redundancy": 0.2,
+      "timeliness": 0.2,
+      "safety": 0.2
+    },
+    "as_of_date": "2026-09-21",
+    "stale_threshold_days": 365,
+    "ceiling_score": 100.0,
+    "deterministic": true,
+    "llm_calls": 0,
+    "reads_held_out_agent_results": false,
+    "reads_benchmark_expected_answers": false
+  },
+  "tool_surface": [
+    "@ax-tools/search_documents",
+    "@ax-tools/read_document",
+    "@ax-tools/lookup_value",
+    "@ax-tools/query_table"
+  ],
+  "tool_count": 4,
+  "ceiling_runtime_identity": {
+    "schema_version": "ax-runtime-identity-v1",
+    "dataset_profile": "ceiling",
+    "dataset_name": "hanbit-distribution-ceiling-v1",
+    "source_root_name": "ceiling_company",
+    "dataset_manifest_sha256": "bcf60e523ee55951b8bb58fdc9049c667c8902154baab02d745ea7262a44a804",
+    "file_count": 30,
+    "parsed_file_count": 30,
+    "scan_report_sha256": "588c304b97a141a9259f9bd54d02c98c67116e6e58474b90b86f7889a2c5fc52",
+    "search_index_document_count": 30,
+    "search_index_sha256": "242b279069440cbe09ad47749e232b2d95eec0a325e2174360744f9f952babea",
+    "table_count": 11,
+    "table_registry_sha256": "ea5466ef0c7bf58698bc6f009a54b56eb95ff1584063648c444aabca0620b740",
+    "corpus_registry_sha256": "48faec8a16736c2dedebdbaabbc2efba9b83184d491fb987b971cc88cd150909"
+  },
+  "dev_task_ids": [
+    "O01_CUSTOMER_COUNT",
+    "O05_HIGHEST_AVAILABLE_STOCK",
+    "C01_HANBIT_AUGUST_TOTAL",
+    "C04_YUNSEONG_LAST_ORDER",
+    "C07_DAON_TOP_ORDER_PRODUCT"
+  ],
+  "held_out_task_ids": [
+    "K01_RETURN_WINDOW",
+    "K02_RETURN_REQUIREMENTS",
+    "K03_DELAY_COMPENSATION_THRESHOLD",
+    "K04_DISCOUNT_APPROVER",
+    "K05_STOCK_REFERENCE_FIELD",
+    "K06_FIRST_RESPONSE_TARGET",
+    "O02_SEPTEMBER_ORDER_TOTAL",
+    "O03_GREEN_TABLE_LAST_ORDER",
+    "O04_PRODUCT_MASTER_COUNT",
+    "O06_RETURN_RATE",
+    "O07_SEOUL_LEAD_TIME",
+    "C02_DONGHAE_SEPTEMBER_TOTAL",
+    "C03_TEA_STOCK",
+    "C05_SAEBOM_JULY_TOTAL",
+    "C06_ARAM_AUGUST_RETURNS",
+    "K07_VENDOR_FORECAST_ABSTAIN"
+  ],
+  "held_out_task_count": 16,
+  "held_out_execution_count": 0,
+  "dev_results": {
+    "semantic_grounded_correct": "5/5",
+    "strict_output_compliance": "3/5",
+    "semantic_json_availability": "5/5",
+    "further_prompt_tuning_allowed": false
+  },
+  "test_suite": {
+    "command": "python -m unittest discover -v",
+    "passed": 88,
+    "total": 88,
+    "result": "88/88 PASS"
+  },
+  "freeze_validation": {
+    "ceiling_runtime_identity_unchanged": true,
+    "model_matches": true,
+    "exactly_four_ax_mcp_tools": true,
+    "runtime_leakage_violations": 0,
+    "held_out_execution_count": 0,
+    "dev_held_out_split_unchanged": true,
+    "retrieval_unchanged": true,
+    "dataset_unchanged": true,
+    "benchmark_unchanged": true,
+    "ground_truth_unchanged": true,
+    "prompt_hash_approved": true,
+    "readiness_hashes_recorded": true,
+    "ceiling_readiness_100": true,
+    "interactive_protocol_complete": true,
+    "headless_unavailable_documented": true,
+    "preexisting_frozen_hash_validation_passed": true
+  },
+  "artifact_inventory": {
+    "behavioral_and_configuration_artifacts": [
+      {
+        "component_id": "kiro_agent_configuration",
+        "description": "Kiro ax-evaluation configuration",
+        "file_count": 1,
+        "aggregate_sha256": "c801f9d7bcdfceb923e0b0b108fb33cf78d3793f7e445ad5adcee913e8a085ad",
+        "files": [
+          {
+            "path": ".kiro/agents/ax-evaluation.json",
+            "size_bytes": 2099,
+            "sha256": "7977a1da0361a54f9be5d2b3bb91c25b7944e9185403b72f767c0806b5f61844"
+          }
+        ]
+      },
+      {
+        "component_id": "kiro_system_behavior_prompt",
+        "description": "Prompt v2 bytes and prompt metadata",
+        "file_count": 2,
+        "aggregate_sha256": "f22d8b649c186d4333656f392b570a7cd172cd2869fa4120069f1ba64534873e",
+        "files": [
+          {
+            "path": ".kiro/agents/ax-evaluation.json",
+            "size_bytes": 2099,
+            "sha256": "7977a1da0361a54f9be5d2b3bb91c25b7944e9185403b72f767c0806b5f61844"
+          },
+          {
+            "path": ".kiro/ax-evaluation.prompt-metadata.json",
+            "size_bytes": 441,
+            "sha256": "46879c192fa078f589877d2dbdc0e492e21c3e017576eec01f5dd73042d386ff"
+          }
+        ]
+      },
+      {
+        "component_id": "evaluation_model_id",
+        "description": "Model identifier fixed by the Kiro agent configuration",
+        "file_count": 1,
+        "aggregate_sha256": "c801f9d7bcdfceb923e0b0b108fb33cf78d3793f7e445ad5adcee913e8a085ad",
+        "files": [
+          {
+            "path": ".kiro/agents/ax-evaluation.json",
+            "size_bytes": 2099,
+            "sha256": "7977a1da0361a54f9be5d2b3bb91c25b7944e9185403b72f767c0806b5f61844"
+          }
+        ]
+      },
+      {
+        "component_id": "interactive_execution_protocol",
+        "description": "Official fresh-process interactive protocol",
+        "file_count": 1,
+        "aggregate_sha256": "c3bb3646322ac1d42dc8edc1beecb8599dcc8d9237611e6a9f225c98ddd6b3dc",
+        "files": [
+          {
+            "path": "INTERACTIVE_EXECUTION.md",
+            "size_bytes": 2788,
+            "sha256": "f61c882f6ddb080d2bc6627bc5797c2f1baa319e02f1e9fdddb3d84634b9e15d"
+          }
+        ]
+      },
+      {
+        "component_id": "mcp_server_implementation",
+        "description": "AX stdio MCP implementation and telemetry",
+        "file_count": 6,
+        "aggregate_sha256": "93dfbbff21e48c4a0aeaaceaf33ca8943c98d28d6f720e2c321a7ec99e317ed0",
+        "files": [
+          {
+            "path": "ax_mcp/__init__.py",
+            "size_bytes": 162,
+            "sha256": "e5853c98d2d17b6b7e784c535a85a0ecc1c3c10972843539f1885aa6675a3fa0"
+          },
+          {
+            "path": "ax_mcp/adapter.py",
+            "size_bytes": 4642,
+            "sha256": "740aee2ee5ef79af7991af73430232e33c25faefa7ad17714df28632dfa92ad7"
+          },
+          {
+            "path": "ax_mcp/runtime_dataset.py",
+            "size_bytes": 8846,
+            "sha256": "9ca351073004d52ce4febc68ce80ce827ee9270a4735017d55c30ae4a7e4ff41"
+          },
+          {
+            "path": "ax_mcp/runtime_identity.py",
+            "size_bytes": 1191,
+            "sha256": "19d088c44a4aa5926182f696420e49e49c7e5fb73270c29e087f08b99e624e8f"
+          },
+          {
+            "path": "ax_mcp/server.py",
+            "size_bytes": 7424,
+            "sha256": "e7ac2c0c0444099a5f5353eb2b343b1498c4492df00b31773ef666325e6d8d1c"
+          },
+          {
+            "path": "ax_mcp/telemetry.py",
+            "size_bytes": 3672,
+            "sha256": "2636e085c109e1e896e0fe6efb0f241f97a6978f01eb9d1c61625054a924d06e"
+          }
+        ]
+      },
+      {
+        "component_id": "mcp_schemas",
+        "description": "MCP request/output schemas and frozen schema capture",
+        "file_count": 4,
+        "aggregate_sha256": "2ca1ee0a76ab92d8e7a9bab770bc47c82ecd0a65c9f565e53b315b0245aae1d4",
+        "files": [
+          {
+            "path": "agent_tool_schemas.json",
+            "size_bytes": 15306,
+            "sha256": "99a9a8fa4162ddba286f43f4a8b791a48a8d3f677162101347e6636c882e59f2"
+          },
+          {
+            "path": "ax_agent/models.py",
+            "size_bytes": 7285,
+            "sha256": "9bb7a022ff4942fdcb89bff56309826f1196d073929ac08794926ad4d0535f33"
+          },
+          {
+            "path": "ax_mcp/adapter.py",
+            "size_bytes": 4642,
+            "sha256": "740aee2ee5ef79af7991af73430232e33c25faefa7ad17714df28632dfa92ad7"
+          },
+          {
+            "path": "runtime_blind_sample.schema.json",
+            "size_bytes": 538,
+            "sha256": "c8ed8ab17c5dc0b0a78bc313b07c867d3fffe4661d91c2684f4c7dc9b2383e7b"
+          }
+        ]
+      },
+      {
+        "component_id": "retrieval_implementation_configuration",
+        "description": "Read-only retrieval, normalization, table store, and tool layer",
+        "file_count": 7,
+        "aggregate_sha256": "a4b615310131e152a798cf18acc54f1987fc30e2e216f537a4d6838a44c9153a",
+        "files": [
+          {
+            "path": "ax_agent/__init__.py",
+            "size_bytes": 422,
+            "sha256": "903ec798f318d07d1ff27ffe8a24cd01f80c31c7daf18ee0a2048f45f725d8eb"
+          },
+          {
+            "path": "ax_agent/errors.py",
+            "size_bytes": 527,
+            "sha256": "7b2d7d99c0fe9b00c7f951c6b2e48d238fde4860d4dbef98a49a42e474e2e632"
+          },
+          {
+            "path": "ax_agent/models.py",
+            "size_bytes": 7285,
+            "sha256": "9bb7a022ff4942fdcb89bff56309826f1196d073929ac08794926ad4d0535f33"
+          },
+          {
+            "path": "ax_agent/normalization.py",
+            "size_bytes": 880,
+            "sha256": "1fea3171d1de4f28eebe3a79862ddbb0406d5b6f15217a2fd691b6c15f229110"
+          },
+          {
+            "path": "ax_agent/retrieval.py",
+            "size_bytes": 3608,
+            "sha256": "91ce751bf7191a20fd9762a3eee5a39c2307f1836e03430c581cd7814b02742f"
+          },
+          {
+            "path": "ax_agent/table_store.py",
+            "size_bytes": 4165,
+            "sha256": "d1b2b5b1756c24f2bb764426a0440ff8cc9941c79cab23964a4dd01d043f3dd4"
+          },
+          {
+            "path": "ax_agent/tools.py",
+            "size_bytes": 16528,
+            "sha256": "c3053fdd80f803d702f0c90ab4a95d8601ae2a82bc4b123291bcb6e912295dfb"
+          }
+        ]
+      },
+      {
+        "component_id": "scanner_implementation_configuration",
+        "description": "Scanner, parsers, PII logic, report writer, schemas, and config",
+        "file_count": 23,
+        "aggregate_sha256": "429c5bf403c3bf5d2b9a2d3ba785faec096a7e2a8e46d366b3b380b27686aee3",
+        "files": [
+          {
+            "path": "SCANNER_SCHEMA.md",
+            "size_bytes": 3315,
+            "sha256": "affd1ac38c354258136cd7507971960b9fb3f07ce9d624e713d771c631c36919"
+          },
+          {
+            "path": "ax_scanner/__init__.py",
+            "size_bytes": 171,
+            "sha256": "d5d2d4bfb4ba575c03865ffb5f3be44a58e0114df3cfc4f6a55c3b3e7dd410d9"
+          },
+          {
+            "path": "ax_scanner/__main__.py",
+            "size_bytes": 81,
+            "sha256": "2cdd23d4f5cd6c3b3e4cb690ad16d560637767b9ca5b2a3cf129fcc0a5ebc82b"
+          },
+          {
+            "path": "ax_scanner/cli.py",
+            "size_bytes": 2039,
+            "sha256": "f2ee3fa7882f198dd1f06a0cc7931efd1ab0f29a8509b15696bf8b6818daf086"
+          },
+          {
+            "path": "ax_scanner/models.py",
+            "size_bytes": 3908,
+            "sha256": "3f965d4ba9a5c74bf5958311baeb39ffc8a9fe0ee7b036b617d12d7ac7c096a8"
+          },
+          {
+            "path": "ax_scanner/parsers/__init__.py",
+            "size_bytes": 106,
+            "sha256": "b0cecac94703e6f0d7859aa8dd2204c7c84613963fe005ffdf52148e6be6b17e"
+          },
+          {
+            "path": "ax_scanner/parsers/base.py",
+            "size_bytes": 406,
+            "sha256": "90cb206e54c45c6a3b0c2ca059bc87656351d62a7d6084216db39299be735bbc"
+          },
+          {
+            "path": "ax_scanner/parsers/docx.py",
+            "size_bytes": 723,
+            "sha256": "99e9872ad70f2623a70716ec8db66ae56d8e7347b6d62946aba16a87d2577f0c"
+          },
+          {
+            "path": "ax_scanner/parsers/pdf.py",
+            "size_bytes": 916,
+            "sha256": "0b15fc97e0ef69cb465fb7b1da29424bcb87c6316c5aeddbad7a3a1dee96b4b3"
+          },
+          {
+            "path": "ax_scanner/parsers/registry.py",
+            "size_bytes": 774,
+            "sha256": "1074fbc3587821f1b5126ad1ff5a8b0ab60418fc8162bd0849d40307c4cb12ae"
+          },
+          {
+            "path": "ax_scanner/parsers/tabular.py",
+            "size_bytes": 2230,
+            "sha256": "7b95da64f9658baa3e6d6d823b7e371da50afc798747bba1eb6bdbea8c64c92b"
+          },
+          {
+            "path": "ax_scanner/parsers/text.py",
+            "size_bytes": 560,
+            "sha256": "943ea6396676848ccee56d6635be8d494966609db5a1a44208f8ba0fda26d495"
+          },
+          {
+            "path": "ax_scanner/pii/__init__.py",
+            "size_bytes": 133,
+            "sha256": "09745f2aca11fbea87a76eeda898981d9d669fabb15699c10c3c49216ee2d14c"
+          },
+          {
+            "path": "ax_scanner/pii/detection.py",
+            "size_bytes": 1617,
+            "sha256": "855d661d187821a736b30ab94d411fc61e19e5f06a54a69a6475b4ab6a474919"
+          },
+          {
+            "path": "ax_scanner/pii/masking.py",
+            "size_bytes": 621,
+            "sha256": "9fe8e4458ec62e85b7721da4b690cc69b5942f409b39f53fe18cd0eaa1ee74ad"
+          },
+          {
+            "path": "ax_scanner/profiling/__init__.py",
+            "size_bytes": 62,
+            "sha256": "20bf869b946189c431e6a7d3d9f1c57283bbcac9b10f38aff48334ef6cafe4c8"
+          },
+          {
+            "path": "ax_scanner/profiling/tables.py",
+            "size_bytes": 4870,
+            "sha256": "aaaece58965866e9f72df68056d9050a24711e48b8126abc7152c582270d689e"
+          },
+          {
+            "path": "ax_scanner/reports/__init__.py",
+            "size_bytes": 138,
+            "sha256": "d95fa7b07a5e34f7d09b602d992602ea393b5ed7d0e2b64d44eff70ac5f014bc"
+          },
+          {
+            "path": "ax_scanner/reports/writer.py",
+            "size_bytes": 773,
+            "sha256": "10955dc48abdb06ff24f43966a1fe1f089a11dc9daf08363ba75f1feaa82c707"
+          },
+          {
+            "path": "ax_scanner/scanner.py",
+            "size_bytes": 6928,
+            "sha256": "cb83b601a25e0d02c4a4abe5e4475726a5475fbd7a34026fcd6d6a866b7f27b3"
+          },
+          {
+            "path": "ax_scanner/telemetry.py",
+            "size_bytes": 1851,
+            "sha256": "590ade980026fb58deadbe23eb91ec46860d8851b4399c109138ddb2cdd910a6"
+          },
+          {
+            "path": "ax_scanner/versioning.py",
+            "size_bytes": 2052,
+            "sha256": "14887df8ced349c351a63af34a6cd3352fdf0a23109271729745be6ed5746513"
+          },
+          {
+            "path": "scan_report.schema.json",
+            "size_bytes": 15476,
+            "sha256": "eed852c9300b950eb2acc387f533a963d1f4fb013b4d07ab45831cdb8356d566"
+          }
+        ]
+      },
+      {
+        "component_id": "runtime_dataset_profile_configuration",
+        "description": "Runtime profile binding and identity validation",
+        "file_count": 3,
+        "aggregate_sha256": "360fb1db7975e0f4fd1a2535e2e48ad75078da43f7e6811a0865fdfabc61640b",
+        "files": [
+          {
+            "path": "ax_mcp/runtime_dataset.py",
+            "size_bytes": 8846,
+            "sha256": "9ca351073004d52ce4febc68ce80ce827ee9270a4735017d55c30ae4a7e4ff41"
+          },
+          {
+            "path": "ax_mcp/runtime_identity.py",
+            "size_bytes": 1191,
+            "sha256": "19d088c44a4aa5926182f696420e49e49c7e5fb73270c29e087f08b99e624e8f"
+          },
+          {
+            "path": "runtime_datasets.json",
+            "size_bytes": 486,
+            "sha256": "8be9fa1ec5a50aad74dca0c65bf4e37a1c7d03f7007758080942b22936119d71"
+          }
+        ]
+      },
+      {
+        "component_id": "ceiling_dataset_manifest",
+        "description": "Ceiling source-file manifest",
+        "file_count": 1,
+        "aggregate_sha256": "50b452d1f978686b7c978e372b120bccb332bb9d7e475790088f09642e057d6e",
+        "files": [
+          {
+            "path": "dataset_manifest.json",
+            "size_bytes": 8090,
+            "sha256": "bcf60e523ee55951b8bb58fdc9049c667c8902154baab02d745ea7262a44a804"
+          }
+        ]
+      },
+      {
+        "component_id": "benchmark_manifest",
+        "description": "Frozen 21-task benchmark",
+        "file_count": 1,
+        "aggregate_sha256": "81c7a3bd7652a5a20ce37e451ea3a639f84d23d4c54120c75e1ea136f28b1274",
+        "files": [
+          {
+            "path": "benchmark_tasks.json",
+            "size_bytes": 34812,
+            "sha256": "3fd63ca0b06bb3901238726f3c156372ad768c49c366321cd23c2da470bc2555"
+          }
+        ]
+      },
+      {
+        "component_id": "ground_truth",
+        "description": "Frozen benchmark ground truth",
+        "file_count": 1,
+        "aggregate_sha256": "8df1f1de7e9de06f7d4ce1daa6016efdb5cfc966d969460bb2f45eedc05aaaf2",
+        "files": [
+          {
+            "path": "ground_truth.json",
+            "size_bytes": 3986,
+            "sha256": "5efcd216b98b2b31edf5bfd9e2fb3411e1027b74d4b08abb8043b2d15dc58e5d"
+          }
+        ]
+      },
+      {
+        "component_id": "task_to_defect_manifest",
+        "description": "Frozen task-to-defect mapping",
+        "file_count": 1,
+        "aggregate_sha256": "51e7d162cfe0c25ed2749cc61535cf420e6033ec5528cb820f541ef155c498e2",
+        "files": [
+          {
+            "path": "task_to_defect_manifest.json",
+            "size_bytes": 12513,
+            "sha256": "e3dda8ea81859de0a5c38321e89152ee459f231f20cf4ab883400cac241e227a"
+          }
+        ]
+      },
+      {
+        "component_id": "control_source_manifest",
+        "description": "Frozen control-source protection manifest",
+        "file_count": 1,
+        "aggregate_sha256": "5cb6eb10b448b29f2cccffe379de6448bc652b0122ab2e4cbb7cdb13522b4786",
+        "files": [
+          {
+            "path": "control_sources.json",
+            "size_bytes": 2493,
+            "sha256": "9c8f8a76c5c945a6d86f786c987d927c5712e49c7cd8f5cd713179ed1a5ede0f"
+          }
+        ]
+      },
+      {
+        "component_id": "deterministic_scorer",
+        "description": "Deterministic Agent-output scorer",
+        "file_count": 1,
+        "aggregate_sha256": "5d7bc8716f9bd7cc41f517b883d38aae7d44fff7084347578d5b34c34572032d",
+        "files": [
+          {
+            "path": "scripts/ceiling_scoring.py",
+            "size_bytes": 2397,
+            "sha256": "c8c5db3e400db0c19832c2b624f0da2bba303f146f2079fa5b22f566fca3f077"
+          }
+        ]
+      },
+      {
+        "component_id": "output_contract_validator",
+        "description": "Strict raw-response output validator",
+        "file_count": 1,
+        "aggregate_sha256": "f4af7b75e7caf80086b089d147a710ff35d5bb73b17fd5ec98efd5411a58b321",
+        "files": [
+          {
+            "path": "scripts/output_contract.py",
+            "size_bytes": 3090,
+            "sha256": "cb009fa3d89c92f05862394897ead5152b92cb7210d8f76940826b4965d683e1"
+          }
+        ]
+      },
+      {
+        "component_id": "semantic_json_extractor",
+        "description": "Analysis-only semantic JSON extractor",
+        "file_count": 1,
+        "aggregate_sha256": "f4af7b75e7caf80086b089d147a710ff35d5bb73b17fd5ec98efd5411a58b321",
+        "files": [
+          {
+            "path": "scripts/output_contract.py",
+            "size_bytes": 3090,
+            "sha256": "cb009fa3d89c92f05862394897ead5152b92cb7210d8f76940826b4965d683e1"
+          }
+        ]
+      },
+      {
+        "component_id": "failure_taxonomy",
+        "description": "Frozen outcome, attribution, system, and F6 labels",
+        "file_count": 4,
+        "aggregate_sha256": "eb54685f62c4b132242adaa23b30b5b81b30761b52cc0e5e4fb4a548b38b14c5",
+        "files": [
+          {
+            "path": "AX_PROJECT_PLAN_v3.md",
+            "size_bytes": 29900,
+            "sha256": "bde8b32b63538374a5f77c5a89bbf1072f4c76805eaab214446ef0a8a8cba1e1"
+          },
+          {
+            "path": "EXPERIMENT_FAILURE_TAXONOMY.md",
+            "size_bytes": 1462,
+            "sha256": "f6ebc193597e393139564bf64378df3d3b096893196dd4e547e573abdb001281"
+          },
+          {
+            "path": "scripts/ceiling_scoring.py",
+            "size_bytes": 2397,
+            "sha256": "c8c5db3e400db0c19832c2b624f0da2bba303f146f2079fa5b22f566fca3f077"
+          },
+          {
+            "path": "scripts/output_contract.py",
+            "size_bytes": 3090,
+            "sha256": "cb009fa3d89c92f05862394897ead5152b92cb7210d8f76940826b4965d683e1"
+          }
+        ]
+      },
+      {
+        "component_id": "runtime_prompt_constructor",
+        "description": "Two-field blind runtime prompt projection and rendering",
+        "file_count": 1,
+        "aggregate_sha256": "1b0bfcfd588da48ec0fc415e7f5852a9066d56e37123d15e74cceccac2c807f6",
+        "files": [
+          {
+            "path": "scripts/runtime_prompt.py",
+            "size_bytes": 1278,
+            "sha256": "15f4382da8daaec6aa33ab29e97041efdf7e5efb424f253da2bc1152583f9a23"
+          }
+        ]
+      },
+      {
+        "component_id": "leakage_validator",
+        "description": "Prompt and runtime leakage validators",
+        "file_count": 5,
+        "aggregate_sha256": "b94562fbe6546f75fd8c319eefa2e1488c5c928e1025508770768af159e3c6b2",
+        "files": [
+          {
+            "path": "scripts/blind_gate.py",
+            "size_bytes": 18321,
+            "sha256": "9c810cc5e5c5f146035cc01e0e583e3beb83bf839671cfb3317d83ce29cecb1a"
+          },
+          {
+            "path": "scripts/validate_blind_gate.py",
+            "size_bytes": 739,
+            "sha256": "85484d24ec495ac32c31fc8c7e8854a8685fe73b4b27de40e7b5f9b0f04d9d3a"
+          },
+          {
+            "path": "scripts/validate_ceiling_artifacts.py",
+            "size_bytes": 356,
+            "sha256": "9ddcd5471419732110e86ad421a3e74f2323d1ffcd980d7c0fc9a083a7b1a3d0"
+          },
+          {
+            "path": "scripts/validate_ceiling_benchmark.py",
+            "size_bytes": 21588,
+            "sha256": "1eace7debb718a05a159237784a4f14aa2e3f08f151547dfed745c5de33d3f3b"
+          },
+          {
+            "path": "scripts/validate_ceiling_dataset.py",
+            "size_bytes": 1042,
+            "sha256": "4e1361f7b8647fa8bac2b19f34ee56b08c4f84d8c3c29042fe7112f3a9236a43"
+          }
+        ]
+      },
+      {
+        "component_id": "interactive_run_recorder",
+        "description": "Interactive run preparation, capture, and finalization",
+        "file_count": 1,
+        "aggregate_sha256": "1907a475f563964b3561e4fa5f019eda6b4c0c333bafeb20ca24fed285d44edb",
+        "files": [
+          {
+            "path": "scripts/interactive_run.py",
+            "size_bytes": 11597,
+            "sha256": "4943f3dc12a5b05d61c10cf8871f47e5ac914618d88c56d325011ff8da213cc7"
+          }
+        ]
+      },
+      {
+        "component_id": "readiness_score_v1",
+        "description": "Deterministic Readiness Score v1 implementation",
+        "file_count": 1,
+        "aggregate_sha256": "2ec6b48edbe6e354cf7c59c9be134bdb8ac3f4aa0324fc8bcd4bb834cf8b0919",
+        "files": [
+          {
+            "path": "readiness_score.py",
+            "size_bytes": 10863,
+            "sha256": "5b3dd7e7b94d230b855981f1b487b35efc655ed11a3d84d02be7278ba3fc8319"
+          }
+        ]
+      },
+      {
+        "component_id": "readiness_score_specification",
+        "description": "Frozen Readiness Score v1 specification",
+        "file_count": 1,
+        "aggregate_sha256": "5eb7eef2644ea613d70bae31f9d091e1065e2551cc20e3fc0f570840b5587241",
+        "files": [
+          {
+            "path": "READINESS_SCORE_SPEC.md",
+            "size_bytes": 5285,
+            "sha256": "4212c2314136f3c42b828717588e01952d882e392feb9f37e41558438cc07c44"
+          }
+        ]
+      },
+      {
+        "component_id": "dataset_condition_generators",
+        "description": "Canonical dataset and truth generators required by the experiment",
+        "file_count": 5,
+        "aggregate_sha256": "a7ee3b4d116c7dc4603aee2456af98838f1f9d12d5a8ad91bb3a608690fec15e",
+        "files": [
+          {
+            "path": "scripts/assemble_ceiling_dataset.py",
+            "size_bytes": 934,
+            "sha256": "e88889cb3841df185757224706924a62e00ad09257bd07b68e49cad07f5f050d"
+          },
+          {
+            "path": "scripts/build_ceiling_dataset.py",
+            "size_bytes": 883,
+            "sha256": "bd3b1e839daa3391e2e9de110bf0822820c766bbb2618b0dd3363f62d29c5ec6"
+          },
+          {
+            "path": "scripts/create_ceiling_dataset.py",
+            "size_bytes": 890,
+            "sha256": "f4b43e40fb755b5821ce75caa6af13827dfc6b81f7264d818f8ebe00a16f8e6e"
+          },
+          {
+            "path": "scripts/generate_ceiling_dataset.py",
+            "size_bytes": 52373,
+            "sha256": "f3cd096c0ba0bb39024dbe50b1f01e47f9e199e9e5052887e3c341a3a63feb9b"
+          },
+          {
+            "path": "scripts/independent_ceiling_truth.py",
+            "size_bytes": 6171,
+            "sha256": "15b955a0b542e9f223d37e4f3badf5220d1d2e7465bb819e8b226e5cb8120e19"
+          }
+        ]
+      },
+      {
+        "component_id": "experiment_hypotheses",
+        "description": "Hypotheses frozen before held-out execution",
+        "file_count": 1,
+        "aggregate_sha256": "58f0d1f77f1a1659e54bd6d2c1146d1f5a38ddec4bb21414661ccb555cf184e1",
+        "files": [
+          {
+            "path": "EXPERIMENT_HYPOTHESES.md",
+            "size_bytes": 975,
+            "sha256": "21c2b95f994e631a1627edec6c439531e6aca981a4a4f804466af76c5049b696"
+          }
+        ]
+      },
+      {
+        "component_id": "dependency_constraints",
+        "description": "Python dependency constraints",
+        "file_count": 2,
+        "aggregate_sha256": "59f803ff957e995ec3f06dc126e0b1c91085a2e0dab92fd48c6a6cb68ee8d2c2",
+        "files": [
+          {
+            "path": "requirements-dev.txt",
+            "size_bytes": 37,
+            "sha256": "22f4fbccf8f076e0d33ecd0f6f5737b1ff2e5f095b555679288d728b488a5578"
+          },
+          {
+            "path": "requirements.txt",
+            "size_bytes": 67,
+            "sha256": "2e546a9437cd9f0d16060eaed83fb4e5ffdaac80bd9ca9ef816790242d0c5f90"
+          }
+        ]
+      }
+    ],
+    "raw_evidence_artifacts": [
+      {
+        "component_id": "ceiling_source_evidence",
+        "description": "Raw Ceiling company files consumed by Scanner and retrieval",
+        "file_count": 30,
+        "aggregate_sha256": "e39ef722dd93ea2605113306ede5159891e4cbf1e31bf591901dbf01e9395474",
+        "files": [
+          {
+            "path": "sample_data/ceiling_company/01_경영관리/2026_사업운영방침.docx",
+            "size_bytes": 37023,
+            "sha256": "6b37222c82a3e1aa669b5e0d78ac5094648e0f130bf9a155b8c8d60dfdf7b957"
+          },
+          {
+            "path": "sample_data/ceiling_company/01_경영관리/거래처_관리기준.pdf",
+            "size_bytes": 1495,
+            "sha256": "28d4794876a79a2f14829c850df600d7fb57ad6fd430d29225e2eb497dea2aeb"
+          },
+          {
+            "path": "sample_data/ceiling_company/01_경영관리/월간_운영회의록_2026-08.txt",
+            "size_bytes": 204,
+            "sha256": "afd62117c24b4eb03c35ea00d0bf4bcfd32217bd23429c5e1a219e9243f1cb0d"
+          },
+          {
+            "path": "sample_data/ceiling_company/01_경영관리/조직_연락망.txt",
+            "size_bytes": 185,
+            "sha256": "98a0908df9c4f3ff2de6a253ee6dc911848079e20b4653178599056a0f1f056f"
+          },
+          {
+            "path": "sample_data/ceiling_company/01_경영관리/회사소개_한빛유통.txt",
+            "size_bytes": 226,
+            "sha256": "8a568e21dae1bcfacde4f16eb83bd791dde948da72696d46759eae9022e95c6b"
+          },
+          {
+            "path": "sample_data/ceiling_company/02_정책/반품_교환_정책_2026.docx",
+            "size_bytes": 36855,
+            "sha256": "04f6ce1df32f33a52ade0aea8a14e4565d6c5a5f9e595b7a80f673ba8f35edd4"
+          },
+          {
+            "path": "sample_data/ceiling_company/02_정책/배송_지연_보상_2026.docx",
+            "size_bytes": 36756,
+            "sha256": "b0679759b829570c6979e7614cba807ec9e760999d40e40acf04ea0e5391ad65"
+          },
+          {
+            "path": "sample_data/ceiling_company/02_정책/신규거래처_등록_절차.docx",
+            "size_bytes": 36810,
+            "sha256": "ec5499f30957d44ddc2218049585c2332e65b56b6d324031e86e53785326fb1a"
+          },
+          {
+            "path": "sample_data/ceiling_company/02_정책/재고_조정_절차.txt",
+            "size_bytes": 246,
+            "sha256": "964842e7ed4e3bdd233ba32c04bb165328ac5a63de71733e92bf1b07ad06fb51"
+          },
+          {
+            "path": "sample_data/ceiling_company/02_정책/할인_승인_규정.docx",
+            "size_bytes": 36814,
+            "sha256": "173beb03c435728a4461b22a23cd2e535c485c63b2af7465dcbc41c8f6c8f083"
+          },
+          {
+            "path": "sample_data/ceiling_company/03_영업/거래처_마스터.xlsx",
+            "size_bytes": 5497,
+            "sha256": "0f8ae595489516ca277fb74a24863384c0f67ade352f9c742cc69d4785dd8ddb"
+          },
+          {
+            "path": "sample_data/ceiling_company/03_영업/영업_운영_안내.txt",
+            "size_bytes": 237,
+            "sha256": "a7724663963825b8a71e72d2731707204e664c0e6dcac04bae18484494be7ca5"
+          },
+          {
+            "path": "sample_data/ceiling_company/03_영업/월별_매출목표_2026.xlsx",
+            "size_bytes": 5219,
+            "sha256": "9c0d1e0bb81e8d56f9c28f5b20946b68fadbd0b88d27fcb03569c8a916259fe4"
+          },
+          {
+            "path": "sample_data/ceiling_company/03_영업/품목_마스터.csv",
+            "size_bytes": 621,
+            "sha256": "347c22d71df4082a9f021005097b46cd54f8d1e729489c601b5904afc4744c44"
+          },
+          {
+            "path": "sample_data/ceiling_company/03_영업/할인코드_정의.csv",
+            "size_bytes": 146,
+            "sha256": "672144effb2b791cbc2ddb2941337404cf37f034c7d05a89baeb8d1c7911ae85"
+          },
+          {
+            "path": "sample_data/ceiling_company/04_주문/8월_주문_검토.pdf",
+            "size_bytes": 1465,
+            "sha256": "fb8e5da70f1bcfaf3971dd14e0ca3e739bddb7a8ca4fda7ffb707935572e7051"
+          },
+          {
+            "path": "sample_data/ceiling_company/04_주문/반품_원장_2026.csv",
+            "size_bytes": 1844,
+            "sha256": "727db2884c7bb942d0e8e91b737aa962ec72e2d7339cf476b5aebfb4fce5518f"
+          },
+          {
+            "path": "sample_data/ceiling_company/04_주문/주문_상태_기준.txt",
+            "size_bytes": 218,
+            "sha256": "8f4aa2570997cb6be520efb1618fa9bb3c14ef417a583f54f2be979171cfb93a"
+          },
+          {
+            "path": "sample_data/ceiling_company/04_주문/주문_원장_2026.xlsx",
+            "size_bytes": 12264,
+            "sha256": "8b3ebc1c4d7a8caa87c7664d8f80772e70b1348c89dd38cb7b6365664dedf789"
+          },
+          {
+            "path": "sample_data/ceiling_company/04_주문/출고_요청_2026.xlsx",
+            "size_bytes": 7075,
+            "sha256": "4720da8d2c92c7d42dbf6a4fe0828a61a043ab6e2efb92e5da97b11923a88661"
+          },
+          {
+            "path": "sample_data/ceiling_company/05_물류/배송권역_리드타임.csv",
+            "size_bytes": 154,
+            "sha256": "851da6752a62976cc386072419cabfd6f589820a13ff9f33fee8d1c900302b78"
+          },
+          {
+            "path": "sample_data/ceiling_company/05_물류/월간_재고_점검.pdf",
+            "size_bytes": 1484,
+            "sha256": "fa65f6dd3bb3dce1c3dd094b36ce82efa9ad01464ace861e298be9f3ce5ce244"
+          },
+          {
+            "path": "sample_data/ceiling_company/05_물류/입고_검수_기준.txt",
+            "size_bytes": 181,
+            "sha256": "ba60292dcf5408a9942288fffc247ab26bc21ac1eb23f7ca825c2ddd91430701"
+          },
+          {
+            "path": "sample_data/ceiling_company/05_물류/재고_현황_2026-09.xlsx",
+            "size_bytes": 5565,
+            "sha256": "bcc80929e6ec4bf4bdd88bbc4013ed1029c2b245a2bd38163c6edc3116cd07c2"
+          },
+          {
+            "path": "sample_data/ceiling_company/05_물류/창고_운영_매뉴얼.docx",
+            "size_bytes": 36836,
+            "sha256": "90805a744afd5108dc3c2b7b4e5f850b62334a94115f36c6148a8bc8dadb470d"
+          },
+          {
+            "path": "sample_data/ceiling_company/06_고객지원/CS_유형_코드.csv",
+            "size_bytes": 136,
+            "sha256": "cc2519f09c0b6c51711d6b114d09ccd95da44d929f335a87fae29b8122369c58"
+          },
+          {
+            "path": "sample_data/ceiling_company/06_고객지원/FAQ_2026.txt",
+            "size_bytes": 197,
+            "sha256": "8892c3a043fc20bbe96898fdbe30ba7c7c124cf569608b0dfe5662e34157fa0c"
+          },
+          {
+            "path": "sample_data/ceiling_company/06_고객지원/고객응대_매뉴얼.docx",
+            "size_bytes": 36792,
+            "sha256": "0f6ca440e8ebf4485bfbd0e4ee69c5dea1ec12355f9610b3bf03246a282533f0"
+          },
+          {
+            "path": "sample_data/ceiling_company/07_정산/세금계산서_처리_안내.pdf",
+            "size_bytes": 1495,
+            "sha256": "c5311394d9dfa685c332dd7b77f64ad45cf4433e67ced608600a122a732f8496"
+          },
+          {
+            "path": "sample_data/ceiling_company/07_정산/정산_캘린더_2026.xlsx",
+            "size_bytes": 5188,
+            "sha256": "674c5fe500f1d9cc6dc8cdff5cbb5754c67fcfdb00d379e0303cbe330dbfe8a6"
+          }
+        ]
+      },
+      {
+        "component_id": "ceiling_static_evidence",
+        "description": "Scanner and static Ceiling validation outputs",
+        "file_count": 3,
+        "aggregate_sha256": "feac08dfe2aee0de1be4191fe646c3d05c16d9b9b8cb6c49e43f1440fa8f46a5",
+        "files": [
+          {
+            "path": "ceiling_scan_report.json",
+            "size_bytes": 63501,
+            "sha256": "588c304b97a141a9259f9bd54d02c98c67116e6e58474b90b86f7889a2c5fc52"
+          },
+          {
+            "path": "ceiling_validation.json",
+            "size_bytes": 5124,
+            "sha256": "c778b076bb2f08fbef3f822b3336006e7723a55306e10a9bb6764b05b195ce03"
+          },
+          {
+            "path": "dataset_provenance.md",
+            "size_bytes": 1584,
+            "sha256": "737f228a9be9dfa22cd6257e59978e6569bc1c0daf07429b647bbb13bfa92f8b"
+          }
+        ]
+      },
+      {
+        "component_id": "dev_run_evidence",
+        "description": "Dev-only interactive run evidence",
+        "file_count": 42,
+        "aggregate_sha256": "a5b742eaeb9107e86cc80dabb257acdaaa37dc68c98bab34f0b0a56f2e1d932e",
+        "files": [
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/closure_result.md",
+            "size_bytes": 1765,
+            "sha256": "270cbed0e0cde25f0cd204f269352d3dba9c323ea3bfc44acd89bc48ce005b51"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/prompts/C01.txt",
+            "size_bytes": 96,
+            "sha256": "975e0fe396a00a45c25c36b518d2a435331c91dff21e4006cc7bf4cce143eeea"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/prompts/C04.txt",
+            "size_bytes": 90,
+            "sha256": "adc5ca541c045f56048ba744a52f9a8f1adde4de56e4c739c3aaa4588f25e1d5"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/prompts/C07.txt",
+            "size_bytes": 122,
+            "sha256": "6e67c665708bf292f98f22f7bb6abb8c8fd349416541887092a66811a7d09311"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/prompts/O01.txt",
+            "size_bytes": 79,
+            "sha256": "5bb873458a7b1f9e396075074bfc7bcbfb76a1c03974e6ac363809acc3e825a4"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/prompts/O05.txt",
+            "size_bytes": 101,
+            "sha256": "d29b795bed9dc181cf90715464806308adbdd67bfc81644b9bc2817bbe3468b3"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/C01/command.txt",
+            "size_bytes": 59,
+            "sha256": "5c03654b8469b37ac8970b9693efce90eb687ee31c792a9e257da6e91cc3aab1"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/C01/mcp-invocations.jsonl",
+            "size_bytes": 1761,
+            "sha256": "b1ba26101527852fe7177a4719be88255b6a006bd2cf0a6f22f2e1bebd454606"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/C01/metadata.json",
+            "size_bytes": 2939,
+            "sha256": "8a8528fff2f0896a6fc40ba5b7ef7ad2da8101c644b808d3f81abb0a5a0d3fd7"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/C01/parsed_result.json",
+            "size_bytes": 767,
+            "sha256": "e51c1939a57fc75734644bc6f60b9f35380db8723134d8824cd70f950a02d8c5"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/C01/prompt.txt",
+            "size_bytes": 96,
+            "sha256": "975e0fe396a00a45c25c36b518d2a435331c91dff21e4006cc7bf4cce143eeea"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/C01/raw_response.txt",
+            "size_bytes": 644,
+            "sha256": "2922da1a836282882eb64cac1007023ee9bc922a75f5739aeab30197e163ca3e"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/C01/terminal-transcript.txt",
+            "size_bytes": 2464,
+            "sha256": "d37f27dd639d6147a4c14b0005559186743b479cb0a5b98f5637e11c7d6565a7"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/C04/command.txt",
+            "size_bytes": 59,
+            "sha256": "5c03654b8469b37ac8970b9693efce90eb687ee31c792a9e257da6e91cc3aab1"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/C04/mcp-invocations.jsonl",
+            "size_bytes": 1437,
+            "sha256": "f9c64777619f858b1745f3204ae858649760440934f1ff09d74e304256e2e8f5"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/C04/metadata.json",
+            "size_bytes": 2936,
+            "sha256": "3f58b28c189d7e1f4e65717fa4d7a20e968309f0e20ad5e1ccccb2a0f882c89d"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/C04/parsed_result.json",
+            "size_bytes": 705,
+            "sha256": "2c99708fc39432d20a368337f5c28838929ed71609b1b83fcf06c09ecce7f071"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/C04/prompt.txt",
+            "size_bytes": 90,
+            "sha256": "adc5ca541c045f56048ba744a52f9a8f1adde4de56e4c739c3aaa4588f25e1d5"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/C04/raw_response.txt",
+            "size_bytes": 504,
+            "sha256": "caaf997bc92a600c04572bab6c089ad54315fb9c18092fb093c4320816e85c7e"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/C04/terminal-transcript.txt",
+            "size_bytes": 2537,
+            "sha256": "ab84331617bc866b97ae31604aa1161ab102a5e44ae59898664063ad906dd47f"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/C07/command.txt",
+            "size_bytes": 59,
+            "sha256": "5c03654b8469b37ac8970b9693efce90eb687ee31c792a9e257da6e91cc3aab1"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/C07/mcp-invocations.jsonl",
+            "size_bytes": 1639,
+            "sha256": "3e68d178756b3af06ca9229eeae803fa0255392d039e12ccf297e38f28d063be"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/C07/metadata.json",
+            "size_bytes": 2940,
+            "sha256": "229c43014d8a2c63552338c06738e698c80b4ff55d4dc182784dd4e1b9830ed9"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/C07/parsed_result.json",
+            "size_bytes": 778,
+            "sha256": "f9ca69a02575b6d95fff80cc24ced6ecc0197caf9b127c28a1df75ebb5900db0"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/C07/prompt.txt",
+            "size_bytes": 122,
+            "sha256": "6e67c665708bf292f98f22f7bb6abb8c8fd349416541887092a66811a7d09311"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/C07/raw_response.txt",
+            "size_bytes": 691,
+            "sha256": "47f55960cf04308e351e44b12bb5bc5b7dab7356198b76ee86760274034b88ad"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/C07/terminal-transcript.txt",
+            "size_bytes": 2548,
+            "sha256": "6e6ebab15f67bb011a84b6b13a6f7e4c1e323a40182de81799d2374fb5bdd481"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/O01/command.txt",
+            "size_bytes": 59,
+            "sha256": "5c03654b8469b37ac8970b9693efce90eb687ee31c792a9e257da6e91cc3aab1"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/O01/mcp-invocations.jsonl",
+            "size_bytes": 804,
+            "sha256": "8fce5a347325614d0c2f837103b73ba31e7546424287399eba45486405de7f74"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/O01/metadata.json",
+            "size_bytes": 2933,
+            "sha256": "b2f364dbdee13e3359d388292844827e5d5ed5aa9957382a0594fe12ea536ec1"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/O01/parsed_result.json",
+            "size_bytes": 536,
+            "sha256": "65b8bbf6188a7723a43864c14aa31228a94be36eac816da5edacc6f967898a74"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/O01/prompt.txt",
+            "size_bytes": 79,
+            "sha256": "5bb873458a7b1f9e396075074bfc7bcbfb76a1c03974e6ac363809acc3e825a4"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/O01/raw_response.txt",
+            "size_bytes": 342,
+            "sha256": "f063dfc4679bdf6655af941781546dba00a1eb89ae86dbb27e3748b7fb4abee4"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/O01/terminal-transcript.txt",
+            "size_bytes": 2326,
+            "sha256": "8007e81d9a217a428575d65d0fc48aedc032620ed964983a509b02dacde22fbd"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/O05/command.txt",
+            "size_bytes": 59,
+            "sha256": "5c03654b8469b37ac8970b9693efce90eb687ee31c792a9e257da6e91cc3aab1"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/O05/mcp-invocations.jsonl",
+            "size_bytes": 610,
+            "sha256": "61ef3774b76d1734deae82276bafd460053e2d76ef0403a1fef79a56b1969490"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/O05/metadata.json",
+            "size_bytes": 2942,
+            "sha256": "1a6728e32fd0061f3ac149e6cf79cc06c8c051e071f82e11416b7731e3889d6a"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/O05/parsed_result.json",
+            "size_bytes": 523,
+            "sha256": "cd99a1a626cae98eb417c0dc56bc02f97b34cb23df0a4c39f8cc90a996409e9f"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/O05/prompt.txt",
+            "size_bytes": 101,
+            "sha256": "d29b795bed9dc181cf90715464806308adbdd67bfc81644b9bc2817bbe3468b3"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/O05/raw_response.txt",
+            "size_bytes": 329,
+            "sha256": "03f83400508dafe287af6132cbe874a20978ea1708ed11b479cfb4f5b95c1c69"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/runs/O05/terminal-transcript.txt",
+            "size_bytes": 2318,
+            "sha256": "c0388b9c25216a0e60c7855735a8ace501e2696bf2635c024df6dbfe64cae792"
+          },
+          {
+            "path": "artifacts/prefreeze_dev_format_2026-09-22/summary.json",
+            "size_bytes": 1692,
+            "sha256": "9cdebc38552547a47deb86c6457034cc332c764c10be4edfa89cd3231909c0d1"
+          }
+        ]
+      },
+      {
+        "component_id": "prefreeze_diagnostic_evidence",
+        "description": "Dev-only headless availability diagnostics",
+        "file_count": 7,
+        "aggregate_sha256": "0a7c112d7eae1134f8ae4a9749a2f51b95ed862be0246ecae89b323d20899470",
+        "files": [
+          {
+            "path": "artifacts/dev_calibration_2026-09-22/diagnosis.md",
+            "size_bytes": 4016,
+            "sha256": "efe89f70434e487698cdf2741c26688d59212493ea1963d5f4ac035b50d89f6a"
+          },
+          {
+            "path": "artifacts/dev_calibration_2026-09-22/headless_o01/metadata.json",
+            "size_bytes": 918,
+            "sha256": "6da1ca809e4b2c784a2bd747052c6fc625763d32d5a68fbafdccbc0a730bece7"
+          },
+          {
+            "path": "artifacts/dev_calibration_2026-09-22/headless_o01/stderr.log",
+            "size_bytes": 103,
+            "sha256": "6ae57182095cc22141f64f6a64d41bf8a83d0116bfd867e450865abf755b5a65"
+          },
+          {
+            "path": "artifacts/dev_calibration_2026-09-22/headless_o01/stdout.jsonl",
+            "size_bytes": 170,
+            "sha256": "6ba4bc450347928d70303e6837c175089c381affa60ba69c9c0b889566bf8d0f"
+          },
+          {
+            "path": "artifacts/dev_calibration_2026-09-22/headless_o01_v2/metadata.json",
+            "size_bytes": 971,
+            "sha256": "91a9fa173eaf4df8c5a0a4025d9f9a72885f4d0a7106ac69ae9367c409595bca"
+          },
+          {
+            "path": "artifacts/dev_calibration_2026-09-22/headless_o01_v2/stderr.log",
+            "size_bytes": 64,
+            "sha256": "7074ea04b9034a618402788a2f733a7bce252c7d9a3f880e9cc878e1b75ab974"
+          },
+          {
+            "path": "artifacts/dev_calibration_2026-09-22/headless_o01_v2/stdout.jsonl",
+            "size_bytes": 338,
+            "sha256": "81ecf2bc3f01a61457e911ea8b5a5c51928994c4023ba2ac41a76b01d67174f8"
+          }
+        ]
+      },
+      {
+        "component_id": "blind_gate_evidence",
+        "description": "Prepared-not-run gate receipts and prompt artifacts",
+        "file_count": 3,
+        "aggregate_sha256": "d901c3e3708f1d212906d88a598e14e99dbc521fa30e7dcbd4d4793d68c68e6a",
+        "files": [
+          {
+            "path": "blind_gate_manifest.json",
+            "size_bytes": 13749,
+            "sha256": "c6a0ea0d118a14c1ad787d3861e1fbaedb69494147ce80692d9d575cf81cfda0"
+          },
+          {
+            "path": "blind_gate_prompts.md",
+            "size_bytes": 804,
+            "sha256": "562a2cd4577196392a95f173510c62e99e4581273d558e7c9505d4211e443590"
+          },
+          {
+            "path": "blind_gate_results.json",
+            "size_bytes": 5045,
+            "sha256": "3af1729c9c7439dbc005745a9f4e72101f335c8c131abf50c342f5d706ad0137"
+          }
+        ]
+      }
+    ],
+    "log_and_capture_artifacts": [
+      {
+        "component_id": "mcp_runtime_logs",
+        "description": "Pre-freeze MCP invocation and runtime-identity logs",
+        "file_count": 3,
+        "aggregate_sha256": "a192dd5a14557cb84080d3630aeea266c209c5737cc79050ed30d4f196228f81",
+        "files": [
+          {
+            "path": ".kiro/logs/ax-mcp-invocations.jsonl",
+            "size_bytes": 3113,
+            "sha256": "0ffc60712c2814552736c9bd74e8983059c47a97378b4552e38b2097d10913e6"
+          },
+          {
+            "path": ".kiro/logs/blind-gate-invocations.jsonl",
+            "size_bytes": 12483,
+            "sha256": "ce4df1ec7d50a4adb72a9936366869e423f584930d5aee2f280a60b7fa9eb16a"
+          },
+          {
+            "path": ".kiro/logs/blind-gate-runtime-identity.json",
+            "size_bytes": 1195,
+            "sha256": "23e3b0a96ad592a9984a0837c754f2a8fe40752e9291799d9746009a96dc78e7"
+          }
+        ]
+      },
+      {
+        "component_id": "tool_contract_captures",
+        "description": "Pre-freeze tool schema and result captures",
+        "file_count": 3,
+        "aggregate_sha256": "d1de95b13d6fd65cebe3f06ee9cc83eaaababa1b9af2a90476c5899b7717e2f8",
+        "files": [
+          {
+            "path": "agent_tool_results.json",
+            "size_bytes": 7932,
+            "sha256": "8b5a13bb159a6c4ef96d18fc1cf33047575b6d197847ba0b7daea9841f749287"
+          },
+          {
+            "path": "kiro_integration_contract_baseline.json",
+            "size_bytes": 1289,
+            "sha256": "393cca844da8d57ab4a3586dd9d156f6e550d131356826f9480c58096f223881"
+          },
+          {
+            "path": "kiro_mcp_search_latency.json",
+            "size_bytes": 1618,
+            "sha256": "860d3464603fe1895a70008a578d4ab605cea11c0e217d2356f888b9f56002b2"
+          }
+        ]
+      }
+    ]
+  },
+  "frozen_artifact_count": 159,
+  "post_freeze_change_policy": {
+    "outcome_affecting_change_requires_new_version": "ax-exp-v2",
+    "existing_v1_results": "archive or mark invalid if any exist",
+    "hashes": "recompute all",
+    "rerun_scope": "both compared conditions under v2",
+    "display_only_changes": "allowed only when raw data, scoring, and interpretation cannot change"
+  },
+  "remaining_blocker": null,
+  "next_safe_action": "On a later authorized day, execute held-out tasks under the frozen interactive protocol; do not run them as part of this freeze."
+}

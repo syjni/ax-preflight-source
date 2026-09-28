@@ -1,0 +1,17 @@
+{
+  "schema_version": "ax-runtime-datasets-v1",
+  "profiles": {
+    "v5-development": {
+      "dataset_name": "hanul-store-v5-development",
+      "source_root": "development",
+      "scan_report": "development_scan_report.json",
+      "dataset_manifest": null
+    },
+    "v5-candidate": {
+      "dataset_name": "haesol-manufacturing-2028-v5-candidate",
+      "source_root": "heldout/해솔제조",
+      "scan_report": "candidate_scan_report.json",
+      "dataset_manifest": "candidate_dataset_manifest.json"
+    }
+  }
+}

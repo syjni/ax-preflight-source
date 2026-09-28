@@ -1,0 +1,126 @@
+{
+  "schema_version": "ax-ground-truth-v2",
+  "dataset_id": "hanbit-distribution-ceiling-v1",
+  "generator_version": "1.1.0",
+  "derivation": "Answers are independently recomputed from generated runtime-facing Ceiling source files, never copied from benchmark declarations.",
+  "independent_method": "independent_runtime_source_readers",
+  "structured_row_counts": {
+    "customers": 10,
+    "products": 12,
+    "orders": 180,
+    "returns": 36,
+    "inventory": 12
+  },
+  "tasks": [
+    {
+      "task_id": "K01_RETURN_WINDOW",
+      "expected_answer": 30,
+      "calculation_source": "independent_runtime_source_readers"
+    },
+    {
+      "task_id": "K02_RETURN_REQUIREMENTS",
+      "expected_answer": [
+        "미개봉",
+        "미사용",
+        "재판매 가능 상태",
+        "원본 영수증"
+      ],
+      "calculation_source": "independent_runtime_source_readers"
+    },
+    {
+      "task_id": "K03_DELAY_COMPENSATION_THRESHOLD",
+      "expected_answer": 3,
+      "calculation_source": "independent_runtime_source_readers"
+    },
+    {
+      "task_id": "K04_DISCOUNT_APPROVER",
+      "expected_answer": "영업운영팀장",
+      "calculation_source": "independent_runtime_source_readers"
+    },
+    {
+      "task_id": "K05_STOCK_REFERENCE_FIELD",
+      "expected_answer": "available_qty",
+      "calculation_source": "independent_runtime_source_readers"
+    },
+    {
+      "task_id": "K06_FIRST_RESPONSE_TARGET",
+      "expected_answer": 4,
+      "calculation_source": "independent_runtime_source_readers"
+    },
+    {
+      "task_id": "O01_CUSTOMER_COUNT",
+      "expected_answer": 10,
+      "calculation_source": "independent_runtime_source_readers"
+    },
+    {
+      "task_id": "O02_SEPTEMBER_ORDER_TOTAL",
+      "expected_answer": 4980700,
+      "calculation_source": "independent_runtime_source_readers"
+    },
+    {
+      "task_id": "O03_GREEN_TABLE_LAST_ORDER",
+      "expected_answer": "2026-09-08",
+      "calculation_source": "independent_runtime_source_readers"
+    },
+    {
+      "task_id": "O04_PRODUCT_MASTER_COUNT",
+      "expected_answer": 12,
+      "calculation_source": "independent_runtime_source_readers"
+    },
+    {
+      "task_id": "O05_HIGHEST_AVAILABLE_STOCK",
+      "expected_answer": "P005",
+      "calculation_source": "independent_runtime_source_readers"
+    },
+    {
+      "task_id": "O06_RETURN_RATE",
+      "expected_answer": 0.15028901734104047,
+      "calculation_source": "independent_runtime_source_readers"
+    },
+    {
+      "task_id": "O07_SEOUL_LEAD_TIME",
+      "expected_answer": 1,
+      "calculation_source": "independent_runtime_source_readers"
+    },
+    {
+      "task_id": "C01_HANBIT_AUGUST_TOTAL",
+      "expected_answer": 642000,
+      "calculation_source": "independent_runtime_source_readers"
+    },
+    {
+      "task_id": "C02_DONGHAE_SEPTEMBER_TOTAL",
+      "expected_answer": 591300,
+      "calculation_source": "independent_runtime_source_readers"
+    },
+    {
+      "task_id": "C03_TEA_STOCK",
+      "expected_answer": 105,
+      "calculation_source": "independent_runtime_source_readers"
+    },
+    {
+      "task_id": "C04_YUNSEONG_LAST_ORDER",
+      "expected_answer": "2026-09-16",
+      "calculation_source": "independent_runtime_source_readers"
+    },
+    {
+      "task_id": "C05_SAEBOM_JULY_TOTAL",
+      "expected_answer": 201300,
+      "calculation_source": "independent_runtime_source_readers"
+    },
+    {
+      "task_id": "C06_ARAM_AUGUST_RETURNS",
+      "expected_answer": 0,
+      "calculation_source": "independent_runtime_source_readers"
+    },
+    {
+      "task_id": "C07_DAON_TOP_ORDER_PRODUCT",
+      "expected_answer": "P010",
+      "calculation_source": "independent_runtime_source_readers"
+    },
+    {
+      "task_id": "K07_VENDOR_FORECAST_ABSTAIN",
+      "expected_answer": null,
+      "calculation_source": "independent_runtime_source_readers"
+    }
+  ]
+}

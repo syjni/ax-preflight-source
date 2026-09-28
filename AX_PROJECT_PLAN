@@ -1,0 +1,1572 @@
+# AX 데이터 준비도 진단 서비스 — Project Plan v4
+
+## 0. 문서 목적
+
+이 문서는 고려대학교 × AWS AI Innovators Challenge 출품을 목표로 하는 **AX 데이터 준비도 진단 서비스**의 개발·실험·평가 기준을 정의한다.
+
+v4는 v3의 구조를 유지하면서 다음 사항을 추가한다.
+
+- Benchmark Mode와 Customer Mode 분리
+- 실제 고객 환경에서의 정답 확정 방식 정의
+- Ceiling 의존 진단을 실제 환경용 heuristic repair로 분리
+- Task별 scoring method 명시
+- structured final answer를 통한 deterministic scoring
+- forbidden keyword의 한계 보완
+- correct abstention / unjustified abstention 분리
+- hallucination / supported-but-wrong 분리
+- cross-file task를 위한 `lookup_value`
+- group-by / order-by / limit를 지원하는 제한적 `query_table`
+- category별 tool-call budget
+- `AGENT_BUDGET_EXCEEDED` 및 system failure 별도 집계
+- Agent context budget 명시
+- LLM 호출 예산과 cache 정책 구체화
+- mini benchmark 실험 항목 보강
+
+본 프로젝트의 핵심은 단순한 데이터 품질 점검이 아니라, 기업이 보유한 실제 자료만으로 **AI가 신입사원처럼 업무를 수행할 수 있는지 검증하고**, 실패 원인을 조건을 바꾼 재실험으로 진단한 뒤, 탐지된 문제만을 근거로 개선하고 다시 측정하는 것이다.
+
+---
+
+# 1. 프로젝트 개요
+
+## 1.1 한 줄 정의
+
+중소기업의 PC와 공유 폴더에 흩어진 자료를 분석하여 AI 활용 가능성을 진단하고, **AI를 가상의 신입사원으로 투입해 실제 업무 질문을 수행하게 한 뒤**, 무엇이 부족한지와 무엇을 고치면 업무 성공률이 얼마나 개선되는지를 보여주는 서비스.
+
+## 1.2 핵심 질문
+
+> "지금 우리 회사 자료만 가지고 AI 직원이 실제로 일을 할 수 있는가?"
+
+본 프로젝트는 readiness를 단일 추상 점수보다 **실제 업무 Task 수행 성공률, 근거, 실패 원인, 개선 가능성**으로 보여준다.
+
+## 1.3 핵심 흐름
+
+```text
+Company Data
+      ↓
+Readiness Scan
+      ↓
+AI Employee Benchmark
+      ↓
+Failure / Abstention / Success
+      ↓
+Counterfactual Diagnosis
+      ↓
+diagnosis_report.json
+      ↓
+Report-driven Remediation
+      ↓
+Re-test
+      ↓
+Compare with Ceiling
+```
+
+---
+
+# 2. 문제 정의
+
+## 2.1 타깃 사용자
+
+- 직원 20~100명 규모 중소기업
+- 제조·유통·서비스업
+- 전담 데이터팀/AI팀이 없음
+- AI 도입 의사는 있으나 데이터 상태를 파악하기 어려움
+- 자료가 NAS, 개인 PC, 공유폴더, Excel/CSV, PDF에 흩어져 있음
+
+대표 사용자:
+
+- 경영지원 담당자
+- 운영팀장
+- 영업관리 담당자
+- 대표/실무 책임자
+
+## 2.2 현실적인 데이터 문제
+
+| 위치 | 문제 |
+|---|---|
+| 개인 PC | 담당자만 위치를 알고 있음 |
+| 공유 폴더/NAS | 폴더 구조와 파일명이 비일관적 |
+| 메일·메신저 첨부 | 최신본이 첨부파일에만 남음 |
+| ERP/쇼핑몰 | 내려받은 CSV가 다시 파편화됨 |
+| 종이/스캔 PDF | 텍스트로 바로 사용 불가 |
+
+대표 증상:
+
+- `최종.xlsx`, `최종_진짜최종.xlsx`
+- 동일 거래처의 다양한 표기
+- 오래된 정책/가격표
+- 병합셀, 다중 헤더, 소계 행
+- 개인정보 포함
+- 스캔 PDF
+- 어떤 파일이 authoritative인지 모름
+- cross-file key 불일치
+
+---
+
+# 3. 프로젝트 가설
+
+## H1. 기업은 현재 보유 데이터의 AI 활용 가능성을 스스로 정확히 판단하기 어렵다.
+
+## H2. 데이터 준비도는 추상 점수보다 실제 업무 성공률로 보여주는 것이 이해하기 쉽다.
+
+## H3. Before / After / Ceiling 조건에서 동일 Task를 반복 실행하면 데이터 개선 효과를 더 신뢰성 있게 측정할 수 있다.
+
+## H4. 실패 원인은 LLM의 설명만으로 추정하지 않고, 한 조건씩 정상 상태로 바꾸어 재실행하는 counterfactual diagnosis로 구분할 수 있다.
+
+## H5. remediation이 진단 결과만을 입력으로 받아야 실제 진단 성능이 Recovery Ratio에 반영된다.
+
+## H6. 실제 고객 환경에서는 최초 1회 정답 확인을 통해 Company Benchmark를 만들 수 있고, 이후 재진단은 자동화할 수 있다.
+
+---
+
+# 4. 핵심 제품 컨셉 — AI 신입사원 입사 테스트
+
+## 4.1 개념
+
+기업 데이터를 AI 신입사원에게 제공되는 업무 자료로 본다.
+
+AI Agent가 실제 신입사원이 받을 법한 질문을 수행한다.
+
+예:
+
+- 반품 규정은 어떻게 되나요?
+- 한빛상사의 지난달 주문액은 얼마인가요?
+- 가장 최근 배송 정책은 무엇인가요?
+- 특정 거래처의 마지막 주문일은 언제인가요?
+- 반품률이 가장 높은 상품은 무엇인가요?
+
+## 4.2 결과 예시
+
+```text
+AI Employee Test
+
+Knowledge Q&A     XX / XX
+Operations Q&A    XX / XX
+Cross-file Tasks  XX / XX
+
+Correct Abstention        XX
+Hallucination             XX
+System Failure            XX
+```
+
+---
+
+# 5. Benchmark Mode와 Customer Mode
+
+## 5.1 Benchmark Mode
+
+대회 및 연구 평가용 모드.
+
+특징:
+
+- `expected_answer` 존재
+- `primary_blocker` 존재
+- Ceiling dataset 존재
+- defect injection ground truth 존재
+- automatic scoring 가능
+
+사용 목적:
+
+- 진단 정확도 평가
+- failure attribution 평가
+- Recovery Ratio 측정
+- retrieval 품질 측정
+- LLM 변동성 측정
+
+## 5.2 Customer Mode
+
+실제 기업에 배포할 때 사용하는 모드.
+
+실제 고객에게는 Ceiling이나 완전한 정답지가 존재하지 않는다.
+
+최초 onboarding:
+
+```text
+업종별 기본 질문 Template
+        ↓
+AI가 후보 답과 근거 제시
+        ↓
+담당자가 20~30분 검토
+        ↓
+Company Benchmark 생성
+```
+
+이 Company Benchmark는 이후 반복 진단에 재사용한다.
+
+예:
+
+```text
+질문:
+현재 반품 가능 기간은?
+
+후보 근거:
+반품정책_2025.pdf → 14일
+반품정책_최종.pdf → 30일
+
+담당자:
+✓ 30일을 현재 기준 정답으로 승인
+```
+
+## 5.3 실제 고객에서 정답이 없어도 잡히는 신호
+
+일부 readiness signal은 benchmark answer 없이도 탐지 가능하다.
+
+- authoritative version conflict
+- required source 없음
+- OCR required
+- schema mismatch
+- PII risk
+- missing required columns
+- stale data
+- duplicate files
+
+## 5.4 Ceiling의 의미
+
+Ceiling은 제품 기능이 아니라 **benchmark 실험에서 수리 가능한 상한을 측정하기 위한 평가 장치**다.
+
+실제 고객 환경에서는 다음 heuristic repair를 사용한다.
+
+| Dimension | Benchmark Mode | Customer Mode |
+|---|---|---|
+| Retrieval | required source 직접 주입 | 후보 문서 직접 주입 |
+| Version | Ceiling source | 최신 후보 / 사용자 승인 authoritative source |
+| Schema | Ceiling schema | canonical normalization |
+| Privacy | synthetic unmasked source | 사용자 동의 하 로컬 진단 |
+| Readability | clean text source | OCR 결과 또는 사용자 제공 변환본 |
+
+공통 인터페이스:
+
+```text
+rerun_with_repaired_dimension(task, dimension, mode)
+```
+
+---
+
+# 6. 실험 설계
+
+## 6.1 세 Dataset Condition
+
+### Ceiling
+
+결함이 없는 기준 dataset.
+
+### Before
+
+Ceiling에 defect injection을 적용한 dataset.
+
+### After
+
+Before에 대해 시스템이 생성한 `diagnosis_report.json`만을 입력으로 remediation 수행.
+
+`remediate.py`는 아래만 읽는다.
+
+```text
+✓ diagnosis_report.json
+✓ Before dataset
+
+✗ injected_defects.json
+✗ Ceiling ground truth
+✗ benchmark primary_blocker
+```
+
+---
+
+## 6.2 Recovery Ratio
+
+```text
+Recovery Ratio
+= (After - Before) / (Ceiling - Before)
+```
+
+이는 Acceptance Criterion이 아니라 Reporting Metric이다.
+
+---
+
+## 6.3 Defect Coverage
+
+보고:
+
+- Injected Defects
+- Detected Defects
+- Remediated Defects
+- Missed Defects
+
+---
+
+## 6.4 Control Tasks
+
+총 task 중 약 20~25%는 control task로 지정.
+
+control source는 defect injection에서 보호한다.
+
+```text
+protected_sources
+=
+control task required_sources의 합집합
+```
+
+주입 후 hash 검증:
+
+```text
+SHA256(before_control_file)
+==
+SHA256(after_control_file)
+```
+
+---
+
+## 6.5 반복 실행
+
+기본:
+
+```text
+3 repetitions
+```
+
+API budget 부족 시:
+
+```text
+2 repetitions
+```
+
+---
+
+# 7. Remediation 설계
+
+## 7.1 원칙
+
+Remediation은 진단 결과만 본다.
+
+입력:
+
+```text
+diagnosis_report.json
+```
+
+## 7.2 자동 적용 범위
+
+MVP에서 자동:
+
+- duplicate 제외
+- known schema alias rename
+- canonical value normalization
+- deterministic authoritative selection rule
+- masked copy 생성
+
+Recommendation only:
+
+- missing source 확보
+- OCR 수행
+- 새로운 데이터 수집
+- 사람의 최신본 승인
+
+---
+
+# 8. Use Case
+
+## 8.1 사내 지식 Q&A
+
+- 정책
+- 매뉴얼
+- 회의록
+- 배송/반품 규정
+
+## 8.2 영업·운영 Q&A
+
+- 주문
+- 거래처
+- 상품
+- 재고
+
+## 8.3 Cross-file Q&A
+
+예:
+
+```text
+"한빛상사의 2026년 8월 주문액은?"
+```
+
+정상 경로:
+
+```text
+lookup_value(customers, customer_name="한빛상사")
+→ customer_id = C013
+
+query_table(
+    orders,
+    customer_id=C013,
+    month=2026-08,
+    aggregation=sum(amount)
+)
+```
+
+---
+
+# 9. Agent Tool Specification
+
+## 9.1 search_documents
+
+```text
+search_documents(query, top_k)
+```
+
+반환:
+
+- document_id
+- title
+- metadata
+- 300~500자 snippet
+- score
+
+기본:
+
+```text
+top_k = 5
+```
+
+---
+
+## 9.2 read_document
+
+```text
+read_document(document_id, section=None)
+```
+
+한 번에 반환:
+
+```text
+약 2,000~3,000 characters
+```
+
+필요 시 section 단위로 추가 호출.
+
+---
+
+## 9.3 lookup_value
+
+```text
+lookup_value(
+    table_id,
+    match_column,
+    value,
+    return_column
+)
+```
+
+예:
+
+```text
+lookup_value(
+    "customers",
+    "customer_name",
+    "한빛상사",
+    "customer_id"
+)
+→ C013
+```
+
+---
+
+## 9.4 query_table
+
+```text
+query_table(
+    table_id,
+    filters=None,
+    select=None,
+    aggregation=None,
+    group_by=None,
+    order_by=None,
+    limit=None
+)
+```
+
+지원 aggregation:
+
+- sum
+- avg
+- count
+- min
+- max
+- rate
+
+지원 order:
+
+- asc
+- desc
+
+limit:
+
+```text
+1~10
+```
+
+예:
+
+```text
+"반품률이 가장 높은 상품은?"
+```
+
+```text
+query_table(
+    table_id="returns",
+    select=["product_id", "return_rate"],
+    aggregation="rate",
+    group_by=["product_id"],
+    order_by=[{"field":"return_rate","direction":"desc"}],
+    limit=1
+)
+```
+
+반환:
+
+```json
+{
+  "rows": [
+    {
+      "product_id": "P13",
+      "return_rate": 0.124
+    }
+  ],
+  "rows_returned": 1
+}
+```
+
+원본 전체 행은 LLM에 전달하지 않는다.
+
+---
+
+# 10. Canonical Value Normalization
+
+`lookup_value`와 `query_table` 이전에 lightweight normalization 적용.
+
+예:
+
+```text
+(주)한빛
+주식회사 한빛
+한빛
+```
+
+→
+
+```text
+한빛
+```
+
+지원:
+
+- `(주)` 제거
+- `주식회사` 제거
+- 공백 정리
+- punctuation 정규화
+- lowercase
+- Unicode normalization
+- optional fuzzy matching
+
+이는 general entity resolution이 아니다.
+
+---
+
+# 11. Agent Output Schema
+
+Agent의 자유 서술 답변 전체를 직접 scoring하지 않는다.
+
+최종 output은 구조화한다.
+
+예:
+
+```json
+{
+  "final_answer": "30",
+  "unit": "days",
+  "explanation": "현재 authoritative 반품정책 기준입니다.",
+  "source_ids": ["DOC_014"],
+  "abstain": false
+}
+```
+
+Scorer는 가능한 한 `final_answer`를 기준으로 판정한다.
+
+---
+
+# 12. Scoring Method
+
+각 BenchmarkTask는 scoring method를 반드시 가진다.
+
+## 12.1 numeric
+
+금액, 수량, 비율, 기간 등 단일 숫자.
+
+```text
+relative_error <= tolerance
+```
+
+예:
+
+```json
+{
+  "type": "numeric",
+  "relative_tolerance": 0.001
+}
+```
+
+---
+
+## 12.2 exact
+
+날짜, ID, code, 단일 categorical answer.
+
+정규화 후 exact match.
+
+---
+
+## 12.3 keyword
+
+여러 조건이나 설명 요소를 포함해야 하는 답.
+
+예:
+
+```json
+{
+  "type": "keyword",
+  "expected_keywords": ["30일", "미개봉", "영수증"],
+  "minimum_matches": 3,
+  "forbidden_keywords": []
+}
+```
+
+중요:
+
+- 기간/금액/비율처럼 값이 갈리는 질문은 keyword 사용 금지
+- `forbidden_keywords`는 보조 장치일 뿐 핵심 해결책이 아님
+- explanation과 final_answer를 분리하여 오답 문맥에 정답 키워드가 등장해 통과하는 문제를 방지
+
+---
+
+## 12.4 llm_judge
+
+deterministic scoring이 어려운 일부 task에만 사용.
+
+조건:
+
+- 전체 benchmark 중 최소화
+- fixed rubric
+- temperature 0 또는 최소값
+- judge reason logging
+- 동일 답안 3회 판정 consistency 확인
+
+---
+
+# 13. Task Result State
+
+단순 SUCCESS / FAIL로 끝내지 않는다.
+
+가능 상태:
+
+```text
+CORRECT
+CORRECT_ABSTENTION
+INCORRECT_SUPPORTED
+HALLUCINATION
+UNJUSTIFIED_ABSTENTION
+SYSTEM_FAILURE
+```
+
+## 13.1 Correct Abstention
+
+실제로 자료가 없거나 답할 수 없는 task에서:
+
+```text
+"현재 자료로는 확인할 수 없습니다."
+```
+
+라고 답함.
+
+업무 완료 점수에는 성공으로 넣지 않지만 별도로 보고.
+
+## 13.2 Unjustified Abstention
+
+자료가 충분히 있는데도 Agent가 답하지 못함.
+
+## 13.3 Incorrect Supported
+
+오답이지만 실제 읽은 source에 근거함.
+
+예:
+
+구버전 반품정책을 읽고 14일이라고 답함.
+
+이는 hallucination이 아니라 **data readiness 문제**다.
+
+## 13.4 Hallucination
+
+규칙:
+
+```text
+INCORRECT
+AND abstain == false
+AND (
+    source_ids가 비어 있음
+    OR source_ids ∩ required_sources == ∅
+)
+```
+
+즉 아무 근거 없이 답하거나 관련 없는 근거로 단정한 경우.
+
+## 13.5 System Failure
+
+- API error
+- timeout
+- AGENT_BUDGET_EXCEEDED
+- parser crash
+
+System failure는 readiness score와 분리해서 집계한다.
+
+---
+
+# 14. Agent Tool Budget
+
+초기값:
+
+```text
+Knowledge Q&A   MAX_TOOL_CALLS = 6
+Operations      MAX_TOOL_CALLS = 8
+Cross-file      MAX_TOOL_CALLS = 12
+```
+
+오늘 mini 실험에서 조정한다.
+
+측정:
+
+- mean
+- median
+- p95
+- max
+
+예:
+
+```text
+Cross-file
+mean = X.X
+p95  = XX
+max  = XX
+```
+
+Tool budget 초과 시:
+
+```text
+AGENT_BUDGET_EXCEEDED
+```
+
+이는 `agent_failure`와 분리한다.
+
+---
+
+# 15. Agent Context Budget
+
+## search_documents
+
+- top 5
+- 각 결과 snippet 300~500자
+
+## read_document
+
+- 1회 최대 2,000~3,000자
+- section 기반 pagination 허용
+
+## query_table
+
+- 최대 10행 반환
+- aggregation 결과 우선
+
+## 전체 Agent Loop
+
+- category별 tool call limit
+- 동일 tool 반복 호출 제한 가능
+- total context가 모델 context window를 넘지 않도록 server-side truncation
+
+---
+
+# 16. Retrieval 설계
+
+기본:
+
+```text
+char 2~3 gram
++
+BM25
+```
+
+Kiwi는 P1.
+
+비교:
+
+- whitespace BM25
+- char n-gram BM25
+
+평가:
+
+- Recall@1
+- Recall@3
+- Recall@5
+
+ground truth:
+
+```text
+required_sources
+```
+
+---
+
+# 17. Counterfactual Failure Attribution
+
+## 17.1 MVP 원칙
+
+Task마다 `primary_blocker` 하나만 평가.
+
+복합 blocker는 최소화.
+
+## 17.2 공통 함수
+
+```text
+rerun_with_repaired_dimension(task, dimension, mode)
+```
+
+dimension:
+
+- retrieval
+- version
+- schema
+- privacy
+- readability
+
+## 17.3 Decision Flow
+
+```text
+TASK FAIL
+ │
+ ├─ required source 없음
+ │      └─ missing_data
+ │
+ ├─ retrieval repair → PASS
+ │      └─ retrieval_failure
+ │
+ ├─ version repair → PASS
+ │      └─ version_ambiguity
+ │
+ ├─ schema repair → PASS
+ │      └─ schema_mismatch
+ │
+ ├─ privacy repair → PASS
+ │      └─ privacy_block
+ │
+ ├─ readability repair → PASS
+ │      └─ unreadable_source
+ │
+ └─ 모두 FAIL
+        └─ agent_failure
+```
+
+Failure classification은 코드가 수행하고, LLM은 자연어 설명만 담당한다.
+
+---
+
+# 18. LLM 호출 예산
+
+Mini benchmark에서 측정:
+
+- avg LLM calls/task
+- avg tool calls/task
+- avg input tokens
+- avg output tokens
+- avg latency
+
+최종 예상식:
+
+```text
+tasks
+× conditions
+× repetitions
+× avg_calls_per_task
+```
+
+Counterfactual diagnosis:
+
+- 각 task의 최초 1회에 대해서만 수행
+- diagnostic result cache
+
+Cache:
+
+- retrieval result
+- parsed document profile
+- table profile
+- diagnostic result
+- repaired fixture
+
+Budget policy:
+
+```text
+80% 도달 → repetition 3→2
+95% 도달 → P1 / non-critical rerun 중단
+```
+
+---
+
+# 19. Synthetic Company Dataset
+
+가상 회사:
+
+```text
+한빛유통
+중소 유통업
+직원 약 45명
+```
+
+회사 구조와 문서는 synthetic.
+
+다음 수치 분포는 가능한 한 공개 데이터 활용:
+
+- 주문량
+- 가격
+- 상품 종류
+- 주문 날짜
+- 재고량
+
+즉:
+
+> Synthetic company structure + real-world-derived numeric distribution
+
+사용 데이터셋의 출처 및 라이선스는 README에 기록.
+
+---
+
+# 20. Dataset Generation
+
+목표:
+
+Minimum:
+
+```text
+Files   20
+Tasks   15
+Control 4
+```
+
+Target:
+
+```text
+Files   30
+Tasks   20
+Control 5
+```
+
+문서 내용:
+
+- LLM으로 초안 생성 가능
+- script로 저장
+
+수치형 ground truth:
+
+데이터 생성 시 자동 계산.
+
+예:
+
+```text
+orders 생성
+↓
+benchmark answer도 동시에 계산
+```
+
+---
+
+# 21. Defect Injection
+
+지원:
+
+```text
+D01 Exact Duplicate
+D02 Version Conflict
+D03 Missing Source
+D04 Schema Mismatch
+D05 PII
+D06 Scanned PDF
+D07 Stale Document
+D08 Column Alias
+D09 High Null Ratio
+D10 Cross-file Key Mismatch
+```
+
+control source는 보호.
+
+---
+
+# 22. Readiness Engine
+
+Use-case profile 2개:
+
+```text
+internal_knowledge_qa
+operations_qa
+```
+
+각 finding은 다음 구조를 가진다.
+
+```text
+Finding
+→ Blocker
+→ Evidence
+→ Recommended Action
+```
+
+예:
+
+```text
+Finding:
+반품정책 파일 2개 내용 충돌
+
+Blocker:
+VERSION_AMBIGUITY
+
+Evidence:
+DOC_004
+DOC_009
+
+Recommended Action:
+현재 authoritative version을 지정하십시오.
+```
+
+---
+
+# 23. Engineering Acceptance Criteria
+
+실험 결과가 아닌 시스템 품질 기준.
+
+| Metric | Minimum | Target |
+|---|---:|---:|
+| Exact duplicate F1 | 0.95 | 1.00 |
+| PII Recall | 0.85 | 0.95 |
+| Version grouping F1 | 0.75 | 0.85 |
+| Retrieval Recall@5 | 0.85 | 0.95 |
+| Primary blocker accuracy | 0.75 | 0.90 |
+| Control task variation | ±1 task | ±0.5 task |
+
+다음은 Reporting Metric:
+
+- Recovery Ratio
+- Before → After delta
+- Ceiling gap
+- Hallucination rate
+- Correct abstention rate
+- System failure rate
+
+---
+
+# 24. P1 기술 비교 실험
+
+시간이 남으면 수행.
+
+## Baseline
+
+```text
+LLM-only readiness classification
+```
+
+## Ours
+
+```text
+Rules + LLM Hybrid
+```
+
+비교:
+
+- accuracy
+- token usage
+- cost
+- latency
+- variance
+
+목적:
+
+> deterministic rule을 코드로 분리하는 설계가 비용과 변동성을 줄이는지 확인
+
+---
+
+# 25. 대회 평가 기준 대응
+
+| 평가 항목 | 대응 |
+|---|---|
+| 목적 부합성 10 | LLM을 기업 데이터 활용성 진단과 실제 업무 수행 검증에 활용 |
+| 기술적 우월성 30 | Rule+LLM hybrid, tool-using agent, BM25 retrieval, counterfactual diagnosis, structured scoring |
+| 서비스 활용성·완성도 30 | 20~100명 SME 대상, 인터뷰 기반 문제 검증, 최초 benchmark onboarding 후 자동 재진단, PoC/connector 확장 |
+| 데이터 활용성 10 | 현실 분포 기반 synthetic dataset, defect labels, task ground truth, control tasks, repeated experiments |
+| 코드 품질 10 | scanner/agent/scorer/evaluator/remediation/provider 분리, JSON artifact, reproducible scripts |
+
+---
+
+# 26. 사업 가설
+
+## Entry
+
+- 무료 또는 저가 readiness scan
+- 기본 AI Employee Test
+
+## Paid
+
+- Company Benchmark 구성
+- 정기 재진단
+- custom benchmark
+- PoC 구축
+
+## Expansion
+
+- cloud drive connector
+- monitoring dashboard
+- workflow automation
+- lightweight ontology
+
+핵심 반복 수익 구조:
+
+```text
+첫 진단
+→ 담당자 benchmark 승인
+→ Company Benchmark 자산화
+→ 정기 자동 regression test
+```
+
+---
+
+# 27. 인터뷰
+
+가능하면 중소기업 재직자 1명 이상 10~20분.
+
+질문:
+
+- 공유폴더 구조가 얼마나 정돈되어 있는지
+- `최종`, `진짜최종` 파일이 흔한지
+- ERP 데이터를 Excel로 export하는지
+- 최신본을 누가 정하는지
+- AI 도입에서 무엇이 막막한지
+- 최초 benchmark 검수 20~30분이 허용 가능한지
+- 어떤 진단 결과에 돈을 낼 가치가 있다고 느끼는지
+
+---
+
+# 28. 선행 확인 사항
+
+사업단 확인:
+
+- 제공 LLM API
+- 모델 목록
+- 호출 제한
+- AWS 부가 서비스 사용 가능 여부
+- 개인 참가 가능 여부
+- 수업 과제 아이디어 출품 가능 여부
+- 예선 심사 방식
+- 제출물 형식
+- 제출 마감 시각
+- demo video 요구 여부
+- repository 공개 여부
+
+---
+
+# 29. 구현 일정
+
+## 9/18 — Feasibility Test
+
+반드시 확인:
+
+1. whitespace BM25 vs char n-gram BM25 Recall@5
+2. `search → read → lookup → query` tool chain
+3. category별 tool call 분포
+4. task당 LLM calls / token / latency
+5. numeric / exact / keyword scorer
+6. 구버전 14일 / 최신본 30일 충돌 case
+7. correct abstention case
+8. hallucination provenance 판정
+
+산출물:
+
+```text
+mini_scan_report.json
+mini_benchmark_results.json
+api_budget_notes.md
+```
+
+---
+
+## 9/19 — Scanner CLI
+
+- folder scan
+- parsers
+- metadata
+- JSON report
+- PII masking
+- duplicate baseline
+
+React 없음.
+
+---
+
+## 9/20 — Agent Tools + Context Policy
+
+- search_documents
+- read_document
+- lookup_value
+- query_table group/order/limit
+- structured agent output
+- category별 tool budget
+- context size policy
+- cross-file mini task
+
+---
+
+## 9/21 — Dataset + Benchmark
+
+- dataset 20 files minimum
+- benchmark 15 tasks minimum
+- ground truth
+- control task
+- scoring_method
+- 공개 데이터 출처
+- 가능하면 인터뷰
+
+---
+
+## 9/22 — Mini Full Experiment
+
+```text
+5 tasks
+× 3 conditions
+× 2 repetitions
+```
+
+전체 파이프라인 완주.
+
+```text
+Ceiling
+↓
+Injection
+↓
+Before
+↓
+Scan
+↓
+Employee Test
+↓
+Diagnosis
+↓
+Report
+↓
+Remediation
+↓
+After
+↓
+Re-test
+↓
+Comparison
+```
+
+이 날 실제 수치가 반드시 나온다.
+
+---
+
+## 9/23 — Readiness Engine
+
+산출물:
+
+- 2 use-case profiles
+- blocker rules
+- evidence structure
+- recommendation mapping
+- diagnosis_report schema
+
+---
+
+## 9/24 — Full Agent
+
+- benchmark 확대
+- cross-file
+- abstention
+- provenance
+- structured scoring
+
+---
+
+## 9/25 — Diagnosis
+
+- generic dimension repair
+- primary blocker
+- hallucination / supported-wrong 분리
+- attribution accuracy
+
+---
+
+## 9/26 — Full Experiment
+
+- Before / After / Ceiling
+- repeated runs
+- budget enforcement
+- final metrics
+
+---
+
+## 9/27 — Dashboard + Docs
+
+화면:
+
+1. Scan Results
+2. AI Employee Test
+3. Comparison
+
+문서:
+
+- README
+- architecture
+- evaluation
+- business
+- interview
+- competition
+
+---
+
+## 9/28 — Submission
+
+- demo
+- final benchmark
+- code cleanup
+- setup verification
+- submission checklist
+
+---
+
+## 9/29 — Buffer
+
+---
+
+# 30. Definition of Done
+
+## P0
+
+- [ ] Scanner CLI
+- [ ] TXT/PDF/DOCX/CSV/XLSX
+- [ ] exact duplicate
+- [ ] probable version
+- [ ] PII masking
+- [ ] char n-gram BM25
+- [ ] Recall@k
+- [ ] 4 Agent tools
+- [ ] structured Agent output
+- [ ] scoring methods
+- [ ] benchmark ≥15
+- [ ] control tasks
+- [ ] Before / After / Ceiling
+- [ ] Benchmark Mode
+- [ ] Customer Mode 설계
+- [ ] report-driven remediation
+- [ ] counterfactual diagnosis
+- [ ] abstention classification
+- [ ] hallucination provenance classification
+- [ ] repeated runs
+- [ ] tool budget
+- [ ] JSON artifacts
+- [ ] dashboard
+- [ ] README
+- [ ] demo video
+
+## P1
+
+- [ ] column semantic mapping
+- [ ] HWPX
+- [ ] advanced near-duplicate
+- [ ] Kiwi
+- [ ] hybrid vs LLM-only experiment
+- [ ] cost dashboard
+- [ ] custom benchmark editor
+
+---
+
+# 31. 발표 / 데모 시나리오
+
+## Scene 1 — Dirty Data
+
+한빛유통 공유폴더.
+
+## Scene 2 — Scan
+
+```text
+XX files scanned
+XX duplicates
+XX version conflicts
+XX PII risks
+XX unreadable sources
+```
+
+## Scene 3 — Employee Test
+
+```text
+Before
+XX.X ± X.X / XX
+```
+
+추가:
+
+```text
+Correct Abstention   XX
+Hallucination        XX
+System Failure       XX
+```
+
+## Scene 4 — Counterfactual Diagnosis
+
+```text
+Question:
+현재 반품 가능 기간은 며칠인가?
+
+Result:
+INCORRECT_SUPPORTED
+
+Source:
+반품정책_2024.pdf
+
+Version repair:
+PASS
+
+Diagnosis:
+VERSION_AMBIGUITY
+```
+
+## Scene 5 — Report-driven Remediation
+
+```text
+diagnosis_report.json
+↓
+remediate.py
+```
+
+ground truth defect 파일은 사용하지 않음.
+
+## Scene 6 — Re-test
+
+```text
+Before   XX.X ± X.X
+After    XX.X ± X.X
+Ceiling  XX.X ± X.X
+```
+
+그리고:
+
+```text
+Injected defects   XX
+Detected defects   XX
+Missed defects     XX
+Recovery Ratio     XX.X%
+```
+
+실측값만 사용한다.
+
+---
+
+# 32. 최종 성공 정의
+
+## Detect
+
+주요 AI blocker를 탐지할 수 있는가?
+
+## Validate
+
+AI Employee Benchmark로 실제 업무 수행 가능성을 측정할 수 있는가?
+
+## Diagnose
+
+실패 원인을 counterfactual rerun으로 구분할 수 있는가?
+
+## Improve
+
+diagnosis report만을 기반으로 remediation한 뒤 성능이 어떻게 변하는가?
+
+## Abstain Safely
+
+자료가 없을 때 AI가 근거 없는 답 대신 적절히 abstain할 수 있는가?
+
+## Measure Honestly
+
+missed defect, hallucination, system failure를 숨기지 않고 별도로 보고할 수 있는가?
+
+---
+
+# 33. 연구 근거
+
+## TheAgentCompany
+
+TheAgentCompany: Benchmarking LLM Agents on Consequential Real World Tasks
+
+https://arxiv.org/abs/2412.14161
+
+https://github.com/TheAgentCompany/TheAgentCompany
+
+활용:
+
+- 실제 회사 업무를 Agent task로 평가
+- task 기반 benchmark 철학
+
+---
+
+## AIDRIN 2.0
+
+A Framework to Assess Data Readiness for AI
+
+https://arxiv.org/abs/2505.18213
+
+활용:
+
+- readiness dimension 참고
+
+---
+
+## Data Readiness for Scientific AI at Scale
+
+https://arxiv.org/abs/2507.23018
+
+---
+
+## Exploratory Visual Analysis for Increasing Data Readiness in AI Projects
+
+https://arxiv.org/abs/2409.03805
+
+---
+
+## SpreadsheetLLM
+
+https://arxiv.org/abs/2407.09025
+
+https://www.microsoft.com/en-us/research/publication/encoding-spreadsheets-for-large-language-models/
+
+---
+
+## LLM-based Column Type Annotation
+
+https://arxiv.org/abs/2503.02718
+
+---
+
+# 34. 최종 Product Positioning
+
+기본 설명:
+
+> **기업의 AI 도입 준비도를 설문이나 추상적 점수로 평가하지 않고, 실제 사내 자료를 AI 직원에게 제공해 업무를 수행하게 함으로써 검증하는 데이터 준비도 진단 서비스.**
+
+기술적 설명:
+
+> **Task-based AI readiness evaluation with structured scoring, counterfactual failure diagnosis, and report-driven remediation.**
+
+실제 고객 설명:
+
+> **최초 한 번 회사 기준 답을 확정하면, 이후에는 AI가 회사 데이터를 제대로 활용할 수 있는지 정기적으로 자동 검사합니다.**
+
+짧은 메시지:
+
+> **"AI를 입사시켜 보면, 우리 회사 데이터가 준비됐는지 알 수 있다."**
+
+핵심 발표 문장:
+
+> **"AI가 왜 일을 못 했는지를 추측하지 않고, 조건을 바꿔 재실행해 진단하고, 탐지한 문제만을 근거로 개선합니다."**

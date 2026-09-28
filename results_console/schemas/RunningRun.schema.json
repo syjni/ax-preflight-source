@@ -1,0 +1,25 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "dataset": {
+      "default": "UNKNOWN",
+      "title": "Dataset",
+      "type": "string"
+    },
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "run_status": {
+      "const": "RUNNING",
+      "default": "RUNNING",
+      "title": "Run Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "run_id"
+  ],
+  "title": "RunningRun",
+  "type": "object"
+}

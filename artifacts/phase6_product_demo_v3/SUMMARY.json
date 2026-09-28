@@ -1,0 +1,456 @@
+{
+  "claim_scope": "EXPLORATORY_PRODUCT_PILOT_NOT_RESEARCH_BENCHMARK",
+  "completed_at": "2026-09-25T13:23:07.344416Z",
+  "fresh_process_per_new_run": true,
+  "kiro_cli_version": "kiro-cli-chat 2.23.0",
+  "model": "claude-sonnet-5",
+  "profile_summaries": {
+    "portfolio-ceiling-after": {
+      "abstention_reasons": {
+        "NOT_FOUND": 2
+      },
+      "diagnostics": {
+        "abstained_run_count": 2,
+        "answered_run_count": 8,
+        "blocked_task_count": 2,
+        "inconclusive_task_count": 0,
+        "observed_run_count": 10,
+        "processable_task_count": 8,
+        "rejected_run_count": 0,
+        "task_count": 10
+      },
+      "evidence_verdicts": {
+        "DIRECT_MATCH": 1,
+        "UNCONFIRMED": 9
+      },
+      "finding_count": 2,
+      "finding_types": {
+        "MISSING_INFORMATION": 2
+      },
+      "outcomes": {
+        "ABSTAINED": 2,
+        "ANSWERED": 8
+      },
+      "run_count": 10
+    },
+    "portfolio-hidden-conflict-before": {
+      "abstention_reasons": {
+        "CONFLICTING_EVIDENCE": 1,
+        "INSUFFICIENT_EVIDENCE": 1,
+        "NOT_FOUND": 2
+      },
+      "diagnostics": {
+        "abstained_run_count": 4,
+        "answered_run_count": 6,
+        "blocked_task_count": 4,
+        "inconclusive_task_count": 0,
+        "observed_run_count": 10,
+        "processable_task_count": 6,
+        "rejected_run_count": 0,
+        "task_count": 10
+      },
+      "evidence_verdicts": {
+        "UNCONFIRMED": 10
+      },
+      "finding_count": 4,
+      "finding_types": {
+        "CONFLICTING_SOURCES": 1,
+        "INSUFFICIENT_EVIDENCE": 1,
+        "MISSING_INFORMATION": 2
+      },
+      "outcomes": {
+        "ABSTAINED": 4,
+        "ANSWERED": 6
+      },
+      "run_count": 10
+    }
+  },
+  "profiles": [
+    "portfolio-hidden-conflict-before",
+    "portfolio-ceiling-after"
+  ],
+  "repetitions": 1,
+  "runs": [
+    {
+      "abstention_reason": null,
+      "answer": "10곳",
+      "category": "고객관리",
+      "dataset": "portfolio-hidden-conflict-before",
+      "delivery_status": "DELIVERED",
+      "duration_seconds": 26.286,
+      "evidence_verdict": "UNCONFIRMED",
+      "payload_status": "ANSWERED",
+      "question": "등록된 거래처는 몇 곳인가요?",
+      "reject_reason": null,
+      "repetition": 1,
+      "run_id": "portfolio-portfolio-hidden-conflict-before-task_customer_count-r1",
+      "source_ids": [
+        "TABLE_FILE_79c849b8a094119f_Customers"
+      ],
+      "task_id": "TASK_CUSTOMER_COUNT"
+    },
+    {
+      "abstention_reason": "NOT_FOUND",
+      "answer": null,
+      "category": "고객관리",
+      "dataset": "portfolio-hidden-conflict-before",
+      "delivery_status": "DELIVERED",
+      "duration_seconds": 21.004,
+      "evidence_verdict": "UNCONFIRMED",
+      "payload_status": "ABSTAINED",
+      "question": "가장 최근 거래처 등록일은 언제인가요?",
+      "reject_reason": null,
+      "repetition": 1,
+      "run_id": "portfolio-portfolio-hidden-conflict-before-task_customer_latest_registration-r1",
+      "source_ids": [
+        "FILE_79c849b8a094119f",
+        "FILE_2e83f1278d225ef5"
+      ],
+      "task_id": "TASK_CUSTOMER_LATEST_REGISTRATION"
+    },
+    {
+      "abstention_reason": null,
+      "answer": "4,980,700원",
+      "category": "주문",
+      "dataset": "portfolio-hidden-conflict-before",
+      "delivery_status": "DELIVERED",
+      "duration_seconds": 32.388,
+      "evidence_verdict": "UNCONFIRMED",
+      "payload_status": "ANSWERED",
+      "question": "이번 달 주문금액은 얼마인가요?",
+      "reject_reason": null,
+      "repetition": 1,
+      "run_id": "portfolio-portfolio-hidden-conflict-before-task_order_monthly_amount-r1",
+      "source_ids": [
+        "TABLE_FILE_950a2b2ed909ef4c_Orders"
+      ],
+      "task_id": "TASK_ORDER_MONTHLY_AMOUNT"
+    },
+    {
+      "abstention_reason": null,
+      "answer": "2026-09-21",
+      "category": "주문",
+      "dataset": "portfolio-hidden-conflict-before",
+      "delivery_status": "DELIVERED",
+      "duration_seconds": 33.19,
+      "evidence_verdict": "UNCONFIRMED",
+      "payload_status": "ANSWERED",
+      "question": "가장 최근 주문은 언제인가요?",
+      "reject_reason": null,
+      "repetition": 1,
+      "run_id": "portfolio-portfolio-hidden-conflict-before-task_order_latest-r1",
+      "source_ids": [
+        "TABLE_FILE_950a2b2ed909ef4c_Orders"
+      ],
+      "task_id": "TASK_ORDER_LATEST"
+    },
+    {
+      "abstention_reason": null,
+      "answer": "P005",
+      "category": "재고",
+      "dataset": "portfolio-hidden-conflict-before",
+      "delivery_status": "DELIVERED",
+      "duration_seconds": 26.142,
+      "evidence_verdict": "UNCONFIRMED",
+      "payload_status": "ANSWERED",
+      "question": "현재 가용재고가 가장 많은 품목은 무엇인가요?",
+      "reject_reason": null,
+      "repetition": 1,
+      "run_id": "portfolio-portfolio-hidden-conflict-before-task_inventory_most_available-r1",
+      "source_ids": [
+        "TABLE_FILE_1c3edebcf446bef5_Inventory"
+      ],
+      "task_id": "TASK_INVENTORY_MOST_AVAILABLE"
+    },
+    {
+      "abstention_reason": "INSUFFICIENT_EVIDENCE",
+      "answer": null,
+      "category": "재고",
+      "dataset": "portfolio-hidden-conflict-before",
+      "delivery_status": "DELIVERED",
+      "duration_seconds": 55.0,
+      "evidence_verdict": "UNCONFIRMED",
+      "payload_status": "ABSTAINED",
+      "question": "안전재고 기준보다 부족한 품목은 무엇인가요?",
+      "reject_reason": null,
+      "repetition": 1,
+      "run_id": "portfolio-portfolio-hidden-conflict-before-task_inventory_low_stock-r1",
+      "source_ids": [
+        "FILE_2b32039c2c5d02a2",
+        "TABLE_FILE_1c3edebcf446bef5_Inventory",
+        "FILE_04ee2b4a75691e45"
+      ],
+      "task_id": "TASK_INVENTORY_LOW_STOCK"
+    },
+    {
+      "abstention_reason": "CONFLICTING_EVIDENCE",
+      "answer": null,
+      "category": "정책",
+      "dataset": "portfolio-hidden-conflict-before",
+      "delivery_status": "DELIVERED",
+      "duration_seconds": 0.004,
+      "evidence_verdict": "UNCONFIRMED",
+      "payload_status": "ABSTAINED",
+      "question": "현재 반품 가능 기간은 며칠인가요?",
+      "reject_reason": null,
+      "repetition": 1,
+      "run_id": "portfolio-portfolio-hidden-conflict-before-task_policy_return_window-r1",
+      "source_ids": [
+        "FILE_d527640c55b31252",
+        "FILE_016dff0726eea674",
+        "FILE_b9ed0f031ae9fe98"
+      ],
+      "task_id": "TASK_POLICY_RETURN_WINDOW"
+    },
+    {
+      "abstention_reason": "NOT_FOUND",
+      "answer": null,
+      "category": "정책",
+      "dataset": "portfolio-hidden-conflict-before",
+      "delivery_status": "DELIVERED",
+      "duration_seconds": 25.347,
+      "evidence_verdict": "UNCONFIRMED",
+      "payload_status": "ABSTAINED",
+      "question": "예외 승인 절차는 어떻게 되나요?",
+      "reject_reason": null,
+      "repetition": 1,
+      "run_id": "portfolio-portfolio-hidden-conflict-before-task_policy_approval_procedure-r1",
+      "source_ids": [],
+      "task_id": "TASK_POLICY_APPROVAL_PROCEDURE"
+    },
+    {
+      "abstention_reason": null,
+      "answer": "매월 세금계산서는 익월 5영업일까지 마감 처리해야 합니다.",
+      "category": "정산",
+      "dataset": "portfolio-hidden-conflict-before",
+      "delivery_status": "DELIVERED",
+      "duration_seconds": 25.133,
+      "evidence_verdict": "UNCONFIRMED",
+      "payload_status": "ANSWERED",
+      "question": "세금계산서 처리 마감일은 언제인가요?",
+      "reject_reason": null,
+      "repetition": 1,
+      "run_id": "portfolio-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r1",
+      "source_ids": [
+        "FILE_9b04d01aea38a735",
+        "FILE_6ac6f3026a34d94f"
+      ],
+      "task_id": "TASK_BILLING_INVOICE_DEADLINE"
+    },
+    {
+      "abstention_reason": null,
+      "answer": "배송문의(CS01)와 반품문의(CS02)는 고객지원팀이 책임팀이고, 상품문의(CS03)는 영업운영팀이 책임팀입니다.",
+      "category": "고객지원",
+      "dataset": "portfolio-hidden-conflict-before",
+      "delivery_status": "DELIVERED",
+      "duration_seconds": 22.17,
+      "evidence_verdict": "UNCONFIRMED",
+      "payload_status": "ANSWERED",
+      "question": "고객 불만 유형별 책임팀은 어디인가요?",
+      "reject_reason": null,
+      "repetition": 1,
+      "run_id": "portfolio-portfolio-hidden-conflict-before-task_support_responsible_team-r1",
+      "source_ids": [
+        "TABLE_FILE_7038ab76eb30cb43_CSV"
+      ],
+      "task_id": "TASK_SUPPORT_RESPONSIBLE_TEAM"
+    },
+    {
+      "abstention_reason": null,
+      "answer": "10곳",
+      "category": "고객관리",
+      "dataset": "portfolio-ceiling-after",
+      "delivery_status": "DELIVERED",
+      "duration_seconds": 26.068,
+      "evidence_verdict": "UNCONFIRMED",
+      "payload_status": "ANSWERED",
+      "question": "등록된 거래처는 몇 곳인가요?",
+      "reject_reason": null,
+      "repetition": 1,
+      "run_id": "portfolio-portfolio-ceiling-after-task_customer_count-r1",
+      "source_ids": [
+        "TABLE_FILE_79c849b8a094119f_Customers"
+      ],
+      "task_id": "TASK_CUSTOMER_COUNT"
+    },
+    {
+      "abstention_reason": "NOT_FOUND",
+      "answer": null,
+      "category": "고객관리",
+      "dataset": "portfolio-ceiling-after",
+      "delivery_status": "DELIVERED",
+      "duration_seconds": 23.29,
+      "evidence_verdict": "UNCONFIRMED",
+      "payload_status": "ABSTAINED",
+      "question": "가장 최근 거래처 등록일은 언제인가요?",
+      "reject_reason": null,
+      "repetition": 1,
+      "run_id": "portfolio-portfolio-ceiling-after-task_customer_latest_registration-r1",
+      "source_ids": [
+        "FILE_79c849b8a094119f",
+        "FILE_2e83f1278d225ef5",
+        "FILE_f4883661ccd5ae02"
+      ],
+      "task_id": "TASK_CUSTOMER_LATEST_REGISTRATION"
+    },
+    {
+      "abstention_reason": null,
+      "answer": "4,980,700원",
+      "category": "주문",
+      "dataset": "portfolio-ceiling-after",
+      "delivery_status": "DELIVERED",
+      "duration_seconds": 27.166,
+      "evidence_verdict": "UNCONFIRMED",
+      "payload_status": "ANSWERED",
+      "question": "이번 달 주문금액은 얼마인가요?",
+      "reject_reason": null,
+      "repetition": 1,
+      "run_id": "portfolio-portfolio-ceiling-after-task_order_monthly_amount-r1",
+      "source_ids": [
+        "TABLE_FILE_950a2b2ed909ef4c_Orders"
+      ],
+      "task_id": "TASK_ORDER_MONTHLY_AMOUNT"
+    },
+    {
+      "abstention_reason": null,
+      "answer": "2026-09-21",
+      "category": "주문",
+      "dataset": "portfolio-ceiling-after",
+      "delivery_status": "DELIVERED",
+      "duration_seconds": 38.985,
+      "evidence_verdict": "UNCONFIRMED",
+      "payload_status": "ANSWERED",
+      "question": "가장 최근 주문은 언제인가요?",
+      "reject_reason": null,
+      "repetition": 1,
+      "run_id": "portfolio-portfolio-ceiling-after-task_order_latest-r1",
+      "source_ids": [
+        "TABLE_FILE_950a2b2ed909ef4c_Orders"
+      ],
+      "task_id": "TASK_ORDER_LATEST"
+    },
+    {
+      "abstention_reason": null,
+      "answer": "P005",
+      "category": "재고",
+      "dataset": "portfolio-ceiling-after",
+      "delivery_status": "DELIVERED",
+      "duration_seconds": 23.698,
+      "evidence_verdict": "UNCONFIRMED",
+      "payload_status": "ANSWERED",
+      "question": "현재 가용재고가 가장 많은 품목은 무엇인가요?",
+      "reject_reason": null,
+      "repetition": 1,
+      "run_id": "portfolio-portfolio-ceiling-after-task_inventory_most_available-r1",
+      "source_ids": [
+        "TABLE_FILE_1c3edebcf446bef5_Inventory"
+      ],
+      "task_id": "TASK_INVENTORY_MOST_AVAILABLE"
+    },
+    {
+      "abstention_reason": null,
+      "answer": "없음 (모든 품목이 안전재고 기준을 충족)",
+      "category": "재고",
+      "dataset": "portfolio-ceiling-after",
+      "delivery_status": "DELIVERED",
+      "duration_seconds": 35.826,
+      "evidence_verdict": "UNCONFIRMED",
+      "payload_status": "ANSWERED",
+      "question": "안전재고 기준보다 부족한 품목은 무엇인가요?",
+      "reject_reason": null,
+      "repetition": 1,
+      "run_id": "portfolio-portfolio-ceiling-after-task_inventory_low_stock-r1",
+      "source_ids": [
+        "TABLE_FILE_1c3edebcf446bef5_Inventory",
+        "FILE_d5094868d77c1778",
+        "FILE_2b32039c2c5d02a2"
+      ],
+      "task_id": "TASK_INVENTORY_LOW_STOCK"
+    },
+    {
+      "abstention_reason": null,
+      "answer": "30일",
+      "category": "정책",
+      "dataset": "portfolio-ceiling-after",
+      "delivery_status": "DELIVERED",
+      "duration_seconds": 0.004,
+      "evidence_verdict": "DIRECT_MATCH",
+      "payload_status": "ANSWERED",
+      "question": "현재 반품 가능 기간은 며칠인가요?",
+      "reject_reason": null,
+      "repetition": 1,
+      "run_id": "portfolio-portfolio-ceiling-after-task_policy_return_window-r1",
+      "source_ids": [
+        "FILE_d527640c55b31252"
+      ],
+      "task_id": "TASK_POLICY_RETURN_WINDOW"
+    },
+    {
+      "abstention_reason": "NOT_FOUND",
+      "answer": null,
+      "category": "정책",
+      "dataset": "portfolio-ceiling-after",
+      "delivery_status": "DELIVERED",
+      "duration_seconds": 28.323,
+      "evidence_verdict": "UNCONFIRMED",
+      "payload_status": "ABSTAINED",
+      "question": "예외 승인 절차는 어떻게 되나요?",
+      "reject_reason": null,
+      "repetition": 1,
+      "run_id": "portfolio-portfolio-ceiling-after-task_policy_approval_procedure-r1",
+      "source_ids": [],
+      "task_id": "TASK_POLICY_APPROVAL_PROCEDURE"
+    },
+    {
+      "abstention_reason": null,
+      "answer": "매월 세금계산서는 다음 달 5영업일(5th business day)까지 마감 처리해야 합니다.",
+      "category": "정산",
+      "dataset": "portfolio-ceiling-after",
+      "delivery_status": "DELIVERED",
+      "duration_seconds": 23.65,
+      "evidence_verdict": "UNCONFIRMED",
+      "payload_status": "ANSWERED",
+      "question": "세금계산서 처리 마감일은 언제인가요?",
+      "reject_reason": null,
+      "repetition": 1,
+      "run_id": "portfolio-portfolio-ceiling-after-task_billing_invoice_deadline-r1",
+      "source_ids": [
+        "FILE_9b04d01aea38a735",
+        "FILE_6ac6f3026a34d94f"
+      ],
+      "task_id": "TASK_BILLING_INVOICE_DEADLINE"
+    },
+    {
+      "abstention_reason": null,
+      "answer": "배송문의(CS01)와 반품문의(CS02)는 고객지원팀이 담당하고, 상품문의(CS03)는 영업운영팀이 담당합니다.",
+      "category": "고객지원",
+      "dataset": "portfolio-ceiling-after",
+      "delivery_status": "DELIVERED",
+      "duration_seconds": 20.723,
+      "evidence_verdict": "UNCONFIRMED",
+      "payload_status": "ANSWERED",
+      "question": "고객 불만 유형별 책임팀은 어디인가요?",
+      "reject_reason": null,
+      "repetition": 1,
+      "run_id": "portfolio-portfolio-ceiling-after-task_support_responsible_team-r1",
+      "source_ids": [
+        "TABLE_FILE_7038ab76eb30cb43_CSV"
+      ],
+      "task_id": "TASK_SUPPORT_RESPONSIBLE_TEAM"
+    }
+  ],
+  "schema_version": "ax-phase6-product-demo-summary-v3",
+  "started_at": "2026-09-25T13:14:32.800919Z",
+  "task_ids": [
+    "TASK_CUSTOMER_COUNT",
+    "TASK_CUSTOMER_LATEST_REGISTRATION",
+    "TASK_ORDER_MONTHLY_AMOUNT",
+    "TASK_ORDER_LATEST",
+    "TASK_INVENTORY_MOST_AVAILABLE",
+    "TASK_INVENTORY_LOW_STOCK",
+    "TASK_POLICY_RETURN_WINDOW",
+    "TASK_POLICY_APPROVAL_PROCEDURE",
+    "TASK_BILLING_INVOICE_DEADLINE",
+    "TASK_SUPPORT_RESPONSIBLE_TEAM"
+  ]
+}

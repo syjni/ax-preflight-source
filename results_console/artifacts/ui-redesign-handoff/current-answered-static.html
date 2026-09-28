@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="ko"><head>
+    
+
+    
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AX · Results Console</title>
+  <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+
+:root {
+  font-family: 'IBM Plex Sans', 'Pretendard Variable', Pretendard, system-ui, sans-serif;
+  font-synthesis: none;
+  --ink: #0a1e3d;
+  --ink-soft: #35506e;
+  --muted: #58748f;
+  --faint: #8398ab;
+  --line: #c3d6e8;
+  --line-soft: #e5edf5;
+  --blue: #0f62fe;
+  --blue-soft: #e6f2fc;
+  --warning: #9a6700;
+  --warning-line: #e7c46a;
+  --warning-soft: #fff8e6;
+  --danger: #c43f5b;
+  --danger-line: #f3d3db;
+  --danger-soft: #fff5f7;
+  --positive: #147d64;
+  --positive-line: #9ed8c9;
+  --positive-soft: #eaf6f2;
+  --warning-deep: #704d00;
+  --danger-deep: #8d243b;
+  --surface-soft: #f7fafc;
+  --surface-detail: #fbfdff;
+  --surface-neutral: #f4f7fa;
+  --white: #ffffff;
+  color: var(--ink);
+  background: var(--white);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; background: var(--white); }
+button, input, textarea, select { font: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; opacity: .45; }
+button, input, textarea, select, a { border-radius: 0; }
+button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, a:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+.mono, code { font-family: 'IBM Plex Mono', Consolas, monospace; font-feature-settings: 'tnum' 1; }
+
+.app-shell { display: flex; width: 100%; min-height: 100vh; background: var(--white); }
+.sidebar {
+  flex: 0 0 280px;
+  width: 280px;
+  min-width: 0;
+  padding: 38px 32px 48px;
+  background: var(--white);
+}
+.brand { display: flex; align-items: baseline; gap: 10px; color: var(--ink); text-decoration: none; }
+.brand-symbol { font-size: 18px; font-weight: 600; letter-spacing: -.04em; }
+.brand-name { font-size: 12px; letter-spacing: .02em; color: var(--ink-soft); }
+.report-tabs { display: flex; flex-direction: column; gap: 4px; margin-top: 40px; }
+.report-tabs button { border: 0; background: transparent; color: var(--ink-soft); padding: 8px 10px; margin-left: -10px; text-align: left; font-size: 13px; }
+.report-tabs button.is-active { background: var(--blue-soft); color: var(--blue); font-weight: 500; }
+.sidebar-group { margin-top: 40px; }
+.sidebar-label { color: var(--muted); font-size: 10px; font-weight: 600; letter-spacing: .16em; }
+.contents-nav { display: flex; flex-direction: column; gap: 13px; margin-top: 20px; }
+.contents-nav a { display: grid; grid-template-columns: 28px minmax(0, 1fr); color: var(--ink-soft); text-decoration: none; font-size: 12px; }
+.contents-nav a span { color: var(--faint); font-family: 'IBM Plex Mono', monospace; font-size: 10px; }
+.contents-nav a:hover { color: var(--blue); }
+.report-meta { margin: 48px 0 0; display: flex; flex-direction: column; gap: 12px; }
+.report-meta div { display: grid; grid-template-columns: 64px minmax(0, 1fr); align-items: baseline; }
+.report-meta dt { color: var(--muted); font-size: 10px; }
+.report-meta dd { min-width: 0; margin: 0; color: var(--ink); font-size: 11px; overflow-wrap: anywhere; }
+
+.report-main {
+  min-width: 0;
+  width: calc(100% - 280px);
+  padding: 56px 64px 32px 96px;
+  background: var(--white);
+}
+.report-main > * { width: 100%; max-width: 1180px; margin-inline: auto; }
+.section-kicker, .section-index { font-family: 'IBM Plex Mono', monospace; color: var(--muted); font-size: 10px; letter-spacing: .02em; }
+.summary-section { padding: 6px 0 0; }
+.summary-grid { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 72px; align-items: end; margin-top: 32px; }
+.summary-grid h1 { margin: 0; font-size: clamp(40px, 4.3vw, 66px); line-height: 1.07; letter-spacing: -.055em; font-weight: 400; text-wrap: balance; }
+.summary-grid > div > p { max-width: 38rem; margin: 24px 0 0; color: var(--ink-soft); font-size: 14px; line-height: 1.8; }
+.score-hero { text-align: right; min-width: 0; }
+.score-hero__label { display: block; margin-bottom: 8px; color: var(--muted); font-size: 10px; letter-spacing: .16em; }
+.score-hero strong { font-size: 96px; line-height: .9; font-weight: 400; letter-spacing: -.07em; font-feature-settings: 'tnum' 1; }
+.score-hero__unit { margin-left: 7px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
+.score-line { position: relative; height: 1px; margin-top: 28px; background: var(--line); }
+.score-line span { position: absolute; left: 0; top: -2px; height: 5px; background: var(--blue); }
+.summary-status { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 32px; margin-top: 48px; padding: 18px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line-soft); }
+.summary-status > div { min-width: 0; display: flex; align-items: center; gap: 14px; }
+.summary-status > div > span:first-child { color: var(--muted); font-size: 10px; }
+.summary-status strong { min-width: 0; color: var(--ink); font-size: 12px; font-weight: 500; overflow-wrap: anywhere; }
+
+.status { display: inline-flex; align-items: center; min-width: 0; border: 1px solid var(--line); padding: 3px 7px; color: var(--ink-soft); background: var(--white); font-family: 'IBM Plex Mono', monospace; font-size: 10px; line-height: 1.35; overflow-wrap: anywhere; }
+.status--blue { border-color: var(--blue); color: var(--blue); }
+.status--warning { border-color: var(--warning-line); color: var(--warning); background: var(--warning-soft); }
+.status--danger { border-color: var(--danger-line); color: var(--danger); background: var(--danger-soft); }
+.status--positive { border-color: var(--positive-line); color: var(--positive); background: var(--positive-soft); }
+
+.report-section { padding: 72px 0 0; scroll-margin-top: 24px; }
+.section-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.section-heading h1, .section-heading h2 { margin: 8px 0 0; font-size: 24px; line-height: 1.2; font-weight: 500; letter-spacing: -.025em; }
+.section-lede { max-width: 48rem; margin: 15px 0 28px; color: var(--ink-soft); font-size: 13px; line-height: 1.75; }
+.state-message { padding: 28px 0; border-bottom: 1px solid var(--line-soft); color: var(--muted); font-size: 13px; }
+.notice { display: flex; flex-direction: column; gap: 4px; margin: 18px 0; padding: 12px 14px; border-left: 3px solid var(--line); background: var(--surface-soft); color: var(--ink-soft); font-size: 12px; line-height: 1.55; }
+.notice strong { color: var(--ink); font-size: 11px; letter-spacing: .02em; }
+.notice--warning { border-color: var(--warning); background: var(--warning-soft); color: var(--warning-deep); }
+.notice--danger { border-color: var(--danger); background: var(--danger-soft); color: var(--danger-deep); }
+.page-context { margin-top: 32px; margin-bottom: -40px; }
+
+.controls-section { padding-top: 54px; }
+.control-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; margin-top: 24px; }
+.control-grid form > label, .question-control > label { display: block; margin-bottom: 8px; color: var(--muted); font-size: 11px; }
+.control-grid form > div { display: flex; min-width: 0; }
+.control-grid input, .question-control textarea { min-width: 0; width: 100%; border: 1px solid var(--line); background: var(--white); color: var(--ink); padding: 10px 12px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; outline: none; }
+.control-grid button, .primary-action { border: 1px solid var(--ink); background: var(--ink); color: var(--white); padding: 10px 16px; font-size: 11px; white-space: nowrap; }
+.question-control { margin-top: 26px; }
+.question-control label { display: flex; justify-content: space-between; }
+.question-control label span { color: var(--faint); }
+.question-control textarea { display: block; resize: vertical; font-family: inherit; line-height: 1.6; }
+.primary-action { margin-top: 10px; background: var(--blue); border-color: var(--blue); }
+.runner-copy { margin: 14px 0 0; color: var(--muted); font-size: 11px; line-height: 1.6; }
+.fixture-control { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 22px; padding-top: 14px; border-top: 1px solid var(--line-soft); color: var(--muted); font-size: 10px; }
+.fixture-control select { min-width: 220px; border: 1px solid var(--line); background: var(--white); padding: 7px 9px; color: var(--ink-soft); font-size: 11px; }
+.dev-banner, .benchmark-banner { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--blue-soft); color: var(--ink); font-size: 12px; }
+.dev-banner strong, .benchmark-banner span { border: 1px solid var(--blue); padding: 2px 6px; color: var(--blue); font-family: 'IBM Plex Mono', monospace; font-size: 10px; }
+.dev-banner button { margin-left: auto; border: 0; border-bottom: 1px solid currentColor; background: transparent; color: var(--blue); padding: 2px 0; font-size: 11px; }
+
+.readiness-table { border-top: 1px solid var(--line); }
+.table-head { display: grid; grid-template-columns: minmax(240px, 1fr) 90px minmax(160px, .8fr); gap: 24px; padding: 10px 0; border-bottom: 1px solid var(--line-soft); color: var(--muted); font-size: 10px; }
+.table-head span:nth-child(2) { text-align: right; }
+.readiness-row { border-bottom: 1px solid var(--line-soft); }
+.readiness-trigger { width: 100%; display: grid; grid-template-columns: 46px minmax(170px, 1fr) 72px minmax(130px, .7fr) 72px; gap: 18px; align-items: center; border: 0; background: var(--white); color: var(--ink); padding: 16px 0; text-align: left; }
+.readiness-trigger:hover { color: var(--blue); }
+.row-index { color: var(--muted); font-size: 10px; }
+.row-name { display: flex; align-items: baseline; gap: 12px; min-width: 0; }
+.row-name strong { font-size: 14px; font-weight: 500; }
+.row-name small { color: var(--muted); font-size: 11px; }
+.row-score { text-align: right; font-size: 24px; }
+.row-bar { position: relative; height: 1px; background: var(--line); }
+.row-bar span { position: absolute; left: 0; top: -1px; height: 3px; background: var(--blue); }
+.row-toggle { color: var(--muted); font-size: 10px; text-align: right; }
+.readiness-detail { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px 48px; padding: 24px 0 28px 64px; border-top: 1px solid var(--line-soft); background: var(--surface-detail); }
+.detail-group h3, .derivation h3, .evidence-references h3, .limitations h3 { margin: 0 0 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; }
+.detail-group dl, .derivation dl { margin: 0; }
+.detail-group dl div, .derivation dl div { display: flex; justify-content: space-between; gap: 20px; padding: 6px 0; border-bottom: 1px solid var(--line-soft); font-size: 11px; }
+.detail-group dt, .derivation dt { color: var(--muted); }
+.detail-group dd, .derivation dd { margin: 0; text-align: right; overflow-wrap: anywhere; }
+.detail-group--wide { grid-column: 1 / -1; }
+.detail-group--wide > p { margin: 0; color: var(--ink-soft); font-size: 11px; }
+.observation-list { margin-top: 14px; }
+.observation-note { margin-bottom: 10px; color: var(--muted); font-size: 10px; line-height: 1.5; }
+.observation-list article { padding: 12px 0; border-top: 1px solid var(--line-soft); }
+.observation-list article > div { display: flex; align-items: flex-start; gap: 10px; font-size: 12px; }
+.observation-list article p { margin: 8px 0 0; color: var(--muted); font-size: 10px; overflow-wrap: anywhere; }
+
+.task-table { border-top: 1px solid var(--line); }
+.task-table > button, .task-row { width: 100%; display: grid; grid-template-columns: 42px minmax(160px, 1.4fr) minmax(120px, .8fr) minmax(150px, 1fr) auto; gap: 16px; align-items: center; padding: 14px 0; border: 0; border-bottom: 1px solid var(--line-soft); background: var(--white); color: var(--ink); text-align: left; }
+.task-table > button:hover { color: var(--blue); }
+.task-number, .task-id, .task-fields { min-width: 0; color: var(--muted); font-size: 10px; overflow-wrap: anywhere; }
+.task-table strong { font-size: 12px; font-weight: 500; }
+.task-table > button > span:last-child, .task-row > span:last-child { color: var(--muted); font-size: 10px; text-align: right; }
+
+.finding-card, .blocked-card { margin-top: 24px; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line); }
+.finding-trigger { width: 100%; display: grid; grid-template-columns: 42px minmax(0, 1fr) auto 76px; gap: 18px; align-items: center; border: 0; background: var(--white); color: var(--ink); padding: 18px 0; text-align: left; }
+.finding-trigger > span:nth-child(2) { min-width: 0; }
+.finding-trigger small { display: block; color: var(--muted); font-family: 'IBM Plex Mono', monospace; font-size: 9px; }
+.finding-trigger strong { display: block; margin-top: 4px; font-size: 15px; font-weight: 500; }
+.finding-number { color: var(--blue); font-size: 11px; }
+.finding-body { padding: 24px 0 8px 60px; border-top: 1px solid var(--line-soft); }
+.verdict-block { display: grid; grid-template-columns: 160px minmax(0, 1fr); column-gap: 28px; }
+.verdict-label { color: var(--muted); font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .08em; }
+.verdict-main { min-width: 0; }
+.answer-display { margin-top: 12px; font-size: 28px; line-height: 1.35; font-weight: 400; overflow-wrap: anywhere; }
+.answer-display small { color: var(--muted); font-size: 13px; }
+.answer-display--muted { color: var(--warning); font-size: 18px; }
+.verdict-block > p { grid-column: 2; margin: 15px 0 0; color: var(--ink-soft); font-size: 13px; line-height: 1.75; }
+.source-link { grid-column: 2; display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 5px 16px; margin-top: 22px; padding: 12px 0; border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
+.source-link > span { color: var(--muted); font-size: 10px; }
+.source-link strong { font-size: 11px; }
+.source-link p { grid-column: 2; margin: 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
+.source-link--not_checked strong { color: var(--warning); }
+.finding-meta { margin: 26px 0 0; }
+.finding-meta > div { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 28px; padding: 9px 0; border-bottom: 1px solid var(--line-soft); }
+.finding-meta dt { color: var(--muted); font-size: 10px; }
+.finding-meta dd { min-width: 0; margin: 0; font-size: 11px; overflow-wrap: anywhere; }
+.source-values { display: flex; flex-wrap: wrap; gap: 6px; }
+.source-values span { border: 1px solid var(--line); padding: 2px 5px; font-size: 9px; }
+.blocked-card { padding: 22px 0 8px; border-top-color: var(--danger); }
+.blocked-head { display: flex; justify-content: space-between; gap: 24px; align-items: flex-start; }
+.blocked-head h3 { margin: 6px 0 0; font-size: 20px; font-weight: 500; }
+.blocked-card > p { color: var(--ink-soft); font-size: 12px; line-height: 1.6; }
+.blocked-card .fixture-copy { color: var(--warning); }
+.running-state { display: flex; gap: 16px; padding: 24px 0; border-bottom: 1px solid var(--line-soft); }
+.running-state > span { width: 9px; height: 9px; margin-top: 5px; background: var(--warning); animation: pulse 1.6s infinite; }
+.running-state strong { font-size: 14px; font-weight: 500; }
+.running-state p { margin: 5px 0 8px; color: var(--ink-soft); font-size: 12px; }
+.running-state code { color: var(--muted); font-size: 10px; overflow-wrap: anywhere; }
+
+.evidence-result { border-top: 3px solid var(--line); }
+.evidence-result--direct_match { border-color: var(--positive); }
+.evidence-result--derivable { border-color: var(--blue); }
+.evidence-result--partial_support { border-color: var(--warning); }
+.evidence-summary { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 28px; padding: 22px 0; border-bottom: 1px solid var(--line-soft); }
+.evidence-summary > div span { display: block; color: var(--muted); font-size: 10px; }
+.evidence-summary > div strong { display: block; margin-top: 5px; font-size: 18px; font-weight: 500; }
+.evidence-summary p { margin: 0; color: var(--ink-soft); font-size: 12px; line-height: 1.65; }
+.not-incorrect { padding: 10px 14px; border-left: 3px solid var(--ink-soft); background: var(--surface-neutral); color: var(--ink); font-size: 12px; }
+.source-groups { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; padding: 24px 0; border-bottom: 1px solid var(--line-soft); }
+.source-set > span { color: var(--muted); font-family: 'IBM Plex Mono', monospace; font-size: 10px; }
+.source-set > div { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 9px; }
+.source-set em { color: var(--faint); font-size: 11px; font-style: normal; }
+.derivation, .evidence-references, .limitations { padding: 24px 0; border-bottom: 1px solid var(--line-soft); }
+.derivation dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; }
+.evidence-references > div { display: grid; grid-template-columns: 48px 1fr 150px 1fr; gap: 16px; padding: 8px 0; border-bottom: 1px solid var(--line-soft); font-size: 10px; }
+.evidence-references > div span, .evidence-references > div small { min-width: 0; color: var(--muted); overflow-wrap: anywhere; }
+.evidence-references p { color: var(--muted); font-size: 11px; }
+.limitations ul { margin: 0; padding-left: 18px; color: var(--ink-soft); font-size: 11px; line-height: 1.7; }
+.evidence-hash { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 20px; padding: 16px 0; color: var(--muted); font-size: 10px; }
+.evidence-hash code { min-width: 0; color: var(--ink-soft); overflow-wrap: anywhere; }
+
+.benchmark-page { padding-top: 56px; }
+.benchmark-section { padding-top: 56px; }
+.benchmark-section .section-heading h1 { font-size: 30px; }
+.benchmark-metrics { display: flex; flex-direction: column; gap: 24px; margin-top: 36px; }
+.benchmark-metric { display: grid; grid-template-columns: 120px 110px minmax(0, 1fr); gap: 20px; align-items: center; color: var(--ink-soft); }
+.benchmark-metric > span { font-size: 13px; }
+.benchmark-metric > strong { font-size: 52px; line-height: 1; font-weight: 400; letter-spacing: -.04em; }
+.benchmark-metric > strong small { color: var(--muted); font-size: 15px; }
+.benchmark-metric > div { position: relative; height: 1px; background: var(--line); }
+.benchmark-metric > div i { position: absolute; left: 0; top: -1px; height: 3px; background: var(--ink-soft); }
+.benchmark-metric p { grid-column: 3; margin: -12px 0 0; color: var(--muted); font-size: 10px; }
+.benchmark-metric.is-accent { color: var(--blue); }
+.benchmark-metric.is-accent > div i { background: var(--blue); }
+.benchmark-table { margin-top: 40px; }
+.benchmark-table > div { display: grid; grid-template-columns: minmax(0, 1fr) 90px 90px 140px; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--line-soft); font-size: 12px; }
+.benchmark-table > div:first-child { border-color: var(--line); color: var(--muted); font-size: 10px; }
+.benchmark-table span:not(:first-child) { text-align: right; }
+.benchmark-table strong { font-weight: 400; }
+.accent-text { color: var(--blue); }
+.benchmark-notes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; margin-top: 36px; }
+.benchmark-notes span { color: var(--muted); font-size: 10px; }
+.benchmark-notes p { margin: 5px 0 0; color: var(--ink-soft); font-size: 12px; line-height: 1.75; }
+.report-footer { padding: 64px 0 16px; color: var(--faint); font-family: 'IBM Plex Mono', monospace; font-size: 9px; text-align: center; }
+.report-footer span { margin: 0 6px; }
+
+@keyframes pulse { 50% { opacity: .35; } }
+
+@media (max-width: 1024px) {
+  .app-shell { display: block; }
+  .sidebar { width: 100%; min-height: 0; padding: 28px 32px; display: grid; grid-template-columns: 1fr auto; gap: 24px 40px; }
+  .report-tabs { flex-direction: row; margin-top: 0; }
+  .sidebar-group { grid-column: 1 / -1; margin-top: 0; }
+  .contents-nav { flex-direction: row; flex-wrap: wrap; gap: 12px 24px; margin-top: 14px; }
+  .contents-nav a { grid-template-columns: 24px auto; }
+  .report-meta { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
+  .report-meta div { grid-template-columns: 52px minmax(0, 1fr); }
+  .report-main { width: 100%; padding: 48px 32px 28px; }
+  .summary-grid { gap: 48px; }
+}
+
+@media (max-width: 768px) {
+  .sidebar { padding: 22px 20px; grid-template-columns: 1fr; gap: 20px; }
+  .report-tabs { justify-content: flex-start; }
+  .sidebar-group { display: none; }
+  .report-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 0; }
+  .report-main { padding: 36px 20px 20px; }
+  .summary-grid { grid-template-columns: 1fr; gap: 42px; }
+  .summary-grid h1 { font-size: clamp(38px, 12vw, 54px); }
+  .score-hero { text-align: left; max-width: 360px; }
+  .score-hero strong { font-size: 78px; }
+  .summary-status { grid-template-columns: 1fr; gap: 12px; }
+  .section-heading { align-items: flex-start; }
+  .control-grid { grid-template-columns: 1fr; }
+  .table-head { display: none; }
+  .readiness-trigger { grid-template-columns: 36px minmax(0, 1fr) 52px 64px; gap: 10px; }
+  .row-bar { grid-column: 2 / 4; grid-row: 2; }
+  .row-toggle { grid-column: 4; grid-row: 1 / 3; align-self: center; }
+  .row-name { flex-direction: column; gap: 2px; }
+  .readiness-detail { grid-template-columns: 1fr; padding-left: 18px; gap: 28px; }
+  .detail-group--wide { grid-column: auto; }
+  .finding-body { padding-left: 18px; }
+  .verdict-block { grid-template-columns: 1fr; }
+  .verdict-main, .verdict-block > p, .source-link { grid-column: 1; margin-top: 12px; }
+  .source-link { grid-template-columns: 1fr; }
+  .source-link p { grid-column: 1; }
+  .finding-meta > div { grid-template-columns: 110px minmax(0, 1fr); gap: 18px; }
+  .source-groups { grid-template-columns: 1fr; gap: 20px; }
+  .evidence-summary { grid-template-columns: 1fr; gap: 12px; }
+  .derivation dl { grid-template-columns: 1fr; }
+  .evidence-references > div { grid-template-columns: 40px 1fr; }
+  .evidence-references > div span:nth-of-type(2), .evidence-references > div small { grid-column: 2; }
+  .evidence-hash { grid-template-columns: 1fr; }
+  .benchmark-metric { grid-template-columns: 90px minmax(0, 1fr); }
+  .benchmark-metric > div, .benchmark-metric p { grid-column: 1 / -1; }
+  .benchmark-metric p { margin-top: -10px; }
+  .benchmark-table { overflow-x: auto; }
+  .benchmark-table > div { min-width: 620px; }
+  .benchmark-notes { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 520px) {
+  .report-meta { grid-template-columns: 1fr; }
+  .dev-banner { align-items: flex-start; flex-direction: column; }
+  .dev-banner button { margin-left: 0; }
+  .fixture-control { align-items: flex-start; flex-direction: column; }
+  .fixture-control select { min-width: 0; width: 100%; }
+  .finding-trigger { grid-template-columns: 32px minmax(0, 1fr) auto; gap: 10px; }
+  .finding-trigger .row-toggle { grid-column: 2 / -1; grid-row: 2; text-align: left; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+}
+</style></head>
+  <body>
+    <div id="root"><div class="app-shell"><aside class="sidebar" aria-label="리포트 탐색"><a class="brand" href="#summary" aria-label="AX Results Console 처음으로"><span class="brand-symbol">AX</span><span class="brand-name">Results Console</span></a><nav class="report-tabs" aria-label="리포트 보기"><button class="is-active">진단 리포트</button></nav><div class="sidebar-group"><div class="sidebar-label">CONTENTS</div><nav class="contents-nav" aria-label="리포트 목차"><a href="#summary"><span>01</span>요약</a><a href="#readiness"><span>02</span>준비도</a><a href="#tasks"><span>03</span>과제</a><a href="#findings"><span>04</span>진단 결과</a><a href="#evidence"><span>05</span>근거 검사</a></nav></div><dl class="report-meta"><div><dt>Dataset</dt><dd>mini</dd></div><div><dt>Name</dt><dd>SAMPLE_ORG_NORTHSTAR</dd></div><div><dt>As of</dt><dd>2026-09-18</dd></div><div><dt>Run ID</dt><dd class="mono">demo-answered</dd></div></dl></aside><main class="report-main"><div class="dev-banner" role="status"><strong>DEV FIXTURE</strong><span>합성 화면 검증 모드이며 실제 고객 결과가 아닙니다.</span><button>라이브 API로 돌아가기</button></div><section class="summary-section" id="summary" aria-labelledby="summary-title"><div class="section-kicker">AX DIAGNOSTIC / PRODUCT CONTRACT</div><div class="summary-grid"><div><h1 id="summary-title">데이터 준비도와<br>AI 실행 결과</h1><p>준비도, 실행 상태, 전달 답변, 근거 검사를 각각의 API 계약 그대로 읽습니다.</p></div><div class="score-hero" aria-label="준비도 점수 62.0"><span class="score-hero__label">READINESS</span><strong>62</strong><span class="score-hero__unit">/ 100</span><div class="score-line" aria-hidden="true"><span style="width: 62%;"></span></div></div></div><div class="summary-status"><div><span>Dataset</span><strong>SAMPLE_ORG_NORTHSTAR</strong></div><div><span>Run status</span><span class="status status--positive">DELIVERED</span></div><div><span>Score contract</span><strong class="mono">ax-readiness-score-v1</strong></div></div></section><section class="report-section controls-section" aria-labelledby="controls-title"><header class="section-heading"><div><div class="section-index">CONTROL</div><h2 id="controls-title">조회와 실행</h2></div></header><div class="control-grid"><form><label for="dataset">Dataset profile</label><div><input id="dataset" disabled="" value="mini"><button disabled="">불러오기</button></div></form><form><label for="run-id">기존 Run ID</label><div><input id="run-id" placeholder="Run ID" disabled="" value=""><button disabled="">조회</button></div></form></div><form class="question-control"><label for="question">Ad hoc question <span>자동 정답 채점 없음</span></label><textarea id="question" rows="3" placeholder="실제 데이터에 대해 물어볼 질문을 입력하세요" disabled=""></textarea><button class="primary-action" disabled="">실행 요청 ↗</button></form><p class="runner-copy">Runner 상태 조회 API는 없습니다. 요청이 <span class="mono">503 RUNNER_UNAVAILABLE</span>이면 run이 생성되지 않습니다.</p><label class="fixture-control">DEV fixture<select><option value="">라이브 API</option><option value="running">RUNNING</option><option value="answered">DELIVERED · ANSWERED</option><option value="abstained">DELIVERED · ABSTAINED</option><option value="rejected">REJECTED</option><option value="mismatch">DATASET MISMATCH</option><option value="legacy">UNKNOWN PROVENANCE</option><option value="benchmark">BENCHMARK MODE</option></select></label></section><section class="report-section" id="readiness" aria-labelledby="readiness-title"><header class="section-heading"><div><div class="section-index">02 / Readiness</div><h2 id="readiness-title">준비도 항목</h2></div><span class="status status--blue">점수 항목 5</span></header><p class="section-lede">각 점수는 Readiness v1 응답을 그대로 표시합니다. 행을 펼치면 API가 제공한 counts와 flags를 확인할 수 있습니다.</p><div class="readiness-table"><div class="table-head" aria-hidden="true"><span>항목</span><span>점수</span><span>상태</span></div><div class="readiness-row"><button class="readiness-trigger" aria-expanded="true" aria-controls="readiness-detail-redundancy"><span class="row-index mono">01</span><span class="row-name"><strong>중복·충돌</strong><small>Redundancy</small></span><span class="row-score mono">48</span><span class="row-bar" aria-hidden="true"><span style="width: 48%;"></span></span><span class="row-toggle">접기 −</span></button><div class="readiness-detail" id="readiness-detail-redundancy"><div class="detail-group"><h3>Counts</h3><dl><div><dt>전체 파일</dt><dd class="mono">48</dd></div><div><dt>완전 중복 그룹</dt><dd class="mono">4</dd></div><div><dt>중복 파일</dt><dd class="mono">9</dd></div></dl></div><div class="detail-group"><h3>Flags</h3><dl><div><dt>빈 파일 집합</dt><dd class="mono">아니요</dd></div><div><dt>스캔·메타데이터 파일 수 불일치</dt><dd class="mono">아니요</dd></div></dl></div><div class="detail-group detail-group--wide"><h3>Files &amp; observations</h3><p>API에서 이 점수 차원의 개별 파일 목록과 observation 연결 정보를 제공하지 않습니다.</p><div class="observation-list"><div class="observation-note">아래는 점수와 분리된 전체 unscored observations이며, 이 차원과 관련 있다고 추정하지 않습니다.</div><article><div><span class="status status--warning">PROBABLE_VERSION_GROUP</span><span>DEV fixture probable version group.</span></div><p class="mono">File IDs · FILE_DEMO_01, FILE_DEMO_02</p></article></div></div></div></div><div class="readiness-row"><button class="readiness-trigger" aria-expanded="false" aria-controls="readiness-detail-completeness"><span class="row-index mono">02</span><span class="row-name"><strong>완결성</strong><small>Completeness</small></span><span class="row-score mono">66</span><span class="row-bar" aria-hidden="true"><span style="width: 66%;"></span></span><span class="row-toggle">펼치기 +</span></button></div><div class="readiness-row"><button class="readiness-trigger" aria-expanded="false" aria-controls="readiness-detail-safety"><span class="row-index mono">03</span><span class="row-name"><strong>권한·민감정보</strong><small>Safety</small></span><span class="row-score mono">72</span><span class="row-bar" aria-hidden="true"><span style="width: 72%;"></span></span><span class="row-toggle">펼치기 +</span></button></div><div class="readiness-row"><button class="readiness-trigger" aria-expanded="false" aria-controls="readiness-detail-accessibility"><span class="row-index mono">04</span><span class="row-name"><strong>접근성</strong><small>Accessibility</small></span><span class="row-score mono">83</span><span class="row-bar" aria-hidden="true"><span style="width: 83%;"></span></span><span class="row-toggle">펼치기 +</span></button></div><div class="readiness-row"><button class="readiness-trigger" aria-expanded="false" aria-controls="readiness-detail-timeliness"><span class="row-index mono">05</span><span class="row-name"><strong>최신성</strong><small>Timeliness</small></span><span class="row-score mono">61</span><span class="row-bar" aria-hidden="true"><span style="width: 61%;"></span></span><span class="row-toggle">펼치기 +</span></button></div></div></section><section class="report-section" id="tasks" aria-labelledby="tasks-title"><header class="section-heading"><div><div class="section-index">03 / Tasks</div><h2 id="tasks-title">검증 과제</h2></div><span class="status status--warning">NOT_ONBOARDED</span></header><div class="notice notice--warning"><strong>과제 catalog가 아직 온보딩되지 않았습니다.</strong><span>API가 빈 목록을 반환했으며 제품 화면에 임의 과제를 만들지 않습니다.</span></div></section><section class="report-section" id="findings" aria-labelledby="findings-title"><header class="section-heading"><div><div class="section-index">04 / Findings</div><h2 id="findings-title">진단 결과</h2></div><span class="status status--positive">DELIVERED</span></header><article class="finding-card" id="finding-current"><button class="finding-trigger" aria-expanded="true" aria-controls="finding-body-demo-answered"><span class="finding-number mono">01</span><span><small>AD HOC RUN</small><strong>전달 답변</strong></span><span class="status status--positive">ANSWERED</span><span class="row-toggle">접기 −</span></button><div class="finding-body" id="finding-body-demo-answered"><div class="notice notice--warning">DEV 전용 합성 응답입니다. 실제 고객 결과가 아닙니다.</div><div class="verdict-block"><div class="verdict-label">DELIVERY VERDICT</div><div class="verdict-main"><span class="status status--positive">답변</span><div class="answer-display">DEV fixture answer</div></div><p>합성 UI 검증용 답변입니다.</p><div class="source-link source-link--not_checked"><span>Delivery source link</span><strong class="mono">NOT_CHECKED</strong><p>Source ID의 연결 및 답변 지지를 아직 검사하지 않은 상태입니다.</p></div></div><dl class="finding-meta"><div><dt>Run ID</dt><dd class="mono">demo-answered</dd></div><div><dt>Dataset</dt><dd class="mono">mini</dd></div><div><dt>Model</dt><dd class="mono">demo-model</dd></div><div><dt>Source IDs</dt><dd class="source-values"><span class="mono">SOURCE_DEMO_01</span></dd></div></dl></div></article></section><section class="report-section evidence-check" id="evidence" aria-labelledby="evidence-title"><header class="section-heading"><div><div class="section-index">05 / Evidence Checker</div><h2 id="evidence-title">근거 검사</h2></div><span class="status status--neutral">확인 불가</span></header><p class="section-lede">최종 DeliveryEnvelope와 동일 run의 구조화 응답만 검사한 별도 결과입니다. DeliveryEnvelope를 수정하지 않습니다.</p><div class="evidence-result evidence-result--unconfirmed"><div class="evidence-summary"><div><span class="mono">UNCONFIRMED</span><strong>확인 불가</strong></div><p>검사 범위 안에서 근거 지지를 결정적으로 확인하지 못했습니다.</p></div><div class="not-incorrect">확인 불가가 오답을 뜻하지 않음</div><div class="source-groups"><div class="source-set"><span>Cited</span><div><span class="status status--neutral">SOURCE_DEMO_01</span></div></div><div class="source-set"><span>Matched</span><div><span class="status status--positive">SOURCE_DEMO_01</span></div></div><div class="source-set"><span>Unmatched</span><div><em>없음</em></div></div></div><div class="evidence-references"><h3>검사 응답</h3><div><span class="mono">#1</span><strong>read_document</strong><span>CITED_RESPONSE</span><small class="mono">SOURCE_DEMO_01</small></div></div><div class="limitations"><h3>Limitations</h3><ul><li>DEV fixture: the cited response does not provide a deterministic match within checker v1 scope.</li></ul></div><div class="evidence-hash"><span>Delivery SHA-256</span><code>0000000000000000000000000000000000000000000000000000000000000000</code></div></div></section><footer class="report-footer">AX RESULTS CONSOLE <span>·</span> API CONTRACT VIEW</footer></main></div></div>
+    
+  
+
+</body><div id="codex-browser-sidebar-comments-root" style="position: fixed; inset: 0px; pointer-events: none; z-index: 2147483647;"></div></html>

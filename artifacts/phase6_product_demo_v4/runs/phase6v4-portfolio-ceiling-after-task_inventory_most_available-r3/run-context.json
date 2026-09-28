@@ -1,0 +1,1 @@
+{"dataset": "portfolio-ceiling-after", "request_type": "TASK_CANDIDATE", "run_id": "phase6v4-portfolio-ceiling-after-task_inventory_most_available-r3", "schema_version": "ax-run-context-v1", "task_id": "TASK_INVENTORY_MOST_AVAILABLE", "task_label": "현재 가용재고가 가장 많은 품목은 무엇인가요?"}

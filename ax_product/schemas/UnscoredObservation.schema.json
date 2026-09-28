@@ -1,0 +1,43 @@
+{
+  "additionalProperties": false,
+  "description": "Static observation outside the frozen readiness score dimensions.",
+  "properties": {
+    "code": {
+      "examples": [
+        "PROBABLE_VERSION_GROUP"
+      ],
+      "minLength": 1,
+      "pattern": "^[A-Z][A-Z0-9_]*$",
+      "title": "Code",
+      "type": "string"
+    },
+    "file_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "File Ids",
+      "type": "array"
+    },
+    "message": {
+      "minLength": 1,
+      "title": "Message",
+      "type": "string"
+    },
+    "severity": {
+      "enum": [
+        "info",
+        "warning",
+        "error"
+      ],
+      "title": "Severity",
+      "type": "string"
+    }
+  },
+  "required": [
+    "code",
+    "severity",
+    "message"
+  ],
+  "title": "UnscoredObservation",
+  "type": "object"
+}

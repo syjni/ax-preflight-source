@@ -1,0 +1,73 @@
+{
+  "scan_metadata": {
+    "schema_version": "ax-scan-report-v1",
+    "scanner_version": "0.1.0",
+    "source_root_name": "return_policy_after",
+    "supported_extensions": [
+      ".txt",
+      ".pdf",
+      ".docx",
+      ".csv",
+      ".xlsx"
+    ],
+    "ocr_min_chars_per_page": 20,
+    "file_count": 2,
+    "parsed_file_count": 2,
+    "unsupported_file_count": 0,
+    "error_file_count": 0,
+    "local_only": true,
+    "llm_dependency_required": false
+  },
+  "files": [
+    {
+      "file_id": "FILE_bac911e84aac7c01",
+      "relative_path": "policies/반품_정책_변경기록.txt",
+      "filename": "반품_정책_변경기록.txt",
+      "extension": ".txt",
+      "size": 373,
+      "modified_at": "2026-09-01T00:00:00Z",
+      "sha256": "ccc889d759d4cab96eb10365bc90b6c16642cbbe510aaf02b23a5ff5c7b77d26",
+      "parse_status": "PARSED",
+      "parser": "txt",
+      "text": "과거 반품 정책 변경 기록\n\n과거에는 상품을 수령한 다음 날부터 14일 이내에 반품을 신청하도록 운영했습니다.\n이 14일 기준은 폐기되었고 30일 기준으로 대체되었으므로 현재 반품 업무에는 적용하지 않습니다.\n반품 신청 시 주문번호와 반품 사유를 고객지원팀에 전달해야 합니다.\n",
+      "text_char_count": 155,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig"
+      }
+    },
+    {
+      "file_id": "FILE_5587cb5d2ae64ba9",
+      "relative_path": "policies/반품_정책_운영기준.txt",
+      "filename": "반품_정책_운영기준.txt",
+      "extension": ".txt",
+      "size": 299,
+      "modified_at": "2026-09-01T00:00:00Z",
+      "sha256": "97054b24e9bc6c906798796ce04cfd5856d430eb31756b0890a80b44f6e1afe0",
+      "parse_status": "PARSED",
+      "parser": "txt",
+      "text": "현행 반품 정책\n\n현재 유효한 반품 가능 기간은 상품을 수령한 다음 날부터 30일 이내입니다.\n이 기준은 고객 반품 업무에 적용되는 최종 운영 정책입니다.\n반품 신청 시 주문번호와 반품 사유를 고객지원팀에 전달해야 합니다.\n",
+      "text_char_count": 125,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig"
+      }
+    }
+  ],
+  "duplicates": [],
+  "probable_version_groups": [],
+  "pii_findings": [],
+  "unreadable_sources": [],
+  "tables": [],
+  "live_llm": {
+    "status": "LIVE_LLM_PENDING",
+    "provider": null,
+    "model": null,
+    "reason": "No OpenAI API key, AWS credential/profile, or supported local LLM runtime was available.",
+    "tasks": []
+  }
+}

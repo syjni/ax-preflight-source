@@ -1,0 +1,24 @@
+{
+  "schema_version": "ax-v5-candidate-dataset-manifest-v1",
+  "dataset_id": "haesol-manufacturing-2028-v5-candidate",
+  "source_root": "experiment/v5/heldout/해솔제조",
+  "file_count": 4,
+  "files": [
+    {
+      "relative_path": "01_고객지원/채널별_반품심사_2028.csv",
+      "sha256": "f709b3f2212d48ad029a19fb469ac92b7069548d33983ae72efb8bcad9a35575"
+    },
+    {
+      "relative_path": "02_설비/설비_조치_기준.txt",
+      "sha256": "f05f3b3530e80e9c4dbbc5344118b0f17cf13d0cb2eff978a97bd57838b08185"
+    },
+    {
+      "relative_path": "03_관리/등록_필수_증빙.txt",
+      "sha256": "cc722f32a9e0e3e51118273b95a77e683ca5ae491b8a68534ee743a3d066c7ab"
+    },
+    {
+      "relative_path": "04_담당/승인권한_2028.txt",
+      "sha256": "80c67d2222a70df8b46be3f2d3d437722bc1968782b84cdc86ab614c34678a8f"
+    }
+  ]
+}

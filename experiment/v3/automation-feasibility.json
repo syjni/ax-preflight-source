@@ -1,0 +1,62 @@
+{
+  "schema_version": "ax-v3-automation-feasibility-v1",
+  "experiment_version": "ax-exp-v3",
+  "kiro_cli_version": "kiro-cli-chat 2.22.1",
+  "held_out_prompt_submitted": false,
+  "held_out_valid_execution_count": 0,
+  "tested_methods": [
+    {
+      "method": "default engine + --no-interactive + --output-format stream-json",
+      "result": "UNSUPPORTED",
+      "observation": "CLI rejected stream-json on the v1 engine before model execution.",
+      "evidence": {
+        "directory": "artifacts/v3_automation_feasibility_2026-09-20/smoke-1",
+        "stdout_sha256": "b058f76ca6e81bb1fdf1f0d1da970405f7488b396a84c58fa4d74dab786d47ce",
+        "stderr_sha256": "6ae57182095cc22141f64f6a64d41bf8a83d0116bfd867e450865abf755b5a65",
+        "runtime_identity_receipt_exists": false
+      }
+    },
+    {
+      "method": "--agent-engine v2 + --no-interactive + stream-json",
+      "result": "FAILED",
+      "observation": "runStarted was emitted, then prompt-stage Internal error; no persistent session or runtime receipt.",
+      "evidence": {
+        "directory": "artifacts/v3_automation_feasibility_2026-09-20_attempt2/smoke-1",
+        "stdout_sha256": "f006655327e0a3c2b3af50d9a5553c47faaec5de85ea63a61d56e94afa85aecc",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runtime_identity_receipt_exists": false
+      }
+    },
+    {
+      "method": "--agent-engine v2 + --no-interactive + text output",
+      "result": "FAILED",
+      "observation": "CLI returned Internal error; no reliable session capture.",
+      "evidence": {
+        "directory": "artifacts/v3_automation_feasibility_2026-09-20_attempt3/smoke-1",
+        "stdout_sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+        "stderr_sha256": "8a9f27f28f50830e24583e6efe782632009a7618095c5ba333e49bafe135455b",
+        "runtime_identity_receipt_exists": false
+      }
+    },
+    {
+      "method": "default engine + --no-interactive + text output",
+      "result": "INCONCLUSIVE_AND_UNSAFE",
+      "observation": "Sandboxed request reported MCP/profile and network dispatch failure, returned a non-diagnostic exit status, and persisted no session or runtime receipt.",
+      "evidence": {
+        "directory": "artifacts/v3_automation_feasibility_2026-09-20_attempt4/smoke-1",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "808d52c8eb0e7dd9964f2f3d52d097da73a90a0404591465bcbc06b62902b003",
+        "runtime_identity_receipt_exists": false
+      }
+    },
+    {
+      "method": "network-enabled repeat of Dev-only non-interactive probe",
+      "result": "NOT_RUN_SAFETY_REVIEW_REJECTED",
+      "observation": "External runtime data-egress approval was not available; no workaround was attempted.",
+      "evidence": null
+    }
+  ],
+  "deterministic_automated_backend_available": false,
+  "decision": "Use SEMI_AUTOMATED_FRESH_PROCESS with authoritative session JSON/JSONL prompt verification.",
+  "reason": "No tested non-interactive path provided a successful response, persistent one-turn session, and runtime identity receipt together."
+}

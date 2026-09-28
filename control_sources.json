@@ -1,0 +1,59 @@
+{
+  "schema_version": "ax-control-sources-v2",
+  "dataset_id": "hanbit-distribution-ceiling-v1",
+  "control_task_ids": [
+    "K03_DELAY_COMPENSATION_THRESHOLD",
+    "K06_FIRST_RESPONSE_TARGET",
+    "O04_PRODUCT_MASTER_COUNT",
+    "O05_HIGHEST_AVAILABLE_STOCK",
+    "C03_TEA_STOCK"
+  ],
+  "protected_sources": [
+    "02_정책/배송_지연_보상_2026.docx",
+    "03_영업/품목_마스터.csv",
+    "05_물류/재고_현황_2026-09.xlsx",
+    "06_고객지원/고객응대_매뉴얼.docx"
+  ],
+  "protected_source_sha256": {
+    "02_정책/배송_지연_보상_2026.docx": "b0679759b829570c6979e7614cba807ec9e760999d40e40acf04ea0e5391ad65",
+    "03_영업/품목_마스터.csv": "347c22d71df4082a9f021005097b46cd54f8d1e729489c601b5904afc4744c44",
+    "05_물류/재고_현황_2026-09.xlsx": "bcc80929e6ec4bf4bdd88bbc4013ed1029c2b245a2bd38163c6edc3116cd07c2",
+    "06_고객지원/고객응대_매뉴얼.docx": "0f6ca440e8ebf4485bfbd0e4ee69c5dea1ec12355f9610b3bf03246a282533f0"
+  },
+  "protected_logical_families": [
+    {
+      "family_id": "02_정책/배송지연보상2026",
+      "canonical_source": "02_정책/배송_지연_보상_2026.docx",
+      "allowed_members": [
+        "02_정책/배송_지연_보상_2026.docx"
+      ]
+    },
+    {
+      "family_id": "03_영업/품목마스터",
+      "canonical_source": "03_영업/품목_마스터.csv",
+      "allowed_members": [
+        "03_영업/품목_마스터.csv"
+      ]
+    },
+    {
+      "family_id": "05_물류/재고현황202609",
+      "canonical_source": "05_물류/재고_현황_2026-09.xlsx",
+      "allowed_members": [
+        "05_물류/재고_현황_2026-09.xlsx"
+      ]
+    },
+    {
+      "family_id": "06_고객지원/고객응대매뉴얼",
+      "canonical_source": "06_고객지원/고객응대_매뉴얼.docx",
+      "allowed_members": [
+        "06_고객지원/고객응대_매뉴얼.docx"
+      ]
+    }
+  ],
+  "protection_rule": "Later defect injection must preserve every protected source byte-for-byte and may not add a duplicate or conflicting sibling in a protected logical family.",
+  "later_retrieval_result_stability_metric": {
+    "name": "protected_control_retrieval_result_stability",
+    "definition": "After a future injection, each control task must retain its Ceiling source hash, required-source retrieval rank@k, and deterministic score classification under the same frozen retrieval contract.",
+    "execution_status": "NOT_RUN"
+  }
+}

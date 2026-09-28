@@ -1,0 +1,367 @@
+{
+  "schema_version": "ax-defect-injection-spec-v2",
+  "experiment_version": "ax-exp-v2",
+  "source_manifest_schema": "ax-task-to-defect-v1",
+  "design_status": "PRE_REGISTERED_BEFORE_HELD_OUT_EXECUTION",
+  "operator_rationale": "The frozen source_readiness label identifies relevant sources but not an operator. v2 operationalizes it as an accessibility defect: retain each source in inventory and make its declared-format parser fail. This avoids treating source_readiness as deletion.",
+  "variants": [
+    {
+      "variant_id": "AXV2_ACCESSIBILITY_D527640C55B3",
+      "runtime_profile": "before-accessibility-d527640c55b3",
+      "affected_task_ids": [
+        "K01_RETURN_WINDOW",
+        "K02_RETURN_REQUIREMENTS"
+      ],
+      "frozen_defect_ids": [
+        "DEF_K01_RETURN_WINDOW_SOURCE_READINESS",
+        "DEF_K02_RETURN_REQUIREMENTS_SOURCE_READINESS"
+      ],
+      "affected_sources": [
+        "02_정책/반품_교환_정책_2026.docx"
+      ],
+      "target_readiness_dimension": "accessibility",
+      "defect_concept": "source remains inventoried but cannot be parsed by its declared-format parser",
+      "transformation_operator": "replace_file_bytes_with_path_keyed_invalid_payload_v1",
+      "transformation_parameters": {
+        "payload_prefix_hex": "fffefbff",
+        "payload_suffix": "sha256(relative_path).digest()",
+        "preserve_relative_path": true,
+        "preserve_modified_timestamp": true
+      },
+      "source_ceiling_sha256": {
+        "02_정책/반품_교환_정책_2026.docx": "04f6ce1df32f33a52ade0aea8a14e4565d6c5a5f9e595b7a80f673ba8f35edd4"
+      },
+      "generated_before_sha256": {
+        "02_정책/반품_교환_정책_2026.docx": "ec44e5859bc8b90353b3726e8d8f5f1b565c59c35b95ce571c289e3f65819c24"
+      },
+      "expected_invariant": {
+        "file_inventory_preserved": true,
+        "target_parse_status": "ERROR",
+        "accessibility_decreases": true,
+        "completeness_redundancy_timeliness_safety_unchanged": true,
+        "protected_control_sources_byte_identical": true
+      },
+      "provenance": {
+        "frozen_mapping": "task_to_defect_manifest.json",
+        "ceiling_manifest": "dataset_manifest.json",
+        "generator": "scripts/generate_before_variants.py"
+      },
+      "dataset_manifest": "experiment/v2/runtime/before-accessibility-d527640c55b3-dataset-manifest.json",
+      "scan_report": "experiment/v2/runtime/before-accessibility-d527640c55b3-scan-report.json",
+      "diff_receipt": "experiment/v2/runtime/before-accessibility-d527640c55b3-diff.json"
+    },
+    {
+      "variant_id": "AXV2_ACCESSIBILITY_0E78131FC878",
+      "runtime_profile": "before-accessibility-0e78131fc878",
+      "affected_task_ids": [
+        "K04_DISCOUNT_APPROVER"
+      ],
+      "frozen_defect_ids": [
+        "DEF_K04_DISCOUNT_APPROVER_SOURCE_READINESS"
+      ],
+      "affected_sources": [
+        "02_정책/할인_승인_규정.docx"
+      ],
+      "target_readiness_dimension": "accessibility",
+      "defect_concept": "source remains inventoried but cannot be parsed by its declared-format parser",
+      "transformation_operator": "replace_file_bytes_with_path_keyed_invalid_payload_v1",
+      "transformation_parameters": {
+        "payload_prefix_hex": "fffefbff",
+        "payload_suffix": "sha256(relative_path).digest()",
+        "preserve_relative_path": true,
+        "preserve_modified_timestamp": true
+      },
+      "source_ceiling_sha256": {
+        "02_정책/할인_승인_규정.docx": "173beb03c435728a4461b22a23cd2e535c485c63b2af7465dcbc41c8f6c8f083"
+      },
+      "generated_before_sha256": {
+        "02_정책/할인_승인_규정.docx": "cfa2ab0f48b0bcc21f3314f6771fe5f873191f0fa5769b43d1aa20a6c2863f1c"
+      },
+      "expected_invariant": {
+        "file_inventory_preserved": true,
+        "target_parse_status": "ERROR",
+        "accessibility_decreases": true,
+        "completeness_redundancy_timeliness_safety_unchanged": true,
+        "protected_control_sources_byte_identical": true
+      },
+      "provenance": {
+        "frozen_mapping": "task_to_defect_manifest.json",
+        "ceiling_manifest": "dataset_manifest.json",
+        "generator": "scripts/generate_before_variants.py"
+      },
+      "dataset_manifest": "experiment/v2/runtime/before-accessibility-0e78131fc878-dataset-manifest.json",
+      "scan_report": "experiment/v2/runtime/before-accessibility-0e78131fc878-scan-report.json",
+      "diff_receipt": "experiment/v2/runtime/before-accessibility-0e78131fc878-diff.json"
+    },
+    {
+      "variant_id": "AXV2_ACCESSIBILITY_7497B2824BA3",
+      "runtime_profile": "before-accessibility-7497b2824ba3",
+      "affected_task_ids": [
+        "C06_ARAM_AUGUST_RETURNS"
+      ],
+      "frozen_defect_ids": [
+        "DEF_C06_ARAM_AUGUST_RETURNS_SOURCE_READINESS"
+      ],
+      "affected_sources": [
+        "03_영업/거래처_마스터.xlsx",
+        "04_주문/반품_원장_2026.csv"
+      ],
+      "target_readiness_dimension": "accessibility",
+      "defect_concept": "source remains inventoried but cannot be parsed by its declared-format parser",
+      "transformation_operator": "replace_file_bytes_with_path_keyed_invalid_payload_v1",
+      "transformation_parameters": {
+        "payload_prefix_hex": "fffefbff",
+        "payload_suffix": "sha256(relative_path).digest()",
+        "preserve_relative_path": true,
+        "preserve_modified_timestamp": true
+      },
+      "source_ceiling_sha256": {
+        "03_영업/거래처_마스터.xlsx": "0f8ae595489516ca277fb74a24863384c0f67ade352f9c742cc69d4785dd8ddb",
+        "04_주문/반품_원장_2026.csv": "727db2884c7bb942d0e8e91b737aa962ec72e2d7339cf476b5aebfb4fce5518f"
+      },
+      "generated_before_sha256": {
+        "03_영업/거래처_마스터.xlsx": "5e917d265d993236b997473b90a8d726d4a92bf9a0373857979b9e10649f1d24",
+        "04_주문/반품_원장_2026.csv": "acfd2aa1930f0cd0128671a166035edb0bbdebda0cbec7760deb3851c59baa36"
+      },
+      "expected_invariant": {
+        "file_inventory_preserved": true,
+        "target_parse_status": "ERROR",
+        "accessibility_decreases": true,
+        "completeness_redundancy_timeliness_safety_unchanged": true,
+        "protected_control_sources_byte_identical": true
+      },
+      "provenance": {
+        "frozen_mapping": "task_to_defect_manifest.json",
+        "ceiling_manifest": "dataset_manifest.json",
+        "generator": "scripts/generate_before_variants.py"
+      },
+      "dataset_manifest": "experiment/v2/runtime/before-accessibility-7497b2824ba3-dataset-manifest.json",
+      "scan_report": "experiment/v2/runtime/before-accessibility-7497b2824ba3-scan-report.json",
+      "diff_receipt": "experiment/v2/runtime/before-accessibility-7497b2824ba3-diff.json"
+    },
+    {
+      "variant_id": "AXV2_ACCESSIBILITY_A534444AFE03",
+      "runtime_profile": "before-accessibility-a534444afe03",
+      "affected_task_ids": [
+        "C02_DONGHAE_SEPTEMBER_TOTAL",
+        "C05_SAEBOM_JULY_TOTAL",
+        "K07_VENDOR_FORECAST_ABSTAIN",
+        "O03_GREEN_TABLE_LAST_ORDER"
+      ],
+      "frozen_defect_ids": [
+        "DEF_C02_DONGHAE_SEPTEMBER_TOTAL_SOURCE_READINESS",
+        "DEF_C05_SAEBOM_JULY_TOTAL_SOURCE_READINESS",
+        "DEF_K07_VENDOR_FORECAST_ABSTAIN_SOURCE_READINESS",
+        "DEF_O03_GREEN_TABLE_LAST_ORDER_SOURCE_READINESS"
+      ],
+      "affected_sources": [
+        "03_영업/거래처_마스터.xlsx",
+        "04_주문/주문_원장_2026.xlsx"
+      ],
+      "target_readiness_dimension": "accessibility",
+      "defect_concept": "source remains inventoried but cannot be parsed by its declared-format parser",
+      "transformation_operator": "replace_file_bytes_with_path_keyed_invalid_payload_v1",
+      "transformation_parameters": {
+        "payload_prefix_hex": "fffefbff",
+        "payload_suffix": "sha256(relative_path).digest()",
+        "preserve_relative_path": true,
+        "preserve_modified_timestamp": true
+      },
+      "source_ceiling_sha256": {
+        "03_영업/거래처_마스터.xlsx": "0f8ae595489516ca277fb74a24863384c0f67ade352f9c742cc69d4785dd8ddb",
+        "04_주문/주문_원장_2026.xlsx": "8b3ebc1c4d7a8caa87c7664d8f80772e70b1348c89dd38cb7b6365664dedf789"
+      },
+      "generated_before_sha256": {
+        "03_영업/거래처_마스터.xlsx": "5e917d265d993236b997473b90a8d726d4a92bf9a0373857979b9e10649f1d24",
+        "04_주문/주문_원장_2026.xlsx": "41c5d271ab60b5ce95e8a80df297e6d11e0fb87fbab14eac7298d6be58b700cb"
+      },
+      "expected_invariant": {
+        "file_inventory_preserved": true,
+        "target_parse_status": "ERROR",
+        "accessibility_decreases": true,
+        "completeness_redundancy_timeliness_safety_unchanged": true,
+        "protected_control_sources_byte_identical": true
+      },
+      "provenance": {
+        "frozen_mapping": "task_to_defect_manifest.json",
+        "ceiling_manifest": "dataset_manifest.json",
+        "generator": "scripts/generate_before_variants.py"
+      },
+      "dataset_manifest": "experiment/v2/runtime/before-accessibility-a534444afe03-dataset-manifest.json",
+      "scan_report": "experiment/v2/runtime/before-accessibility-a534444afe03-scan-report.json",
+      "diff_receipt": "experiment/v2/runtime/before-accessibility-a534444afe03-diff.json"
+    },
+    {
+      "variant_id": "AXV2_ACCESSIBILITY_66A46D7E2186",
+      "runtime_profile": "before-accessibility-66a46d7e2186",
+      "affected_task_ids": [
+        "O06_RETURN_RATE"
+      ],
+      "frozen_defect_ids": [
+        "DEF_O06_RETURN_RATE_SOURCE_READINESS"
+      ],
+      "affected_sources": [
+        "04_주문/반품_원장_2026.csv"
+      ],
+      "target_readiness_dimension": "accessibility",
+      "defect_concept": "source remains inventoried but cannot be parsed by its declared-format parser",
+      "transformation_operator": "replace_file_bytes_with_path_keyed_invalid_payload_v1",
+      "transformation_parameters": {
+        "payload_prefix_hex": "fffefbff",
+        "payload_suffix": "sha256(relative_path).digest()",
+        "preserve_relative_path": true,
+        "preserve_modified_timestamp": true
+      },
+      "source_ceiling_sha256": {
+        "04_주문/반품_원장_2026.csv": "727db2884c7bb942d0e8e91b737aa962ec72e2d7339cf476b5aebfb4fce5518f"
+      },
+      "generated_before_sha256": {
+        "04_주문/반품_원장_2026.csv": "acfd2aa1930f0cd0128671a166035edb0bbdebda0cbec7760deb3851c59baa36"
+      },
+      "expected_invariant": {
+        "file_inventory_preserved": true,
+        "target_parse_status": "ERROR",
+        "accessibility_decreases": true,
+        "completeness_redundancy_timeliness_safety_unchanged": true,
+        "protected_control_sources_byte_identical": true
+      },
+      "provenance": {
+        "frozen_mapping": "task_to_defect_manifest.json",
+        "ceiling_manifest": "dataset_manifest.json",
+        "generator": "scripts/generate_before_variants.py"
+      },
+      "dataset_manifest": "experiment/v2/runtime/before-accessibility-66a46d7e2186-dataset-manifest.json",
+      "scan_report": "experiment/v2/runtime/before-accessibility-66a46d7e2186-scan-report.json",
+      "diff_receipt": "experiment/v2/runtime/before-accessibility-66a46d7e2186-diff.json"
+    },
+    {
+      "variant_id": "AXV2_ACCESSIBILITY_950A2B2ED909",
+      "runtime_profile": "before-accessibility-950a2b2ed909",
+      "affected_task_ids": [
+        "O02_SEPTEMBER_ORDER_TOTAL"
+      ],
+      "frozen_defect_ids": [
+        "DEF_O02_SEPTEMBER_ORDER_TOTAL_SOURCE_READINESS"
+      ],
+      "affected_sources": [
+        "04_주문/주문_원장_2026.xlsx"
+      ],
+      "target_readiness_dimension": "accessibility",
+      "defect_concept": "source remains inventoried but cannot be parsed by its declared-format parser",
+      "transformation_operator": "replace_file_bytes_with_path_keyed_invalid_payload_v1",
+      "transformation_parameters": {
+        "payload_prefix_hex": "fffefbff",
+        "payload_suffix": "sha256(relative_path).digest()",
+        "preserve_relative_path": true,
+        "preserve_modified_timestamp": true
+      },
+      "source_ceiling_sha256": {
+        "04_주문/주문_원장_2026.xlsx": "8b3ebc1c4d7a8caa87c7664d8f80772e70b1348c89dd38cb7b6365664dedf789"
+      },
+      "generated_before_sha256": {
+        "04_주문/주문_원장_2026.xlsx": "41c5d271ab60b5ce95e8a80df297e6d11e0fb87fbab14eac7298d6be58b700cb"
+      },
+      "expected_invariant": {
+        "file_inventory_preserved": true,
+        "target_parse_status": "ERROR",
+        "accessibility_decreases": true,
+        "completeness_redundancy_timeliness_safety_unchanged": true,
+        "protected_control_sources_byte_identical": true
+      },
+      "provenance": {
+        "frozen_mapping": "task_to_defect_manifest.json",
+        "ceiling_manifest": "dataset_manifest.json",
+        "generator": "scripts/generate_before_variants.py"
+      },
+      "dataset_manifest": "experiment/v2/runtime/before-accessibility-950a2b2ed909-dataset-manifest.json",
+      "scan_report": "experiment/v2/runtime/before-accessibility-950a2b2ed909-scan-report.json",
+      "diff_receipt": "experiment/v2/runtime/before-accessibility-950a2b2ed909-diff.json"
+    },
+    {
+      "variant_id": "AXV2_ACCESSIBILITY_F1D1804D1AA6",
+      "runtime_profile": "before-accessibility-f1d1804d1aa6",
+      "affected_task_ids": [
+        "O07_SEOUL_LEAD_TIME"
+      ],
+      "frozen_defect_ids": [
+        "DEF_O07_SEOUL_LEAD_TIME_SOURCE_READINESS"
+      ],
+      "affected_sources": [
+        "05_물류/배송권역_리드타임.csv"
+      ],
+      "target_readiness_dimension": "accessibility",
+      "defect_concept": "source remains inventoried but cannot be parsed by its declared-format parser",
+      "transformation_operator": "replace_file_bytes_with_path_keyed_invalid_payload_v1",
+      "transformation_parameters": {
+        "payload_prefix_hex": "fffefbff",
+        "payload_suffix": "sha256(relative_path).digest()",
+        "preserve_relative_path": true,
+        "preserve_modified_timestamp": true
+      },
+      "source_ceiling_sha256": {
+        "05_물류/배송권역_리드타임.csv": "851da6752a62976cc386072419cabfd6f589820a13ff9f33fee8d1c900302b78"
+      },
+      "generated_before_sha256": {
+        "05_물류/배송권역_리드타임.csv": "62416e297063244fbcf29de5f3cc0f21cf36c41e312637766baf53f8501c848b"
+      },
+      "expected_invariant": {
+        "file_inventory_preserved": true,
+        "target_parse_status": "ERROR",
+        "accessibility_decreases": true,
+        "completeness_redundancy_timeliness_safety_unchanged": true,
+        "protected_control_sources_byte_identical": true
+      },
+      "provenance": {
+        "frozen_mapping": "task_to_defect_manifest.json",
+        "ceiling_manifest": "dataset_manifest.json",
+        "generator": "scripts/generate_before_variants.py"
+      },
+      "dataset_manifest": "experiment/v2/runtime/before-accessibility-f1d1804d1aa6-dataset-manifest.json",
+      "scan_report": "experiment/v2/runtime/before-accessibility-f1d1804d1aa6-scan-report.json",
+      "diff_receipt": "experiment/v2/runtime/before-accessibility-f1d1804d1aa6-diff.json"
+    },
+    {
+      "variant_id": "AXV2_ACCESSIBILITY_91428D0D2D6D",
+      "runtime_profile": "before-accessibility-91428d0d2d6d",
+      "affected_task_ids": [
+        "K05_STOCK_REFERENCE_FIELD"
+      ],
+      "frozen_defect_ids": [
+        "DEF_K05_STOCK_REFERENCE_FIELD_SOURCE_READINESS"
+      ],
+      "affected_sources": [
+        "05_물류/창고_운영_매뉴얼.docx"
+      ],
+      "target_readiness_dimension": "accessibility",
+      "defect_concept": "source remains inventoried but cannot be parsed by its declared-format parser",
+      "transformation_operator": "replace_file_bytes_with_path_keyed_invalid_payload_v1",
+      "transformation_parameters": {
+        "payload_prefix_hex": "fffefbff",
+        "payload_suffix": "sha256(relative_path).digest()",
+        "preserve_relative_path": true,
+        "preserve_modified_timestamp": true
+      },
+      "source_ceiling_sha256": {
+        "05_물류/창고_운영_매뉴얼.docx": "90805a744afd5108dc3c2b7b4e5f850b62334a94115f36c6148a8bc8dadb470d"
+      },
+      "generated_before_sha256": {
+        "05_물류/창고_운영_매뉴얼.docx": "81035114380403f4eeab6d320d05366319a4656271958571a36c495de5afa3b5"
+      },
+      "expected_invariant": {
+        "file_inventory_preserved": true,
+        "target_parse_status": "ERROR",
+        "accessibility_decreases": true,
+        "completeness_redundancy_timeliness_safety_unchanged": true,
+        "protected_control_sources_byte_identical": true
+      },
+      "provenance": {
+        "frozen_mapping": "task_to_defect_manifest.json",
+        "ceiling_manifest": "dataset_manifest.json",
+        "generator": "scripts/generate_before_variants.py"
+      },
+      "dataset_manifest": "experiment/v2/runtime/before-accessibility-91428d0d2d6d-dataset-manifest.json",
+      "scan_report": "experiment/v2/runtime/before-accessibility-91428d0d2d6d-scan-report.json",
+      "diff_receipt": "experiment/v2/runtime/before-accessibility-91428d0d2d6d-diff.json"
+    }
+  ]
+}

@@ -1,0 +1,320 @@
+{
+  "schema_version": "ax-evidence-check-v1-v5-manual-comparison-v1",
+  "scope": "posthoc comparison only; not a new Agent performance metric",
+  "official_v5_results_modified": false,
+  "checker_inputs": [
+    "approved delivered.json",
+    "same-run cited structured tool responses"
+  ],
+  "checker_excluded_inputs": [
+    "raw_response.txt",
+    "assistant final prose",
+    "research expected answers",
+    "research source files",
+    "evaluation scores"
+  ],
+  "runs_compared": 32,
+  "agreements": 25,
+  "mismatches": 7,
+  "by_checker_verdict": {
+    "DIRECT_MATCH": 22,
+    "PARTIAL_SUPPORT": 1,
+    "UNCONFIRMED": 9
+  },
+  "limitations": [
+    "The 32 records are two repeats of 16 tasks over four short files, not 32 independent tasks.",
+    "Manual auditors allowed division/rate and unit conversion; checker v1 intentionally does not.",
+    "UNCONFIRMED means not verified under the checker contract, not an incorrect answer.",
+    "This retrospective v5 comparison does not establish production or Agent performance."
+  ],
+  "rows": [
+    {
+      "task_id": "V5_R01_ONLINE_RETURN_APPROVAL_RATE",
+      "repetition": 1,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "UNCONFIRMED",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": false,
+      "note": "Manual audit derived a rate/division, but checker v1 excludes division and unit conversion; other unrelated numeric cells no longer create partial support."
+    },
+    {
+      "task_id": "V5_R01_ONLINE_RETURN_APPROVAL_RATE",
+      "repetition": 2,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "UNCONFIRMED",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": false,
+      "note": "Manual audit derived a rate/division, but checker v1 excludes division and unit conversion; other unrelated numeric cells no longer create partial support."
+    },
+    {
+      "task_id": "V5_R02_DEALER_RETURN_APPROVAL_RATE",
+      "repetition": 1,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "UNCONFIRMED",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": false,
+      "note": "Manual audit derived a rate/division, but checker v1 excludes division and unit conversion; other unrelated numeric cells no longer create partial support."
+    },
+    {
+      "task_id": "V5_R02_DEALER_RETURN_APPROVAL_RATE",
+      "repetition": 2,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "UNCONFIRMED",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": false,
+      "note": "Manual audit derived a rate/division, but checker v1 excludes division and unit conversion; other unrelated numeric cells no longer create partial support."
+    },
+    {
+      "task_id": "V5_R03_DIRECT_RETURN_APPROVAL_RATE",
+      "repetition": 1,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "DIRECT_MATCH",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": true,
+      "note": ""
+    },
+    {
+      "task_id": "V5_R03_DIRECT_RETURN_APPROVAL_RATE",
+      "repetition": 2,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "PARTIAL_SUPPORT",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": false,
+      "note": "Manual audit verified a rate/division; checker v1 found the answer value but cannot verify the required unit relationship or division."
+    },
+    {
+      "task_id": "V5_R04_BUSINESS_RETURN_APPROVAL_RATE",
+      "repetition": 1,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "UNCONFIRMED",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": false,
+      "note": "Manual audit derived a rate/division, but checker v1 excludes division and unit conversion; other unrelated numeric cells no longer create partial support."
+    },
+    {
+      "task_id": "V5_R04_BUSINESS_RETURN_APPROVAL_RATE",
+      "repetition": 2,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "UNCONFIRMED",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": false,
+      "note": "Manual audit derived a rate/division, but checker v1 excludes division and unit conversion; other unrelated numeric cells no longer create partial support."
+    },
+    {
+      "task_id": "V5_T01_COOLANT_PRESSURE_NOTICE_THRESHOLD",
+      "repetition": 1,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "DIRECT_MATCH",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": true,
+      "note": ""
+    },
+    {
+      "task_id": "V5_T01_COOLANT_PRESSURE_NOTICE_THRESHOLD",
+      "repetition": 2,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "DIRECT_MATCH",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": true,
+      "note": ""
+    },
+    {
+      "task_id": "V5_T02_PACKER_SENSOR_NOTICE_THRESHOLD",
+      "repetition": 1,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "DIRECT_MATCH",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": true,
+      "note": ""
+    },
+    {
+      "task_id": "V5_T02_PACKER_SENSOR_NOTICE_THRESHOLD",
+      "repetition": 2,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "DIRECT_MATCH",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": true,
+      "note": ""
+    },
+    {
+      "task_id": "V5_T03_FILLING_LEAK_NOTICE_THRESHOLD",
+      "repetition": 1,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "DIRECT_MATCH",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": true,
+      "note": ""
+    },
+    {
+      "task_id": "V5_T03_FILLING_LEAK_NOTICE_THRESHOLD",
+      "repetition": 2,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "DIRECT_MATCH",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": true,
+      "note": ""
+    },
+    {
+      "task_id": "V5_T04_SHIPPING_LABEL_NOTICE_THRESHOLD",
+      "repetition": 1,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "DIRECT_MATCH",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": true,
+      "note": ""
+    },
+    {
+      "task_id": "V5_T04_SHIPPING_LABEL_NOTICE_THRESHOLD",
+      "repetition": 2,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "DIRECT_MATCH",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": true,
+      "note": ""
+    },
+    {
+      "task_id": "V5_S01_SAFETY_INSPECTION_EVIDENCE",
+      "repetition": 1,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "DIRECT_MATCH",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": true,
+      "note": ""
+    },
+    {
+      "task_id": "V5_S01_SAFETY_INSPECTION_EVIDENCE",
+      "repetition": 2,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "DIRECT_MATCH",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": true,
+      "note": ""
+    },
+    {
+      "task_id": "V5_S02_VENDOR_VISIT_EVIDENCE",
+      "repetition": 1,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "DIRECT_MATCH",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": true,
+      "note": ""
+    },
+    {
+      "task_id": "V5_S02_VENDOR_VISIT_EVIDENCE",
+      "repetition": 2,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "DIRECT_MATCH",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": true,
+      "note": ""
+    },
+    {
+      "task_id": "V5_S03_TEST_MATERIAL_EVIDENCE",
+      "repetition": 1,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "DIRECT_MATCH",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": true,
+      "note": ""
+    },
+    {
+      "task_id": "V5_S03_TEST_MATERIAL_EVIDENCE",
+      "repetition": 2,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "DIRECT_MATCH",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": true,
+      "note": ""
+    },
+    {
+      "task_id": "V5_S04_PROCESS_CHANGE_EVIDENCE",
+      "repetition": 1,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "DIRECT_MATCH",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": true,
+      "note": ""
+    },
+    {
+      "task_id": "V5_S04_PROCESS_CHANGE_EVIDENCE",
+      "repetition": 2,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "DIRECT_MATCH",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": true,
+      "note": ""
+    },
+    {
+      "task_id": "V5_E01_MAINTENANCE_PLAN_APPROVER",
+      "repetition": 1,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "DIRECT_MATCH",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": true,
+      "note": ""
+    },
+    {
+      "task_id": "V5_E01_MAINTENANCE_PLAN_APPROVER",
+      "repetition": 2,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "DIRECT_MATCH",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": true,
+      "note": ""
+    },
+    {
+      "task_id": "V5_E02_VENDOR_REGISTRATION_APPROVER",
+      "repetition": 1,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "DIRECT_MATCH",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": true,
+      "note": ""
+    },
+    {
+      "task_id": "V5_E02_VENDOR_REGISTRATION_APPROVER",
+      "repetition": 2,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "DIRECT_MATCH",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": true,
+      "note": ""
+    },
+    {
+      "task_id": "V5_E03_OVERSEAS_PLANT_APPROVER",
+      "repetition": 1,
+      "manual_verdict": "SUPPORTED_SOURCE_ID_MISSING",
+      "checker_verdict": "UNCONFIRMED",
+      "comparison_expectation": "UNCONFIRMED",
+      "agreement": true,
+      "note": "Manual audit found content support, but the delivery cited no source ID; checker does not use uncited responses."
+    },
+    {
+      "task_id": "V5_E03_OVERSEAS_PLANT_APPROVER",
+      "repetition": 2,
+      "manual_verdict": "SUPPORTED_AND_CITED",
+      "checker_verdict": "DIRECT_MATCH",
+      "comparison_expectation": "CONFIRMED",
+      "agreement": true,
+      "note": ""
+    },
+    {
+      "task_id": "V5_E04_AI_INSPECTION_APPROVER",
+      "repetition": 1,
+      "manual_verdict": "SUPPORTED_SOURCE_ID_MISSING",
+      "checker_verdict": "UNCONFIRMED",
+      "comparison_expectation": "UNCONFIRMED",
+      "agreement": true,
+      "note": "Manual audit found content support, but the delivery cited no source ID; checker does not use uncited responses."
+    },
+    {
+      "task_id": "V5_E04_AI_INSPECTION_APPROVER",
+      "repetition": 2,
+      "manual_verdict": "SUPPORTED_SOURCE_ID_MISSING",
+      "checker_verdict": "UNCONFIRMED",
+      "comparison_expectation": "UNCONFIRMED",
+      "agreement": true,
+      "note": "Manual audit found content support, but the delivery cited no source ID; checker does not use uncited responses."
+    }
+  ]
+}

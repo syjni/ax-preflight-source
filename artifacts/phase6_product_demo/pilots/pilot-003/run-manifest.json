@@ -1,0 +1,81 @@
+{
+  "claim_scope": "PRODUCT_SANITY_DEMO_NOT_RESEARCH_BENCHMARK",
+  "execution_id": "pilot-003",
+  "fresh_process_per_run": true,
+  "kiro_cli_version": "kiro-cli-chat 2.23.0",
+  "mode": "pilot",
+  "model": "claude-sonnet-5",
+  "question_utf8_sha256": "7eda629cb6294c42f13b514539b2205da4335f220a24227963786409edb8c48e",
+  "raw_kiro_output_persisted_as_customer_log": false,
+  "raw_kiro_output_used_as_product_result": false,
+  "runs": [
+    {
+      "abstention_reason": "CONFLICTING_EVIDENCE",
+      "dataset_profile": "demo-return-before",
+      "delivery_sha256": "1d2b12cbc24880c5a7f7cd4da1c3a0dc466fe115daf4248c5849c179ae595a1f",
+      "delivery_status": "DELIVERED",
+      "ended_at": "2026-09-23T12:21:46.717281Z",
+      "evidence_check_sha256": "e9f0cc36bf1f106f39035cf7b407bf544c43d39bd99f16cc385a76b6f34aa74c",
+      "evidence_verdict": "UNCONFIRMED",
+      "execution_order": 1,
+      "kiro_cli_version": "kiro-cli-chat 2.23.0",
+      "model": "claude-sonnet-5",
+      "payload_status": "ABSTAINED",
+      "question_utf8_sha256": "7eda629cb6294c42f13b514539b2205da4335f220a24227963786409edb8c48e",
+      "readiness_dimensions": {
+        "accessibility": 1.0,
+        "completeness": 1.0,
+        "redundancy": 1.0,
+        "safety": 1.0,
+        "timeliness": 1.0
+      },
+      "readiness_total": 100.0,
+      "repetition": 1,
+      "run_artifact_directory": "artifacts/phase6_product_demo/pilots/pilot-003/runs/phase6demo-pilot-pilot-003-01-before-eeda5407",
+      "run_id": "phase6demo-pilot-pilot-003-01-before-eeda5407",
+      "source_ids": [
+        "FILE_0190582b04c0b44a",
+        "FILE_afb4c3a0cc53d8c8"
+      ],
+      "started_at": "2026-09-23T12:21:25.078223Z",
+      "tool_response_count": 3,
+      "unscored_observation_codes": [
+        "PROBABLE_VERSION_GROUP"
+      ],
+      "unscored_observation_count": 1
+    },
+    {
+      "abstention_reason": null,
+      "dataset_profile": "demo-return-after",
+      "delivery_sha256": "a199a854a6b5a2174fe46674634273dbbab136b5f6c618544d32afe4cb6f3264",
+      "delivery_status": "DELIVERED",
+      "ended_at": "2026-09-23T12:22:01.909163Z",
+      "evidence_check_sha256": "964ef15a13c4a012d16883b3f9f5acb96c8c636f1ce33aff8bd37675c8132e08",
+      "evidence_verdict": "UNCONFIRMED",
+      "execution_order": 2,
+      "kiro_cli_version": "kiro-cli-chat 2.23.0",
+      "model": "claude-sonnet-5",
+      "payload_status": "ANSWERED",
+      "question_utf8_sha256": "7eda629cb6294c42f13b514539b2205da4335f220a24227963786409edb8c48e",
+      "readiness_dimensions": {
+        "accessibility": 1.0,
+        "completeness": 1.0,
+        "redundancy": 1.0,
+        "safety": 1.0,
+        "timeliness": 1.0
+      },
+      "readiness_total": 100.0,
+      "repetition": 1,
+      "run_artifact_directory": "artifacts/phase6_product_demo/pilots/pilot-003/runs/phase6demo-pilot-pilot-003-02-after-53225801",
+      "run_id": "phase6demo-pilot-pilot-003-02-after-53225801",
+      "source_ids": [
+        "FILE_5587cb5d2ae64ba9"
+      ],
+      "started_at": "2026-09-23T12:21:46.722281Z",
+      "tool_response_count": 1,
+      "unscored_observation_codes": [],
+      "unscored_observation_count": 0
+    }
+  ],
+  "schema_version": "ax-phase6-product-demo-run-manifest-v1"
+}

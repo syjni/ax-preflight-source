@@ -1,0 +1,95 @@
+{
+  "$defs": {
+    "BatchTaskInput": {
+      "additionalProperties": false,
+      "properties": {
+        "question": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Question"
+        },
+        "request_type": {
+          "enum": [
+            "VERIFIED_BUSINESS_TASK",
+            "TASK_CANDIDATE"
+          ],
+          "title": "Request Type",
+          "type": "string"
+        },
+        "task_id": {
+          "minLength": 1,
+          "title": "Task Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "task_id",
+        "request_type"
+      ],
+      "title": "BatchTaskInput",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "batch_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Batch Id"
+    },
+    "dataset": {
+      "minLength": 1,
+      "title": "Dataset",
+      "type": "string"
+    },
+    "max_attempts": {
+      "default": 2,
+      "maximum": 3,
+      "minimum": 1,
+      "title": "Max Attempts",
+      "type": "integer"
+    },
+    "model": {
+      "default": "claude-sonnet-5",
+      "minLength": 1,
+      "title": "Model",
+      "type": "string"
+    },
+    "repetitions": {
+      "default": 3,
+      "maximum": 5,
+      "minimum": 1,
+      "title": "Repetitions",
+      "type": "integer"
+    },
+    "tasks": {
+      "items": {
+        "$ref": "#/$defs/BatchTaskInput"
+      },
+      "maxItems": 10,
+      "minItems": 1,
+      "title": "Tasks",
+      "type": "array"
+    }
+  },
+  "required": [
+    "dataset",
+    "tasks"
+  ],
+  "title": "BatchCreateRequest",
+  "type": "object"
+}

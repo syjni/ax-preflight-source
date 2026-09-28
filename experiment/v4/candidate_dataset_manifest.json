@@ -1,0 +1,24 @@
+{
+  "schema_version": "ax-v4-candidate-dataset-manifest-v1",
+  "dataset_id": "ondam-logistics-2027-v4-candidate",
+  "source_root": "experiment/v4/heldout/온담물류",
+  "file_count": 4,
+  "files": [
+    {
+      "relative_path": "01_품질/지역별_검수_2027.csv",
+      "sha256": "d7426bebb7d3c4a5de44fae187a1a12c26f91341a99cb985236138b2eed65712"
+    },
+    {
+      "relative_path": "02_운영/접수_필수_항목.txt",
+      "sha256": "dee5b03fd5b44fc08f106a9363e319ad4199d02a0c1d3b446500922f9af1f229"
+    },
+    {
+      "relative_path": "02_운영/처리_기한_기준.txt",
+      "sha256": "3a0810afac2d57929508b045d2e11322ffdd5477913cda43ab0c8ff5b4d3f693"
+    },
+    {
+      "relative_path": "03_담당/업무_책임팀_2027.txt",
+      "sha256": "6d42fa459539526fa9057b8f49a927166716958d8b86b059f51862ae6de27c16"
+    }
+  ]
+}

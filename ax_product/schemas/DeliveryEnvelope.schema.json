@@ -1,0 +1,207 @@
+{
+  "$defs": {
+    "SubmitAnswerInput": {
+      "additionalProperties": false,
+      "description": "One authoritative final answer submitted by the product agent.",
+      "properties": {
+        "abstention_reason": {
+          "anyOf": [
+            {
+              "enum": [
+                "NOT_FOUND",
+                "INSUFFICIENT_EVIDENCE",
+                "CONFLICTING_EVIDENCE"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Abstention Reason"
+        },
+        "answer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Answer"
+        },
+        "answer_kind": {
+          "anyOf": [
+            {
+              "enum": [
+                "EXACT_TEXT",
+                "EMPTY_SET",
+                "ID_LIST",
+                "NUMERIC_QUANTITY"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Answer Kind"
+        },
+        "explanation": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Explanation",
+          "type": "string"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Ids",
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "ANSWERED",
+            "ABSTAINED"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        }
+      },
+      "required": [
+        "status",
+        "explanation"
+      ],
+      "title": "SubmitAnswerInput",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Gate result consumed by product clients; no raw model prose is included.",
+  "properties": {
+    "dataset": {
+      "default": "UNKNOWN",
+      "minLength": 1,
+      "title": "Dataset",
+      "type": "string"
+    },
+    "delivery_status": {
+      "enum": [
+        "DELIVERED",
+        "REJECTED"
+      ],
+      "title": "Delivery Status",
+      "type": "string"
+    },
+    "model": {
+      "minLength": 1,
+      "title": "Model",
+      "type": "string"
+    },
+    "payload": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SubmitAnswerInput"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "reject_reason": {
+      "anyOf": [
+        {
+          "enum": [
+            "NO_SUBMISSION",
+            "INVALID_SUBMISSION",
+            "INVALID_RUN",
+            "MODEL_FALLBACK",
+            "FORBIDDEN_TOOL",
+            "RUNTIME_ERROR"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Reject Reason"
+    },
+    "run_id": {
+      "minLength": 1,
+      "title": "Run Id",
+      "type": "string"
+    },
+    "source_link_status": {
+      "anyOf": [
+        {
+          "enum": [
+            "NOT_CHECKED",
+            "LINKED",
+            "PARTIAL",
+            "UNLINKED"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Link Status"
+    },
+    "task_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Task Id"
+    }
+  },
+  "required": [
+    "delivery_status",
+    "run_id",
+    "model"
+  ],
+  "title": "DeliveryEnvelope",
+  "type": "object"
+}

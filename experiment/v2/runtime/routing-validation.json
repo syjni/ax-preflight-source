@@ -1,0 +1,322 @@
+{
+  "schema_version": "ax-runtime-routing-validation-v2",
+  "experiment_version": "ax-exp-v2",
+  "passed": true,
+  "held_out_execution_count": 0,
+  "summary": {
+    "held_out_tasks_checked": "16/16",
+    "treated_tasks": 12,
+    "control_tasks": 4,
+    "before_bindings": 16,
+    "ceiling_bindings": 16,
+    "unique_defect_variants": 8,
+    "runtime_identity_mismatches": 0,
+    "leakage_violations": 0
+  },
+  "invariant_checks": {
+    "held_out_task_count_16": true,
+    "binding_coverage_16": true,
+    "treated_task_count_12": true,
+    "control_task_count_4": true,
+    "route_count_32": true,
+    "ceiling_identity_unchanged": true,
+    "prompt_hash_unchanged": true,
+    "model_unchanged": true,
+    "four_tool_surface_unchanged": true,
+    "runtime_profile_mismatches_zero": true,
+    "runtime_leakage_violations_zero": true,
+    "held_out_execution_count_zero": true
+  },
+  "mismatches": [],
+  "leakage_violations": [],
+  "routes": [
+    {
+      "task_id": "K01_RETURN_WINDOW",
+      "task_group": "treated",
+      "condition": "Before",
+      "expected_runtime_profile": "before-accessibility-d527640c55b3",
+      "actual_runtime_profile": "before-accessibility-d527640c55b3",
+      "runtime_identity_sha256": "fbac1ccc2c2ce694c2ae53c4df5adc3547946fbc93bf2cae9425931fdfb7163c",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "K01_RETURN_WINDOW",
+      "task_group": "treated",
+      "condition": "Ceiling",
+      "expected_runtime_profile": "ceiling",
+      "actual_runtime_profile": "ceiling",
+      "runtime_identity_sha256": "baa5078e30d31dcf681a141452fc7f6cc8a9b673c90413e26bcb355c6df9ab99",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "K02_RETURN_REQUIREMENTS",
+      "task_group": "treated",
+      "condition": "Before",
+      "expected_runtime_profile": "before-accessibility-d527640c55b3",
+      "actual_runtime_profile": "before-accessibility-d527640c55b3",
+      "runtime_identity_sha256": "fbac1ccc2c2ce694c2ae53c4df5adc3547946fbc93bf2cae9425931fdfb7163c",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "K02_RETURN_REQUIREMENTS",
+      "task_group": "treated",
+      "condition": "Ceiling",
+      "expected_runtime_profile": "ceiling",
+      "actual_runtime_profile": "ceiling",
+      "runtime_identity_sha256": "baa5078e30d31dcf681a141452fc7f6cc8a9b673c90413e26bcb355c6df9ab99",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "K03_DELAY_COMPENSATION_THRESHOLD",
+      "task_group": "control",
+      "condition": "Before",
+      "expected_runtime_profile": "ceiling",
+      "actual_runtime_profile": "ceiling",
+      "runtime_identity_sha256": "baa5078e30d31dcf681a141452fc7f6cc8a9b673c90413e26bcb355c6df9ab99",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "K03_DELAY_COMPENSATION_THRESHOLD",
+      "task_group": "control",
+      "condition": "Ceiling",
+      "expected_runtime_profile": "ceiling",
+      "actual_runtime_profile": "ceiling",
+      "runtime_identity_sha256": "baa5078e30d31dcf681a141452fc7f6cc8a9b673c90413e26bcb355c6df9ab99",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "K04_DISCOUNT_APPROVER",
+      "task_group": "treated",
+      "condition": "Before",
+      "expected_runtime_profile": "before-accessibility-0e78131fc878",
+      "actual_runtime_profile": "before-accessibility-0e78131fc878",
+      "runtime_identity_sha256": "58f23e5e90e33a680a917db4deed7e578a1a8aadf2732cf56c81d32606ef6894",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "K04_DISCOUNT_APPROVER",
+      "task_group": "treated",
+      "condition": "Ceiling",
+      "expected_runtime_profile": "ceiling",
+      "actual_runtime_profile": "ceiling",
+      "runtime_identity_sha256": "baa5078e30d31dcf681a141452fc7f6cc8a9b673c90413e26bcb355c6df9ab99",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "K05_STOCK_REFERENCE_FIELD",
+      "task_group": "treated",
+      "condition": "Before",
+      "expected_runtime_profile": "before-accessibility-91428d0d2d6d",
+      "actual_runtime_profile": "before-accessibility-91428d0d2d6d",
+      "runtime_identity_sha256": "a7f0225da5196b2c7e91f246bc1663ee00af75ce590b55985fea26f5c5d7cd79",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "K05_STOCK_REFERENCE_FIELD",
+      "task_group": "treated",
+      "condition": "Ceiling",
+      "expected_runtime_profile": "ceiling",
+      "actual_runtime_profile": "ceiling",
+      "runtime_identity_sha256": "baa5078e30d31dcf681a141452fc7f6cc8a9b673c90413e26bcb355c6df9ab99",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "K06_FIRST_RESPONSE_TARGET",
+      "task_group": "control",
+      "condition": "Before",
+      "expected_runtime_profile": "ceiling",
+      "actual_runtime_profile": "ceiling",
+      "runtime_identity_sha256": "baa5078e30d31dcf681a141452fc7f6cc8a9b673c90413e26bcb355c6df9ab99",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "K06_FIRST_RESPONSE_TARGET",
+      "task_group": "control",
+      "condition": "Ceiling",
+      "expected_runtime_profile": "ceiling",
+      "actual_runtime_profile": "ceiling",
+      "runtime_identity_sha256": "baa5078e30d31dcf681a141452fc7f6cc8a9b673c90413e26bcb355c6df9ab99",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "O02_SEPTEMBER_ORDER_TOTAL",
+      "task_group": "treated",
+      "condition": "Before",
+      "expected_runtime_profile": "before-accessibility-950a2b2ed909",
+      "actual_runtime_profile": "before-accessibility-950a2b2ed909",
+      "runtime_identity_sha256": "e3f3f30131a0d9b1371a0757463d0472942a33f1800a547af1739f5de962e467",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "O02_SEPTEMBER_ORDER_TOTAL",
+      "task_group": "treated",
+      "condition": "Ceiling",
+      "expected_runtime_profile": "ceiling",
+      "actual_runtime_profile": "ceiling",
+      "runtime_identity_sha256": "baa5078e30d31dcf681a141452fc7f6cc8a9b673c90413e26bcb355c6df9ab99",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "O03_GREEN_TABLE_LAST_ORDER",
+      "task_group": "treated",
+      "condition": "Before",
+      "expected_runtime_profile": "before-accessibility-a534444afe03",
+      "actual_runtime_profile": "before-accessibility-a534444afe03",
+      "runtime_identity_sha256": "1b727f73677b7c834e2afa92801b540a047581b3c6bd6548c8c2faea6740ce2b",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "O03_GREEN_TABLE_LAST_ORDER",
+      "task_group": "treated",
+      "condition": "Ceiling",
+      "expected_runtime_profile": "ceiling",
+      "actual_runtime_profile": "ceiling",
+      "runtime_identity_sha256": "baa5078e30d31dcf681a141452fc7f6cc8a9b673c90413e26bcb355c6df9ab99",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "O04_PRODUCT_MASTER_COUNT",
+      "task_group": "control",
+      "condition": "Before",
+      "expected_runtime_profile": "ceiling",
+      "actual_runtime_profile": "ceiling",
+      "runtime_identity_sha256": "baa5078e30d31dcf681a141452fc7f6cc8a9b673c90413e26bcb355c6df9ab99",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "O04_PRODUCT_MASTER_COUNT",
+      "task_group": "control",
+      "condition": "Ceiling",
+      "expected_runtime_profile": "ceiling",
+      "actual_runtime_profile": "ceiling",
+      "runtime_identity_sha256": "baa5078e30d31dcf681a141452fc7f6cc8a9b673c90413e26bcb355c6df9ab99",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "O06_RETURN_RATE",
+      "task_group": "treated",
+      "condition": "Before",
+      "expected_runtime_profile": "before-accessibility-66a46d7e2186",
+      "actual_runtime_profile": "before-accessibility-66a46d7e2186",
+      "runtime_identity_sha256": "6c28f846e59f80b4bddbbfa78a08fbc4dc0e659548672cf2c77564847bed19ca",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "O06_RETURN_RATE",
+      "task_group": "treated",
+      "condition": "Ceiling",
+      "expected_runtime_profile": "ceiling",
+      "actual_runtime_profile": "ceiling",
+      "runtime_identity_sha256": "baa5078e30d31dcf681a141452fc7f6cc8a9b673c90413e26bcb355c6df9ab99",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "O07_SEOUL_LEAD_TIME",
+      "task_group": "treated",
+      "condition": "Before",
+      "expected_runtime_profile": "before-accessibility-f1d1804d1aa6",
+      "actual_runtime_profile": "before-accessibility-f1d1804d1aa6",
+      "runtime_identity_sha256": "672bf4e5b3d7d1fe1abfe5c967e62de7aab933af863fb98d1983b35331611188",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "O07_SEOUL_LEAD_TIME",
+      "task_group": "treated",
+      "condition": "Ceiling",
+      "expected_runtime_profile": "ceiling",
+      "actual_runtime_profile": "ceiling",
+      "runtime_identity_sha256": "baa5078e30d31dcf681a141452fc7f6cc8a9b673c90413e26bcb355c6df9ab99",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "C02_DONGHAE_SEPTEMBER_TOTAL",
+      "task_group": "treated",
+      "condition": "Before",
+      "expected_runtime_profile": "before-accessibility-a534444afe03",
+      "actual_runtime_profile": "before-accessibility-a534444afe03",
+      "runtime_identity_sha256": "1b727f73677b7c834e2afa92801b540a047581b3c6bd6548c8c2faea6740ce2b",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "C02_DONGHAE_SEPTEMBER_TOTAL",
+      "task_group": "treated",
+      "condition": "Ceiling",
+      "expected_runtime_profile": "ceiling",
+      "actual_runtime_profile": "ceiling",
+      "runtime_identity_sha256": "baa5078e30d31dcf681a141452fc7f6cc8a9b673c90413e26bcb355c6df9ab99",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "C03_TEA_STOCK",
+      "task_group": "control",
+      "condition": "Before",
+      "expected_runtime_profile": "ceiling",
+      "actual_runtime_profile": "ceiling",
+      "runtime_identity_sha256": "baa5078e30d31dcf681a141452fc7f6cc8a9b673c90413e26bcb355c6df9ab99",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "C03_TEA_STOCK",
+      "task_group": "control",
+      "condition": "Ceiling",
+      "expected_runtime_profile": "ceiling",
+      "actual_runtime_profile": "ceiling",
+      "runtime_identity_sha256": "baa5078e30d31dcf681a141452fc7f6cc8a9b673c90413e26bcb355c6df9ab99",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "C05_SAEBOM_JULY_TOTAL",
+      "task_group": "treated",
+      "condition": "Before",
+      "expected_runtime_profile": "before-accessibility-a534444afe03",
+      "actual_runtime_profile": "before-accessibility-a534444afe03",
+      "runtime_identity_sha256": "1b727f73677b7c834e2afa92801b540a047581b3c6bd6548c8c2faea6740ce2b",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "C05_SAEBOM_JULY_TOTAL",
+      "task_group": "treated",
+      "condition": "Ceiling",
+      "expected_runtime_profile": "ceiling",
+      "actual_runtime_profile": "ceiling",
+      "runtime_identity_sha256": "baa5078e30d31dcf681a141452fc7f6cc8a9b673c90413e26bcb355c6df9ab99",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "C06_ARAM_AUGUST_RETURNS",
+      "task_group": "treated",
+      "condition": "Before",
+      "expected_runtime_profile": "before-accessibility-7497b2824ba3",
+      "actual_runtime_profile": "before-accessibility-7497b2824ba3",
+      "runtime_identity_sha256": "d6c0d1246ba99b6248f83dc0197fdfe630b4cfedda5492e90c03aa5d6a554137",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "C06_ARAM_AUGUST_RETURNS",
+      "task_group": "treated",
+      "condition": "Ceiling",
+      "expected_runtime_profile": "ceiling",
+      "actual_runtime_profile": "ceiling",
+      "runtime_identity_sha256": "baa5078e30d31dcf681a141452fc7f6cc8a9b673c90413e26bcb355c6df9ab99",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "K07_VENDOR_FORECAST_ABSTAIN",
+      "task_group": "treated",
+      "condition": "Before",
+      "expected_runtime_profile": "before-accessibility-a534444afe03",
+      "actual_runtime_profile": "before-accessibility-a534444afe03",
+      "runtime_identity_sha256": "1b727f73677b7c834e2afa92801b540a047581b3c6bd6548c8c2faea6740ce2b",
+      "leakage_passed": true
+    },
+    {
+      "task_id": "K07_VENDOR_FORECAST_ABSTAIN",
+      "task_group": "treated",
+      "condition": "Ceiling",
+      "expected_runtime_profile": "ceiling",
+      "actual_runtime_profile": "ceiling",
+      "runtime_identity_sha256": "baa5078e30d31dcf681a141452fc7f6cc8a9b673c90413e26bcb355c6df9ab99",
+      "leakage_passed": true
+    }
+  ]
+}

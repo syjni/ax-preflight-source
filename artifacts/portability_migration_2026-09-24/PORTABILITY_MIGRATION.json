@@ -1,0 +1,561 @@
+{
+  "schema_version": "ax-submission-portability-migration-v1",
+  "migration_id": "portability-migration-2026-09-24",
+  "created_at": "2026-09-24T03:57:39.979393Z",
+  "scope": "ALLOWLISTED_PATH_METADATA_AND_DEPENDENT_HASH_CHAIN_ONLY",
+  "freeze_timestamps_statuses_experiment_and_run_ids_preserved": true,
+  "kiro_or_llm_executed": false,
+  "freeze_scripts_executed": false,
+  "phase6_official_runs_regenerated": false,
+  "held_out_results_regenerated": false,
+  "path_portability": {
+    "audit_reported_before_hits": 29,
+    "reproduced_before_hits": 29,
+    "remaining_after_canonical_agent_edit": 21,
+    "after_hits": 0,
+    "canonical_agent_fields_changed": 8,
+    "phase6_scanner_output_fields_changed": 2,
+    "v2_manifest_source_root_fields_changed": 8,
+    "v2_parser_error_fields_changed": 3
+  },
+  "changed_files": [
+    {
+      "path": ".kiro/agents/ax-evaluation.json",
+      "old_sha256": "2959221c2b3b871e43eaa902c0ae99e36035811b2fb415820552972266cc25e0",
+      "new_sha256": "7977a1da0361a54f9be5d2b3bb91c25b7944e9185403b72f767c0806b5f61844"
+    },
+    {
+      "path": ".kiro/agents/ax-product.json",
+      "old_sha256": "0190fa5e16f0aee299e6100009fbe041447f5fcca57e67830fb0b512de36ccaf",
+      "new_sha256": "20a5bee34d9f4c746e9a73f28f5cec4644766e2a0988c520e8e6766628a9cdcd"
+    },
+    {
+      "path": "artifacts/phase5_evidence_checker_v1/FROZEN_HASH_VERIFICATION.json",
+      "old_sha256": "79bca5ef6c46ff6db308e2796100f3c32ab5da707757781829f81580812ed973",
+      "new_sha256": "4b6aa856a55d08b61c9233aa392c0ae116daed73ba4573819fdb04b0dc203ffd"
+    },
+    {
+      "path": "artifacts/phase6_product_demo/FROZEN_MANIFEST.json",
+      "old_sha256": "78b3ac739c783e151ec5e74272f80f6237f05b7fa7d9c31bb12b9c735f53bb43",
+      "new_sha256": "515930fde7dee2e1b84fa90b79ccf33511359116a5b44bbd042fab486d8befd9"
+    },
+    {
+      "path": "artifacts/phase6_product_demo/dataset-manifest.json",
+      "old_sha256": "af2f2955a7390cf03fa23ee7cf8afef69f50f39aec605bdd37b4ba77fcfac9dd",
+      "new_sha256": "91b3ce089c53db152e8d186d92ab9807ca9eb83646c622b2e5101dee0dbe9552"
+    },
+    {
+      "path": "ax_mcp/runtime_dataset.py",
+      "old_sha256": "b2564e5b881999b0edfa30ffcaa35f5d16a996f6971c4db7aa2df746a7bf7378",
+      "new_sha256": "9ca351073004d52ce4febc68ce80ce827ee9270a4735017d55c30ae4a7e4ff41"
+    },
+    {
+      "path": "experiment/frozen/ax-exp-v1-manifest.json",
+      "old_sha256": "8077fb08f829133443fd496b1e0cebd760a048e45c7f64bba32222c7959841e3",
+      "new_sha256": "3202f9df178f07610b09f9a4cb318c0da0b63653e81f9a7f1cc8b6fd62f4d358"
+    },
+    {
+      "path": "experiment/frozen/ax-exp-v2-manifest.json",
+      "old_sha256": "488f4201e2ee97c91f5ccdeb4cf3784c9eca914a555649ffbfbdb8355365b83d",
+      "new_sha256": "b4531692548dea5d53b2cf1639e170dc659797548a29289d99d2f9a94c9c8c42"
+    },
+    {
+      "path": "experiment/frozen/ax-exp-v3-manifest.json",
+      "old_sha256": "7c564b8c897cc51cea1fe27c6133ccb4955a7b21f0536b895a66bad8d632b320",
+      "new_sha256": "57225746fdd1b6cc3682896026e0bd82171d57d0d0f33523e3e7791f72cf5a69"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-0e78131fc878-dataset-manifest.json",
+      "old_sha256": "19003950cfa773eb07dffbe20fd07422081a77616defb2c633fc0dc651d5b70a",
+      "new_sha256": "a8cdfe918f07abab1febe54500b28f24c1145af0c4f88ac755a081acf3119893"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-0e78131fc878-diff.json",
+      "old_sha256": "8c4a173837b1aaaa96c89c7a319797a1d6ee7594cea05c170020221f0057c279",
+      "new_sha256": "441419e918c942e20bc6f64764139bb7c62841548724c22c0504140419553b9d"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-0e78131fc878-scan-report.json",
+      "old_sha256": "650b00a36e9e5ac00b38ed30fc814d8c25eb4681e2f05d2219645d96edbfb0de",
+      "new_sha256": "db694d5e57e4fc43ab035cf8da5c6d03546ba43bed0bf3b6567183cbaf37e220"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-66a46d7e2186-dataset-manifest.json",
+      "old_sha256": "ab6829688f113f5f46ff4a6686a9ff9d6b5b3fda81ab2e81dc069b4df4d7b0a4",
+      "new_sha256": "0ff04152ba9a5815a7c4efb9b6f8b6f470f32f5bcba308790cf57b830ae3be87"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-66a46d7e2186-diff.json",
+      "old_sha256": "e9723c6caec6ead2a6d3c1cef46f4bdf2c93669d2024d5f0f1c9b525cd817abe",
+      "new_sha256": "0917cb7587af2c078a0ea886524cca19b1db8f333e556ff85dd379fa4d616b62"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-7497b2824ba3-dataset-manifest.json",
+      "old_sha256": "ecff3aa3b51b90e64387b40d47038cc0c7abf547191e9bb8041f0a01c72cb79c",
+      "new_sha256": "12f47f6516b8bed455a202132b1229974bda0dab00cff66084162cc43b272552"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-7497b2824ba3-diff.json",
+      "old_sha256": "dffbbbe30af021833f761b05dea415c722a7ec90dae1c16136d9e7ddc9f1318f",
+      "new_sha256": "98998471cc9c1aca74546d6c2273bd0a42e4772a886dde45456395950a68b871"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-91428d0d2d6d-dataset-manifest.json",
+      "old_sha256": "fc0c83bc2beedff09b5a78ecfaad8f7dbc02cfef89abd99fb8d94887f688eb9f",
+      "new_sha256": "cf76b10d6a7ca6975849640133a285bc520afbb918e1aa2f301ec2ef5825ed16"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-91428d0d2d6d-diff.json",
+      "old_sha256": "6055afa1720e02fe517d9abb54dd8667766dda269e8fc4cf852720264d9aeaf8",
+      "new_sha256": "677430d3d478021f06ec11cafa73af78322f8b579e9a1d4fc075a42293a8ff03"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-91428d0d2d6d-scan-report.json",
+      "old_sha256": "a8b4a4fcadddd42675b45dc6b6fcfe796ab7d256ec984b8c47944e81abfdfe22",
+      "new_sha256": "59492e5fd0fec1b42c2dc13d4f3f50dcbc42b0bac4c80b501d1a28115f973a62"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-950a2b2ed909-dataset-manifest.json",
+      "old_sha256": "7deffcc47a01a353b8ea2959c696ab685af6e1f138645a0be0e94d88004f77d7",
+      "new_sha256": "37d8acbc0a83a08e1facc89b257605a87cb27dd1758e61d85300593deecb5ccd"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-950a2b2ed909-diff.json",
+      "old_sha256": "e336ef1d005ed629f5698a83c1dc7c0e9dd6142633cb571e1ee972973a0b02d6",
+      "new_sha256": "aab26b71a2a4d7002aacd2f998bb043ea450b0b48044b1e8811f0b767d105585"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-a534444afe03-dataset-manifest.json",
+      "old_sha256": "8284f555f5053cb305350d5a39c094dea968bf0e2b5630a9b7038338d3fdfb21",
+      "new_sha256": "f6ab19c11f07f4ff71606fe701cbc815e63ad4bd0774eaba0d5b6bda1dae027c"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-a534444afe03-diff.json",
+      "old_sha256": "e25aa83a2e277106b75584f9df74cf0cc9813b6b8acf83e3e7a2d3ede0d4a07d",
+      "new_sha256": "b31c0cda20ee1f56158643d210398a2664dc58b35b39058c7a4c16b0352bc222"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-d527640c55b3-dataset-manifest.json",
+      "old_sha256": "1e3a95f424e44b2e585f5a72039b6116287edecd25c6f1d01e66165b71a3d320",
+      "new_sha256": "05a3d3c7294e33590a9c23bace577fe84fc189731a67a5e5c110e809f778d72f"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-d527640c55b3-diff.json",
+      "old_sha256": "afb8302a1bdca2458b54b217e92c5624d8a338ad08edba3faf8c573dfd26fdb5",
+      "new_sha256": "e3f05474e9957ea3db6b0d883639ea05ebdaed575617532e0b242f95c371926a"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-d527640c55b3-scan-report.json",
+      "old_sha256": "f04a6bd46308da0dd86e92679b5809a962331159ff83cb6100e1f1f935f1495c",
+      "new_sha256": "a9dc0c35174398ded5faa8907ad8179b9160fb3692132e10020f72a08407f4b0"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-f1d1804d1aa6-dataset-manifest.json",
+      "old_sha256": "14941d52885b6884f69085bb1b37638c59f34ce83707264ec751b34a9bff0207",
+      "new_sha256": "d109a397627cc4315033f02e6b0fd0e4395c66fed7f572e0c9cf7ffdcfae7ea8"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-f1d1804d1aa6-diff.json",
+      "old_sha256": "00f40f7dd4651eaf8e46fa5e8ae90625743c5b2b5225590ba0fb2ae40bf9bf4a",
+      "new_sha256": "ea6f1ae5624e04f5c88f9a11a32c63214dcd8cf68a28f2eb23d35af727a1030f"
+    },
+    {
+      "path": "experiment/v2/runtime/routing-validation.json",
+      "old_sha256": "d0933a282ff3a9607c53d11f7eecadb070ce8a16d89ce9ae617a595960aba166",
+      "new_sha256": "e3a2ecc8b0f9983f2f994081c143bad85322f984db239ad92078926f57fc9b2a"
+    },
+    {
+      "path": "scripts/generate_before_variants.py",
+      "old_sha256": "4144a26907117c01364e2bc878c3417bf237cf5bbdfd3c93cc647b5a5d51d58b",
+      "new_sha256": "0e3359b6dfd5d7ffe4266564f159d1b66fd304b0ec66404246895375ca4a6c42"
+    },
+    {
+      "path": "scripts/migrate_submission_portability.py",
+      "old_sha256": null,
+      "new_sha256": "d1d964a10c6416172ab388488a3e4d49dc1614f4a0b8592bf581af4fa5e8d97f"
+    },
+    {
+      "path": "scripts/run_phase6_demo.py",
+      "old_sha256": "456bfec0881d9be246ff87d18b6941a7ee45432ab6273c5023b0437dba8e5e09",
+      "new_sha256": "77731c6bf6f7928a0fd4490ef6e757f70a830b03998afd440299e6e9177e27c6"
+    },
+    {
+      "path": "scripts/verify_phase5_preservation.py",
+      "old_sha256": "25ad5e0dd7b80107f911014e4a7f41481961cc60401ff7de274cfc8f0524dc1b",
+      "new_sha256": "df35b4fa74664002fcb4f0ae4967965896a3b3b6c8f07af333efc69b0e57f162"
+    },
+    {
+      "path": "tests/test_phase6_product_demo.py",
+      "old_sha256": "816713815eecc8d1117fdb12422c2b454c78de475529ea9b2207e09b4d8ce653",
+      "new_sha256": "d7e9b27fe4a3ea1a4033d073368c5d164d23cd66a9c2d4b760530925ddf09004"
+    }
+  ],
+  "changed_fields": [
+    {
+      "path": ".kiro/agents/ax-evaluation.json",
+      "json_pointers_or_fields": [
+        "/mcpServers/ax-tools/command",
+        "/mcpServers/ax-tools/args/3",
+        "/mcpServers/ax-tools/args/5",
+        "/mcpServers/ax-tools/env/AX_RUNTIME_DATASET_CONFIG",
+        "/mcpServers/ax-tools/env/PYTHONPATH"
+      ],
+      "reason": "replace machine-specific path metadata with repository-relative portable metadata"
+    },
+    {
+      "path": ".kiro/agents/ax-product.json",
+      "json_pointers_or_fields": [
+        "/mcpServers/ax-product-tools/command",
+        "/mcpServers/ax-product-tools/env/AX_RUNTIME_DATASET_CONFIG",
+        "/mcpServers/ax-product-tools/env/PYTHONPATH"
+      ],
+      "reason": "replace machine-specific path metadata with repository-relative portable metadata"
+    },
+    {
+      "path": "artifacts/phase5_evidence_checker_v1/FROZEN_HASH_VERIFICATION.json",
+      "json_pointers_or_fields": [
+        "/checks and approved expected/actual hash records"
+      ],
+      "reason": "mechanically refresh dependent hash or approved preservation metadata"
+    },
+    {
+      "path": "artifacts/phase6_product_demo/FROZEN_MANIFEST.json",
+      "json_pointers_or_fields": [
+        "/artifacts/files/3/sha256",
+        "/artifacts/files/3/size_bytes"
+      ],
+      "reason": "mechanically refresh dependent hash or approved preservation metadata"
+    },
+    {
+      "path": "artifacts/phase6_product_demo/dataset-manifest.json",
+      "json_pointers_or_fields": [
+        "/scanner_invocations/0/output",
+        "/scanner_invocations/1/output"
+      ],
+      "reason": "replace machine-specific path metadata with repository-relative portable metadata"
+    },
+    {
+      "path": "ax_mcp/runtime_dataset.py",
+      "json_pointers_or_fields": [
+        "relative config resolution against repository root"
+      ],
+      "reason": "replace machine-specific path metadata with repository-relative portable metadata"
+    },
+    {
+      "path": "experiment/frozen/ax-exp-v1-manifest.json",
+      "json_pointers_or_fields": [
+        "/artifact_inventory/behavioral_and_configuration_artifacts/0/files/0",
+        "/artifact_inventory/behavioral_and_configuration_artifacts/0/aggregate_sha256",
+        "/artifact_inventory/behavioral_and_configuration_artifacts/1/files/0",
+        "/artifact_inventory/behavioral_and_configuration_artifacts/1/aggregate_sha256",
+        "/artifact_inventory/behavioral_and_configuration_artifacts/2/files/0",
+        "/artifact_inventory/behavioral_and_configuration_artifacts/2/aggregate_sha256",
+        "/artifact_inventory/behavioral_and_configuration_artifacts/4/files/2",
+        "/artifact_inventory/behavioral_and_configuration_artifacts/4/aggregate_sha256",
+        "/artifact_inventory/behavioral_and_configuration_artifacts/8/files/0",
+        "/artifact_inventory/behavioral_and_configuration_artifacts/8/aggregate_sha256"
+      ],
+      "reason": "mechanically refresh dependent hash or approved preservation metadata"
+    },
+    {
+      "path": "experiment/frozen/ax-exp-v2-manifest.json",
+      "json_pointers_or_fields": [
+        "/v1_frozen_manifest/sha256",
+        "/before_runtime_identities",
+        "/before_generator_hash",
+        "/routing_validation_artifact_hash",
+        "/v1_frozen_invariant_components/mcp_server_implementation/v1_aggregate_sha256",
+        "/v1_frozen_invariant_components/mcp_server_implementation/v2_current_aggregate_sha256",
+        "/v2_artifact_inventory/aggregate_sha256",
+        "/v2_artifact_inventory/files/3",
+        "/v2_artifact_inventory/files/4",
+        "/v2_artifact_inventory/files/5",
+        "/v2_artifact_inventory/files/6",
+        "/v2_artifact_inventory/files/7",
+        "/v2_artifact_inventory/files/9",
+        "/v2_artifact_inventory/files/10",
+        "/v2_artifact_inventory/files/12",
+        "/v2_artifact_inventory/files/13",
+        "/v2_artifact_inventory/files/14",
+        "/v2_artifact_inventory/files/15",
+        "/v2_artifact_inventory/files/16",
+        "/v2_artifact_inventory/files/18",
+        "/v2_artifact_inventory/files/19",
+        "/v2_artifact_inventory/files/21",
+        "/v2_artifact_inventory/files/22",
+        "/v2_artifact_inventory/files/23",
+        "/v2_artifact_inventory/files/24",
+        "/v2_artifact_inventory/files/25",
+        "/v2_artifact_inventory/files/28",
+        "/v2_artifact_inventory/files/271"
+      ],
+      "reason": "mechanically refresh dependent hash or approved preservation metadata"
+    },
+    {
+      "path": "experiment/frozen/ax-exp-v3-manifest.json",
+      "json_pointers_or_fields": [
+        "/predecessor_manifest/sha256",
+        "/frozen_invariant_components/mcp_server_implementation/frozen_aggregate_sha256",
+        "/frozen_invariant_components/mcp_server_implementation/current_aggregate_sha256"
+      ],
+      "reason": "mechanically refresh dependent hash or approved preservation metadata"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-0e78131fc878-dataset-manifest.json",
+      "json_pointers_or_fields": [
+        "/source_root"
+      ],
+      "reason": "replace machine-specific path metadata with repository-relative portable metadata"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-0e78131fc878-diff.json",
+      "json_pointers_or_fields": [
+        "/runtime_identity",
+        "/runtime_identity_sha256",
+        "/dataset_manifest_sha256",
+        "/scan_report_sha256"
+      ],
+      "reason": "mechanically refresh dependent hash or approved preservation metadata"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-0e78131fc878-scan-report.json",
+      "json_pointers_or_fields": [
+        "/files/9/parse_error"
+      ],
+      "reason": "replace machine-specific path metadata with repository-relative portable metadata"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-66a46d7e2186-dataset-manifest.json",
+      "json_pointers_or_fields": [
+        "/source_root"
+      ],
+      "reason": "replace machine-specific path metadata with repository-relative portable metadata"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-66a46d7e2186-diff.json",
+      "json_pointers_or_fields": [
+        "/runtime_identity",
+        "/runtime_identity_sha256",
+        "/dataset_manifest_sha256"
+      ],
+      "reason": "mechanically refresh dependent hash or approved preservation metadata"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-7497b2824ba3-dataset-manifest.json",
+      "json_pointers_or_fields": [
+        "/source_root"
+      ],
+      "reason": "replace machine-specific path metadata with repository-relative portable metadata"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-7497b2824ba3-diff.json",
+      "json_pointers_or_fields": [
+        "/runtime_identity",
+        "/runtime_identity_sha256",
+        "/dataset_manifest_sha256"
+      ],
+      "reason": "mechanically refresh dependent hash or approved preservation metadata"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-91428d0d2d6d-dataset-manifest.json",
+      "json_pointers_or_fields": [
+        "/source_root"
+      ],
+      "reason": "replace machine-specific path metadata with repository-relative portable metadata"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-91428d0d2d6d-diff.json",
+      "json_pointers_or_fields": [
+        "/runtime_identity",
+        "/runtime_identity_sha256",
+        "/dataset_manifest_sha256",
+        "/scan_report_sha256"
+      ],
+      "reason": "mechanically refresh dependent hash or approved preservation metadata"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-91428d0d2d6d-scan-report.json",
+      "json_pointers_or_fields": [
+        "/files/24/parse_error"
+      ],
+      "reason": "replace machine-specific path metadata with repository-relative portable metadata"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-950a2b2ed909-dataset-manifest.json",
+      "json_pointers_or_fields": [
+        "/source_root"
+      ],
+      "reason": "replace machine-specific path metadata with repository-relative portable metadata"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-950a2b2ed909-diff.json",
+      "json_pointers_or_fields": [
+        "/runtime_identity",
+        "/runtime_identity_sha256",
+        "/dataset_manifest_sha256"
+      ],
+      "reason": "mechanically refresh dependent hash or approved preservation metadata"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-a534444afe03-dataset-manifest.json",
+      "json_pointers_or_fields": [
+        "/source_root"
+      ],
+      "reason": "replace machine-specific path metadata with repository-relative portable metadata"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-a534444afe03-diff.json",
+      "json_pointers_or_fields": [
+        "/runtime_identity",
+        "/runtime_identity_sha256",
+        "/dataset_manifest_sha256"
+      ],
+      "reason": "mechanically refresh dependent hash or approved preservation metadata"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-d527640c55b3-dataset-manifest.json",
+      "json_pointers_or_fields": [
+        "/source_root"
+      ],
+      "reason": "replace machine-specific path metadata with repository-relative portable metadata"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-d527640c55b3-diff.json",
+      "json_pointers_or_fields": [
+        "/runtime_identity",
+        "/runtime_identity_sha256",
+        "/dataset_manifest_sha256",
+        "/scan_report_sha256"
+      ],
+      "reason": "mechanically refresh dependent hash or approved preservation metadata"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-d527640c55b3-scan-report.json",
+      "json_pointers_or_fields": [
+        "/files/5/parse_error"
+      ],
+      "reason": "replace machine-specific path metadata with repository-relative portable metadata"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-f1d1804d1aa6-dataset-manifest.json",
+      "json_pointers_or_fields": [
+        "/source_root"
+      ],
+      "reason": "replace machine-specific path metadata with repository-relative portable metadata"
+    },
+    {
+      "path": "experiment/v2/runtime/before-accessibility-f1d1804d1aa6-diff.json",
+      "json_pointers_or_fields": [
+        "/runtime_identity",
+        "/runtime_identity_sha256",
+        "/dataset_manifest_sha256"
+      ],
+      "reason": "mechanically refresh dependent hash or approved preservation metadata"
+    },
+    {
+      "path": "experiment/v2/runtime/routing-validation.json",
+      "json_pointers_or_fields": [
+        "/routes/0/runtime_identity_sha256",
+        "/routes/2/runtime_identity_sha256",
+        "/routes/6/runtime_identity_sha256",
+        "/routes/8/runtime_identity_sha256",
+        "/routes/12/runtime_identity_sha256",
+        "/routes/14/runtime_identity_sha256",
+        "/routes/18/runtime_identity_sha256",
+        "/routes/20/runtime_identity_sha256",
+        "/routes/22/runtime_identity_sha256",
+        "/routes/26/runtime_identity_sha256",
+        "/routes/28/runtime_identity_sha256",
+        "/routes/30/runtime_identity_sha256"
+      ],
+      "reason": "mechanically refresh dependent hash or approved preservation metadata"
+    },
+    {
+      "path": "scripts/generate_before_variants.py",
+      "json_pointers_or_fields": [
+        "repository-relative manifest source_root",
+        "portable parser-error source path normalization"
+      ],
+      "reason": "replace machine-specific path metadata with repository-relative portable metadata"
+    },
+    {
+      "path": "scripts/run_phase6_demo.py",
+      "json_pointers_or_fields": [
+        "repository-relative scanner_invocations[].output"
+      ],
+      "reason": "replace machine-specific path metadata with repository-relative portable metadata"
+    },
+    {
+      "path": "scripts/verify_phase5_preservation.py",
+      "json_pointers_or_fields": [
+        "EXPECTED['.kiro/agents/ax-evaluation.json']",
+        "EXPECTED['experiment/frozen/ax-exp-v1-manifest.json']",
+        "EXPECTED['experiment/frozen/ax-exp-v2-manifest.json']",
+        "EXPECTED['experiment/frozen/ax-exp-v3-manifest.json']"
+      ],
+      "reason": "mechanically refresh dependent hash or approved preservation metadata"
+    },
+    {
+      "path": "tests/test_phase6_product_demo.py",
+      "json_pointers_or_fields": [
+        "approved experiment/frozen portability-migration tree hash baseline"
+      ],
+      "reason": "replace machine-specific path metadata with repository-relative portable metadata"
+    }
+  ],
+  "hash_chain": {
+    "v1_manifest_sha256": "3202f9df178f07610b09f9a4cb318c0da0b63653e81f9a7f1cc8b6fd62f4d358",
+    "v2_predecessor_sha256": "3202f9df178f07610b09f9a4cb318c0da0b63653e81f9a7f1cc8b6fd62f4d358",
+    "v2_manifest_sha256": "b4531692548dea5d53b2cf1639e170dc659797548a29289d99d2f9a94c9c8c42",
+    "v3_predecessor_sha256": "b4531692548dea5d53b2cf1639e170dc659797548a29289d99d2f9a94c9c8c42",
+    "v3_manifest_sha256": "57225746fdd1b6cc3682896026e0bd82171d57d0d0f33523e3e7791f72cf5a69",
+    "phase6_dataset_manifest_sha256": "91b3ce089c53db152e8d186d92ab9807ca9eb83646c622b2e5101dee0dbe9552",
+    "phase6_frozen_manifest_dataset_record_updated": true
+  },
+  "semantic_invariants": {
+    "passed": true,
+    "model_prompt_hash_tool_surface_unchanged": true,
+    "task_bindings_source_file_hashes_readiness_results_unchanged": true,
+    "held_out_results_unchanged": true,
+    "phase6_official_run_results_unchanged": true,
+    "semantic_snapshot_sha256": "b80af46bea0a2cf93a25d28a371410c3ae48e092c4dd8062bc651f91720493e4"
+  },
+  "protected_scope_comparisons": {
+    "original_source_datasets": {
+      "file_count": 45,
+      "before_snapshot_sha256": "7712befd445d61a28d9c73e344a7dbfaa0048c5023c5a226ac18d6f7ccc50287",
+      "after_snapshot_sha256": "7712befd445d61a28d9c73e344a7dbfaa0048c5023c5a226ac18d6f7ccc50287",
+      "path_size_sha256_mtime_changes": 0,
+      "passed": true
+    },
+    "held_out_64_run_artifacts": {
+      "file_count": 582,
+      "before_snapshot_sha256": "6325b4599de8a2d615875040af5600dc58e62b5fe185adad7df8d092100a6c21",
+      "after_snapshot_sha256": "6325b4599de8a2d615875040af5600dc58e62b5fe185adad7df8d092100a6c21",
+      "path_size_sha256_mtime_changes": 0,
+      "passed": true
+    },
+    "phase6_official_delivery_evidence_tool_responses": {
+      "file_count": 24,
+      "before_snapshot_sha256": "a76066ae1362de50b91a7fd016469af854eea29658a7c056bbdf067228285a90",
+      "after_snapshot_sha256": "a76066ae1362de50b91a7fd016469af854eea29658a7c056bbdf067228285a90",
+      "path_size_sha256_mtime_changes": 0,
+      "passed": true
+    },
+    "phase6c_ui_source": {
+      "file_count": 19,
+      "before_snapshot_sha256": "e133541eddd462115fd07e6cdbeb49cb0df63dc08ced807a140257b890824dea",
+      "after_snapshot_sha256": "e133541eddd462115fd07e6cdbeb49cb0df63dc08ced807a140257b890824dea",
+      "path_size_sha256_mtime_changes": 0,
+      "passed": true
+    },
+    "readiness_and_evidence_checker_implementation": {
+      "file_count": 13,
+      "before_snapshot_sha256": "7d01b04067423450861b83a13280d64db20221a33cf71653e90f10e1ebc5ed32",
+      "after_snapshot_sha256": "7d01b04067423450861b83a13280d64db20221a33cf71653e90f10e1ebc5ed32",
+      "path_size_sha256_mtime_changes": 0,
+      "passed": true
+    }
+  },
+  "receipt_self_hash_excluded": true
+}

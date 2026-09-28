@@ -1,0 +1,139 @@
+{
+  "schema_version": "ax-phase6-evidence-checker-comparison-v1",
+  "created_at": "2026-09-25T11:13:58.1900441Z",
+  "checker_commit": "71c610f05a9626555405d67ec19f73152e7a4fa3",
+  "execution": {
+    "method": "check_run_on_byte_identical_copies",
+    "copy_root": "_review_v2/evidence-checker-v2-recheck",
+    "official_source_root": "artifacts/phase6_product_demo/runs",
+    "copied_file_count": 24,
+    "all_copied_files_sha256_identical": true,
+    "copy_mismatch_count": 0
+  },
+  "frozen_v1": {
+    "manifest_path": "artifacts/phase6_product_demo/FROZEN_MANIFEST.json",
+    "manifest_sha256": "515930fde7dee2e1b84fa90b79ccf33511359116a5b44bbd042fab486d8befd9",
+    "mutated": false,
+    "verification_passed": true
+  },
+  "summary": {
+    "after_run_count": 3,
+    "after_direct_match_before": 1,
+    "after_direct_match_recomputed": 3,
+    "after_3_of_3_direct_match": true,
+    "target_run_change_count": 2,
+    "before_abstention_run_count": 3,
+    "before_abstention_promoted_count": 0,
+    "before_abstention_results_unchanged": true,
+    "passed": true
+  },
+  "runs": [
+    {
+      "run_id": "phase6demo-official-official-001-01-before-489834b1",
+      "profile": "before",
+      "answer": null,
+      "unit": null,
+      "baseline_verdict": "UNCONFIRMED",
+      "recomputed_verdict": "UNCONFIRMED",
+      "verdict_changed": false,
+      "source_bindings_unchanged": true,
+      "reason_code": "ABSTENTION_RESULT_UNCHANGED"
+    },
+    {
+      "run_id": "phase6demo-official-official-001-02-after-02d170f8",
+      "profile": "after",
+      "answer": 30,
+      "unit": "일",
+      "baseline_verdict": "DIRECT_MATCH",
+      "recomputed_verdict": "DIRECT_MATCH",
+      "verdict_changed": false,
+      "source_bindings_unchanged": true,
+      "reason_code": "NUMERIC_ANSWER_WITH_DECLARED_UNIT_PRESERVED"
+    },
+    {
+      "run_id": "phase6demo-official-official-001-03-before-1c3baf2d",
+      "profile": "before",
+      "answer": null,
+      "unit": null,
+      "baseline_verdict": "UNCONFIRMED",
+      "recomputed_verdict": "UNCONFIRMED",
+      "verdict_changed": false,
+      "source_bindings_unchanged": true,
+      "reason_code": "ABSTENTION_RESULT_UNCHANGED"
+    },
+    {
+      "run_id": "phase6demo-official-official-001-04-after-7b4095d7",
+      "profile": "after",
+      "answer": "30일",
+      "unit": "일",
+      "baseline_verdict": "UNCONFIRMED",
+      "recomputed_verdict": "DIRECT_MATCH",
+      "verdict_changed": true,
+      "baseline_evidence_match": "CITED_RESPONSE",
+      "recomputed_evidence_match": "DIRECT_VALUE",
+      "source_bindings_unchanged": true,
+      "matched_source_ids": [
+        "FILE_5587cb5d2ae64ba9"
+      ],
+      "matched_snippet_quantity": "30일 이내",
+      "parsed_quantity": {
+        "value": 30,
+        "embedded_unit": "일",
+        "declared_unit": "일",
+        "unit_family": "day"
+      },
+      "reason_code": "WHOLE_STRING_QUANTITY_UNIT_FAMILY_MATCH"
+    },
+    {
+      "run_id": "phase6demo-official-official-001-05-before-2e03fdf6",
+      "profile": "before",
+      "answer": null,
+      "unit": null,
+      "baseline_verdict": "UNCONFIRMED",
+      "recomputed_verdict": "UNCONFIRMED",
+      "verdict_changed": false,
+      "source_bindings_unchanged": true,
+      "reason_code": "ABSTENTION_RESULT_UNCHANGED"
+    },
+    {
+      "run_id": "phase6demo-official-official-001-06-after-233af967",
+      "profile": "after",
+      "answer": "30일",
+      "unit": "일",
+      "baseline_verdict": "UNCONFIRMED",
+      "recomputed_verdict": "DIRECT_MATCH",
+      "verdict_changed": true,
+      "baseline_evidence_match": "CITED_RESPONSE",
+      "recomputed_evidence_match": "DIRECT_VALUE",
+      "source_bindings_unchanged": true,
+      "matched_source_ids": [
+        "FILE_5587cb5d2ae64ba9"
+      ],
+      "matched_snippet_quantity": "30일 이내",
+      "parsed_quantity": {
+        "value": 30,
+        "embedded_unit": "일",
+        "declared_unit": "일",
+        "unit_family": "day"
+      },
+      "reason_code": "WHOLE_STRING_QUANTITY_UNIT_FAMILY_MATCH"
+    }
+  ],
+  "proposed_versioning": {
+    "status": "PROPOSED_NOT_CREATED_AWAITING_EXPLICIT_APPROVAL",
+    "snapshot_path": "artifacts/phase6_product_demo_v2",
+    "manifest_path": "artifacts/phase6_product_demo_v2/FROZEN_MANIFEST.v2.json",
+    "manifest_schema_version": "ax-phase6-product-demo-freeze-v2",
+    "parent_manifest_path": "artifacts/phase6_product_demo/FROZEN_MANIFEST.json",
+    "parent_manifest_sha256": "515930fde7dee2e1b84fa90b79ccf33511359116a5b44bbd042fab486d8befd9",
+    "policy": "COPY_V1_INPUTS_BY_HASH_AND_WRITE_NEW_EVIDENCE_CHECKS_WITHOUT_OVERWRITING_V1",
+    "required_manifest_fields": [
+      "parent_manifest_sha256",
+      "checker_commit",
+      "source_input_hashes",
+      "recomputed_evidence_hashes",
+      "changed_paths",
+      "comparison_report_sha256"
+    ]
+  }
+}

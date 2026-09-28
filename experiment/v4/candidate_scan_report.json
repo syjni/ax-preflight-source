@@ -1,0 +1,181 @@
+{
+  "scan_metadata": {
+    "schema_version": "ax-scan-report-v1",
+    "scanner_version": "0.1.0",
+    "source_root_name": "온담물류",
+    "supported_extensions": [
+      ".txt",
+      ".pdf",
+      ".docx",
+      ".csv",
+      ".xlsx"
+    ],
+    "ocr_min_chars_per_page": 20,
+    "file_count": 4,
+    "parsed_file_count": 4,
+    "unsupported_file_count": 0,
+    "error_file_count": 0,
+    "local_only": true,
+    "llm_dependency_required": false
+  },
+  "files": [
+    {
+      "file_id": "FILE_286926360d4d9b10",
+      "relative_path": "01_품질/지역별_검수_2027.csv",
+      "filename": "지역별_검수_2027.csv",
+      "extension": ".csv",
+      "size": 413,
+      "modified_at": "2026-09-22T08:50:07.595078Z",
+      "sha256": "d7426bebb7d3c4a5de44fae187a1a12c26f91341a99cb985236138b2eed65712",
+      "parse_status": "PARSED",
+      "parser": "csv",
+      "text": "inspection_id | region | inspection_date | defective_qty | inspected_qty\nQ2701 | 북부 | 2027-01-08 | 3 | 42\nQ2702 | 남부 | 2027-01-09 | 5 | 33\nQ2703 | 서부 | 2027-01-10 | 2 | 71\nQ2704 | 동부 | 2027-01-11 | 7 | 90\nQ2705 | 북부 | 2027-02-08 | 4 | 51\nQ2706 | 남부 | 2027-02-09 | 1 | 44\nQ2707 | 서부 | 2027-02-10 | 6 | 68\nQ2708 | 동부 | 2027-02-11 | 4 | 81\nQ2709 | 북부 | 2027-03-08 | 2 | 37\nQ2710 | 남부 | 2027-03-09 | 3 | 48\nQ2711 | 서부 | 2027-03-10 | 1 | 59\nQ2712 | 동부 | 2027-03-11 | 5 | 87",
+      "text_char_count": 468,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig",
+        "delimiter": ","
+      }
+    },
+    {
+      "file_id": "FILE_ab4dbbefbf02f51c",
+      "relative_path": "02_운영/접수_필수_항목.txt",
+      "filename": "접수_필수_항목.txt",
+      "extension": ".txt",
+      "size": 612,
+      "modified_at": "2026-09-22T08:50:12.194933Z",
+      "sha256": "dee5b03fd5b44fc08f106a9363e319ad4199d02a0c1d3b446500922f9af1f229",
+      "parse_status": "PARSED",
+      "parser": "txt",
+      "text": "온담물류 2027년 접수 필수 항목\n\n보증 수리 접수: 제품 식별번호, 구매 증빙, 증상 설명을 모두 확인합니다.\n법인 고객 신규 계정 접수: 사업자등록증, 담당자 연락처, 세금계산서 수신 이메일을 모두 확인합니다.\n대량 배송 변경 접수: 원주문 번호, 변경 배송지, 요청자 승인을 모두 확인합니다.\n입고 오차 신고 접수: 납품서, 실측 수량, 로트 번호를 모두 확인합니다.\n\n각 줄의 세 항목은 해당 절차의 필수 항목입니다. 다른 절차의 항목을 섞어 안내하지 않습니다.\n",
+      "text_char_count": 264,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig"
+      }
+    },
+    {
+      "file_id": "FILE_e2bae550a439ce19",
+      "relative_path": "02_운영/처리_기한_기준.txt",
+      "filename": "처리_기한_기준.txt",
+      "extension": ".txt",
+      "size": 592,
+      "modified_at": "2026-09-22T08:50:10.594470Z",
+      "sha256": "3a0810afac2d57929508b045d2e11322ffdd5477913cda43ab0c8ff5b4d3f693",
+      "parse_status": "PARSED",
+      "parser": "txt",
+      "text": "온담물류 2027년 처리 기한 기준\n\n상품 재검수 건은 접수 후 2영업일을 초과하면 담당팀에 에스컬레이션합니다.\n정산 이의 건은 접수 후 5영업일을 초과하면 담당팀에 에스컬레이션합니다.\n긴급 배송 조정 건은 접수 후 1영업일을 초과하면 담당팀에 에스컬레이션합니다.\n계약 검토 회신 건은 접수 후 4영업일을 초과하면 담당팀에 에스컬레이션합니다.\n\n여기서 명시한 숫자는 초과 기준값이며 최초 에스컬레이션 대상 영업일차는 그 다음 날입니다.\n",
+      "text_char_count": 244,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig"
+      }
+    },
+    {
+      "file_id": "FILE_bd35eab54903d267",
+      "relative_path": "03_담당/업무_책임팀_2027.txt",
+      "filename": "업무_책임팀_2027.txt",
+      "extension": ".txt",
+      "size": 337,
+      "modified_at": "2026-09-22T08:50:14.609953Z",
+      "sha256": "6d42fa459539526fa9057b8f49a927166716958d8b86b059f51862ae6de27c16",
+      "parse_status": "PARSED",
+      "parser": "txt",
+      "text": "온담물류 2027년 업무 책임팀\n\n2027년 2분기 창고 재고 조사의 책임팀은 운영관리팀입니다.\n해외 발송 서류 검토의 책임팀은 통관지원팀입니다.\n\n이 문서에는 2028년 창고 이전 프로젝트의 책임팀이나 2027년 4분기 신규 서비스 교육의 책임팀 정보가 없습니다.\n",
+      "text_char_count": 149,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig"
+      }
+    }
+  ],
+  "duplicates": [],
+  "probable_version_groups": [],
+  "pii_findings": [],
+  "unreadable_sources": [],
+  "tables": [
+    {
+      "table_id": "TABLE_FILE_286926360d4d9b10_CSV",
+      "file_id": "FILE_286926360d4d9b10",
+      "sheet_name": "CSV",
+      "row_count": 12,
+      "column_count": 5,
+      "column_names": [
+        "inspection_id",
+        "region",
+        "inspection_date",
+        "defective_qty",
+        "inspected_qty"
+      ],
+      "columns": [
+        {
+          "name": "inspection_id",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "Q2701",
+            "Q2702",
+            "Q2703"
+          ]
+        },
+        {
+          "name": "region",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "북부",
+            "남부",
+            "서부"
+          ]
+        },
+        {
+          "name": "inspection_date",
+          "inferred_type": "date",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "2027-01-08",
+            "2027-01-09",
+            "2027-01-10"
+          ]
+        },
+        {
+          "name": "defective_qty",
+          "inferred_type": "integer",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "3",
+            "5",
+            "2"
+          ]
+        },
+        {
+          "name": "inspected_qty",
+          "inferred_type": "integer",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "42",
+            "33",
+            "71"
+          ]
+        }
+      ],
+      "merged_cell_present": false,
+      "merged_ranges": []
+    }
+  ],
+  "live_llm": {
+    "status": "LIVE_LLM_PENDING",
+    "provider": null,
+    "model": null,
+    "reason": "No OpenAI API key, AWS credential/profile, or supported local LLM runtime was available.",
+    "tasks": []
+  }
+}

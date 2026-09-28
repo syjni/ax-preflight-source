@@ -1,0 +1,186 @@
+{
+  "schema_version": "ax-ceiling-benchmark-validation-v2",
+  "dataset_id": "hanbit-distribution-ceiling-v1",
+  "passed": true,
+  "safety_status": "NOT_SAFE",
+  "safety_scope": "Static Ceiling-data integrity passed, but this artifact is not authorization to begin the 9/22 runtime experiment.",
+  "remaining_weaknesses": [
+    "Kiro was intentionally not run; the blind runtime sample protocol remains NOT_RUN.",
+    "Deterministic tool validation is a low-level scanner-metadata harness, not Kiro/runtime retrieval feasibility evidence."
+  ],
+  "checks": [
+    {
+      "name": "ceiling_dataset_shape",
+      "passed": true,
+      "detail": {
+        "file_count": 30,
+        "format_counts": {
+          "csv": 5,
+          "docx": 7,
+          "pdf": 4,
+          "txt": 8,
+          "xlsx": 6
+        }
+      }
+    },
+    {
+      "name": "supported_p0_formats_present",
+      "passed": true,
+      "detail": {
+        "observed": {
+          "csv": 5,
+          "docx": 7,
+          "pdf": 4,
+          "txt": 8,
+          "xlsx": 6
+        }
+      }
+    },
+    {
+      "name": "dataset_manifest_integrity",
+      "passed": true,
+      "detail": {
+        "mismatches": []
+      }
+    },
+    {
+      "name": "benchmark_schema_and_scoring",
+      "passed": true,
+      "detail": {
+        "task_count": 21,
+        "category_counts": {
+          "knowledge": 7,
+          "operations": 6,
+          "cross_file": 8
+        },
+        "scoring_counts": {
+          "numeric": 13,
+          "set": 1,
+          "exact": 7
+        },
+        "errors": []
+      }
+    },
+    {
+      "name": "required_source_validation",
+      "passed": true,
+      "detail": {
+        "missing": []
+      }
+    },
+    {
+      "name": "as_of_date_order_boundary",
+      "passed": true,
+      "detail": {
+        "as_of_date": "2026-09-21",
+        "max_order_date": "2026-09-21"
+      }
+    },
+    {
+      "name": "independent_source_truth_verification",
+      "passed": true,
+      "detail": {
+        "mismatched_tasks": [],
+        "method": "independent_runtime_source_readers"
+      }
+    },
+    {
+      "name": "control_source_hash_and_family_protection",
+      "passed": true,
+      "detail": {
+        "protected_source_count": 4,
+        "errors": [],
+        "sibling_conflicts": [],
+        "stability_metric": {
+          "name": "protected_control_retrieval_result_stability",
+          "definition": "After a future injection, each control task must retain its Ceiling source hash, required-source retrieval rank@k, and deterministic score classification under the same frozen retrieval contract.",
+          "execution_status": "NOT_RUN"
+        }
+      }
+    },
+    {
+      "name": "task_to_defect_manifest",
+      "passed": true,
+      "detail": {
+        "defect_sensitive_task_count": 16,
+        "errors": []
+      }
+    },
+    {
+      "name": "deterministic_tool_contract_validation",
+      "passed": true,
+      "detail": {
+        "scope": "low-level hidden-plan replay only; not Kiro/runtime feasibility",
+        "validated_tasks": 21,
+        "failures": [],
+        "tool_call_counts": {
+          "K01_RETURN_WINDOW": 2,
+          "K02_RETURN_REQUIREMENTS": 2,
+          "K03_DELAY_COMPENSATION_THRESHOLD": 2,
+          "K04_DISCOUNT_APPROVER": 2,
+          "K05_STOCK_REFERENCE_FIELD": 2,
+          "K06_FIRST_RESPONSE_TARGET": 2,
+          "O01_CUSTOMER_COUNT": 3,
+          "O02_SEPTEMBER_ORDER_TOTAL": 3,
+          "O03_GREEN_TABLE_LAST_ORDER": 6,
+          "O04_PRODUCT_MASTER_COUNT": 3,
+          "O05_HIGHEST_AVAILABLE_STOCK": 3,
+          "O06_RETURN_RATE": 3,
+          "O07_SEOUL_LEAD_TIME": 3,
+          "C01_HANBIT_AUGUST_TOTAL": 6,
+          "C02_DONGHAE_SEPTEMBER_TOTAL": 6,
+          "C03_TEA_STOCK": 6,
+          "C04_YUNSEONG_LAST_ORDER": 6,
+          "C05_SAEBOM_JULY_TOTAL": 6,
+          "C06_ARAM_AUGUST_RETURNS": 6,
+          "C07_DAON_TOP_ORDER_PRODUCT": 6,
+          "K07_VENDOR_FORECAST_ABSTAIN": 1
+        }
+      }
+    },
+    {
+      "name": "runtime_leakage_prevention",
+      "passed": true,
+      "detail": {
+        "passed": true,
+        "zip_aware": true,
+        "runtime_file_count": 32,
+        "violations": [],
+        "kiro_resource_boundary": {
+          "agent_config_available": true,
+          "resources_empty": true,
+          "include_mcp_json_disabled": true
+        }
+      }
+    },
+    {
+      "name": "blind_runtime_protocol_schema_present",
+      "passed": true,
+      "detail": {
+        "execution_status": "NOT_RUN"
+      }
+    },
+    {
+      "name": "provenance_present",
+      "passed": true,
+      "detail": {
+        "path": "dataset_provenance.md"
+      }
+    }
+  ],
+  "summary": {
+    "task_count": 21,
+    "category_counts": {
+      "knowledge": 7,
+      "operations": 6,
+      "cross_file": 8
+    },
+    "control_task_count": 5,
+    "scoring_counts": {
+      "numeric": 13,
+      "set": 1,
+      "exact": 7
+    },
+    "deterministic_tool_validation_count": 21
+  }
+}

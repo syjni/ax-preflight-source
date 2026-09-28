@@ -1,0 +1,20 @@
+{
+  "schema_version": "ax-business-task-approvals-v1",
+  "approvals": [
+    {
+      "approval_id": "DEMO_RETURN_WINDOW_AFTER_V1",
+      "dataset_profile": "portfolio-ceiling-after",
+      "task_id": "TASK_POLICY_RETURN_WINDOW",
+      "owner_role": "정책 운영 담당자",
+      "success_criteria": [
+        "현행 반품 가능 기간을 일 단위로 답한다.",
+        "최종 답변은 해당 데이터셋에서 조회된 근거 source ID를 하나 이상 포함한다.",
+        "상충 근거가 남아 있으면 답변하지 않고 보류한다."
+      ],
+      "approval_scope": "CONTROLLED_DEMO",
+      "approved_by_role": "AX Preflight 데모 운영자",
+      "approved_at": "2026-09-28",
+      "question_sha256": "7eda629cb6294c42f13b514539b2205da4335f220a24227963786409edb8c48e"
+    }
+  ]
+}

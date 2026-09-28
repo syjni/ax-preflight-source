@@ -1,0 +1,1 @@
+{"dataset": "portfolio-ceiling-after", "request_type": "TASK_CANDIDATE", "run_id": "phase6v4-portfolio-ceiling-after-task_customer_count-r3", "schema_version": "ax-run-context-v1", "task_id": "TASK_CUSTOMER_COUNT", "task_label": "등록된 거래처는 몇 곳인가요?"}

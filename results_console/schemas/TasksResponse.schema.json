@@ -1,0 +1,136 @@
+{
+  "$defs": {
+    "BusinessTaskApprovalSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "approval_id": {
+          "minLength": 1,
+          "title": "Approval Id",
+          "type": "string"
+        },
+        "approval_scope": {
+          "enum": [
+            "CUSTOMER",
+            "CONTROLLED_DEMO"
+          ],
+          "title": "Approval Scope",
+          "type": "string"
+        },
+        "approved_at": {
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "title": "Approved At",
+          "type": "string"
+        },
+        "approved_by_role": {
+          "minLength": 1,
+          "title": "Approved By Role",
+          "type": "string"
+        },
+        "owner_role": {
+          "minLength": 1,
+          "title": "Owner Role",
+          "type": "string"
+        },
+        "success_criteria": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Success Criteria",
+          "type": "array"
+        }
+      },
+      "required": [
+        "approval_id",
+        "owner_role",
+        "success_criteria",
+        "approval_scope",
+        "approved_by_role",
+        "approved_at"
+      ],
+      "title": "BusinessTaskApprovalSummary",
+      "type": "object"
+    },
+    "BusinessTaskView": {
+      "additionalProperties": false,
+      "properties": {
+        "approval": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BusinessTaskApprovalSummary"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "category": {
+          "minLength": 1,
+          "title": "Category",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "question": {
+          "minLength": 1,
+          "title": "Question",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "CANDIDATE",
+            "VERIFIED"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "task_id": {
+          "minLength": 1,
+          "title": "Task Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "task_id",
+        "category",
+        "question",
+        "description",
+        "status"
+      ],
+      "title": "BusinessTaskView",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "catalog_status": {
+      "enum": [
+        "CANDIDATES_AVAILABLE",
+        "VERIFIED_TASKS_AVAILABLE"
+      ],
+      "title": "Catalog Status",
+      "type": "string"
+    },
+    "dataset": {
+      "title": "Dataset",
+      "type": "string"
+    },
+    "tasks": {
+      "items": {
+        "$ref": "#/$defs/BusinessTaskView"
+      },
+      "title": "Tasks",
+      "type": "array"
+    }
+  },
+  "required": [
+    "dataset",
+    "catalog_status"
+  ],
+  "title": "TasksResponse",
+  "type": "object"
+}

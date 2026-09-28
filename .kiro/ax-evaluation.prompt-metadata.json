@@ -1,0 +1,14 @@
+{
+  "schema_version": "ax-agent-prompt-metadata-v1",
+  "prompt_version": "2",
+  "prompt_sha256": "dc783a41a5b06eb871ada33be7dd21aec2e4106757a40921ddf59fcf81176fc8",
+  "previous_prompt_sha256": "503d8ea1464f0c34ac8ffae6f54ed0377110f21b4443968ec5e4c392497e6ee2",
+  "revision_scope": "Generic raw-JSON output formatting only",
+  "frozen_schema_fields": [
+    "final_answer",
+    "unit",
+    "explanation",
+    "source_ids",
+    "abstain"
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "scan_metadata": {
+    "schema_version": "ax-scan-report-v1",
+    "scanner_version": "0.1.0",
+    "source_root_name": "해솔제조",
+    "supported_extensions": [
+      ".txt",
+      ".pdf",
+      ".docx",
+      ".csv",
+      ".xlsx"
+    ],
+    "ocr_min_chars_per_page": 20,
+    "file_count": 4,
+    "parsed_file_count": 4,
+    "unsupported_file_count": 0,
+    "error_file_count": 0,
+    "local_only": true,
+    "llm_dependency_required": false
+  },
+  "files": [
+    {
+      "file_id": "FILE_38c379c0eac1f25e",
+      "relative_path": "01_고객지원/채널별_반품심사_2028.csv",
+      "filename": "채널별_반품심사_2028.csv",
+      "extension": ".csv",
+      "size": 432,
+      "modified_at": "2026-09-22T09:33:39.707120Z",
+      "sha256": "f709b3f2212d48ad029a19fb469ac92b7069548d33983ae72efb8bcad9a35575",
+      "parse_status": "PARSED",
+      "parser": "csv",
+      "text": "review_id | channel | review_date | approved_returns | reviewed_returns\nR2801 | 온라인 | 2028-04-06 | 7 | 83\nR2802 | 대리점 | 2028-04-07 | 4 | 62\nR2803 | 직영 | 2028-04-08 | 2 | 55\nR2804 | 기업 | 2028-04-09 | 5 | 90\nR2805 | 온라인 | 2028-05-06 | 5 | 76\nR2806 | 대리점 | 2028-05-07 | 6 | 70\nR2807 | 직영 | 2028-05-08 | 4 | 65\nR2808 | 기업 | 2028-05-09 | 6 | 110\nR2809 | 온라인 | 2028-06-06 | 9 | 91\nR2810 | 대리점 | 2028-06-07 | 3 | 68\nR2811 | 직영 | 2028-06-08 | 3 | 60\nR2812 | 기업 | 2028-06-09 | 8 | 100",
+      "text_char_count": 475,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig",
+        "delimiter": ","
+      }
+    },
+    {
+      "file_id": "FILE_88f7066f5f654f48",
+      "relative_path": "02_설비/설비_조치_기준.txt",
+      "filename": "설비_조치_기준.txt",
+      "extension": ".txt",
+      "size": 605,
+      "modified_at": "2026-09-22T09:33:41.597956Z",
+      "sha256": "f05f3b3530e80e9c4dbbc5344118b0f17cf13d0cb2eff978a97bd57838b08185",
+      "parse_status": "PARSED",
+      "parser": "txt",
+      "text": "해솔제조 2028년 설비 이상 조치 기준\n\n냉각수 압력 경고는 접수 후 2시간을 초과하면 당직 관리자에게 통보한다. 3시간째부터 통보 대상이다.\n포장기 센서 오류는 접수 후 4시간을 초과하면 당직 관리자에게 통보한다. 5시간째부터 통보 대상이다.\n충전라인 누출 의심은 접수 후 1시간을 초과하면 당직 관리자에게 통보한다. 2시간째부터 통보 대상이다.\n출하 라벨 인쇄 오류는 접수 후 3시간을 초과하면 당직 관리자에게 통보한다. 4시간째부터 통보 대상이다.\n",
+      "text_char_count": 255,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig"
+      }
+    },
+    {
+      "file_id": "FILE_63c0ffafe57c076d",
+      "relative_path": "03_관리/등록_필수_증빙.txt",
+      "filename": "등록_필수_증빙.txt",
+      "extension": ".txt",
+      "size": 559,
+      "modified_at": "2026-09-22T09:33:43.496468Z",
+      "sha256": "cc722f32a9e0e3e51118273b95a77e683ca5ae491b8a68534ee743a3d066c7ab",
+      "parse_status": "PARSED",
+      "parser": "txt",
+      "text": "해솔제조 2028년 관리 등록 필수 증빙\n\n정기 안전점검 등록: 점검 일지, 설비 번호, 점검자 서명을 모두 확인한다.\n협력사 출입 신청: 방문 목적, 방문자 명단, 안전교육 확인을 모두 확인한다.\n시험 자재 반입: 반입 목록, 보관 위치, 책임자 승인을 모두 확인한다.\n공정 변경 신청: 변경 사유, 영향 평가서, 시행 예정일을 모두 확인한다.\n\n아래 항목은 위 등록 서류의 필수 증빙이 아니다: 홍보 사진, 식당 메뉴, 개인 취미 기록.\n",
+      "text_char_count": 247,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig"
+      }
+    },
+    {
+      "file_id": "FILE_446ed47ad6d2dba4",
+      "relative_path": "04_담당/승인권한_2028.txt",
+      "filename": "승인권한_2028.txt",
+      "extension": ".txt",
+      "size": 450,
+      "modified_at": "2026-09-22T09:33:45.294053Z",
+      "sha256": "80c67d2222a70df8b46be3f2d3d437722bc1968782b84cdc86ab614c34678a8f",
+      "parse_status": "PARSED",
+      "parser": "txt",
+      "text": "해솔제조 2028년 승인 권한 메모\n\n2028년 하반기 설비 예방정비 계획의 승인팀은 설비기술팀이다.\n신규 협력사 등록 심사의 승인팀은 구매관리팀이다.\n\n이 문서는 2029년 해외 제2공장 착공 계획의 승인팀을 정하지 않았다. 관련 승인팀 정보가 없다.\n이 문서는 2028년 4분기 AI 검사 장비 도입의 승인팀을 정하지 않았다. 관련 승인팀 정보가 없다.\n",
+      "text_char_count": 200,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig"
+      }
+    }
+  ],
+  "duplicates": [],
+  "probable_version_groups": [],
+  "pii_findings": [],
+  "unreadable_sources": [],
+  "tables": [
+    {
+      "table_id": "TABLE_FILE_38c379c0eac1f25e_CSV",
+      "file_id": "FILE_38c379c0eac1f25e",
+      "sheet_name": "CSV",
+      "row_count": 12,
+      "column_count": 5,
+      "column_names": [
+        "review_id",
+        "channel",
+        "review_date",
+        "approved_returns",
+        "reviewed_returns"
+      ],
+      "columns": [
+        {
+          "name": "review_id",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "R2801",
+            "R2802",
+            "R2803"
+          ]
+        },
+        {
+          "name": "channel",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "온라인",
+            "대리점",
+            "직영"
+          ]
+        },
+        {
+          "name": "review_date",
+          "inferred_type": "date",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "2028-04-06",
+            "2028-04-07",
+            "2028-04-08"
+          ]
+        },
+        {
+          "name": "approved_returns",
+          "inferred_type": "integer",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "7",
+            "4",
+            "2"
+          ]
+        },
+        {
+          "name": "reviewed_returns",
+          "inferred_type": "integer",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "83",
+            "62",
+            "55"
+          ]
+        }
+      ],
+      "merged_cell_present": false,
+      "merged_ranges": []
+    }
+  ],
+  "live_llm": {
+    "status": "LIVE_LLM_PENDING",
+    "provider": null,
+    "model": null,
+    "reason": "No OpenAI API key, AWS credential/profile, or supported local LLM runtime was available.",
+    "tasks": []
+  }
+}

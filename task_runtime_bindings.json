@@ -1,0 +1,169 @@
+{
+  "schema_version": "ax-task-runtime-bindings-v2",
+  "experiment_version": "ax-exp-v2",
+  "run_design": "16 tasks x 2 conditions x 2 repetitions = 64 runs",
+  "treated_task_count": 12,
+  "control_task_count": 4,
+  "bindings": [
+    {
+      "task_id": "K01_RETURN_WINDOW",
+      "task_group": "treated",
+      "defect_variant_id": "AXV2_ACCESSIBILITY_D527640C55B3",
+      "runtime_profiles": {
+        "Before": "before-accessibility-d527640c55b3",
+        "Ceiling": "ceiling"
+      },
+      "pre_registered_interpretation": "task-relevant single-defect Before versus frozen Ceiling"
+    },
+    {
+      "task_id": "K02_RETURN_REQUIREMENTS",
+      "task_group": "treated",
+      "defect_variant_id": "AXV2_ACCESSIBILITY_D527640C55B3",
+      "runtime_profiles": {
+        "Before": "before-accessibility-d527640c55b3",
+        "Ceiling": "ceiling"
+      },
+      "pre_registered_interpretation": "task-relevant single-defect Before versus frozen Ceiling"
+    },
+    {
+      "task_id": "K03_DELAY_COMPENSATION_THRESHOLD",
+      "task_group": "control",
+      "defect_variant_id": null,
+      "runtime_profiles": {
+        "Before": "ceiling",
+        "Ceiling": "ceiling"
+      },
+      "pre_registered_interpretation": "negative control with byte-identical evidence across condition labels"
+    },
+    {
+      "task_id": "K04_DISCOUNT_APPROVER",
+      "task_group": "treated",
+      "defect_variant_id": "AXV2_ACCESSIBILITY_0E78131FC878",
+      "runtime_profiles": {
+        "Before": "before-accessibility-0e78131fc878",
+        "Ceiling": "ceiling"
+      },
+      "pre_registered_interpretation": "task-relevant single-defect Before versus frozen Ceiling"
+    },
+    {
+      "task_id": "K05_STOCK_REFERENCE_FIELD",
+      "task_group": "treated",
+      "defect_variant_id": "AXV2_ACCESSIBILITY_91428D0D2D6D",
+      "runtime_profiles": {
+        "Before": "before-accessibility-91428d0d2d6d",
+        "Ceiling": "ceiling"
+      },
+      "pre_registered_interpretation": "task-relevant single-defect Before versus frozen Ceiling"
+    },
+    {
+      "task_id": "K06_FIRST_RESPONSE_TARGET",
+      "task_group": "control",
+      "defect_variant_id": null,
+      "runtime_profiles": {
+        "Before": "ceiling",
+        "Ceiling": "ceiling"
+      },
+      "pre_registered_interpretation": "negative control with byte-identical evidence across condition labels"
+    },
+    {
+      "task_id": "O02_SEPTEMBER_ORDER_TOTAL",
+      "task_group": "treated",
+      "defect_variant_id": "AXV2_ACCESSIBILITY_950A2B2ED909",
+      "runtime_profiles": {
+        "Before": "before-accessibility-950a2b2ed909",
+        "Ceiling": "ceiling"
+      },
+      "pre_registered_interpretation": "task-relevant single-defect Before versus frozen Ceiling"
+    },
+    {
+      "task_id": "O03_GREEN_TABLE_LAST_ORDER",
+      "task_group": "treated",
+      "defect_variant_id": "AXV2_ACCESSIBILITY_A534444AFE03",
+      "runtime_profiles": {
+        "Before": "before-accessibility-a534444afe03",
+        "Ceiling": "ceiling"
+      },
+      "pre_registered_interpretation": "task-relevant single-defect Before versus frozen Ceiling"
+    },
+    {
+      "task_id": "O04_PRODUCT_MASTER_COUNT",
+      "task_group": "control",
+      "defect_variant_id": null,
+      "runtime_profiles": {
+        "Before": "ceiling",
+        "Ceiling": "ceiling"
+      },
+      "pre_registered_interpretation": "negative control with byte-identical evidence across condition labels"
+    },
+    {
+      "task_id": "O06_RETURN_RATE",
+      "task_group": "treated",
+      "defect_variant_id": "AXV2_ACCESSIBILITY_66A46D7E2186",
+      "runtime_profiles": {
+        "Before": "before-accessibility-66a46d7e2186",
+        "Ceiling": "ceiling"
+      },
+      "pre_registered_interpretation": "task-relevant single-defect Before versus frozen Ceiling"
+    },
+    {
+      "task_id": "O07_SEOUL_LEAD_TIME",
+      "task_group": "treated",
+      "defect_variant_id": "AXV2_ACCESSIBILITY_F1D1804D1AA6",
+      "runtime_profiles": {
+        "Before": "before-accessibility-f1d1804d1aa6",
+        "Ceiling": "ceiling"
+      },
+      "pre_registered_interpretation": "task-relevant single-defect Before versus frozen Ceiling"
+    },
+    {
+      "task_id": "C02_DONGHAE_SEPTEMBER_TOTAL",
+      "task_group": "treated",
+      "defect_variant_id": "AXV2_ACCESSIBILITY_A534444AFE03",
+      "runtime_profiles": {
+        "Before": "before-accessibility-a534444afe03",
+        "Ceiling": "ceiling"
+      },
+      "pre_registered_interpretation": "task-relevant single-defect Before versus frozen Ceiling"
+    },
+    {
+      "task_id": "C03_TEA_STOCK",
+      "task_group": "control",
+      "defect_variant_id": null,
+      "runtime_profiles": {
+        "Before": "ceiling",
+        "Ceiling": "ceiling"
+      },
+      "pre_registered_interpretation": "negative control with byte-identical evidence across condition labels"
+    },
+    {
+      "task_id": "C05_SAEBOM_JULY_TOTAL",
+      "task_group": "treated",
+      "defect_variant_id": "AXV2_ACCESSIBILITY_A534444AFE03",
+      "runtime_profiles": {
+        "Before": "before-accessibility-a534444afe03",
+        "Ceiling": "ceiling"
+      },
+      "pre_registered_interpretation": "task-relevant single-defect Before versus frozen Ceiling"
+    },
+    {
+      "task_id": "C06_ARAM_AUGUST_RETURNS",
+      "task_group": "treated",
+      "defect_variant_id": "AXV2_ACCESSIBILITY_7497B2824BA3",
+      "runtime_profiles": {
+        "Before": "before-accessibility-7497b2824ba3",
+        "Ceiling": "ceiling"
+      },
+      "pre_registered_interpretation": "task-relevant single-defect Before versus frozen Ceiling"
+    },
+    {
+      "task_id": "K07_VENDOR_FORECAST_ABSTAIN",
+      "task_group": "treated",
+      "defect_variant_id": "AXV2_ACCESSIBILITY_A534444AFE03",
+      "runtime_profiles": {
+        "Before": "before-accessibility-a534444afe03",
+        "Ceiling": "ceiling"
+      },
+      "pre_registered_interpretation": "task-relevant single-defect Before versus frozen Ceiling"
+    }
+  ]
+}

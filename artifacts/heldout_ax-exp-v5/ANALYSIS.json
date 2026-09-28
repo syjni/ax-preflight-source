@@ -1,0 +1,327 @@
+{
+  "schema_version": "ax-v5-official-analysis-v1",
+  "experiment_id": "ax-exp-v5",
+  "manifest_sha256": "18decb9ba3a073edde09c4de5cd08d4df04f21935ae819c6d7f2a9de03c2e06c",
+  "completed_valid_runs": 32,
+  "unique_tasks": 16,
+  "overall": {
+    "runs": 32,
+    "primary_success": 32,
+    "native_strict": 15,
+    "delivered_valid": 32,
+    "content_correct": 32,
+    "gate_rejected": 0,
+    "correct_and_native_strict": 15
+  },
+  "outcomes": {
+    "CORRECT_SUPPORTED": 28,
+    "CORRECT_ABSTENTION": 4
+  },
+  "gate_decisions": {
+    "NORMALIZED_WRAPPER": 17,
+    "NATIVE_STRICT": 15
+  },
+  "by_stratum": {
+    "ratio": {
+      "runs": 8,
+      "primary_success": 8,
+      "native_strict": 2,
+      "delivered_valid": 8,
+      "content_correct": 8,
+      "gate_rejected": 0,
+      "correct_and_native_strict": 2
+    },
+    "threshold": {
+      "runs": 8,
+      "primary_success": 8,
+      "native_strict": 8,
+      "delivered_valid": 8,
+      "content_correct": 8,
+      "gate_rejected": 0,
+      "correct_and_native_strict": 8
+    },
+    "set": {
+      "runs": 8,
+      "primary_success": 8,
+      "native_strict": 3,
+      "delivered_valid": 8,
+      "content_correct": 8,
+      "gate_rejected": 0,
+      "correct_and_native_strict": 3
+    },
+    "exact_or_abstain": {
+      "runs": 8,
+      "primary_success": 8,
+      "native_strict": 2,
+      "delivered_valid": 8,
+      "content_correct": 8,
+      "gate_rejected": 0,
+      "correct_and_native_strict": 2
+    }
+  },
+  "repetition_agreement_task_count": {
+    "primary_success": 16,
+    "outcome": 16,
+    "native_strict": 15,
+    "delivered_valid": 16
+  },
+  "task_results": [
+    {
+      "task_id": "V5_R01_ONLINE_RETURN_APPROVAL_RATE",
+      "stratum": "ratio",
+      "r1": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": false,
+        "delivered_valid": true,
+        "primary_success": true
+      },
+      "r2": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": false,
+        "delivered_valid": true,
+        "primary_success": true
+      }
+    },
+    {
+      "task_id": "V5_R02_DEALER_RETURN_APPROVAL_RATE",
+      "stratum": "ratio",
+      "r1": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": false,
+        "delivered_valid": true,
+        "primary_success": true
+      },
+      "r2": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": false,
+        "delivered_valid": true,
+        "primary_success": true
+      }
+    },
+    {
+      "task_id": "V5_R03_DIRECT_RETURN_APPROVAL_RATE",
+      "stratum": "ratio",
+      "r1": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": true,
+        "delivered_valid": true,
+        "primary_success": true
+      },
+      "r2": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": true,
+        "delivered_valid": true,
+        "primary_success": true
+      }
+    },
+    {
+      "task_id": "V5_R04_BUSINESS_RETURN_APPROVAL_RATE",
+      "stratum": "ratio",
+      "r1": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": false,
+        "delivered_valid": true,
+        "primary_success": true
+      },
+      "r2": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": false,
+        "delivered_valid": true,
+        "primary_success": true
+      }
+    },
+    {
+      "task_id": "V5_T01_COOLANT_PRESSURE_NOTICE_THRESHOLD",
+      "stratum": "threshold",
+      "r1": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": true,
+        "delivered_valid": true,
+        "primary_success": true
+      },
+      "r2": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": true,
+        "delivered_valid": true,
+        "primary_success": true
+      }
+    },
+    {
+      "task_id": "V5_T02_PACKER_SENSOR_NOTICE_THRESHOLD",
+      "stratum": "threshold",
+      "r1": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": true,
+        "delivered_valid": true,
+        "primary_success": true
+      },
+      "r2": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": true,
+        "delivered_valid": true,
+        "primary_success": true
+      }
+    },
+    {
+      "task_id": "V5_T03_FILLING_LEAK_NOTICE_THRESHOLD",
+      "stratum": "threshold",
+      "r1": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": true,
+        "delivered_valid": true,
+        "primary_success": true
+      },
+      "r2": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": true,
+        "delivered_valid": true,
+        "primary_success": true
+      }
+    },
+    {
+      "task_id": "V5_T04_SHIPPING_LABEL_NOTICE_THRESHOLD",
+      "stratum": "threshold",
+      "r1": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": true,
+        "delivered_valid": true,
+        "primary_success": true
+      },
+      "r2": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": true,
+        "delivered_valid": true,
+        "primary_success": true
+      }
+    },
+    {
+      "task_id": "V5_S01_SAFETY_INSPECTION_EVIDENCE",
+      "stratum": "set",
+      "r1": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": false,
+        "delivered_valid": true,
+        "primary_success": true
+      },
+      "r2": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": false,
+        "delivered_valid": true,
+        "primary_success": true
+      }
+    },
+    {
+      "task_id": "V5_S02_VENDOR_VISIT_EVIDENCE",
+      "stratum": "set",
+      "r1": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": false,
+        "delivered_valid": true,
+        "primary_success": true
+      },
+      "r2": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": false,
+        "delivered_valid": true,
+        "primary_success": true
+      }
+    },
+    {
+      "task_id": "V5_S03_TEST_MATERIAL_EVIDENCE",
+      "stratum": "set",
+      "r1": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": true,
+        "delivered_valid": true,
+        "primary_success": true
+      },
+      "r2": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": true,
+        "delivered_valid": true,
+        "primary_success": true
+      }
+    },
+    {
+      "task_id": "V5_S04_PROCESS_CHANGE_EVIDENCE",
+      "stratum": "set",
+      "r1": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": false,
+        "delivered_valid": true,
+        "primary_success": true
+      },
+      "r2": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": true,
+        "delivered_valid": true,
+        "primary_success": true
+      }
+    },
+    {
+      "task_id": "V5_E01_MAINTENANCE_PLAN_APPROVER",
+      "stratum": "exact_or_abstain",
+      "r1": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": true,
+        "delivered_valid": true,
+        "primary_success": true
+      },
+      "r2": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": true,
+        "delivered_valid": true,
+        "primary_success": true
+      }
+    },
+    {
+      "task_id": "V5_E02_VENDOR_REGISTRATION_APPROVER",
+      "stratum": "exact_or_abstain",
+      "r1": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": false,
+        "delivered_valid": true,
+        "primary_success": true
+      },
+      "r2": {
+        "outcome": "CORRECT_SUPPORTED",
+        "native_strict": false,
+        "delivered_valid": true,
+        "primary_success": true
+      }
+    },
+    {
+      "task_id": "V5_E03_OVERSEAS_PLANT_APPROVER",
+      "stratum": "exact_or_abstain",
+      "r1": {
+        "outcome": "CORRECT_ABSTENTION",
+        "native_strict": false,
+        "delivered_valid": true,
+        "primary_success": true
+      },
+      "r2": {
+        "outcome": "CORRECT_ABSTENTION",
+        "native_strict": false,
+        "delivered_valid": true,
+        "primary_success": true
+      }
+    },
+    {
+      "task_id": "V5_E04_AI_INSPECTION_APPROVER",
+      "stratum": "exact_or_abstain",
+      "r1": {
+        "outcome": "CORRECT_ABSTENTION",
+        "native_strict": false,
+        "delivered_valid": true,
+        "primary_success": true
+      },
+      "r2": {
+        "outcome": "CORRECT_ABSTENTION",
+        "native_strict": false,
+        "delivered_valid": true,
+        "primary_success": true
+      }
+    }
+  ],
+  "note": "v4 was incomplete and is not a comparison group; repetitions are not distinct tasks."
+}

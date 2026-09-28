@@ -1,0 +1,99 @@
+{
+  "abstention_reasons": [],
+  "citation_checks": {
+    "after_answered_runs_with_current_source": 0,
+    "before_conflict_runs_with_both_sources": 0
+  },
+  "claim_scope": "PRODUCT_SANITY_DEMO_NOT_RESEARCH_BENCHMARK",
+  "frequencies": {
+    "demo-return-after": {
+      "ABSTAINED": 0,
+      "ANSWERED": 0,
+      "REJECTED": 1
+    },
+    "demo-return-before": {
+      "ABSTAINED": 0,
+      "ANSWERED": 0,
+      "REJECTED": 1
+    }
+  },
+  "mode": "pilot",
+  "run_count": 2,
+  "run_ids": [
+    "phase6demo-pilot-pilot-001-01-before-40f89ff8",
+    "phase6demo-pilot-pilot-001-02-after-23e6ccb3"
+  ],
+  "runs": [
+    {
+      "abstention_reason": null,
+      "dataset_profile": "demo-return-before",
+      "delivery_sha256": "453d6b52db8c330b4ab8462b3ae595477eec1894c6a8ddf2c4fe88e478439873",
+      "delivery_status": "REJECTED",
+      "ended_at": "2026-09-23T12:16:35.046717Z",
+      "evidence_check_sha256": "7e1ee5d526f136fc146e8919525f098ec3f55b047d189ad06e9706e8ca03128b",
+      "evidence_verdict": "UNCONFIRMED",
+      "execution_order": 1,
+      "kiro_cli_version": "kiro-cli-chat 2.23.0",
+      "model": "claude-sonnet-5",
+      "payload_status": null,
+      "question_utf8_sha256": "7eda629cb6294c42f13b514539b2205da4335f220a24227963786409edb8c48e",
+      "readiness_dimensions": {
+        "accessibility": 1.0,
+        "completeness": 1.0,
+        "redundancy": 1.0,
+        "safety": 1.0,
+        "timeliness": 1.0
+      },
+      "readiness_total": 100.0,
+      "repetition": 1,
+      "run_artifact_directory": "artifacts/phase6_product_demo/pilots/pilot-001/runs/phase6demo-pilot-pilot-001-01-before-40f89ff8",
+      "run_id": "phase6demo-pilot-pilot-001-01-before-40f89ff8",
+      "source_ids": [],
+      "started_at": "2026-09-23T12:16:22.698170Z",
+      "tool_response_count": 0,
+      "unscored_observation_codes": [
+        "PROBABLE_VERSION_GROUP"
+      ],
+      "unscored_observation_count": 1
+    },
+    {
+      "abstention_reason": null,
+      "dataset_profile": "demo-return-after",
+      "delivery_sha256": "a1c935eaf1d0f0c01926e1fa78ff4510393d128edb9a0bd6c24d8df8359211bc",
+      "delivery_status": "REJECTED",
+      "ended_at": "2026-09-23T12:16:47.669756Z",
+      "evidence_check_sha256": "609270702d5176d60265302ac2a34332b3ef54479a353408e4ae00c33ba4fedf",
+      "evidence_verdict": "UNCONFIRMED",
+      "execution_order": 2,
+      "kiro_cli_version": "kiro-cli-chat 2.23.0",
+      "model": "claude-sonnet-5",
+      "payload_status": null,
+      "question_utf8_sha256": "7eda629cb6294c42f13b514539b2205da4335f220a24227963786409edb8c48e",
+      "readiness_dimensions": {
+        "accessibility": 1.0,
+        "completeness": 1.0,
+        "redundancy": 1.0,
+        "safety": 1.0,
+        "timeliness": 1.0
+      },
+      "readiness_total": 100.0,
+      "repetition": 1,
+      "run_artifact_directory": "artifacts/phase6_product_demo/pilots/pilot-001/runs/phase6demo-pilot-pilot-001-02-after-23e6ccb3",
+      "run_id": "phase6demo-pilot-pilot-001-02-after-23e6ccb3",
+      "source_ids": [],
+      "started_at": "2026-09-23T12:16:35.048716Z",
+      "tool_response_count": 0,
+      "unscored_observation_codes": [],
+      "unscored_observation_count": 0
+    }
+  ],
+  "sanity_criteria": {
+    "after_answered_count": 0,
+    "after_passed": false,
+    "before_conflicting_abstention_count": 0,
+    "before_passed": false,
+    "passed": false,
+    "threshold": 1
+  },
+  "schema_version": "ax-phase6-product-demo-summary-v1"
+}

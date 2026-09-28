@@ -1,0 +1,450 @@
+{
+  "schema_version": "ax-exp-v4-preregistration-v1",
+  "experiment_id": "ax-exp-v4",
+  "status": "FROZEN",
+  "model": "claude-sonnet-5",
+  "kiro_cli_version": "kiro-cli-chat 2.23.0",
+  "backend": "AUTOMATED_FRESH_PROCESS_V2",
+  "runtime_profile": "v4-candidate",
+  "repetitions": 2,
+  "dataset_files": [
+    {
+      "path": "experiment/v4/heldout/온담물류/01_품질/지역별_검수_2027.csv",
+      "sha256": "d7426bebb7d3c4a5de44fae187a1a12c26f91341a99cb985236138b2eed65712"
+    },
+    {
+      "path": "experiment/v4/heldout/온담물류/02_운영/접수_필수_항목.txt",
+      "sha256": "dee5b03fd5b44fc08f106a9363e319ad4199d02a0c1d3b446500922f9af1f229"
+    },
+    {
+      "path": "experiment/v4/heldout/온담물류/02_운영/처리_기한_기준.txt",
+      "sha256": "3a0810afac2d57929508b045d2e11322ffdd5477913cda43ab0c8ff5b4d3f693"
+    },
+    {
+      "path": "experiment/v4/heldout/온담물류/03_담당/업무_책임팀_2027.txt",
+      "sha256": "6d42fa459539526fa9057b8f49a927166716958d8b86b059f51862ae6de27c16"
+    }
+  ],
+  "frozen_files": [
+    {
+      "path": "scripts/v4_contract.py",
+      "sha256": "47f8c5c5a33be9fd61cc31d8d2b603535cdd73d704890994af2c15d6823693c4"
+    },
+    {
+      "path": "scripts/v4_scoring.py",
+      "sha256": "0ee1b473b0e716a9c6409ed74879e11f75849039bd76ea084f85cfecae17b653"
+    },
+    {
+      "path": "scripts/v4_prompt.py",
+      "sha256": "eaa2ca96fb562c106e82ad206b6689b4ad22096be632f029ceafbbbc16d73cf6"
+    },
+    {
+      "path": "scripts/v4_evaluation.py",
+      "sha256": "94315ec317a6d713399be8fade0b7dd3d4bed9f8a42cfdfb3de0f17e0737e5cb"
+    },
+    {
+      "path": "scripts/v4_official_runner.py",
+      "sha256": "ec202010bf020691161f36eae22e19f544512635a349ba5e395f4b6e450bce38"
+    },
+    {
+      "path": "scripts/v4_preflight.py",
+      "sha256": "4de0b65f663311088c4e4e43666440581475bae6c25fd78f91427bd051bab6ea"
+    },
+    {
+      "path": "scripts/build_v4_candidate.py",
+      "sha256": "15e59ef1828f0431eab7981ad68149dc4eb0acd3ffb58547a2d82c2e9d50a30e"
+    },
+    {
+      "path": "scripts/verify_v4_candidate_truth.py",
+      "sha256": "dfa90fb67a6a385d8357605b993402f6c30e89538e57cc98a7d4bf35e6d56295"
+    },
+    {
+      "path": "scripts/validate_v4_tool_access.py",
+      "sha256": "f37d780526a739c6a5129caca85a5d017991bf4cb1a1f5fa2ddfd18077c8803d"
+    },
+    {
+      "path": "scripts/freeze_v4.py",
+      "sha256": "31046c5331d2d9d4464dc385e6762db917e97abc9fd4a11997ab944c1f678f1c"
+    },
+    {
+      "path": "experiment/v4/AGENT_PROMPT.txt",
+      "sha256": "96615129bed48196fec4e151e11943b0d5fe428e89328fdcd85e046738ff206e"
+    },
+    {
+      "path": "experiment/v4/PREREGISTRATION.md",
+      "sha256": "4d496d6819d6b9548192384750a64e522fefea4a6e05266b539dfc67f8472d39"
+    },
+    {
+      "path": "experiment/v4/DEV_VALIDATION.md",
+      "sha256": "f76937c397a93d8e54f0ddd3d1193f22bab9f49a568d9f22acd80681f7c80e57"
+    },
+    {
+      "path": "experiment/v4/runtime_datasets.json",
+      "sha256": "ae54647e3c1d4c289785787cd4895fa8b7bb969897eb4f5773a589ca6b95695b"
+    },
+    {
+      "path": "experiment/v4/candidate_scan_report.json",
+      "sha256": "b1bbb8819bd0313629dcd9ca390143d7d2bec395f1b2e53d757bac395d291ed6"
+    },
+    {
+      "path": "experiment/v4/candidate_dataset_manifest.json",
+      "sha256": "4c867ec7c7421e892b2ac3ee8edd9da14a237e9c8fe9fcc74ba9f131498497b8"
+    }
+  ],
+  "tasks": [
+    {
+      "task_id": "V4_R01_NORTH_DEFECT_RATE",
+      "stratum": "ratio",
+      "category": "operations",
+      "question": "2027년 1분기 북부 지역 검수 기록에서 defective_qty 합계를 inspected_qty 합계로 나눈 불량률은 얼마인가요?",
+      "required_sources": [
+        "experiment/v4/heldout/온담물류/01_품질/지역별_검수_2027.csv"
+      ],
+      "expects_abstention": false,
+      "expected_answer": "0.06923076923076923076923076923",
+      "scoring_method": {
+        "type": "numeric_quantity",
+        "accepted_units": {
+          "ratio": {
+            "scale_to_canonical": "1",
+            "absolute_tolerance_canonical": "0.00005"
+          },
+          "percent": {
+            "scale_to_canonical": "0.01",
+            "absolute_tolerance_canonical": "0.00005"
+          }
+        }
+      }
+    },
+    {
+      "task_id": "V4_R02_SOUTH_DEFECT_RATE",
+      "stratum": "ratio",
+      "category": "operations",
+      "question": "2027년 1분기 남부 지역 검수 기록에서 defective_qty 합계를 inspected_qty 합계로 나눈 불량률은 얼마인가요?",
+      "required_sources": [
+        "experiment/v4/heldout/온담물류/01_품질/지역별_검수_2027.csv"
+      ],
+      "expects_abstention": false,
+      "expected_answer": "0.072",
+      "scoring_method": {
+        "type": "numeric_quantity",
+        "accepted_units": {
+          "ratio": {
+            "scale_to_canonical": "1",
+            "absolute_tolerance_canonical": "0.00005"
+          },
+          "percent": {
+            "scale_to_canonical": "0.01",
+            "absolute_tolerance_canonical": "0.00005"
+          }
+        }
+      }
+    },
+    {
+      "task_id": "V4_R03_WEST_DEFECT_RATE",
+      "stratum": "ratio",
+      "category": "operations",
+      "question": "2027년 1분기 서부 지역 검수 기록에서 defective_qty 합계를 inspected_qty 합계로 나눈 불량률은 얼마인가요?",
+      "required_sources": [
+        "experiment/v4/heldout/온담물류/01_품질/지역별_검수_2027.csv"
+      ],
+      "expects_abstention": false,
+      "expected_answer": "0.04545454545454545454545454545",
+      "scoring_method": {
+        "type": "numeric_quantity",
+        "accepted_units": {
+          "ratio": {
+            "scale_to_canonical": "1",
+            "absolute_tolerance_canonical": "0.00005"
+          },
+          "percent": {
+            "scale_to_canonical": "0.01",
+            "absolute_tolerance_canonical": "0.00005"
+          }
+        }
+      }
+    },
+    {
+      "task_id": "V4_R04_EAST_DEFECT_RATE",
+      "stratum": "ratio",
+      "category": "operations",
+      "question": "2027년 1분기 동부 지역 검수 기록에서 defective_qty 합계를 inspected_qty 합계로 나눈 불량률은 얼마인가요?",
+      "required_sources": [
+        "experiment/v4/heldout/온담물류/01_품질/지역별_검수_2027.csv"
+      ],
+      "expects_abstention": false,
+      "expected_answer": "0.06201550387596899224806201550",
+      "scoring_method": {
+        "type": "numeric_quantity",
+        "accepted_units": {
+          "ratio": {
+            "scale_to_canonical": "1",
+            "absolute_tolerance_canonical": "0.00005"
+          },
+          "percent": {
+            "scale_to_canonical": "0.01",
+            "absolute_tolerance_canonical": "0.00005"
+          }
+        }
+      }
+    },
+    {
+      "task_id": "V4_T01_REINSPECTION_THRESHOLD",
+      "stratum": "threshold",
+      "category": "knowledge",
+      "question": "2027년 상품 재검수 건은 접수 후 몇 영업일을 초과하면 에스컬레이션하나요? 최초 대상 일차가 아닌 초과 기준값을 답하세요.",
+      "required_sources": [
+        "experiment/v4/heldout/온담물류/02_운영/처리_기한_기준.txt"
+      ],
+      "expects_abstention": false,
+      "expected_answer": 2,
+      "scoring_method": {
+        "type": "numeric_quantity",
+        "accepted_units": {
+          "business_days_threshold": {
+            "scale_to_canonical": "1",
+            "absolute_tolerance_canonical": "0"
+          }
+        }
+      }
+    },
+    {
+      "task_id": "V4_T02_SETTLEMENT_THRESHOLD",
+      "stratum": "threshold",
+      "category": "knowledge",
+      "question": "2027년 정산 이의 건은 접수 후 몇 영업일을 초과하면 에스컬레이션하나요? 최초 대상 일차가 아닌 초과 기준값을 답하세요.",
+      "required_sources": [
+        "experiment/v4/heldout/온담물류/02_운영/처리_기한_기준.txt"
+      ],
+      "expects_abstention": false,
+      "expected_answer": 5,
+      "scoring_method": {
+        "type": "numeric_quantity",
+        "accepted_units": {
+          "business_days_threshold": {
+            "scale_to_canonical": "1",
+            "absolute_tolerance_canonical": "0"
+          }
+        }
+      }
+    },
+    {
+      "task_id": "V4_T03_URGENT_DELIVERY_THRESHOLD",
+      "stratum": "threshold",
+      "category": "knowledge",
+      "question": "2027년 긴급 배송 조정 건은 접수 후 몇 영업일을 초과하면 에스컬레이션하나요? 최초 대상 일차가 아닌 초과 기준값을 답하세요.",
+      "required_sources": [
+        "experiment/v4/heldout/온담물류/02_운영/처리_기한_기준.txt"
+      ],
+      "expects_abstention": false,
+      "expected_answer": 1,
+      "scoring_method": {
+        "type": "numeric_quantity",
+        "accepted_units": {
+          "business_days_threshold": {
+            "scale_to_canonical": "1",
+            "absolute_tolerance_canonical": "0"
+          }
+        }
+      }
+    },
+    {
+      "task_id": "V4_T04_CONTRACT_REPLY_THRESHOLD",
+      "stratum": "threshold",
+      "category": "knowledge",
+      "question": "2027년 계약 검토 회신 건은 접수 후 몇 영업일을 초과하면 에스컬레이션하나요? 최초 대상 일차가 아닌 초과 기준값을 답하세요.",
+      "required_sources": [
+        "experiment/v4/heldout/온담물류/02_운영/처리_기한_기준.txt"
+      ],
+      "expects_abstention": false,
+      "expected_answer": 4,
+      "scoring_method": {
+        "type": "numeric_quantity",
+        "accepted_units": {
+          "business_days_threshold": {
+            "scale_to_canonical": "1",
+            "absolute_tolerance_canonical": "0"
+          }
+        }
+      }
+    },
+    {
+      "task_id": "V4_S01_WARRANTY_REPAIR_ITEMS",
+      "stratum": "set",
+      "category": "knowledge",
+      "question": "2027년 보증 수리 접수 때 확인해야 하는 필수 항목을 모두 답하세요.",
+      "required_sources": [
+        "experiment/v4/heldout/온담물류/02_운영/접수_필수_항목.txt"
+      ],
+      "expects_abstention": false,
+      "expected_answer": [
+        "제품 식별번호",
+        "구매 증빙",
+        "증상 설명"
+      ],
+      "scoring_method": {
+        "type": "set_items",
+        "accepted_forms": {
+          "제품 식별번호": [
+            "제품 ID"
+          ],
+          "구매 증빙": [
+            "구매 증빙 서류"
+          ],
+          "증상 설명": [
+            "고장 증상 설명"
+          ]
+        }
+      }
+    },
+    {
+      "task_id": "V4_S02_CORPORATE_ACCOUNT_ITEMS",
+      "stratum": "set",
+      "category": "knowledge",
+      "question": "2027년 법인 고객 신규 계정 접수 때 확인해야 하는 필수 항목을 모두 답하세요.",
+      "required_sources": [
+        "experiment/v4/heldout/온담물류/02_운영/접수_필수_항목.txt"
+      ],
+      "expects_abstention": false,
+      "expected_answer": [
+        "사업자등록증",
+        "담당자 연락처",
+        "세금계산서 수신 이메일"
+      ],
+      "scoring_method": {
+        "type": "set_items",
+        "accepted_forms": {
+          "사업자등록증": [
+            "사업자 등록증"
+          ],
+          "담당자 연락처": [],
+          "세금계산서 수신 이메일": [
+            "세금계산서 받을 이메일"
+          ]
+        }
+      }
+    },
+    {
+      "task_id": "V4_S03_BULK_DELIVERY_ITEMS",
+      "stratum": "set",
+      "category": "knowledge",
+      "question": "2027년 대량 배송 변경 접수 때 확인해야 하는 필수 항목을 모두 답하세요.",
+      "required_sources": [
+        "experiment/v4/heldout/온담물류/02_운영/접수_필수_항목.txt"
+      ],
+      "expects_abstention": false,
+      "expected_answer": [
+        "원주문 번호",
+        "변경 배송지",
+        "요청자 승인"
+      ],
+      "scoring_method": {
+        "type": "set_items",
+        "accepted_forms": {
+          "원주문 번호": [
+            "기존 주문 번호"
+          ],
+          "변경 배송지": [
+            "변경할 배송지"
+          ],
+          "요청자 승인": [
+            "요청자의 승인"
+          ]
+        }
+      }
+    },
+    {
+      "task_id": "V4_S04_INBOUND_DISCREPANCY_ITEMS",
+      "stratum": "set",
+      "category": "knowledge",
+      "question": "2027년 입고 오차 신고 접수 때 확인해야 하는 필수 항목을 모두 답하세요.",
+      "required_sources": [
+        "experiment/v4/heldout/온담물류/02_운영/접수_필수_항목.txt"
+      ],
+      "expects_abstention": false,
+      "expected_answer": [
+        "납품서",
+        "실측 수량",
+        "로트 번호"
+      ],
+      "scoring_method": {
+        "type": "set_items",
+        "accepted_forms": {
+          "납품서": [],
+          "실측 수량": [
+            "실제로 측정한 수량"
+          ],
+          "로트 번호": [
+            "로트번호"
+          ]
+        }
+      }
+    },
+    {
+      "task_id": "V4_E01_Q2_STOCKTAKE_OWNER",
+      "stratum": "exact_or_abstain",
+      "category": "knowledge",
+      "question": "2027년 2분기 창고 재고 조사의 책임팀은 어디인가요?",
+      "required_sources": [
+        "experiment/v4/heldout/온담물류/03_담당/업무_책임팀_2027.txt"
+      ],
+      "expects_abstention": false,
+      "expected_answer": "운영관리팀",
+      "scoring_method": {
+        "type": "exact_text",
+        "accepted_forms": [
+          "운영관리팀"
+        ]
+      }
+    },
+    {
+      "task_id": "V4_E02_EXPORT_DOCS_OWNER",
+      "stratum": "exact_or_abstain",
+      "category": "knowledge",
+      "question": "해외 발송 서류 검토의 책임팀은 어디인가요?",
+      "required_sources": [
+        "experiment/v4/heldout/온담물류/03_담당/업무_책임팀_2027.txt"
+      ],
+      "expects_abstention": false,
+      "expected_answer": "통관지원팀",
+      "scoring_method": {
+        "type": "exact_text",
+        "accepted_forms": [
+          "통관지원팀"
+        ]
+      }
+    },
+    {
+      "task_id": "V4_E03_FUTURE_MOVE_OWNER",
+      "stratum": "exact_or_abstain",
+      "category": "knowledge",
+      "question": "2028년 창고 이전 프로젝트의 책임팀은 어디인가요?",
+      "required_sources": [
+        "experiment/v4/heldout/온담물류/03_담당/업무_책임팀_2027.txt"
+      ],
+      "expects_abstention": true,
+      "expected_answer": null,
+      "scoring_method": {
+        "type": "exact_text",
+        "accepted_forms": []
+      }
+    },
+    {
+      "task_id": "V4_E04_Q4_TRAINING_OWNER",
+      "stratum": "exact_or_abstain",
+      "category": "knowledge",
+      "question": "2027년 4분기 신규 서비스 교육의 책임팀은 어디인가요?",
+      "required_sources": [
+        "experiment/v4/heldout/온담물류/03_담당/업무_책임팀_2027.txt"
+      ],
+      "expects_abstention": true,
+      "expected_answer": null,
+      "scoring_method": {
+        "type": "exact_text",
+        "accepted_forms": []
+      }
+    }
+  ],
+  "freeze_timestamp_utc": "2026-09-22T09:08:45.206546Z",
+  "candidate_manifest_sha256": "a29ad5b424e3a08913a3adac827cea72673fc016c0880659b3bbc70858f1da4e"
+}

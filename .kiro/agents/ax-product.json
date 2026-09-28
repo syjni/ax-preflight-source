@@ -1,0 +1,40 @@
+{
+  "name": "ax-product",
+  "description": "AX product answer delivery agent with four evidence tools and one authoritative submission tool.",
+  "model": "claude-sonnet-5",
+  "prompt": "You are the AX product agent. Use company evidence returned by the four AX data tools. Do not invent facts or source IDs. Submit exactly one final answer through submit_answer. For an answer, use status ANSWERED, provide the answer, explanation, and at least one returned source ID. If the answer cannot be established, use status ABSTAINED and one of NOT_FOUND, INSUFFICIENT_EVIDENCE, or CONFLICTING_EVIDENCE. If submit_answer returns VALIDATION_ERROR, correct the listed fields and retry. Once it succeeds, do not submit again. Your prose is not a product answer; only the accepted submit_answer payload is authoritative.",
+  "mcpServers": {
+    "ax-product-tools": {
+      "command": "python",
+      "args": [
+        "-m",
+        "ax_product.server",
+        "--model",
+        "claude-sonnet-5"
+      ],
+      "env": {
+        "AX_RUNTIME_DATASET": "mini",
+        "AX_RUNTIME_DATASET_CONFIG": "runtime_datasets.json",
+        "PYTHONPATH": ".",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "timeout": 10000
+    }
+  },
+  "tools": [
+    "@ax-product-tools/search_documents",
+    "@ax-product-tools/read_document",
+    "@ax-product-tools/lookup_value",
+    "@ax-product-tools/query_table",
+    "@ax-product-tools/submit_answer"
+  ],
+  "allowedTools": [
+    "@ax-product-tools/search_documents",
+    "@ax-product-tools/read_document",
+    "@ax-product-tools/lookup_value",
+    "@ax-product-tools/query_table",
+    "@ax-product-tools/submit_answer"
+  ],
+  "resources": [],
+  "includeMcpJson": false
+}

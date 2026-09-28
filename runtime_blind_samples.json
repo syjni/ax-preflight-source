@@ -1,0 +1,115 @@
+{
+  "schema_version": "ax-runtime-blind-samples-v1",
+  "execution_status": "NOT_RUN",
+  "included_fields": [
+    "category",
+    "question"
+  ],
+  "samples": [
+    {
+      "category": "knowledge",
+      "question": "현재 반품 가능 기간은 며칠인가요?",
+      "runtime_prompt": "업무 범주: knowledge\n질문: 현재 반품 가능 기간은 며칠인가요?"
+    },
+    {
+      "category": "knowledge",
+      "question": "반품 접수 시 함께 확인해야 할 상품 상태 요건을 모두 답하세요.",
+      "runtime_prompt": "업무 범주: knowledge\n질문: 반품 접수 시 함께 확인해야 할 상품 상태 요건을 모두 답하세요."
+    },
+    {
+      "category": "knowledge",
+      "question": "배송 지연 보상은 지연 후 몇 영업일부터 시작되나요?",
+      "runtime_prompt": "업무 범주: knowledge\n질문: 배송 지연 보상은 지연 후 몇 영업일부터 시작되나요?"
+    },
+    {
+      "category": "knowledge",
+      "question": "주문금액 100만원 이상 개별 할인 요청의 승인 담당자는 누구인가요?",
+      "runtime_prompt": "업무 범주: knowledge\n질문: 주문금액 100만원 이상 개별 할인 요청의 승인 담당자는 누구인가요?"
+    },
+    {
+      "category": "knowledge",
+      "question": "재고 조회의 기준 수량 필드는 무엇인가요?",
+      "runtime_prompt": "업무 범주: knowledge\n질문: 재고 조회의 기준 수량 필드는 무엇인가요?"
+    },
+    {
+      "category": "knowledge",
+      "question": "일반 문의의 최초 응답 목표는 영업일 기준 몇 시간 이내인가요?",
+      "runtime_prompt": "업무 범주: knowledge\n질문: 일반 문의의 최초 응답 목표는 영업일 기준 몇 시간 이내인가요?"
+    },
+    {
+      "category": "operations",
+      "question": "등록된 거래처는 총 몇 곳인가요?",
+      "runtime_prompt": "업무 범주: operations\n질문: 등록된 거래처는 총 몇 곳인가요?"
+    },
+    {
+      "category": "operations",
+      "question": "2026년 9월 전체 주문금액은 얼마인가요?",
+      "runtime_prompt": "업무 범주: operations\n질문: 2026년 9월 전체 주문금액은 얼마인가요?"
+    },
+    {
+      "category": "cross_file",
+      "question": "그린테이블의 마지막 주문일은 언제인가요?",
+      "runtime_prompt": "업무 범주: cross_file\n질문: 그린테이블의 마지막 주문일은 언제인가요?"
+    },
+    {
+      "category": "operations",
+      "question": "품목마스터에 등록된 상품은 총 몇 개인가요?",
+      "runtime_prompt": "업무 범주: operations\n질문: 품목마스터에 등록된 상품은 총 몇 개인가요?"
+    },
+    {
+      "category": "operations",
+      "question": "현재 가용재고가 가장 많은 품목 ID는 무엇인가요?",
+      "runtime_prompt": "업무 범주: operations\n질문: 현재 가용재고가 가장 많은 품목 ID는 무엇인가요?"
+    },
+    {
+      "category": "operations",
+      "question": "반품원장에서 반품수량 합계를 분자로, 출고수량 합계를 분모로 계산한 반품률은 얼마인가요?",
+      "runtime_prompt": "업무 범주: operations\n질문: 반품원장에서 반품수량 합계를 분자로, 출고수량 합계를 분모로 계산한 반품률은 얼마인가요?"
+    },
+    {
+      "category": "operations",
+      "question": "서울 권역의 표준 배송 리드타임은 며칠인가요?",
+      "runtime_prompt": "업무 범주: operations\n질문: 서울 권역의 표준 배송 리드타임은 며칠인가요?"
+    },
+    {
+      "category": "cross_file",
+      "question": "한빛상사의 2026년 8월 주문금액은 얼마인가요?",
+      "runtime_prompt": "업무 범주: cross_file\n질문: 한빛상사의 2026년 8월 주문금액은 얼마인가요?"
+    },
+    {
+      "category": "cross_file",
+      "question": "주식회사 동해상사의 2026년 9월 주문금액은 얼마인가요?",
+      "runtime_prompt": "업무 범주: cross_file\n질문: 주식회사 동해상사의 2026년 9월 주문금액은 얼마인가요?"
+    },
+    {
+      "category": "cross_file",
+      "question": "프리미엄 홍차 세트의 현재 가용재고는 몇 개인가요?",
+      "runtime_prompt": "업무 범주: cross_file\n질문: 프리미엄 홍차 세트의 현재 가용재고는 몇 개인가요?"
+    },
+    {
+      "category": "cross_file",
+      "question": "윤성마트의 마지막 주문일은 언제인가요?",
+      "runtime_prompt": "업무 범주: cross_file\n질문: 윤성마트의 마지막 주문일은 언제인가요?"
+    },
+    {
+      "category": "cross_file",
+      "question": "새봄마트의 2026년 7월 주문금액은 얼마인가요?",
+      "runtime_prompt": "업무 범주: cross_file\n질문: 새봄마트의 2026년 7월 주문금액은 얼마인가요?"
+    },
+    {
+      "category": "cross_file",
+      "question": "아람리빙의 2026년 8월 반품 수량은 몇 개인가요?",
+      "runtime_prompt": "업무 범주: cross_file\n질문: 아람리빙의 2026년 8월 반품 수량은 몇 개인가요?"
+    },
+    {
+      "category": "cross_file",
+      "question": "다온유통의 주문 중 금액이 가장 큰 주문의 품목 ID는 무엇인가요?",
+      "runtime_prompt": "업무 범주: cross_file\n질문: 다온유통의 주문 중 금액이 가장 큰 주문의 품목 ID는 무엇인가요?"
+    },
+    {
+      "category": "knowledge",
+      "question": "한빛상사의 2027년 1분기 주문금액 전망은 얼마인가요?",
+      "runtime_prompt": "업무 범주: knowledge\n질문: 한빛상사의 2027년 1분기 주문금액 전망은 얼마인가요?"
+    }
+  ]
+}

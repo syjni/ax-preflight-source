@@ -1,0 +1,482 @@
+{
+  "schema_version": "ax-exp-v5-preregistration-v1",
+  "experiment_id": "ax-exp-v5",
+  "status": "FROZEN",
+  "model": "claude-sonnet-5",
+  "kiro_cli_version": "kiro-cli-chat 2.23.0",
+  "backend": "AUTOMATED_FRESH_PROCESS_V2_AGGREGATE_VALIDATED",
+  "runtime_profile": "v5-candidate",
+  "repetitions": 2,
+  "dataset_files": [
+    {
+      "path": "experiment/v5/heldout/해솔제조/01_고객지원/채널별_반품심사_2028.csv",
+      "sha256": "f709b3f2212d48ad029a19fb469ac92b7069548d33983ae72efb8bcad9a35575"
+    },
+    {
+      "path": "experiment/v5/heldout/해솔제조/02_설비/설비_조치_기준.txt",
+      "sha256": "f05f3b3530e80e9c4dbbc5344118b0f17cf13d0cb2eff978a97bd57838b08185"
+    },
+    {
+      "path": "experiment/v5/heldout/해솔제조/03_관리/등록_필수_증빙.txt",
+      "sha256": "cc722f32a9e0e3e51118273b95a77e683ca5ae491b8a68534ee743a3d066c7ab"
+    },
+    {
+      "path": "experiment/v5/heldout/해솔제조/04_담당/승인권한_2028.txt",
+      "sha256": "80c67d2222a70df8b46be3f2d3d437722bc1968782b84cdc86ab614c34678a8f"
+    }
+  ],
+  "frozen_files": [
+    {
+      "path": "scripts/v4_contract.py",
+      "sha256": "47f8c5c5a33be9fd61cc31d8d2b603535cdd73d704890994af2c15d6823693c4"
+    },
+    {
+      "path": "scripts/v4_scoring.py",
+      "sha256": "0ee1b473b0e716a9c6409ed74879e11f75849039bd76ea084f85cfecae17b653"
+    },
+    {
+      "path": "scripts/v4_prompt.py",
+      "sha256": "eaa2ca96fb562c106e82ad206b6689b4ad22096be632f029ceafbbbc16d73cf6"
+    },
+    {
+      "path": "scripts/v4_evaluation.py",
+      "sha256": "94315ec317a6d713399be8fade0b7dd3d4bed9f8a42cfdfb3de0f17e0737e5cb"
+    },
+    {
+      "path": "scripts/session_prompt_validation.py",
+      "sha256": "8d34388c612fa835564a4a2ed12bc3dbf1955169d9dcc32d510dbb60a4bc5550"
+    },
+    {
+      "path": "scripts/stream_response_validation.py",
+      "sha256": "7b2f91905eebb9ef7f7ba4b03141b26ee60e8fb320f2fbb2b0473a47439d9322"
+    },
+    {
+      "path": "scripts/v5_official_runner.py",
+      "sha256": "37fefd43c28793f2f282a9f1594193ad77bf7b4b12ce78c37e3f2159cf8e198b"
+    },
+    {
+      "path": "scripts/v5_preflight.py",
+      "sha256": "1dc70eb8b955ded39dcde3ebb4cc07e05464612754650c0fa5c0486b9937b1a2"
+    },
+    {
+      "path": "scripts/build_v5_candidate.py",
+      "sha256": "9cf7838ba28669f0d9c0730b088ec620e2a6f2a264c72fba5e3cb20c1b52fcf0"
+    },
+    {
+      "path": "scripts/verify_v5_candidate_truth.py",
+      "sha256": "a8f470b50d3a87e7e25ebf5dd79782e0d457715bc7ecf7c752174bfd8c4080ce"
+    },
+    {
+      "path": "scripts/validate_v5_tool_access.py",
+      "sha256": "353306f352b6a0aa391a976ade838a73f6926ac3eadcf1c29f86323212476a7c"
+    },
+    {
+      "path": "scripts/validate_v5_development.py",
+      "sha256": "5378caa55dbe17035c6d78510121abd943731a8924ac111168ec083af78774a9"
+    },
+    {
+      "path": "scripts/v5_dev_runner_probe.py",
+      "sha256": "27cb4e8794ec1b243feb3b60f3da2d8351609c5e97239d7835f7581328e3ea3e"
+    },
+    {
+      "path": "scripts/freeze_v5.py",
+      "sha256": "dfbd1fb0f2b0c38b5890288704ce0a9aa6035853c7549b2145c53c232acd20ad"
+    },
+    {
+      "path": "experiment/v5/AGENT_PROMPT.txt",
+      "sha256": "96615129bed48196fec4e151e11943b0d5fe428e89328fdcd85e046738ff206e"
+    },
+    {
+      "path": "experiment/v5/PREREGISTRATION.md",
+      "sha256": "65e88e288cf6458bb7111350f85df2c670b081797bccb2fd2b8b6d3122b072aa"
+    },
+    {
+      "path": "experiment/v5/RUNBOOK.md",
+      "sha256": "525452b376ca5a862f93901ff5876e3410329b90c65a191af142f15800a76381"
+    },
+    {
+      "path": "experiment/v5/ROOT_CAUSE.md",
+      "sha256": "bdae5ea9ee7bdb3dc7dfe65a986f8caec409fb267c343e530375143cc4ab4dc2"
+    },
+    {
+      "path": "experiment/v5/DEV_VALIDATION.md",
+      "sha256": "a876d67656a7d17f8f148afada8bfc5dbe357538b2bbea8b975564db6e1411ca"
+    },
+    {
+      "path": "tests/test_stream_response_validation.py",
+      "sha256": "541721a7fd088cacbcdf268aed073b7a5032d137ecf1625c398770f0ac9388d5"
+    },
+    {
+      "path": "tests/test_v5_preflight.py",
+      "sha256": "eec7a4b5f3e5a5bff6e18064f385d374c068a18ccd683b12f9164a22f21ddc8c"
+    },
+    {
+      "path": "experiment/v5/runtime_datasets.json",
+      "sha256": "f820f9ef3f20f6d7ae7022fa95d05e93345b53c1886df0cce6d8332f7b1209f6"
+    },
+    {
+      "path": "experiment/v5/candidate_scan_report.json",
+      "sha256": "78177dfb6fbadae17ecf06c84415ebed531b1629b480290282586b34f69a612d"
+    },
+    {
+      "path": "experiment/v5/candidate_dataset_manifest.json",
+      "sha256": "9a4feec85e98ae8dfc38bd7b9bb7cbca15235b2226095d4beff44ea743cf472a"
+    }
+  ],
+  "tasks": [
+    {
+      "task_id": "V5_R01_ONLINE_RETURN_APPROVAL_RATE",
+      "stratum": "ratio",
+      "category": "operations",
+      "question": "2028년 2분기 온라인 채널 반품 심사에서 approved_returns 총합을 reviewed_returns 총합으로 나눈 승인률은 얼마인가요?",
+      "required_sources": [
+        "experiment/v5/heldout/해솔제조/01_고객지원/채널별_반품심사_2028.csv"
+      ],
+      "expects_abstention": false,
+      "expected_answer": "0.084",
+      "scoring_method": {
+        "type": "numeric_quantity",
+        "accepted_units": {
+          "ratio": {
+            "scale_to_canonical": "1",
+            "absolute_tolerance_canonical": "0.00005"
+          },
+          "percent": {
+            "scale_to_canonical": "0.01",
+            "absolute_tolerance_canonical": "0.00005"
+          }
+        }
+      }
+    },
+    {
+      "task_id": "V5_R02_DEALER_RETURN_APPROVAL_RATE",
+      "stratum": "ratio",
+      "category": "operations",
+      "question": "2028년 2분기 대리점 채널 반품 심사에서 approved_returns 총합을 reviewed_returns 총합으로 나눈 승인률은 얼마인가요?",
+      "required_sources": [
+        "experiment/v5/heldout/해솔제조/01_고객지원/채널별_반품심사_2028.csv"
+      ],
+      "expects_abstention": false,
+      "expected_answer": "0.065",
+      "scoring_method": {
+        "type": "numeric_quantity",
+        "accepted_units": {
+          "ratio": {
+            "scale_to_canonical": "1",
+            "absolute_tolerance_canonical": "0.00005"
+          },
+          "percent": {
+            "scale_to_canonical": "0.01",
+            "absolute_tolerance_canonical": "0.00005"
+          }
+        }
+      }
+    },
+    {
+      "task_id": "V5_R03_DIRECT_RETURN_APPROVAL_RATE",
+      "stratum": "ratio",
+      "category": "operations",
+      "question": "2028년 2분기 직영 채널 반품 심사에서 approved_returns 총합을 reviewed_returns 총합으로 나눈 승인률은 얼마인가요?",
+      "required_sources": [
+        "experiment/v5/heldout/해솔제조/01_고객지원/채널별_반품심사_2028.csv"
+      ],
+      "expects_abstention": false,
+      "expected_answer": "0.05",
+      "scoring_method": {
+        "type": "numeric_quantity",
+        "accepted_units": {
+          "ratio": {
+            "scale_to_canonical": "1",
+            "absolute_tolerance_canonical": "0.00005"
+          },
+          "percent": {
+            "scale_to_canonical": "0.01",
+            "absolute_tolerance_canonical": "0.00005"
+          }
+        }
+      }
+    },
+    {
+      "task_id": "V5_R04_BUSINESS_RETURN_APPROVAL_RATE",
+      "stratum": "ratio",
+      "category": "operations",
+      "question": "2028년 2분기 기업 채널 반품 심사에서 approved_returns 총합을 reviewed_returns 총합으로 나눈 승인률은 얼마인가요?",
+      "required_sources": [
+        "experiment/v5/heldout/해솔제조/01_고객지원/채널별_반품심사_2028.csv"
+      ],
+      "expects_abstention": false,
+      "expected_answer": "0.06333333333333333333333333333",
+      "scoring_method": {
+        "type": "numeric_quantity",
+        "accepted_units": {
+          "ratio": {
+            "scale_to_canonical": "1",
+            "absolute_tolerance_canonical": "0.00005"
+          },
+          "percent": {
+            "scale_to_canonical": "0.01",
+            "absolute_tolerance_canonical": "0.00005"
+          }
+        }
+      }
+    },
+    {
+      "task_id": "V5_T01_COOLANT_PRESSURE_NOTICE_THRESHOLD",
+      "stratum": "threshold",
+      "category": "knowledge",
+      "question": "2028년 냉각수 압력 경고는 접수 후 몇 시간을 초과하면 당직 관리자에게 통보하나요? 최초 통보 대상 시각이 아닌 초과 기준값을 답하세요.",
+      "required_sources": [
+        "experiment/v5/heldout/해솔제조/02_설비/설비_조치_기준.txt"
+      ],
+      "expects_abstention": false,
+      "expected_answer": 2,
+      "scoring_method": {
+        "type": "numeric_quantity",
+        "accepted_units": {
+          "hours_threshold": {
+            "scale_to_canonical": "1",
+            "absolute_tolerance_canonical": "0"
+          }
+        }
+      }
+    },
+    {
+      "task_id": "V5_T02_PACKER_SENSOR_NOTICE_THRESHOLD",
+      "stratum": "threshold",
+      "category": "knowledge",
+      "question": "2028년 포장기 센서 오류는 접수 후 몇 시간을 초과하면 당직 관리자에게 통보하나요? 최초 통보 대상 시각이 아닌 초과 기준값을 답하세요.",
+      "required_sources": [
+        "experiment/v5/heldout/해솔제조/02_설비/설비_조치_기준.txt"
+      ],
+      "expects_abstention": false,
+      "expected_answer": 4,
+      "scoring_method": {
+        "type": "numeric_quantity",
+        "accepted_units": {
+          "hours_threshold": {
+            "scale_to_canonical": "1",
+            "absolute_tolerance_canonical": "0"
+          }
+        }
+      }
+    },
+    {
+      "task_id": "V5_T03_FILLING_LEAK_NOTICE_THRESHOLD",
+      "stratum": "threshold",
+      "category": "knowledge",
+      "question": "2028년 충전라인 누출 의심은 접수 후 몇 시간을 초과하면 당직 관리자에게 통보하나요? 최초 통보 대상 시각이 아닌 초과 기준값을 답하세요.",
+      "required_sources": [
+        "experiment/v5/heldout/해솔제조/02_설비/설비_조치_기준.txt"
+      ],
+      "expects_abstention": false,
+      "expected_answer": 1,
+      "scoring_method": {
+        "type": "numeric_quantity",
+        "accepted_units": {
+          "hours_threshold": {
+            "scale_to_canonical": "1",
+            "absolute_tolerance_canonical": "0"
+          }
+        }
+      }
+    },
+    {
+      "task_id": "V5_T04_SHIPPING_LABEL_NOTICE_THRESHOLD",
+      "stratum": "threshold",
+      "category": "knowledge",
+      "question": "2028년 출하 라벨 인쇄 오류는 접수 후 몇 시간을 초과하면 당직 관리자에게 통보하나요? 최초 통보 대상 시각이 아닌 초과 기준값을 답하세요.",
+      "required_sources": [
+        "experiment/v5/heldout/해솔제조/02_설비/설비_조치_기준.txt"
+      ],
+      "expects_abstention": false,
+      "expected_answer": 3,
+      "scoring_method": {
+        "type": "numeric_quantity",
+        "accepted_units": {
+          "hours_threshold": {
+            "scale_to_canonical": "1",
+            "absolute_tolerance_canonical": "0"
+          }
+        }
+      }
+    },
+    {
+      "task_id": "V5_S01_SAFETY_INSPECTION_EVIDENCE",
+      "stratum": "set",
+      "category": "knowledge",
+      "question": "2028년 정기 안전점검 등록에 필요한 증빙 항목을 모두 답하세요.",
+      "required_sources": [
+        "experiment/v5/heldout/해솔제조/03_관리/등록_필수_증빙.txt"
+      ],
+      "expects_abstention": false,
+      "expected_answer": [
+        "점검 일지",
+        "설비 번호",
+        "점검자 서명"
+      ],
+      "scoring_method": {
+        "type": "set_items",
+        "accepted_forms": {
+          "점검 일지": [
+            "안전점검 일지"
+          ],
+          "설비 번호": [
+            "설비번호"
+          ],
+          "점검자 서명": [
+            "점검 담당자 서명"
+          ]
+        }
+      }
+    },
+    {
+      "task_id": "V5_S02_VENDOR_VISIT_EVIDENCE",
+      "stratum": "set",
+      "category": "knowledge",
+      "question": "2028년 협력사 출입 신청에 필요한 증빙 항목을 모두 답하세요.",
+      "required_sources": [
+        "experiment/v5/heldout/해솔제조/03_관리/등록_필수_증빙.txt"
+      ],
+      "expects_abstention": false,
+      "expected_answer": [
+        "방문 목적",
+        "방문자 명단",
+        "안전교육 확인"
+      ],
+      "scoring_method": {
+        "type": "set_items",
+        "accepted_forms": {
+          "방문 목적": [],
+          "방문자 명단": [
+            "방문 인원 명단"
+          ],
+          "안전교육 확인": [
+            "안전교육 이수 확인"
+          ]
+        }
+      }
+    },
+    {
+      "task_id": "V5_S03_TEST_MATERIAL_EVIDENCE",
+      "stratum": "set",
+      "category": "knowledge",
+      "question": "2028년 시험 자재 반입에 필요한 증빙 항목을 모두 답하세요.",
+      "required_sources": [
+        "experiment/v5/heldout/해솔제조/03_관리/등록_필수_증빙.txt"
+      ],
+      "expects_abstention": false,
+      "expected_answer": [
+        "반입 목록",
+        "보관 위치",
+        "책임자 승인"
+      ],
+      "scoring_method": {
+        "type": "set_items",
+        "accepted_forms": {
+          "반입 목록": [
+            "반입 자재 목록"
+          ],
+          "보관 위치": [
+            "보관 장소"
+          ],
+          "책임자 승인": [
+            "담당 책임자 승인"
+          ]
+        }
+      }
+    },
+    {
+      "task_id": "V5_S04_PROCESS_CHANGE_EVIDENCE",
+      "stratum": "set",
+      "category": "knowledge",
+      "question": "2028년 공정 변경 신청에 필요한 증빙 항목을 모두 답하세요.",
+      "required_sources": [
+        "experiment/v5/heldout/해솔제조/03_관리/등록_필수_증빙.txt"
+      ],
+      "expects_abstention": false,
+      "expected_answer": [
+        "변경 사유",
+        "영향 평가서",
+        "시행 예정일"
+      ],
+      "scoring_method": {
+        "type": "set_items",
+        "accepted_forms": {
+          "변경 사유": [],
+          "영향 평가서": [
+            "변경 영향 평가서"
+          ],
+          "시행 예정일": [
+            "예정 시행일"
+          ]
+        }
+      }
+    },
+    {
+      "task_id": "V5_E01_MAINTENANCE_PLAN_APPROVER",
+      "stratum": "exact_or_abstain",
+      "category": "knowledge",
+      "question": "2028년 하반기 설비 예방정비 계획의 승인팀은 어디인가요?",
+      "required_sources": [
+        "experiment/v5/heldout/해솔제조/04_담당/승인권한_2028.txt"
+      ],
+      "expects_abstention": false,
+      "expected_answer": "설비기술팀",
+      "scoring_method": {
+        "type": "exact_text",
+        "accepted_forms": [
+          "설비기술팀"
+        ]
+      }
+    },
+    {
+      "task_id": "V5_E02_VENDOR_REGISTRATION_APPROVER",
+      "stratum": "exact_or_abstain",
+      "category": "knowledge",
+      "question": "신규 협력사 등록 심사의 승인팀은 어디인가요?",
+      "required_sources": [
+        "experiment/v5/heldout/해솔제조/04_담당/승인권한_2028.txt"
+      ],
+      "expects_abstention": false,
+      "expected_answer": "구매관리팀",
+      "scoring_method": {
+        "type": "exact_text",
+        "accepted_forms": [
+          "구매관리팀"
+        ]
+      }
+    },
+    {
+      "task_id": "V5_E03_OVERSEAS_PLANT_APPROVER",
+      "stratum": "exact_or_abstain",
+      "category": "knowledge",
+      "question": "2029년 해외 제2공장 착공 계획의 승인팀은 어디인가요?",
+      "required_sources": [
+        "experiment/v5/heldout/해솔제조/04_담당/승인권한_2028.txt"
+      ],
+      "expects_abstention": true,
+      "expected_answer": null,
+      "scoring_method": {
+        "type": "exact_text",
+        "accepted_forms": []
+      }
+    },
+    {
+      "task_id": "V5_E04_AI_INSPECTION_APPROVER",
+      "stratum": "exact_or_abstain",
+      "category": "knowledge",
+      "question": "2028년 4분기 AI 검사 장비 도입의 승인팀은 어디인가요?",
+      "required_sources": [
+        "experiment/v5/heldout/해솔제조/04_담당/승인권한_2028.txt"
+      ],
+      "expects_abstention": true,
+      "expected_answer": null,
+      "scoring_method": {
+        "type": "exact_text",
+        "accepted_forms": []
+      }
+    }
+  ],
+  "freeze_timestamp_utc": "2026-09-22T09:43:05.344469Z",
+  "candidate_manifest_sha256": "74232876c89202972976f05e6287ac5597edaea180493c5b382caef2fadad2bf"
+}

@@ -1,0 +1,17 @@
+{
+  "schema_version": "ax-finding-comparisons-v1",
+  "comparisons": [
+    {
+      "before_dataset": "demo-return-before",
+      "after_dataset": "demo-return-after",
+      "task_id": "TASK_POLICY_RETURN_WINDOW",
+      "task_label": "현재 반품 가능 기간은 며칠인가요?"
+    },
+    {
+      "before_dataset": "portfolio-hidden-conflict-before",
+      "after_dataset": "portfolio-ceiling-after",
+      "task_id": "TASK_POLICY_RETURN_WINDOW",
+      "task_label": "현재 반품 가능 기간은 며칠인가요?"
+    }
+  ]
+}

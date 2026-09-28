@@ -1,0 +1,1 @@
+{"dataset": "portfolio-ceiling-after", "request_type": "TASK_CANDIDATE", "run_id": "phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r3", "schema_version": "ax-run-context-v1", "task_id": "TASK_ORDER_MONTHLY_AMOUNT", "task_label": "이번 달 주문금액은 얼마인가요?"}

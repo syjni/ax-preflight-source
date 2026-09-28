@@ -1,0 +1,4 @@
+﻿discount_code,discount_name,discount_rate,approval_required
+DISC05,정기거래처,0.05,N
+DISC10,계절행사,0.1,Y
+DISC15,대량주문,0.15,Y

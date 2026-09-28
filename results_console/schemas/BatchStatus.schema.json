@@ -1,0 +1,248 @@
+{
+  "$defs": {
+    "BatchItem": {
+      "additionalProperties": false,
+      "properties": {
+        "attempt": {
+          "maximum": 3,
+          "minimum": 1,
+          "title": "Attempt",
+          "type": "integer"
+        },
+        "delivery_status": {
+          "anyOf": [
+            {
+              "enum": [
+                "DELIVERED",
+                "REJECTED"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Delivery Status"
+        },
+        "error_code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Error Code"
+        },
+        "item_id": {
+          "pattern": "^t\\d{2}-r\\d{2}$",
+          "title": "Item Id",
+          "type": "string"
+        },
+        "repetition": {
+          "maximum": 5,
+          "minimum": 1,
+          "title": "Repetition",
+          "type": "integer"
+        },
+        "request_type": {
+          "enum": [
+            "VERIFIED_BUSINESS_TASK",
+            "TASK_CANDIDATE"
+          ],
+          "title": "Request Type",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "status": {
+          "enum": [
+            "QUEUED",
+            "RUNNING",
+            "SUCCEEDED",
+            "FAILED",
+            "CANCELLED"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "task_id": {
+          "minLength": 1,
+          "title": "Task Id",
+          "type": "string"
+        },
+        "task_label": {
+          "minLength": 1,
+          "title": "Task Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "item_id",
+        "task_id",
+        "task_label",
+        "request_type",
+        "repetition",
+        "attempt",
+        "status"
+      ],
+      "title": "BatchItem",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "batch_id": {
+      "minLength": 1,
+      "title": "Batch Id",
+      "type": "string"
+    },
+    "cancelled_items": {
+      "minimum": 0,
+      "title": "Cancelled Items",
+      "type": "integer"
+    },
+    "completed_items": {
+      "minimum": 0,
+      "title": "Completed Items",
+      "type": "integer"
+    },
+    "created_at": {
+      "minLength": 1,
+      "title": "Created At",
+      "type": "string"
+    },
+    "dataset": {
+      "minLength": 1,
+      "title": "Dataset",
+      "type": "string"
+    },
+    "failed_items": {
+      "minimum": 0,
+      "title": "Failed Items",
+      "type": "integer"
+    },
+    "items": {
+      "items": {
+        "$ref": "#/$defs/BatchItem"
+      },
+      "maxItems": 50,
+      "minItems": 1,
+      "title": "Items",
+      "type": "array"
+    },
+    "max_attempts": {
+      "maximum": 3,
+      "minimum": 1,
+      "title": "Max Attempts",
+      "type": "integer"
+    },
+    "model": {
+      "minLength": 1,
+      "title": "Model",
+      "type": "string"
+    },
+    "progress_percent": {
+      "maximum": 100,
+      "minimum": 0,
+      "title": "Progress Percent",
+      "type": "integer"
+    },
+    "queued_items": {
+      "minimum": 0,
+      "title": "Queued Items",
+      "type": "integer"
+    },
+    "repetitions": {
+      "maximum": 5,
+      "minimum": 1,
+      "title": "Repetitions",
+      "type": "integer"
+    },
+    "requested_control": {
+      "enum": [
+        "RUN",
+        "PAUSE",
+        "CANCEL"
+      ],
+      "title": "Requested Control",
+      "type": "string"
+    },
+    "running_items": {
+      "minimum": 0,
+      "title": "Running Items",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "ax-batch-status-v1",
+      "default": "ax-batch-status-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "state": {
+      "enum": [
+        "QUEUED",
+        "RUNNING",
+        "PAUSE_REQUESTED",
+        "PAUSED",
+        "CANCEL_REQUESTED",
+        "CANCELLED",
+        "COMPLETED",
+        "COMPLETED_WITH_ERRORS"
+      ],
+      "title": "State",
+      "type": "string"
+    },
+    "succeeded_items": {
+      "minimum": 0,
+      "title": "Succeeded Items",
+      "type": "integer"
+    },
+    "total_items": {
+      "maximum": 50,
+      "minimum": 1,
+      "title": "Total Items",
+      "type": "integer"
+    },
+    "updated_at": {
+      "minLength": 1,
+      "title": "Updated At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "batch_id",
+    "dataset",
+    "model",
+    "state",
+    "requested_control",
+    "repetitions",
+    "max_attempts",
+    "created_at",
+    "updated_at",
+    "total_items",
+    "completed_items",
+    "succeeded_items",
+    "failed_items",
+    "cancelled_items",
+    "running_items",
+    "queued_items",
+    "progress_percent",
+    "items"
+  ],
+  "title": "BatchStatus",
+  "type": "object"
+}

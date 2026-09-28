@@ -1,0 +1,78 @@
+{
+  "schema_version": "ax-before-variant-diff-v2",
+  "variant_id": "AXV2_ACCESSIBILITY_0E78131FC878",
+  "runtime_profile": "before-accessibility-0e78131fc878",
+  "checks": {
+    "only_affected_source_bytes_changed": true,
+    "affected_sources_are_parser_errors": true,
+    "file_inventory_preserved": true,
+    "accessibility_decreased": true,
+    "other_readiness_dimensions_unchanged": true,
+    "protected_sources_unchanged": true,
+    "runtime_leakage_free": true
+  },
+  "changed_source_paths": [
+    "02_정책/할인_승인_규정.docx"
+  ],
+  "parser_error_paths": [
+    "02_정책/할인_승인_규정.docx"
+  ],
+  "protected_source_mismatches": [],
+  "readiness": {
+    "ceiling_score": 100.0,
+    "before_score": 99.333333,
+    "dimension_diff": {
+      "accessibility": {
+        "ceiling": 1.0,
+        "before": 0.966667
+      },
+      "completeness": {
+        "ceiling": 1.0,
+        "before": 1.0
+      },
+      "redundancy": {
+        "ceiling": 1.0,
+        "before": 1.0
+      },
+      "timeliness": {
+        "ceiling": 1.0,
+        "before": 1.0
+      },
+      "safety": {
+        "ceiling": 1.0,
+        "before": 1.0
+      }
+    }
+  },
+  "runtime_identity": {
+    "schema_version": "ax-runtime-identity-v1",
+    "dataset_profile": "before-accessibility-0e78131fc878",
+    "dataset_name": "hanbit-distribution-before-accessibility-0e78131fc878-v2",
+    "source_root_name": "before-accessibility-0e78131fc878",
+    "dataset_manifest_sha256": "a8cdfe918f07abab1febe54500b28f24c1145af0c4f88ac755a081acf3119893",
+    "file_count": 30,
+    "parsed_file_count": 29,
+    "scan_report_sha256": "db694d5e57e4fc43ab035cf8da5c6d03546ba43bed0bf3b6567183cbaf37e220",
+    "search_index_document_count": 29,
+    "search_index_sha256": "6a93a4537386e6cc742100392bd9d2cdf7bbf30388a17d6ea7923836f0833db4",
+    "table_count": 11,
+    "table_registry_sha256": "ea5466ef0c7bf58698bc6f009a54b56eb95ff1584063648c444aabca0620b740",
+    "corpus_registry_sha256": "652dd7fd9ae5f34edb22781b8b562905b99e6e6847c5a67ab6b06eef10a6344f"
+  },
+  "runtime_identity_sha256": "58f23e5e90e33a680a917db4deed7e578a1a8aadf2732cf56c81d32606ef6894",
+  "runtime_leakage": {
+    "passed": true,
+    "runtime_resource_count": 32,
+    "forbidden_markers": [
+      "expected_answer",
+      "primary_blocker",
+      "required_sources",
+      "tool_plan",
+      "defect ground truth",
+      "defect_ground_truth"
+    ],
+    "violations": []
+  },
+  "dataset_manifest_sha256": "a8cdfe918f07abab1febe54500b28f24c1145af0c4f88ac755a081acf3119893",
+  "scan_report_sha256": "db694d5e57e4fc43ab035cf8da5c6d03546ba43bed0bf3b6567183cbaf37e220"
+}

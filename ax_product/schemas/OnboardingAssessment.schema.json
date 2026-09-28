@@ -1,0 +1,121 @@
+{
+  "$defs": {
+    "OnboardingCheck": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "DATASET_INTEGRITY",
+            "PARSE_COVERAGE",
+            "RETRIEVAL_SURFACE",
+            "RUNTIME_RESOURCE_LEAKAGE",
+            "BUSINESS_TASK_REVIEW"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "observed": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Observed"
+        },
+        "status": {
+          "enum": [
+            "PASS",
+            "WARN",
+            "BLOCK"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "total": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Total"
+        }
+      },
+      "required": [
+        "code",
+        "status"
+      ],
+      "title": "OnboardingCheck",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "blocker_count": {
+      "minimum": 0,
+      "title": "Blocker Count",
+      "type": "integer"
+    },
+    "can_run": {
+      "title": "Can Run",
+      "type": "boolean"
+    },
+    "checks": {
+      "items": {
+        "$ref": "#/$defs/OnboardingCheck"
+      },
+      "title": "Checks",
+      "type": "array"
+    },
+    "dataset": {
+      "minLength": 1,
+      "title": "Dataset",
+      "type": "string"
+    },
+    "dataset_name": {
+      "minLength": 1,
+      "title": "Dataset Name",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "ax-onboarding-assessment-v1",
+      "default": "ax-onboarding-assessment-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "READY",
+        "REVIEW_REQUIRED",
+        "BLOCKED"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "warning_count": {
+      "minimum": 0,
+      "title": "Warning Count",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "dataset",
+    "dataset_name",
+    "status",
+    "can_run",
+    "blocker_count",
+    "warning_count",
+    "checks"
+  ],
+  "title": "OnboardingAssessment",
+  "type": "object"
+}

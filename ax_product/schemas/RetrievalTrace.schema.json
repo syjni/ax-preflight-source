@@ -1,0 +1,232 @@
+{
+  "$defs": {
+    "RetrievalCandidate": {
+      "additionalProperties": false,
+      "properties": {
+        "cited": {
+          "title": "Cited",
+          "type": "boolean"
+        },
+        "rank": {
+          "minimum": 1,
+          "title": "Rank",
+          "type": "integer"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Ids",
+          "type": "array"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rank",
+        "title",
+        "source_ids",
+        "cited"
+      ],
+      "title": "RetrievalCandidate",
+      "type": "object"
+    },
+    "RetrievalStep": {
+      "additionalProperties": false,
+      "properties": {
+        "candidates": {
+          "items": {
+            "$ref": "#/$defs/RetrievalCandidate"
+          },
+          "title": "Candidates",
+          "type": "array"
+        },
+        "cited_source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Cited Source Ids",
+          "type": "array"
+        },
+        "error_code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Error Code"
+        },
+        "request_summary": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ToolRequestSummary"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "result_count": {
+          "minimum": 0,
+          "title": "Result Count",
+          "type": "integer"
+        },
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "status": {
+          "default": "SUCCESS",
+          "enum": [
+            "SUCCESS",
+            "ERROR"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "tool_name": {
+          "enum": [
+            "search_documents",
+            "read_document",
+            "lookup_value",
+            "query_table"
+          ],
+          "title": "Tool Name",
+          "type": "string"
+        },
+        "truncated": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Truncated"
+        }
+      },
+      "required": [
+        "sequence",
+        "tool_name",
+        "result_count",
+        "candidates",
+        "cited_source_ids"
+      ],
+      "title": "RetrievalStep",
+      "type": "object"
+    },
+    "ToolRequestSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "filter_fields": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Filter Fields",
+          "type": "array"
+        },
+        "parameter_names": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Parameter Names",
+          "type": "array"
+        },
+        "query_character_count": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query Character Count"
+        },
+        "result_limit": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Result Limit"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "parameter_names",
+        "source_ids",
+        "filter_fields"
+      ],
+      "title": "ToolRequestSummary",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "cited_source_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Cited Source Ids",
+      "type": "array"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    },
+    "run_id": {
+      "minLength": 1,
+      "title": "Run Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "ax-retrieval-trace-v2",
+      "default": "ax-retrieval-trace-v2",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "steps": {
+      "items": {
+        "$ref": "#/$defs/RetrievalStep"
+      },
+      "title": "Steps",
+      "type": "array"
+    }
+  },
+  "required": [
+    "run_id",
+    "cited_source_ids",
+    "steps",
+    "limitations"
+  ],
+  "title": "RetrievalTrace",
+  "type": "object"
+}

@@ -1,0 +1,2110 @@
+{
+  "artifacts": {
+    "files": [
+      {
+        "path": "README.md",
+        "sha256": "19c88a35150715d86e2daa186f132fd9f91d821babd3aeee66d978038749b13a",
+        "size_bytes": 528
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_billing_invoice_deadline-r1/delivery.json",
+        "sha256": "7dec0089f787b6440ab60e4fc9e090fcaded9229981bfcc65c0e3def7a206443",
+        "size_bytes": 975
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_billing_invoice_deadline-r1/evidence-check.json",
+        "sha256": "8a7ebb671a71133439ed6a03dedb5b018fed845d6709c1e024ca31a54c59373a",
+        "size_bytes": 1284
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_billing_invoice_deadline-r1/run-context.json",
+        "sha256": "455af1dc409a045b4cdaa35a0a2729b922ca7d2fa751aa69547dddd1018dc2e2",
+        "size_bytes": 305
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_billing_invoice_deadline-r1/tool-responses/000001.json",
+        "sha256": "78de2034838244843fc5eff0262ef98b45a52a3c20c9f83d0b8347add90b4f69",
+        "size_bytes": 768
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_billing_invoice_deadline-r1/tool-responses/000002.json",
+        "sha256": "843aaadf5fde87607eac82778aeb9291487b8cd7e3a539617399dfcf45d93afc",
+        "size_bytes": 630
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_billing_invoice_deadline-r1/tool-responses/000003.json",
+        "sha256": "40e0654fafb10458b50b2db44d5257512bb8a58d875ecdc34fa2d080d02b96fc",
+        "size_bytes": 2831
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_billing_invoice_deadline-r1/tool-responses/000004.json",
+        "sha256": "4c42305978eb54669738c51e73147f0b31815be6f939e8692a226d9bf63b4162",
+        "size_bytes": 1026
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_billing_invoice_deadline-r2/delivery.json",
+        "sha256": "e1483dbd1835891a15c3f55e00e087fd50f9aff416157fd3cd70711af45ee159",
+        "size_bytes": 924
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_billing_invoice_deadline-r2/evidence-check.json",
+        "sha256": "7b94b6de502ec0eceeedd615b2b6a9e4ddb5ac282d87c525e33472a18ef89695",
+        "size_bytes": 1343
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_billing_invoice_deadline-r2/run-context.json",
+        "sha256": "9c42bc2078539556e426024bb544ad5fab9d70f2ad54cb37d13e3d1917a090e5",
+        "size_bytes": 305
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_billing_invoice_deadline-r2/tool-responses/000001.json",
+        "sha256": "268416a73624020774bbc4049b34f7d99262717e4667660d8847726866a666ef",
+        "size_bytes": 768
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_billing_invoice_deadline-r2/tool-responses/000002.json",
+        "sha256": "bd308c4172b15fc4c1c168d7d6cf4516b4b299a91140f95dfcd108c439460b49",
+        "size_bytes": 630
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_billing_invoice_deadline-r2/tool-responses/000003.json",
+        "sha256": "df251d4c5b505492c873c8c3063cdfdc119276f0daf10e54f3d7d8575b424e9f",
+        "size_bytes": 6724
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_billing_invoice_deadline-r2/tool-responses/000004.json",
+        "sha256": "f44d85f8f6a92602a0d16fffae8faaa998c06cba71638f42fb691727ef9d5b1e",
+        "size_bytes": 5255
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_billing_invoice_deadline-r3/delivery.json",
+        "sha256": "7b2b0075bf126e975baf507b4af62e718237a766d9487688d46f298d9c59cef6",
+        "size_bytes": 930
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_billing_invoice_deadline-r3/evidence-check.json",
+        "sha256": "225fe465474a38ba6b1ebc4c68c69aec863f8cbf4306197b9ffe4bbd420b72f4",
+        "size_bytes": 1161
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_billing_invoice_deadline-r3/run-context.json",
+        "sha256": "1c3c56df6fc02333c0cbf1927a3f08e859a3534f578a36dc023139802d7e0aaf",
+        "size_bytes": 305
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_billing_invoice_deadline-r3/tool-responses/000001.json",
+        "sha256": "a2de72e2fc6b7a4993a22f6e72511f5e109856c119ead558e4bcd78ec17b43d9",
+        "size_bytes": 768
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_billing_invoice_deadline-r3/tool-responses/000002.json",
+        "sha256": "c3c5990f0652e2087947348317a744c0e7c7af2e6e4cddaf32971a4b4228831c",
+        "size_bytes": 630
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_billing_invoice_deadline-r3/tool-responses/000003.json",
+        "sha256": "85bcfc90cd2e270af14da0995ef11d7c59dfdd2d0cd9dc038b5f305e1c59c18b",
+        "size_bytes": 2733
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_count-r1/delivery.json",
+        "sha256": "cd3c08fb0a9e5c1d3863170b5289e06e136b47c807e74951482407c98c3ae920",
+        "size_bytes": 742
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_count-r1/evidence-check.json",
+        "sha256": "1456b14039eaa4744f2d8282d557278f2ffc62256113bbb93ed09e2a21434c66",
+        "size_bytes": 1170
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_count-r1/run-context.json",
+        "sha256": "9c217f24109b12351a4fe4f033648883c92b728d5ff7d9dc6ccfa57748e92af0",
+        "size_bytes": 273
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_count-r1/tool-responses/000001.json",
+        "sha256": "2f4656732e05baf60f52981e12e3089e8f0371dd953a670f980fa0813e7ccb4d",
+        "size_bytes": 2973
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_count-r1/tool-responses/000002.json",
+        "sha256": "d34fe4566019e40e0fe0124d30630b1cfe1bcf3050839c6c3c7ecdb5815ed9eb",
+        "size_bytes": 3284
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_count-r1/tool-responses/000003.json",
+        "sha256": "40f5c56bbaaf88b79beec724a822b4e37d83113477267a9727fa0b03627278d4",
+        "size_bytes": 484
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_count-r2/delivery.json",
+        "sha256": "10ac846ceed652ff36204d74cbab33019939221d7be591007c0cc2e2e0e4273d",
+        "size_bytes": 595
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_count-r2/evidence-check.json",
+        "sha256": "0c4486adbf1683b510ab7b944fe8f515397f17db1bfafea5cf2f38f2ab8320dc",
+        "size_bytes": 1170
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_count-r2/run-context.json",
+        "sha256": "886855bc81e9328ad13cd29f3aae4169baf04bde46195a1b51c667d2dfc87599",
+        "size_bytes": 273
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_count-r2/tool-responses/000001.json",
+        "sha256": "e20683f383ebc9a780929b185d744761858c770375d8e227d5091f5d3d1d5cf2",
+        "size_bytes": 2973
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_count-r2/tool-responses/000002.json",
+        "sha256": "16ad8f0db29fa047a58b1a540c59b45108ad52988006c3aff1faff1afe39434e",
+        "size_bytes": 3284
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_count-r2/tool-responses/000003.json",
+        "sha256": "836cfb47ee89da643be88b2f75c6715aef18452c8a708a1abe71d9e4651fae1d",
+        "size_bytes": 484
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_count-r3/delivery.json",
+        "sha256": "73ada940f341a53875aab00189939050ae57a3b8712b3076164ac45cc79a3380",
+        "size_bytes": 655
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_count-r3/evidence-check.json",
+        "sha256": "587aff915cbe9609b47bb2bb8bbd7a8e6f3ec400798a892692e5176aaf199cec",
+        "size_bytes": 1170
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_count-r3/run-context.json",
+        "sha256": "83a176db32e3a53c0a4a496fe97554d7b29f43cc129373bfd540096ac775005d",
+        "size_bytes": 273
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_count-r3/tool-responses/000001.json",
+        "sha256": "69aa34f9fc60d242991d3896a9e3c72f42c54d9da06e2a3156d4dfd9d39912f1",
+        "size_bytes": 2973
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_count-r3/tool-responses/000002.json",
+        "sha256": "7c44b4179c74130996c9e7772f53953a363e8844867f92fab32493e7068fb3a3",
+        "size_bytes": 3284
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_count-r3/tool-responses/000003.json",
+        "sha256": "7f68a94143e0b3aee892c9a7e3b5bd695783ad23e5f6d9836cd8752433d2cce8",
+        "size_bytes": 484
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_latest_registration-r1/delivery.json",
+        "sha256": "5e98eba71f6df9d7fa5bcb626387705dea710418fbef90ea48f70c27143020ff",
+        "size_bytes": 1096
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_latest_registration-r1/evidence-check.json",
+        "sha256": "2acb4cbbae63e72a80fb94b325f0d40da991232aacbfbee67bee8ef72849dee5",
+        "size_bytes": 1249
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_latest_registration-r1/run-context.json",
+        "sha256": "0065de8a0fcd6379db97f4c716a6fe1a0ef40c7d7b5c94526db45a93a45ce687",
+        "size_bytes": 314
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_latest_registration-r1/tool-responses/000001.json",
+        "sha256": "146750d9acd228b876e1af17c226ca9733d926d90f9d53a9a24098602b4ed24d",
+        "size_bytes": 5016
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_latest_registration-r1/tool-responses/000002.json",
+        "sha256": "b7727fe07dbb1acf5e0f5912e318b1c9ebb0b24f7ebb0948772a843ee45395e8",
+        "size_bytes": 6280
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_latest_registration-r2/delivery.json",
+        "sha256": "afe218e5b54a0a65ffa09612cad458f15dd77e6ac9c32c76bb30f71520c72401",
+        "size_bytes": 1019
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_latest_registration-r2/evidence-check.json",
+        "sha256": "b17e5cbd1f093d7dde9c009572ee4ae636d41335138d78d0eeaae3ed1361eb28",
+        "size_bytes": 1493
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_latest_registration-r2/run-context.json",
+        "sha256": "03dc9dcdd206c99472926df945a82fefa5b73ffd52ec51208c37e5c3a12176e4",
+        "size_bytes": 314
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_latest_registration-r2/tool-responses/000001.json",
+        "sha256": "eb7c580f155b33c59ea9823c9232f30f305fba2de2b9b6168ce319361ade4db4",
+        "size_bytes": 2987
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_latest_registration-r2/tool-responses/000002.json",
+        "sha256": "5f2c467de11ce7499860de061b08533eb506f372410215f511927934b56599ba",
+        "size_bytes": 2987
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_latest_registration-r2/tool-responses/000003.json",
+        "sha256": "4483a1fc6cfcf7a049696e0dffc9ee0c174333acb38ba49d11f37fc5d1aad66f",
+        "size_bytes": 3298
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_latest_registration-r2/tool-responses/000004.json",
+        "sha256": "ff1742341f02aa342ce55dea0e8d2211ffd50303e820f23b4ecb8e170ba5a01e",
+        "size_bytes": 3155
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_latest_registration-r3/delivery.json",
+        "sha256": "c498efdc7620da66d0ed79f2ad28ea91ed3ca52a7e680743a6bae06d2119de25",
+        "size_bytes": 1162
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_latest_registration-r3/evidence-check.json",
+        "sha256": "51593b631e171a0478b45b5ce0f157457ad5b5f56b1d5f144e100d8da65f0d29",
+        "size_bytes": 1383
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_latest_registration-r3/run-context.json",
+        "sha256": "d1d59031ec256d698194afb2a25210bf3fee868e0c8b497521e89ff566fa728f",
+        "size_bytes": 314
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_latest_registration-r3/tool-responses/000001.json",
+        "sha256": "55ec5ca7df6568a383c397a89b51cd155fb423bc7bd67da828f1b26d0dd7dd1e",
+        "size_bytes": 2987
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_latest_registration-r3/tool-responses/000002.json",
+        "sha256": "74ec1ed974f0ab216039f91647c5a023834915312e305480433ede33d76991b9",
+        "size_bytes": 3298
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_customer_latest_registration-r3/tool-responses/000003.json",
+        "sha256": "595fc38e65d9576f909807c25f29cca93cbb7c412328219da614cfd5db4fc9ef",
+        "size_bytes": 3306
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_low_stock-r1/delivery.json",
+        "sha256": "550066c1234e33fc3a760c55bdc5456662fec361ebc023d64865efd7f25251f4",
+        "size_bytes": 1239
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_low_stock-r1/evidence-check.json",
+        "sha256": "5b02aa79b62f201fea2b7c129b5a3f08243bfbc1082b863d9c51bbe988d99f94",
+        "size_bytes": 1477
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_low_stock-r1/run-context.json",
+        "sha256": "b1e7af6c0698b751979b978de2d3af1af5a4e52b052541cf785a5a2dff9f4013",
+        "size_bytes": 305
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_low_stock-r1/tool-responses/000001.json",
+        "sha256": "145d77574086a70fd9c3d48dd56407a0aac47a84a54e1fdc15735fa24ac9c540",
+        "size_bytes": 3058
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_low_stock-r1/tool-responses/000002.json",
+        "sha256": "513f73fdc72e7f69ebcea230d436008a3686f728fe6fe1c038ff698355bd644d",
+        "size_bytes": 3360
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_low_stock-r1/tool-responses/000003.json",
+        "sha256": "a0813a450118264bb3c5f67c8e7eeb7f1b278896d9f84f30f995342bfdf5b178",
+        "size_bytes": 2185
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_low_stock-r1/tool-responses/000004.json",
+        "sha256": "0c921432e670ef69c02213f4421d3cece40888d391b4b8f667760a8367440679",
+        "size_bytes": 813
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_low_stock-r2/delivery.json",
+        "sha256": "c9130aa6b493e09ffc9fff5cee94020e6d0ab05b5fc7518cbc9adfe31ecddad0",
+        "size_bytes": 1082
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_low_stock-r2/evidence-check.json",
+        "sha256": "760e433568a81594df73f3657588b18ce687ca999a2dae2c331d11128ad2b107",
+        "size_bytes": 1477
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_low_stock-r2/run-context.json",
+        "sha256": "c0abe574917cf53c348fe3fbb36978f7f8015bf0c1af5970fc259eb863316823",
+        "size_bytes": 305
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_low_stock-r2/tool-responses/000001.json",
+        "sha256": "bf2c44a6d367ccd684e464d50d2b625d67d5bdc3eccb70e54a7a7b67f03aea18",
+        "size_bytes": 3057
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_low_stock-r2/tool-responses/000002.json",
+        "sha256": "f23a2476332cf549ee00fb14021118afb6884baa0a52872c5efee459c6dd8778",
+        "size_bytes": 3360
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_low_stock-r2/tool-responses/000003.json",
+        "sha256": "f7a16250d057da9a20b85ee4cd201b05dafb1ce000e9f7ee8f9ab5d5996730ae",
+        "size_bytes": 1641
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_low_stock-r2/tool-responses/000004.json",
+        "sha256": "605d4b7aeebb19d01e75ebe45f88687774ba024082f923806cc5ade3e5500f14",
+        "size_bytes": 704
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_low_stock-r3/delivery.json",
+        "sha256": "b80bd6e03dd9d74a00a4f22bce823a5eb2bbdcc5b5743c18d584002a2bdd4333",
+        "size_bytes": 1054
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_low_stock-r3/evidence-check.json",
+        "sha256": "1af4192f0194c55aee02fbdf50e91e4c99d2f07eabf15bf4fb61f9779ae40ee8",
+        "size_bytes": 1477
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_low_stock-r3/run-context.json",
+        "sha256": "8f039935904187a87ee7969f6aae5424d8cfc563c665c35458074f6838693129",
+        "size_bytes": 305
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_low_stock-r3/tool-responses/000001.json",
+        "sha256": "4193e6583ea358dbcee71c587f0b692cf6059c4d7002bee209ab30986c9e5caa",
+        "size_bytes": 2970
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_low_stock-r3/tool-responses/000002.json",
+        "sha256": "8cf2116a04210bf8652703ba476e53fa191c510a8abbf7ae3b50982cea207d37",
+        "size_bytes": 3360
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_low_stock-r3/tool-responses/000003.json",
+        "sha256": "92ee394d08416540cd3cc88333a55e1ed8f9f47423d455d0195177f4cdb7253b",
+        "size_bytes": 1641
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_low_stock-r3/tool-responses/000004.json",
+        "sha256": "5764ce5252a37cf38f04cc8ced64e8257cf66200bd40e5a0551e61fa03b35967",
+        "size_bytes": 704
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r1/delivery.json",
+        "sha256": "86e5e141ed90dfef838c9c7f5c99943c4fde1a32dc6ab2ed95bc4034872c7940",
+        "size_bytes": 947
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r1/evidence-check.json",
+        "sha256": "c8a791dd9bcd8b5a04abdf35ad76624e10559fda62a602dc277069352fa2ada9",
+        "size_bytes": 1526
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r1/run-context.json",
+        "sha256": "8c80a4afed5cac2c8596546740adb97136478b282426d235800c9873de45269d",
+        "size_bytes": 316
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r1/tool-responses/000001.json",
+        "sha256": "a780bce8e78d91a17afb58aab463ea0ad5fdc7cfb27bdd87193b9796d2bc0a7b",
+        "size_bytes": 2944
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r1/tool-responses/000002.json",
+        "sha256": "18d5ea27319a8dbace0c9fe9c01ab244bd446903971f75717452af18afea7577",
+        "size_bytes": 3515
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r1/tool-responses/000003.json",
+        "sha256": "9d4bd46bf2ae3973342a2516e516278b7c056368a6acdce6de2245a064846867",
+        "size_bytes": 3736
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r1/tool-responses/000004.json",
+        "sha256": "f0a1df7d2f325cb983a283073b87280db0e7b70ca77e7cb92c552574a8d42551",
+        "size_bytes": 2186
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r1/tool-responses/000005.json",
+        "sha256": "97cc22bacc0d85460aeff40e5c0d3d3350451e393bb989898050e61b86c3e2d1",
+        "size_bytes": 434
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r2/delivery.json",
+        "sha256": "b5b7e6f3057bf8a416bcea2bdd3f289a69da385d59a4a4b1f05b150a8f2c6d79",
+        "size_bytes": 785
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r2/evidence-check.json",
+        "sha256": "f3846bbf46000b3d7252fcba0f45c20ddfc693a9f9ef1ebf761edb563a2c8263",
+        "size_bytes": 1650
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r2/run-context.json",
+        "sha256": "f68bdc44bc9164e0b3abdf12c5d78cc77ee11ad06af34f8e743ba02b238b3550",
+        "size_bytes": 316
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r2/tool-responses/000001.json",
+        "sha256": "bf550d2fc59520039604d426e4db62ac8c17485fefe309ae084966fc482c3efb",
+        "size_bytes": 2944
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r2/tool-responses/000002.json",
+        "sha256": "e244390b9a9e5f898805c6913ef221b0de73274e6f4ed7a48e9bef9eeb05db22",
+        "size_bytes": 3440
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r2/tool-responses/000003.json",
+        "sha256": "243d0fe9bd1ccac0e77f0b6b780bfb36b21ade632985d14358fa725ac9323b50",
+        "size_bytes": 3356
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r2/tool-responses/000004.json",
+        "sha256": "807160c83f38d0e1d25a98e956fddc75b2dd8543c5c109d853c6142a2aa3529b",
+        "size_bytes": 739
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r2/tool-responses/000005.json",
+        "sha256": "5302a894f4ad8828c29927f33026d8c797d371fcf8a71818826ce18f95e59202",
+        "size_bytes": 425
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r2/tool-responses/000006.json",
+        "sha256": "aeb6c884ad5992131fd376e09458c59dafd2e735be015813d9a71dba0a49e459",
+        "size_bytes": 3703
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r2/tool-responses/000007.json",
+        "sha256": "ba410a79de4eceb0184fd6b2c2a60f9daee14dd20cc0d071d6c46459fe39be69",
+        "size_bytes": 434
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r3/delivery.json",
+        "sha256": "4bb4f41d0c7a62e7919f41df6db78da51494ff91ded952140ab380fb714c6d29",
+        "size_bytes": 917
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r3/evidence-check.json",
+        "sha256": "8e00dafe47c9ac770c77ec941a2dfe2611d98e6356fbb776a52d0963b6907fe9",
+        "size_bytes": 1536
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r3/run-context.json",
+        "sha256": "a0ba92f768c39a7efc8b4e33d25e4abc6241bbdb92fdcf60b0823c938bc33593",
+        "size_bytes": 316
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r3/tool-responses/000001.json",
+        "sha256": "cbf3966b15f9301533523c529366efc9cdae75187665701b7ad3bfa2a022e494",
+        "size_bytes": 2944
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r3/tool-responses/000002.json",
+        "sha256": "04a51261afc792188cd8e657df253c2e78c205c3a4f468352040eec7863a2963",
+        "size_bytes": 3440
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r3/tool-responses/000003.json",
+        "sha256": "0a0528f4ea3fcdc40b0de5497ce3c8687ce4dd714e797c44d4bd1e7cc32004f6",
+        "size_bytes": 3765
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r3/tool-responses/000004.json",
+        "sha256": "06eaabc7906fad4765b18dcdf658a371ada8123d6ec18cf0df0a36833818ebd1",
+        "size_bytes": 853
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r3/tool-responses/000005.json",
+        "sha256": "026f98a43565589694707e1f078bd51d84073d5f058bcc0d3341b49863c2e205",
+        "size_bytes": 425
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_inventory_most_available-r3/tool-responses/000006.json",
+        "sha256": "39b08b9ebe42adfd345ed6777bde3ad59e357b2d767453ce1dc193f743faa752",
+        "size_bytes": 3703
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_latest-r1/delivery.json",
+        "sha256": "43b897af56bca36afae3e16a296aee1a4e287afdea5d2f536d7b7831553cf38d",
+        "size_bytes": 1083
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_latest-r1/evidence-check.json",
+        "sha256": "b478f9c6303eaa7d86523324ddf917b9bbc0b177d4485ee49566c9f7e334adb9",
+        "size_bytes": 1539
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_latest-r1/run-context.json",
+        "sha256": "e016c2b73af2c51e3eaedf1bbfa00550ddb74381ad82e0186fa25fd76aabb092",
+        "size_bytes": 269
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_latest-r1/tool-responses/000001.json",
+        "sha256": "128bf53f7d1c078c986f0dbdc0bc9996717f6d6eac0becba435e4fa8038b7330",
+        "size_bytes": 3431
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_latest-r1/tool-responses/000002.json",
+        "sha256": "09ed9af5dca15fc15eb4b8a666c1bc8f49b628c7c6775432fb27fe5d7148f055",
+        "size_bytes": 3200
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_latest-r1/tool-responses/000003.json",
+        "sha256": "efd6af93adf3cbdd4c4b6916cf6805fb220593404f14f297c92e759c168a2608",
+        "size_bytes": 3557
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_latest-r1/tool-responses/000004.json",
+        "sha256": "52535793713ba5d78406a8dc677755e5a36d97880350cdb38719c32795574dda",
+        "size_bytes": 3013
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_latest-r1/tool-responses/000005.json",
+        "sha256": "ebab31e9afa9b8eaa38c5a4bd02c8d0dc2962274ae4e0efc7c1ced74fcff5f77",
+        "size_bytes": 3438
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_latest-r1/tool-responses/000006.json",
+        "sha256": "d65d295aa02c373a7726e7fe98dcce0581d33306eb560c3263482fa8d298dc48",
+        "size_bytes": 3884
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_latest-r2/delivery.json",
+        "sha256": "968b1a2d1784fe70a387afb8b2c66544e3507d163e3444e9725c5ad01b7fd800",
+        "size_bytes": 1298
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_latest-r2/evidence-check.json",
+        "sha256": "311bba612096e22e0103bc4355951005b14773711ef7a423a04aedaf1586af39",
+        "size_bytes": 1453
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_latest-r2/run-context.json",
+        "sha256": "3691e6bb28bbbdabfda5c5d262e99dec8dfcd0078f3ee10755156ce8e8e72f4e",
+        "size_bytes": 269
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_latest-r2/tool-responses/000001.json",
+        "sha256": "8f2330c183c9962b255c5bf419c9b174582fda718f8bf3b6243a32ed17569700",
+        "size_bytes": 3431
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_latest-r2/tool-responses/000002.json",
+        "sha256": "659fbed68e5997dfb3a2a95fcf5c3379615e2408e99715cc866a57cfbc1a526b",
+        "size_bytes": 3705
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_latest-r2/tool-responses/000003.json",
+        "sha256": "bb60069745ea8dd647efbed13fa74253b64006987db286527563ec90bad7c789",
+        "size_bytes": 3014
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_latest-r2/tool-responses/000004.json",
+        "sha256": "91f803d3509e4d72c071050192f128fe0113dce9daa7924326b72fa937d3419d",
+        "size_bytes": 3142
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_latest-r2/tool-responses/000005.json",
+        "sha256": "0e39d7f8d94e353bcd1b6e619d9e6e83b6de244c6c4fce278547443ca98ad090",
+        "size_bytes": 1172
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_latest-r3/delivery.json",
+        "sha256": "7108d50b59cf5158bad11a490e169ed510e0cc3fc4bd87a1d636353d38b15015",
+        "size_bytes": 741
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_latest-r3/evidence-check.json",
+        "sha256": "f816704f41592787c217504160c512c542c7f3d91edc21d85a4bacc9079e7425",
+        "size_bytes": 1153
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_latest-r3/run-context.json",
+        "sha256": "7cee2c7704fd68366f86b4fdced8168c09e9d49fe6a3633a29e4a58e3aefd820",
+        "size_bytes": 269
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_latest-r3/tool-responses/000001.json",
+        "sha256": "036948359f8bbb5072f7f0cb1813525d7b1b090b48a171911087e571d9acf0e7",
+        "size_bytes": 3009
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_latest-r3/tool-responses/000002.json",
+        "sha256": "cbedf5b5bd17e7fb0aeb66f38c5ceb1126cf20c3da2b72c4ec346367c4fc5330",
+        "size_bytes": 4236
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_latest-r3/tool-responses/000003.json",
+        "sha256": "faaf191021e4b87f32bfdb40e09e1ea40a693b622535e37b9d115b1bad09a2d4",
+        "size_bytes": 1370
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r1/delivery.json",
+        "sha256": "277e7071616572b10cdc03a426d476360abcf46613ed5b721513ef5b6d806974",
+        "size_bytes": 768
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r1/evidence-check.json",
+        "sha256": "5486499bae0bc94723036a3389c98c4266f74aff4a939ddd2fd3df639f7888a0",
+        "size_bytes": 1396
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r1/run-context.json",
+        "sha256": "deae0a1629e38ca849fe809c2ae88128933bd94a4db0632ac4c607184d497c05",
+        "size_bytes": 288
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r1/tool-responses/000001.json",
+        "sha256": "b4601c6c72cf4376791ee356a9f7a9c6a8a8e3b19e5a8e3ea957c4b7781da79b",
+        "size_bytes": 6074
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r1/tool-responses/000002.json",
+        "sha256": "cd0f2bb3603808f65957285b4875034ed3aea7db50be13b86e798d48b1d5a9a7",
+        "size_bytes": 7579
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r1/tool-responses/000003.json",
+        "sha256": "69ff05d91b5845d9dae9f0a207a54af17ab48e275f52ff8df17de5e790be8a19",
+        "size_bytes": 494
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r1/tool-responses/000004.json",
+        "sha256": "b8361ab25e2d6f160b34e7edc30e01be0f945e3f07fbe083cd4c6a53f0c92f59",
+        "size_bytes": 484
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r1/tool-responses/000005.json",
+        "sha256": "832e5a78f92997720af7b9d58f747e593a10135eb3c4a858063222c322cb658f",
+        "size_bytes": 583
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r2/delivery.json",
+        "sha256": "dee1cc4bcedd17c9ea727dac5fed5e9f1dca21949ac71e4446975266b375264f",
+        "size_bytes": 847
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r2/evidence-check.json",
+        "sha256": "7245f77750baa66bf46ddf133b6c4fd94245634fbdb883b6f97f8727ede84e07",
+        "size_bytes": 1396
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r2/run-context.json",
+        "sha256": "5b62261f6e2ee3b1ca4e7b1e4615fd6faee909012eb5610d1144216f1a21fe3e",
+        "size_bytes": 288
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r2/tool-responses/000001.json",
+        "sha256": "b181bd18784b96d009d60b411c735630fe1fedb30f7eb073c8e09fa1ca80067d",
+        "size_bytes": 3446
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r2/tool-responses/000002.json",
+        "sha256": "a1938b80a03a2fb30f9ca84105cee3d20c7d308e5808718f064edc771ceda018",
+        "size_bytes": 2908
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r2/tool-responses/000003.json",
+        "sha256": "2c5881f33418a6706728d8832dbc595e2789f8e70c2dad22a026d4c597276051",
+        "size_bytes": 3933
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r2/tool-responses/000004.json",
+        "sha256": "3dc6f5d5a354746014242b3b0ec16cec338795c1cbb4ea12f3a2af708026da75",
+        "size_bytes": 585
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r2/tool-responses/000005.json",
+        "sha256": "271c739a10cdbd5acd41031557f3ed51a1371358ecdab57643297c6ca6aa6feb",
+        "size_bytes": 3050
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r2/tool-responses/000006.json",
+        "sha256": "b3c5855bee65b3e9623487ae0e989dc46171b9b2a35afc10d6a530dfb01b3b02",
+        "size_bytes": 4447
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r2/tool-responses/000007.json",
+        "sha256": "829e7277465270b043a30cade06814355a0e55743db8c81c1d34082c4b54d756",
+        "size_bytes": 494
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r2/tool-responses/000008.json",
+        "sha256": "6c4d9722bf37355a4241cc0ecc56a1a854dc0c0a41d37b49108de23152c6d07e",
+        "size_bytes": 484
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r2/tool-responses/000009.json",
+        "sha256": "7159b2a4512c62177b5a9594c3a36f5fc7163f9c06cae82c90e71f1f2380f6cd",
+        "size_bytes": 470
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r3/delivery.json",
+        "sha256": "15c1a948ae75010d79f0703ada0ec018a9d14a5020b41a8731f02b5e2d9cadfa",
+        "size_bytes": 1158
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r3/evidence-check.json",
+        "sha256": "4396879a0b76044d10c07f1382103bd05509a626126007e6ae2734366f713095",
+        "size_bytes": 1461
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r3/run-context.json",
+        "sha256": "8d182fa57f841108eb8dd56adb4dfa2224cc6fe1e6f7bc5d501b4e253402f5b7",
+        "size_bytes": 288
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r3/tool-responses/000001.json",
+        "sha256": "5e8f9bfe30c77ffc5f5aa6c7b893be48b933d3782669dd7f68762dcbce4299d4",
+        "size_bytes": 3216
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r3/tool-responses/000002.json",
+        "sha256": "a468e72ed94b9345adb858a409cfe3820cbf4e0d09985699d7eec476a0345e0c",
+        "size_bytes": 3697
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r3/tool-responses/000003.json",
+        "sha256": "3b4d08a6a56950a65465a6d98472742c420836dc75d1366882dc9569fdd268ad",
+        "size_bytes": 3081
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_order_monthly_amount-r3/tool-responses/000004.json",
+        "sha256": "146d0caecc1a401bd554e0d24ef6584843648d444e8876e4b530479e1a87a3d0",
+        "size_bytes": 3219
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_approval_procedure-r1/delivery.json",
+        "sha256": "c5080a3af7c55f832aeaaeb058fa0bd464b91c6d1adaba6825d9c8c018234b1a",
+        "size_bytes": 1206
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_approval_procedure-r1/evidence-check.json",
+        "sha256": "a40a09bba0fff52d31f7aefa143821f9cb6ecbff08cb9659b6ff9571fd1e3459",
+        "size_bytes": 1500
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_approval_procedure-r1/run-context.json",
+        "sha256": "1b67b9e13f711c623477a9e91d725b3a83652dd9e50b6d5374a929c1d8df83b9",
+        "size_bytes": 299
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_approval_procedure-r1/tool-responses/000001.json",
+        "sha256": "a4c5624827da5a18c05b369de21ed60e002d38542e56a98558811bdeba0c580f",
+        "size_bytes": 5478
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_approval_procedure-r1/tool-responses/000002.json",
+        "sha256": "0ce84579a40882fa487d3bd41bce74a3e499b58b59a3da9a82022d901dc234f4",
+        "size_bytes": 5403
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_approval_procedure-r1/tool-responses/000003.json",
+        "sha256": "54331ed979f8cb97b50da4173a643cb1a95e222a1b3431bdc64647d490939490",
+        "size_bytes": 5473
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_approval_procedure-r2/delivery.json",
+        "sha256": "eee1573b5c31af331d9ca546a376296dbb93fc6d6a64b7b9573f193c326f23b3",
+        "size_bytes": 1278
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_approval_procedure-r2/evidence-check.json",
+        "sha256": "4396311d610fdb2e0d537e47d8b321f1b46fe6d588e2a907ff4c018f4c44a3b1",
+        "size_bytes": 1404
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_approval_procedure-r2/run-context.json",
+        "sha256": "6599846a3599b062964c77f465c25f241103f956f198cc77296d51932ef1c64e",
+        "size_bytes": 299
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_approval_procedure-r2/tool-responses/000001.json",
+        "sha256": "724141d8937e79097e27612b61eefa634644b044005f11534a2c4fbc3bfe435f",
+        "size_bytes": 2876
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_approval_procedure-r2/tool-responses/000002.json",
+        "sha256": "bdb5ff7f22e8ec7a254d4420b7256ec1e22c1cec54f5a2f599ae4fa1e266ff88",
+        "size_bytes": 2742
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_approval_procedure-r2/tool-responses/000003.json",
+        "sha256": "c171413af7f59f971036b9130dde46966db7e6cad8cd559c71db3b0f4f520bad",
+        "size_bytes": 2863
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_approval_procedure-r3/delivery.json",
+        "sha256": "68bb3c01c1176b4706276295ed0891bb9cf3fd1bd0fa5f9eabfbf36a681b0e81",
+        "size_bytes": 1043
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_approval_procedure-r3/evidence-check.json",
+        "sha256": "40955cd7f8b76a607304c7ed29342e1e53f4f1d8788736133c248978dba140ec",
+        "size_bytes": 777
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_approval_procedure-r3/run-context.json",
+        "sha256": "9ad21bfb83464257c000f1998d787e3425cbeb3d0baec0dd001f529bf49e3a1c",
+        "size_bytes": 299
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_approval_procedure-r3/tool-responses/000001.json",
+        "sha256": "c45e2e6b6cb6aeef537da3217c5f06362d1e6f30b521b89dfc9e6d5ceebafdca",
+        "size_bytes": 2876
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_approval_procedure-r3/tool-responses/000002.json",
+        "sha256": "8d6fd08ab4ae619cd87abc15faa4d5522aeb933382c84d08973093166e19d1d2",
+        "size_bytes": 2924
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_approval_procedure-r3/tool-responses/000003.json",
+        "sha256": "34e9c8940a81b8cb18998fbae8aeae42ecaba39bd3d8d181853e8aac03df723c",
+        "size_bytes": 2693
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_return_window-r1/delivery.json",
+        "sha256": "2971a76d8b7dee9da91b226e43c49df202723cdcbe2c05cd892dbb3e3c73729b",
+        "size_bytes": 706
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_return_window-r1/evidence-check.json",
+        "sha256": "32a89b0133e9b1f044249327ca6e66f1ac38b6ee590ae42a9f66456d69fedbec",
+        "size_bytes": 959
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_return_window-r1/run-context.json",
+        "sha256": "71bae4b3abe902be656c6351f859bd14a2c4f19bf56912b29bac0f354167aa68",
+        "size_bytes": 292
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_return_window-r1/tool-responses/000001.json",
+        "sha256": "0aaa46747a80471a470067deeccaafdba2528d15f9b9549e48581c2a74be8700",
+        "size_bytes": 2889
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_return_window-r1/tool-responses/000002.json",
+        "sha256": "2ab24436cd430807ccf9a9821583255213c54f4cee906a745a361400b20907ba",
+        "size_bytes": 758
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_return_window-r2/delivery.json",
+        "sha256": "3441f3febe544e528d6987d06ad50ce122f42a702211e00f903d3c41925743ea",
+        "size_bytes": 824
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_return_window-r2/evidence-check.json",
+        "sha256": "e419d55dfe0450bc09e0d432845226fb0d1fa6a20b536e197f4e5d48726bcd67",
+        "size_bytes": 854
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_return_window-r2/run-context.json",
+        "sha256": "9764f20d11d1fd80198bbc366e8ef6d2fad3f50d55b4740552fbd5e84cc5b5bf",
+        "size_bytes": 292
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_return_window-r2/tool-responses/000001.json",
+        "sha256": "9ba5d22aeb2d4f037e709cd52ada905007c4c30711736e6d599ccd2c2c4698d1",
+        "size_bytes": 2889
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_return_window-r2/tool-responses/000002.json",
+        "sha256": "aaa09ecdabd1ec76de9e8cab1072a09cfad32e207cc5eeb1c5885640b71ac0d6",
+        "size_bytes": 643
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_return_window-r3/delivery.json",
+        "sha256": "3c981df22c0e38b3a43b343e74e7dd6f39fe1a7aa782cbf6a7237b0b593a8e5e",
+        "size_bytes": 922
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_return_window-r3/evidence-check.json",
+        "sha256": "f4ea75e54560680fe1646b5aca6e455243e38b319a9ed65d24905690d0de0951",
+        "size_bytes": 854
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_return_window-r3/run-context.json",
+        "sha256": "c48d66cae77dc11b3b4564c74db1fc37fb63e85fb8755632749fb326697d06fc",
+        "size_bytes": 292
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_return_window-r3/tool-responses/000001.json",
+        "sha256": "62bb99d1ed21a3c85100b3d0a34736c9af477474fbfaf1ac4707b1227ec4e1f3",
+        "size_bytes": 2889
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_policy_return_window-r3/tool-responses/000002.json",
+        "sha256": "29dbb83e35a867435e10692185be760020af449228832a675995f669eb5a29a7",
+        "size_bytes": 643
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_support_responsible_team-r1/delivery.json",
+        "sha256": "a03ee027c271636f4f00c5d800a8931d0ecddbe659903c8ef408d129b5c3cbe7",
+        "size_bytes": 809
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_support_responsible_team-r1/evidence-check.json",
+        "sha256": "dddfa1b199d96bc0756781c9193dbf2de1a6947613fe7a2da08f65ac341d7bc1",
+        "size_bytes": 1157
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_support_responsible_team-r1/run-context.json",
+        "sha256": "96d631be6d348c27fa16474087ff07a5ea081a6ef344f04f4aefe028c761d4ea",
+        "size_bytes": 306
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_support_responsible_team-r1/tool-responses/000001.json",
+        "sha256": "480285d382ce6b24db7718c85e13e9c3fd4589b4ef1ec19be5b7dd9600d699c2",
+        "size_bytes": 2802
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_support_responsible_team-r1/tool-responses/000002.json",
+        "sha256": "b022a53bbab09add8506a0257be481a76f12415dc1daa14261dd1c4c80725e8d",
+        "size_bytes": 721
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_support_responsible_team-r2/delivery.json",
+        "sha256": "0ce0a2037598be622ac07b3864c972b1a40236224cdee6e8a377b8c3dac8ac1c",
+        "size_bytes": 991
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_support_responsible_team-r2/evidence-check.json",
+        "sha256": "f3fe8bd88e69fc8b69bdccf68b2d81c3af39813552cd173d37e01e3ab667c6ce",
+        "size_bytes": 1157
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_support_responsible_team-r2/run-context.json",
+        "sha256": "6f6442d401ad8972a3107686496000002adeba31a9d9e921470bfbf4ae743d3b",
+        "size_bytes": 306
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_support_responsible_team-r2/tool-responses/000001.json",
+        "sha256": "9bfc250fecfbc192d078a2fa2186b037253d84287cd9e44790830105a9a1e8ba",
+        "size_bytes": 2802
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_support_responsible_team-r2/tool-responses/000002.json",
+        "sha256": "3c6dfdc9de30c23d4115d6c28bcd76f39e26f2d74cfed19dd658e5855ff61792",
+        "size_bytes": 721
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_support_responsible_team-r3/delivery.json",
+        "sha256": "aeec28a70b284f43d5064dda1ee54a4c2afbdb1e91f4b13d8080f4984fde29dd",
+        "size_bytes": 954
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_support_responsible_team-r3/evidence-check.json",
+        "sha256": "d4da1d78ffac2e8ad26ca6cc28bff29ed37c085e0bbb2ae7b7e24a69b9a0d4dd",
+        "size_bytes": 1157
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_support_responsible_team-r3/run-context.json",
+        "sha256": "572414b3bd031863ade016fc9bc66c77458bcbc17d225b26f3530e2bdb206a7b",
+        "size_bytes": 306
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_support_responsible_team-r3/tool-responses/000001.json",
+        "sha256": "f095863b4bcd31ec7ef61d79fd6dd2f0a7485a9dfa78bf9e1ab2e57df75fc3e2",
+        "size_bytes": 2802
+      },
+      {
+        "path": "runs/phase6v4-portfolio-ceiling-after-task_support_responsible_team-r3/tool-responses/000002.json",
+        "sha256": "c6c8ee747617ad80faf4d10f00cbbba6625b525dbe13e4dc91adc56b6d0f4f55",
+        "size_bytes": 721
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r1/delivery.json",
+        "sha256": "d082835cb39ca60f00d73d537222c7a1e55eee854f0933036617f4eb22f922f3",
+        "size_bytes": 1041
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r1/evidence-check.json",
+        "sha256": "7f708029ff9280ea1cec6b67807e07776fd5b7fcd982f91514dfef1a2b92b133",
+        "size_bytes": 1629
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r1/run-context.json",
+        "sha256": "1e7fd4a6c9edfa507e0d1142e2c21252e86a681ae1cf527d52cecb071e074342",
+        "size_bytes": 323
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r1/tool-responses/000001.json",
+        "sha256": "20370c6836ca4bbb804e5943246b01bc6fa7db660bdee2cdcdf9d7f9b16d3368",
+        "size_bytes": 777
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r1/tool-responses/000002.json",
+        "sha256": "19ee02f1cfae25f3547b4c0609e239deece3df45a0c577d4c82e0558ec942e80",
+        "size_bytes": 639
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r1/tool-responses/000003.json",
+        "sha256": "35e54ee7fcb9ee73d9ef92309deee5cd179f8cebc3891f397be30636925da7f4",
+        "size_bytes": 2742
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r1/tool-responses/000004.json",
+        "sha256": "1d191311bdd48c7f9f27c4948128ed93611d14221080e713b11c58e46fa654b9",
+        "size_bytes": 2812
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r1/tool-responses/000005.json",
+        "sha256": "bd49da4b5389e9672f7b40f45d3bdb4bcec7fba16583f5d35043a3bf308938f4",
+        "size_bytes": 450
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r2/delivery.json",
+        "sha256": "c5c818f764cc51ac4081690c8b248a9f351208247d21279062de587956597d42",
+        "size_bytes": 940
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r2/evidence-check.json",
+        "sha256": "d516a4eb2c29758e34743746b708ac67fae5e727c91dfea4428c06ce0ce93267",
+        "size_bytes": 1533
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r2/run-context.json",
+        "sha256": "f32e575cf46b028545ad9f18434150619ca5bf4ba9f24855943be9622fe04043",
+        "size_bytes": 323
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r2/tool-responses/000001.json",
+        "sha256": "fea1a8e97ba0039a0f789a7bca5a00a99db21e31fdcac4c2827773f9840aecc8",
+        "size_bytes": 777
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r2/tool-responses/000002.json",
+        "sha256": "b129553b6492b47201559c3677ad91e5f0af8254e821e4cd25da2351c3ba4cfe",
+        "size_bytes": 639
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r2/tool-responses/000003.json",
+        "sha256": "482fc107e9cd40c6afdc067a6653ac267c75afb4826355211435abacbf74ac2a",
+        "size_bytes": 2742
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r2/tool-responses/000004.json",
+        "sha256": "164a25b2d369693dec2969504a840277fd93bf424a0df114fd3b3e9eb3acd7ae",
+        "size_bytes": 1844
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r2/tool-responses/000005.json",
+        "sha256": "d33138910b9d622a76e3b97bffdb83451482216ea38857a1323652ed8dc0d04a",
+        "size_bytes": 577
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r3/delivery.json",
+        "sha256": "6d4b6d48b0161ecd4b73a1f1eedd4a153d57ffcdeb5efe75a051db10632fd2bd",
+        "size_bytes": 764
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r3/evidence-check.json",
+        "sha256": "20e2562f592ef737e261c01b15ed39c459f77193a89a3dd06cedbe6cc2b8dd82",
+        "size_bytes": 1170
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r3/run-context.json",
+        "sha256": "62859292d3508a42c403a0b19b621897534365b5032e54cffe22f7c875acc6b0",
+        "size_bytes": 323
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r3/tool-responses/000001.json",
+        "sha256": "302bda8e801543be6a3941acbed2c4b3dd2c36cfe9f525c4e7bc1789f9cdbe26",
+        "size_bytes": 777
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r3/tool-responses/000002.json",
+        "sha256": "ce5ad37039ced9ce3e8bdb622e5757d7778a35f2078ba9579a6f95e58a10efe5",
+        "size_bytes": 2742
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_billing_invoice_deadline-r3/tool-responses/000003.json",
+        "sha256": "7b0256df0d84e3c0996301d577911b0b23b6729ccce1c6502cc5d6b088ea283b",
+        "size_bytes": 639
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_count-r1/delivery.json",
+        "sha256": "1909ab54b6eed2b67afa5d6ca173626dd717ea2fa95477d3b06c836d32328280",
+        "size_bytes": 766
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_count-r1/evidence-check.json",
+        "sha256": "ef90584d9e63ea8db0ebf475392d064648cbe5bce7911628680bbe7bc9b21c9c",
+        "size_bytes": 1179
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_count-r1/run-context.json",
+        "sha256": "cb49f2a7cd134ad5e9c7ccd4df7dddd4989a171c1d65be901cab11e99d9316f7",
+        "size_bytes": 291
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_count-r1/tool-responses/000001.json",
+        "sha256": "504f8a1c625cce51f93f114ff5dacd09d03b0751664168a30fbc41b5ee0b78f7",
+        "size_bytes": 2982
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_count-r1/tool-responses/000002.json",
+        "sha256": "3bdd3b15551220b9eda41423c3d5ac25df5ef051e688d4febc1ec9a8a4e6e34f",
+        "size_bytes": 3294
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_count-r1/tool-responses/000003.json",
+        "sha256": "d382af19d5d43adb0d063d72fc8507ac3da9c4d872eba38238817767b02df69f",
+        "size_bytes": 493
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_count-r2/delivery.json",
+        "sha256": "a72a8ccaf3bdd8e345244bb3ce229e7e3744491920736a7d59210d9d8c5ee7a2",
+        "size_bytes": 742
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_count-r2/evidence-check.json",
+        "sha256": "c9bd33bc3d723f74b29ef4b109844c451c2c2dc5de602ea700c108d39abb697f",
+        "size_bytes": 1211
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_count-r2/run-context.json",
+        "sha256": "4b901605eca7b9ff924d7c74c2ba64c9cf487d11a2fee3df5e447dec686b50b8",
+        "size_bytes": 291
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_count-r2/tool-responses/000001.json",
+        "sha256": "4ef77e8e3e31d6c961ca15a319512979be4e2975d33e521333fe2ff626d78a06",
+        "size_bytes": 5011
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_count-r2/tool-responses/000002.json",
+        "sha256": "33ef7a235895a58a7208bcbe0e53030e0af066094e21357eb055969292dfce32",
+        "size_bytes": 505
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_count-r3/delivery.json",
+        "sha256": "209e28b161cfac3679551d980b0c95b6d38022f1173df8221d1902261e16cf6a",
+        "size_bytes": 773
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_count-r3/evidence-check.json",
+        "sha256": "66013912c4b014e61c0fb2fbb5ca6b44bdf282accefe1c4a781bcb51c80a4d91",
+        "size_bytes": 1335
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_count-r3/run-context.json",
+        "sha256": "c2b0a228f0f0442509b40489a7df8ad89b2f48a560850754722263f3dc7f15b1",
+        "size_bytes": 291
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_count-r3/tool-responses/000001.json",
+        "sha256": "ed874ab257b79619f45796154bcda947c47b94ed70fad728381bfb5179deca46",
+        "size_bytes": 2982
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_count-r3/tool-responses/000002.json",
+        "sha256": "53fdd5c9e10c69245423b37f2baf54a4797e9aad2584031894c2cea1d14d98cc",
+        "size_bytes": 3294
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_count-r3/tool-responses/000003.json",
+        "sha256": "92a5715f5696e5105e3f6ea1c8e98631ad57275eea2cb5d09cc24bc360d5aa4b",
+        "size_bytes": 3294
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_count-r3/tool-responses/000004.json",
+        "sha256": "3871c4c9ef6da0d2ca97051a4b1013ec792229888cb43e504fda950f345a3980",
+        "size_bytes": 505
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_latest_registration-r1/delivery.json",
+        "sha256": "a6c1e9fc2d7fa90cbd097d4d70b5186b26a4a33cc69ab7bc81109beb85d8c1a5",
+        "size_bytes": 996
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_latest_registration-r1/evidence-check.json",
+        "sha256": "f285df88b5f05a764fd70aca47dd442f51206cb90e3a849211520af3bee54947",
+        "size_bytes": 1454
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_latest_registration-r1/run-context.json",
+        "sha256": "e18d8ef542ebab3481d156c77fcab98c493fbce784471830488e9648c0f019ab",
+        "size_bytes": 332
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_latest_registration-r1/tool-responses/000001.json",
+        "sha256": "1a8c7460bb79491e819045882b2a92530f6422ab514d2887ac959b7ed78f0729",
+        "size_bytes": 2996
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_latest_registration-r1/tool-responses/000002.json",
+        "sha256": "449953933b545d38b63d3b720b12c96a9cfe6456b2843022b3f40bbbf4f837b6",
+        "size_bytes": 2996
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_latest_registration-r1/tool-responses/000003.json",
+        "sha256": "947e4740b8ca0e6e755e3a0803d0f8c75940b6cd9c64740fa9b8c3248f6d6a09",
+        "size_bytes": 3308
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_latest_registration-r1/tool-responses/000004.json",
+        "sha256": "2242e11f0c4c588562f4616158f3b22505a993ef7b5a8ad2b707d10796319bb0",
+        "size_bytes": 2794
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_latest_registration-r2/delivery.json",
+        "sha256": "c6e27594f2bb71f19a0ca39c65c37e9b1819bacc25ccc0737b1f80847a66063c",
+        "size_bytes": 1034
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_latest_registration-r2/evidence-check.json",
+        "sha256": "a61e68a11e9ee856d67634836433fab27a3e535ab974602b3c778972e12989e6",
+        "size_bytes": 1392
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_latest_registration-r2/run-context.json",
+        "sha256": "eedb29ce13b4ed2bb9e2ae6af6fa3c9f7474d08a759a85249879277b018a1b67",
+        "size_bytes": 332
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_latest_registration-r2/tool-responses/000001.json",
+        "sha256": "ca140f7d234e68cd7b8ea2976ed08777fe5fa671bad5a1a5e528e693b571db7f",
+        "size_bytes": 2996
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_latest_registration-r2/tool-responses/000002.json",
+        "sha256": "d7cd946f7637a15535ac6eb4a7f733b449fb1d81a67dd154f6a9badfc3b75dfe",
+        "size_bytes": 3308
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_latest_registration-r2/tool-responses/000003.json",
+        "sha256": "b94d8bc9f610fcd313989744c33938464e1109937dfed1993992b15decf383f5",
+        "size_bytes": 3315
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_latest_registration-r3/delivery.json",
+        "sha256": "9de7280f07fd7c56e45ec4ec234fca81ecdbc9c9c81b87a0dcf956ca00389cf7",
+        "size_bytes": 985
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_latest_registration-r3/evidence-check.json",
+        "sha256": "2ec329edb9e48c97a7b3f6b3a6aab9ddd37b1e162c973987142e2998848b86e4",
+        "size_bytes": 1272
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_latest_registration-r3/run-context.json",
+        "sha256": "2825223e11132e89ec6f91b0ef540df03a6abcc0545a42e1ed81d20a7b0eeb6d",
+        "size_bytes": 332
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_latest_registration-r3/tool-responses/000001.json",
+        "sha256": "5775edbd3cfe9fabf17bfd8f22890ed1a806fd62dc3581585cf0c6caeff9d92c",
+        "size_bytes": 2996
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_latest_registration-r3/tool-responses/000002.json",
+        "sha256": "755d24f2d333214384fe4b6adb4ea100d17c9473fc6f5c6abfa98fd4e288591f",
+        "size_bytes": 3308
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_customer_latest_registration-r3/tool-responses/000003.json",
+        "sha256": "72d3a168b901e7dd68952705359911ff15a0f2a1f7f9fe7f981f78ad0b76788d",
+        "size_bytes": 2996
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r1/delivery.json",
+        "sha256": "d75e5ad10045dcbeb9f5e88e6781b3ed6e2f6bc44fc7aedba77f229681d553c8",
+        "size_bytes": 1257
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r1/evidence-check.json",
+        "sha256": "ec711d2b7a26cd0fdbfc9575679a72806b8932b64875255b7f15f99a07a5668b",
+        "size_bytes": 1486
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r1/run-context.json",
+        "sha256": "cbe5fbfa8b916e761e5cba9cc469748e05313a7a6b80f45b662bbf4117e039ea",
+        "size_bytes": 323
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r1/tool-responses/000001.json",
+        "sha256": "52381f8bd73e572b0f40a67961e29c18cf93bee4594c48922cd84fcc2db75f89",
+        "size_bytes": 3066
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r1/tool-responses/000002.json",
+        "sha256": "57af19ff0ee2b4821a181aec182a3fc4288ae5975930738585f36af7e2e54960",
+        "size_bytes": 3377
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r1/tool-responses/000003.json",
+        "sha256": "335a6ad25406b26859d4ed1732b8f83da6072d0fa5bdda408b492c77e6896820",
+        "size_bytes": 1650
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r1/tool-responses/000004.json",
+        "sha256": "befeb9a480a06cee75832b47bf4c2394a721187e7b51fd732db9ecb06b28c731",
+        "size_bytes": 713
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r2/delivery.json",
+        "sha256": "199eb2aa30593f76b216ac0822531015c63f6a431b5af8e9dd2e80740e8f9aee",
+        "size_bytes": 1563
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r2/evidence-check.json",
+        "sha256": "164694cb9f5da8de79818a521028fb28cddf5e597eb98e15d1a605b2a8e9a8c4",
+        "size_bytes": 1597
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r2/run-context.json",
+        "sha256": "ab201ba6adedcde08d75e11c6b61a2c5e725811089fd52daf24c28b73aaf868d",
+        "size_bytes": 323
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r2/tool-responses/000001.json",
+        "sha256": "b9a9e85131b367c885ba1fe03d1d38ed31f96057a4b127b6c06ebe944ffbe3d9",
+        "size_bytes": 5952
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r2/tool-responses/000002.json",
+        "sha256": "db7e4de2b4d32894ef9b791090f6b81a719cd8ae870a609c19b576819fbeaf76",
+        "size_bytes": 6869
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r2/tool-responses/000003.json",
+        "sha256": "724b234abfaf6496e170f3a169460dcb062e640657ce59e548b18c319bcd5d6c",
+        "size_bytes": 731
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r2/tool-responses/000004.json",
+        "sha256": "ce94837678521617ace459638aee372014ba837500d36e8cce79fa9c75f8486f",
+        "size_bytes": 712
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r2/tool-responses/000005.json",
+        "sha256": "b085d5e85cac1dc198e25c8324fc9441743b44830f2d4540e29d9f8e04b37954",
+        "size_bytes": 614
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r2/tool-responses/000006.json",
+        "sha256": "4e4aab42281c1b55641533f092e413d44a26bcba3e9e8a7d9d7e5d1b09f64cf3",
+        "size_bytes": 5558
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r3/delivery.json",
+        "sha256": "11820b5fbd4c69a65e80ae52fc63f6f9301f23398a575794c096b468f57eea65",
+        "size_bytes": 922
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r3/evidence-check.json",
+        "sha256": "a03319cc6198ac8352b6d43280092bbec137c5ee7c1712445d06d1c2b09fc96d",
+        "size_bytes": 1306
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r3/run-context.json",
+        "sha256": "87bff17cb5de05d8de1e3c395dbc118265cbc11acdb15d61e446a2723c4f5b78",
+        "size_bytes": 323
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r3/tool-responses/000001.json",
+        "sha256": "ba8e0bcba59770df995dd8ec1e04d5a04aead07a38e1657827aae8b51231adca",
+        "size_bytes": 3067
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r3/tool-responses/000002.json",
+        "sha256": "87211d9c0ed38500a8b85c3ea64780c1b8460b5b9599fe6b907be4ce8a4978d8",
+        "size_bytes": 3376
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r3/tool-responses/000003.json",
+        "sha256": "8e5480f1be39921f5d19c44152dde98ff2cdd077dadd5bb2896894ba4e992183",
+        "size_bytes": 1450
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_low_stock-r3/tool-responses/000004.json",
+        "sha256": "8ff55ac7c97a1fcfbc561510a042703899e1f0d8d1d02df8c61d5a7978fbcf3f",
+        "size_bytes": 673
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_most_available-r1/delivery.json",
+        "sha256": "1515876353af976afbbd7670b699f24e82d16ab90e7a4f3fe06ce7a12d172f31",
+        "size_bytes": 825
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_most_available-r1/evidence-check.json",
+        "sha256": "dac7205632ad04114450faecc8a4967d6bc818eb86f488267ab7be8e6f3135b8",
+        "size_bytes": 1310
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_most_available-r1/run-context.json",
+        "sha256": "9ea6e62a4f03dab86404a18b014308b6baccbf1ef4e1e6e0e396613499b3727e",
+        "size_bytes": 334
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_most_available-r1/tool-responses/000001.json",
+        "sha256": "8f9d43114d39cf4bdca48575b7d365906d0b152ea5c572d0ae877e3e8ab09927",
+        "size_bytes": 3414
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_most_available-r1/tool-responses/000002.json",
+        "sha256": "7964577e8e9ea4101e3bf4c65104c7b4e773d98750d82cf5c0c5b4003c23bb8e",
+        "size_bytes": 748
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_most_available-r1/tool-responses/000003.json",
+        "sha256": "eb57872e3b775f3b5d44ffee1dc5c0998e2309ce4a7c63e442c579116e294e60",
+        "size_bytes": 658
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_most_available-r2/delivery.json",
+        "sha256": "f27f2ac0bb3642b51b3172bb2f5507fffccabb258e1542cda0e416fe8f445410",
+        "size_bytes": 884
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_most_available-r2/evidence-check.json",
+        "sha256": "f7d344b3b8a70e60aab4a64d727445c9b149512dfa57d4136436705f9a88cb66",
+        "size_bytes": 1417
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_most_available-r2/run-context.json",
+        "sha256": "f3b6f08941d653988cd2fce9687f65fe9d7d7396d012e47a9a57355dd0fd33ab",
+        "size_bytes": 334
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_most_available-r2/tool-responses/000001.json",
+        "sha256": "d6a248d2e4919c7fab5a1dfd3a5d97eecf4e9128020e3c9b24e3a6ea93e13397",
+        "size_bytes": 5549
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_most_available-r2/tool-responses/000002.json",
+        "sha256": "8a93f8f74a3546fd87d16dc5e8151170450e6993ec268e7247ee2e2db953ed95",
+        "size_bytes": 7186
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_most_available-r2/tool-responses/000003.json",
+        "sha256": "dd9bc5ed9699124025e8873032eb4b66f9e728f29bba631e2a076b8e7f39087d",
+        "size_bytes": 1339
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_most_available-r2/tool-responses/000004.json",
+        "sha256": "e90b50eaa7bcbd4b07e799bc00389d1a1aaebe770febd0d54ca6b9e9473d292c",
+        "size_bytes": 443
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_most_available-r3/delivery.json",
+        "sha256": "58e6fe9892860c413f794748f3dfda67ad59b26da91ca58f266244e917e24b79",
+        "size_bytes": 959
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_most_available-r3/evidence-check.json",
+        "sha256": "d00d36ff6e6683dc7f91a0069cb611199e11e83670de2cec7bde6f3d444b1212",
+        "size_bytes": 1392
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_most_available-r3/run-context.json",
+        "sha256": "dfec9a245cbd0673fca1ddaad1d8e1ced575532742e913a809401c073c074cb4",
+        "size_bytes": 334
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_most_available-r3/tool-responses/000001.json",
+        "sha256": "979e5ca86c269869afae4c1d95c16dec5b0a7d870b6efa94f85c48c392345e53",
+        "size_bytes": 3414
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_most_available-r3/tool-responses/000002.json",
+        "sha256": "938e5b97dc51ca6b03777d83b8982465333d10339763bfecb4b9af3f164eaed8",
+        "size_bytes": 1339
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_inventory_most_available-r3/tool-responses/000003.json",
+        "sha256": "ca584cc81502ad66e539324a37290b64ae01c2e67eb4c203350b4a69441dfc5b",
+        "size_bytes": 658
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_latest-r1/delivery.json",
+        "sha256": "43f5c292f12ec5130fc074633f983e6b53afe92a8161da7e0c96e887b8828e8d",
+        "size_bytes": 1062
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_latest-r1/evidence-check.json",
+        "sha256": "ee796573cb809a1c90cf291f905e18db6090012d506801e50c290648689a606b",
+        "size_bytes": 1291
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_latest-r1/run-context.json",
+        "sha256": "d23aadc86b819ef6cc9e4ec75230dbb05a73924e3e3871a5a545e4dbb282c638",
+        "size_bytes": 287
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_latest-r1/tool-responses/000001.json",
+        "sha256": "a8793e2288e2851c90f0ea505f86f2aceb461fd48e2c4948f3409a91ca95418d",
+        "size_bytes": 3082
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_latest-r1/tool-responses/000002.json",
+        "sha256": "12f565437475c6801a1efe76370f6546b989c206f1482b782074bad89a3ad19c",
+        "size_bytes": 3473
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_latest-r1/tool-responses/000003.json",
+        "sha256": "1b204533447c2a03324e568b33bb637adadf7665dc1686b42fb34e995d7dd2a8",
+        "size_bytes": 3081
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_latest-r1/tool-responses/000004.json",
+        "sha256": "801976e2bd07c5c023c4033d4004ee6f57aec1d3ccaeaff6444e1bebfdf514fd",
+        "size_bytes": 586
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_latest-r2/delivery.json",
+        "sha256": "93ba43ea05bba3776d623f58e6ba64b5207d3d08c2c5b108d26de7763c9f27fb",
+        "size_bytes": 847
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_latest-r2/evidence-check.json",
+        "sha256": "73002ab7de7d8cf0a3a79b2de126a2526e97ccb052d9aa44f0074b4cfe31517b",
+        "size_bytes": 1461
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_latest-r2/run-context.json",
+        "sha256": "e376c2dc998e22a394b0325eb0e73b01a8efc6a07d17e3941eb6c8394c99c0ff",
+        "size_bytes": 287
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_latest-r2/tool-responses/000001.json",
+        "sha256": "97c7bf7f43417c5765f1ff82a4804ee3c27285d921d5d682fb845514b0d06ec0",
+        "size_bytes": 3444
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_latest-r2/tool-responses/000002.json",
+        "sha256": "4ac3a20bc2dea8364983e1dc23953bcca8daafacda993e9dde43f69963672671",
+        "size_bytes": 4166
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_latest-r2/tool-responses/000003.json",
+        "sha256": "740407fcd2e5c2c805985778c3098c4cfa2e328d371a54fb4fd7028f7f782437",
+        "size_bytes": 505
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_latest-r2/tool-responses/000004.json",
+        "sha256": "0364df8bf04909fca2c423cb9541c698d06a80f77529be7a94a381eebe1fbeca",
+        "size_bytes": 833
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_latest-r3/delivery.json",
+        "sha256": "b6d58c0051954963fb93ebdf0f62f1d4f914976f70ec2ebb1afaa926098a6100",
+        "size_bytes": 802
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_latest-r3/evidence-check.json",
+        "sha256": "4487319d1570a312fe85eaec980304a9ec01dc8b7f87681a47ca67bb23b926bd",
+        "size_bytes": 1281
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_latest-r3/run-context.json",
+        "sha256": "7d22c0992f40ec3e15e2d288e55b30f50b23e19ca5db2e26446637047b4e3f81",
+        "size_bytes": 287
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_latest-r3/tool-responses/000001.json",
+        "sha256": "23650d7a820c3661e8f767bc8bc41531ffb180b961f6374af6c2d8d7a5dd9981",
+        "size_bytes": 3081
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_latest-r3/tool-responses/000002.json",
+        "sha256": "b3bd5999d515a9eab28e82c6ea2e1d09fa707eb7949b2de9605b9a506896e2b2",
+        "size_bytes": 2748
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_latest-r3/tool-responses/000003.json",
+        "sha256": "d274dff3e8b780ce9eb6f7170433b74b3f311384f5a956cea4a7f294fdfae272",
+        "size_bytes": 3077
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_latest-r3/tool-responses/000004.json",
+        "sha256": "c58e8148f63517bc8814d665f777c2f5687959f4c70192039e6b85068cb7e0b0",
+        "size_bytes": 4166
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_latest-r3/tool-responses/000005.json",
+        "sha256": "ac6c6f7bdf70a61ba1e61bc117f1ed6b2e7b14de79e664db16fcab617824b0eb",
+        "size_bytes": 3824
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_latest-r3/tool-responses/000006.json",
+        "sha256": "08f6a8d94f4eb206f6c00d4aa57e7ad79c48ab87348d922685fbe40617a3af87",
+        "size_bytes": 505
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_latest-r3/tool-responses/000007.json",
+        "sha256": "1be43acb0ef944ec3c6192eda217380ba9ea1816613fdd20e540264c7b2b1ea2",
+        "size_bytes": 833
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r1/delivery.json",
+        "sha256": "7477a1d3c7897ff2ff44b7d46776326b292c80e54520225776cfff27380b20c0",
+        "size_bytes": 891
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r1/evidence-check.json",
+        "sha256": "a0d4669a476ff9572b44dc4b4b1d72a5b84e1a7f6c1f0b5333a2a3905e804943",
+        "size_bytes": 1685
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r1/run-context.json",
+        "sha256": "e319456794b686b072c21f74f8b52f13e84d5607c496c6502859a7f30196291e",
+        "size_bytes": 306
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r1/tool-responses/000001.json",
+        "sha256": "c92638dbe40063d2a59a090b49c82b3b82826d32036ead93de2c389d9b88b061",
+        "size_bytes": 3453
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r1/tool-responses/000002.json",
+        "sha256": "ff3327dabc0771a1cb145198b81c2146fac99046e65eb8618e22e76b4274f368",
+        "size_bytes": 3720
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r1/tool-responses/000003.json",
+        "sha256": "2708b615bcec28e68b0418431d93713ed643b0c9e702099cb9a4df94361bbfc1",
+        "size_bytes": 3934
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r1/tool-responses/000004.json",
+        "sha256": "5c225e85b9e0542a33d3c18ed1339c4f637ca440b4f26a5a9ad708efde70a7bc",
+        "size_bytes": 3146
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r1/tool-responses/000005.json",
+        "sha256": "bc8b0cb060f7a4fbd262fc93498a27dbed515b39e4e00dd0f356a57b3a76f4d4",
+        "size_bytes": 3346
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r1/tool-responses/000006.json",
+        "sha256": "4ccf50df5e0f9d7293970c3131d4158b38ea4702e55d1cec51dd64fe5e9eae2e",
+        "size_bytes": 503
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r1/tool-responses/000007.json",
+        "sha256": "8741a2daf325d2c6f4e7ed3117fc3491df3092036721c653d5925deaca2e39a9",
+        "size_bytes": 592
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r2/delivery.json",
+        "sha256": "73bde4f426c348b3eb1e26a7906e4978fcaf4c2839b83efcf99c631ab692bb5c",
+        "size_bytes": 835
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r2/evidence-check.json",
+        "sha256": "f18e12de51d701b652680a1759c807500dec4f0f2db89e3cd91cb54c64cbedbc",
+        "size_bytes": 1405
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r2/run-context.json",
+        "sha256": "c46f8200256dfd24ae64b0e757fd77f26b6fc7ad3cc6cc9c84ec46c864e789e9",
+        "size_bytes": 306
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r2/tool-responses/000001.json",
+        "sha256": "9ab87187bf786e9cd7e273dc12b0e4647533aadb7be2296c3a716b10f835eed4",
+        "size_bytes": 7650
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r2/tool-responses/000002.json",
+        "sha256": "8f7cb712cea4a2552b26282d71657ca888486b5a475a3e1fa07cddf0496a265d",
+        "size_bytes": 503
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r2/tool-responses/000003.json",
+        "sha256": "ef4c344edd4361ac380f97df21ff44482a715a9f95a5ee1f751efa7698a9dad6",
+        "size_bytes": 493
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r2/tool-responses/000004.json",
+        "sha256": "d6bfa7b09aa09bb741385f5020589c302f6b1e8c7884547904aba669ed712516",
+        "size_bytes": 572
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r3/delivery.json",
+        "sha256": "a4547986364838e637976ff28d8844fe15dbb2c80af11502d172826210213e8f",
+        "size_bytes": 803
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r3/evidence-check.json",
+        "sha256": "612b464d068bb68ce96f4894f76dfbaaea519575befba9a2c97f5011d10f2fe9",
+        "size_bytes": 1353
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r3/run-context.json",
+        "sha256": "2093872247b9c8af22075ec9663408a38835d7fbe27516cca4f32e9459a12291",
+        "size_bytes": 306
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r3/tool-responses/000001.json",
+        "sha256": "0f067d8ff7442b66c650f76162db93d00f0693e265e9424ef4cf68a350098682",
+        "size_bytes": 3453
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r3/tool-responses/000002.json",
+        "sha256": "cabc8e0099a0a7081e64978233f0c89bebc6a3ace19f9161b670afbdb713b6d8",
+        "size_bytes": 4174
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_order_monthly_amount-r3/tool-responses/000003.json",
+        "sha256": "073c06868e4f8a6971b2284e22f21fe9538b7ad8f18c3a092b4614c20f724c9f",
+        "size_bytes": 503
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_approval_procedure-r1/delivery.json",
+        "sha256": "cb49da747a415bb5a4b5f700560974b504eae30ec2ada7338d503f30b477d140",
+        "size_bytes": 1501
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_approval_procedure-r1/evidence-check.json",
+        "sha256": "44ba3afdc738f23b219a1425af601099f370f425604806c7d9746d4fb2d6686e",
+        "size_bytes": 1375
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_approval_procedure-r1/run-context.json",
+        "sha256": "aad9cdcfbc5b70e30eec32355e478d2d4ce0e23362d2832e5e8c9a9c1e0dc66d",
+        "size_bytes": 317
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_approval_procedure-r1/tool-responses/000001.json",
+        "sha256": "9d27be396eefbc86727723244f45658c7114d62fb9a7ee93b2f750caeb13df05",
+        "size_bytes": 5590
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_approval_procedure-r1/tool-responses/000002.json",
+        "sha256": "b83493116a95b20718bd3707a9ede0e416db154c454a00a0dad7fb83825071cf",
+        "size_bytes": 5415
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_approval_procedure-r1/tool-responses/000003.json",
+        "sha256": "adb52047ea2caf16769ccdb5798ff7b3f2214c3d1575c04afd5f4c8c72fbf077",
+        "size_bytes": 6655
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_approval_procedure-r2/delivery.json",
+        "sha256": "c98f33f238bcd96c63f18d74586c9d788493d108acb813a4e0ae8ca9f3b066f2",
+        "size_bytes": 1309
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_approval_procedure-r2/evidence-check.json",
+        "sha256": "bb7e9562870093afcc930bc23da2b42b3dfc3043d2a6939aabc41211c67c7aee",
+        "size_bytes": 1255
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_approval_procedure-r2/run-context.json",
+        "sha256": "b258197b67e623ccbc300b24a5fd035889ac0f1c06cda0db57771dc5d9f5981b",
+        "size_bytes": 317
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_approval_procedure-r2/tool-responses/000001.json",
+        "sha256": "6c405a2c3ed15e39c4fb7974902de64a3409c66923861de6df731e78466fbd58",
+        "size_bytes": 5590
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_approval_procedure-r2/tool-responses/000002.json",
+        "sha256": "67ade2f534eb6e23f9a5461386bbd8ae1645b9c2624c243621dd3be81dc4d12d",
+        "size_bytes": 5485
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_approval_procedure-r2/tool-responses/000003.json",
+        "sha256": "52e12c56a7098bfeaf6717261f7572fce0bcb5d50d04f29d6f6e4bcaf2896290",
+        "size_bytes": 6938
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_approval_procedure-r3/delivery.json",
+        "sha256": "28214d77786ceb0b3c2f51cd0697ac4dda52be3beeea324f4a30b55150987dee",
+        "size_bytes": 1133
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_approval_procedure-r3/evidence-check.json",
+        "sha256": "3b24697fbdfe517e68d83af5a4ac9ec0d2112adc2f052837aeb5f4b7af511b02",
+        "size_bytes": 1557
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_approval_procedure-r3/run-context.json",
+        "sha256": "1e3ccee2ea45efd6f0ea8fdc4dbe5d16978dd46d72ad36ca4cc234523b808355",
+        "size_bytes": 317
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_approval_procedure-r3/tool-responses/000001.json",
+        "sha256": "bdba894974d5e1aead5b4a9ee4ed6884a4eb5bbe9a8b8b0d485756f371fa7c84",
+        "size_bytes": 5590
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_approval_procedure-r3/tool-responses/000002.json",
+        "sha256": "c6eeaf33a50da675efaa7237e265234124e1576cdf8ff79f334a63aca81e1e4d",
+        "size_bytes": 5645
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_approval_procedure-r3/tool-responses/000003.json",
+        "sha256": "6aacc74b4d0b6676ce93b8802e086c0c92454159dc2f5dfb537d82d3567c1693",
+        "size_bytes": 5515
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_return_window-r1/delivery.json",
+        "sha256": "1b675eb829d362ceeff84a3cd316b4515ed7c7e8f978b3a3250cfab9c6f5daf5",
+        "size_bytes": 1010
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_return_window-r1/evidence-check.json",
+        "sha256": "e5eb1c24c6d636e174cb7df8b40bedd24505dc3485fb930c1ab1e880f340486e",
+        "size_bytes": 1044
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_return_window-r1/run-context.json",
+        "sha256": "dd2dcdd0b7eb7e26966ba92c8fedb92b2d6b4f67968bd96052b2a42be7f5e64b",
+        "size_bytes": 310
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_return_window-r1/tool-responses/000001.json",
+        "sha256": "fdda47db93f3580876bec99b47763c2ab48a0755bc06d207538ed79c0ce39e14",
+        "size_bytes": 2999
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_return_window-r2/delivery.json",
+        "sha256": "87f868a72f2d09ca0d6bb0103590c8df2c1cd4f1e2ef75dac99db315656fa48d",
+        "size_bytes": 1079
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_return_window-r2/evidence-check.json",
+        "sha256": "31239d4f2b56fa9d9752fdfaf7cb4601b832f1f3ec3b6a153157ceca240c0ba0",
+        "size_bytes": 1044
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_return_window-r2/run-context.json",
+        "sha256": "f52498482bcad963e5a9cfcc8650b5367d7d6fdc2d4e8ae28dfae30527cc8eac",
+        "size_bytes": 310
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_return_window-r2/tool-responses/000001.json",
+        "sha256": "8de579c870a71f7c80546d326821c3dcbb0eec5edbbd20866edfb28e2458038d",
+        "size_bytes": 2999
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_return_window-r3/delivery.json",
+        "sha256": "5d234fe791c6870c3d3ad2382eb1a2cbd78ce74770198d7906b55ba16d82f395",
+        "size_bytes": 1013
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_return_window-r3/evidence-check.json",
+        "sha256": "0239ceef033bc2a4f442f947359be4485d3f4d1d92d0f035f672ffbf367e5d7c",
+        "size_bytes": 1044
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_return_window-r3/run-context.json",
+        "sha256": "35ac42c636711c2a46c7ed7cf82a386ce681a64b06551176dea567a1216f143b",
+        "size_bytes": 310
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_policy_return_window-r3/tool-responses/000001.json",
+        "sha256": "a898ff7e249293118da4a0d5810c886b24579455ce4b9f067d3407564e6ce3a3",
+        "size_bytes": 3925
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_support_responsible_team-r1/delivery.json",
+        "sha256": "ecc7eb48d4f89e8466bd15a5b2d18fe27e75171f373d977a682fa40927d07860",
+        "size_bytes": 1074
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_support_responsible_team-r1/evidence-check.json",
+        "sha256": "353b8ed841ae5d5aea28cc2ece945c68bf0d9febb9a200cfcbe54a74de9b1aba",
+        "size_bytes": 1238
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_support_responsible_team-r1/run-context.json",
+        "sha256": "2978f38215943be918d1a6f2985887dd98c776fdf517cd57519c202208b52578",
+        "size_bytes": 324
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_support_responsible_team-r1/tool-responses/000001.json",
+        "sha256": "79f3d92d7f99605da50a9f36ed7bdc6d6f4ea14d34290a81db207814a7b64e48",
+        "size_bytes": 2911
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_support_responsible_team-r1/tool-responses/000002.json",
+        "sha256": "7961602fd3ce3249cb34b867a8c22fadcae8c225a45487ad9df06cf6b1cda626",
+        "size_bytes": 730
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_support_responsible_team-r2/delivery.json",
+        "sha256": "9200c321fd199968e213a71dd2b2b8eaa5f1b714e3c95f862bfbbab864514505",
+        "size_bytes": 1113
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_support_responsible_team-r2/evidence-check.json",
+        "sha256": "153d3caa9e37ade3f8fa4b582bb51910fc26c9e7fe311204c92c23035df190c0",
+        "size_bytes": 1238
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_support_responsible_team-r2/run-context.json",
+        "sha256": "2c1627dc31e27695fa7f4b874e86673a795a1be77c32f569867d8427742eb230",
+        "size_bytes": 324
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_support_responsible_team-r2/tool-responses/000001.json",
+        "sha256": "5473bfedb98af0bcd9a7f048cc534fb7fe201a731eccaa979615d9a06db8ce11",
+        "size_bytes": 2911
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_support_responsible_team-r2/tool-responses/000002.json",
+        "sha256": "fcacf3f51c34d33b49e142624e5f590e90291f09de817b005ea2a0405b6e6711",
+        "size_bytes": 730
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_support_responsible_team-r3/delivery.json",
+        "sha256": "7d1513bae7cf342890f7bd2d33cd4c2201ba6fbd710a2ad4039a0760c6b4682a",
+        "size_bytes": 1004
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_support_responsible_team-r3/evidence-check.json",
+        "sha256": "2df8ac2283a341e01683a38fe24e6626e1e5fb2cb02437bbb64b18500341e2d4",
+        "size_bytes": 1166
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_support_responsible_team-r3/run-context.json",
+        "sha256": "7b0aa8774eac4082279429b48d18c2fbd59b92c15c160a0d7b1053fcf5aff8ca",
+        "size_bytes": 324
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_support_responsible_team-r3/tool-responses/000001.json",
+        "sha256": "61b019d53d0607d7c157adf654937e2424074d9e6d12920a5240a03326def0a4",
+        "size_bytes": 2911
+      },
+      {
+        "path": "runs/phase6v4-portfolio-hidden-conflict-before-task_support_responsible_team-r3/tool-responses/000002.json",
+        "sha256": "50ae63e0d459d19e666aad7dc97cd56b2f07c7b00576b101b0a0abf99887a604",
+        "size_bytes": 730
+      },
+      {
+        "path": "SUMMARY.json",
+        "sha256": "8c550a4c3409607cbb6fff8dc4a39ff96ac02d09cc218558699412cfe257f6cb",
+        "size_bytes": 47619
+      }
+    ]
+  },
+  "checker_v2_path": "ax_product/evidence_v2.py",
+  "checker_v2_sha256": "73496de4e524ecf9ed12ce0602907856dcc5985b74fffb4e21351e1aa61cc8a4",
+  "hash_algorithm": "SHA-256",
+  "parent_manifest_path": "artifacts/phase6_product_demo_v3/FROZEN_MANIFEST.v3.json",
+  "parent_manifest_sha256": "0292532cdc28fff71f77a3e1609744d97949fe3fceaf8826286fe5d9e93b9ce6",
+  "parent_tree_sha256": "a76e0d0978776724abe09df438746da4a01f7b7b4cccdd43c20786132b0967ed",
+  "policy": "NEW_60_RUN_SNAPSHOT_WITHOUT_OVERWRITING_V3",
+  "profile_summaries": {
+    "portfolio-ceiling-after": {
+      "abstention_reasons": {
+        "INSUFFICIENT_EVIDENCE": 1,
+        "NOT_FOUND": 8
+      },
+      "diagnostics": {
+        "abstained_run_count": 9,
+        "answered_run_count": 21,
+        "blocked_task_count": 4,
+        "inconclusive_task_count": 4,
+        "observed_run_count": 30,
+        "processable_task_count": 2,
+        "rejected_run_count": 0,
+        "task_count": 10
+      },
+      "evidence_verdicts": {
+        "DIRECT_MATCH": 18,
+        "UNCONFIRMED": 12
+      },
+      "finding_count": 10,
+      "finding_types": {
+        "CONFLICTING_SOURCES": 1,
+        "INCONSISTENT_ANSWERS": 4,
+        "INSUFFICIENT_EVIDENCE": 1,
+        "MISSING_INFORMATION": 4
+      },
+      "outcomes": {
+        "ABSTAINED": 9,
+        "ANSWERED": 21
+      },
+      "run_count": 30
+    },
+    "portfolio-hidden-conflict-before": {
+      "abstention_reasons": {
+        "CONFLICTING_EVIDENCE": 3,
+        "INSUFFICIENT_EVIDENCE": 1,
+        "NOT_FOUND": 7
+      },
+      "diagnostics": {
+        "abstained_run_count": 11,
+        "answered_run_count": 19,
+        "blocked_task_count": 5,
+        "inconclusive_task_count": 1,
+        "observed_run_count": 30,
+        "processable_task_count": 4,
+        "rejected_run_count": 0,
+        "task_count": 10
+      },
+      "evidence_verdicts": {
+        "DIRECT_MATCH": 17,
+        "UNCONFIRMED": 13
+      },
+      "finding_count": 11,
+      "finding_types": {
+        "CONFLICTING_SOURCES": 1,
+        "INCONSISTENT_ANSWERS": 6,
+        "INSUFFICIENT_EVIDENCE": 1,
+        "MISSING_INFORMATION": 3
+      },
+      "outcomes": {
+        "ABSTAINED": 11,
+        "ANSWERED": 19
+      },
+      "run_count": 30
+    }
+  },
+  "repetitions": 3,
+  "run_count": 60,
+  "runtime_dataset_config_sha256": "d28ea0059260495c50acf6582ca66b921df80f6fc8f745557028f217fde6ac17",
+  "runtime_identities": {
+    "portfolio-ceiling-after": {
+      "corpus_registry_sha256": "48faec8a16736c2dedebdbaabbc2efba9b83184d491fb987b971cc88cd150909",
+      "dataset_manifest_sha256": "bcf60e523ee55951b8bb58fdc9049c667c8902154baab02d745ea7262a44a804",
+      "dataset_name": "hanbit-distribution-ceiling-v1",
+      "dataset_profile": "portfolio-ceiling-after",
+      "file_count": 30,
+      "parsed_file_count": 30,
+      "scan_report_sha256": "588c304b97a141a9259f9bd54d02c98c67116e6e58474b90b86f7889a2c5fc52",
+      "schema_version": "ax-runtime-identity-v1",
+      "search_index_document_count": 30,
+      "search_index_sha256": "242b279069440cbe09ad47749e232b2d95eec0a325e2174360744f9f952babea",
+      "source_root_name": "ceiling_company",
+      "table_count": 11,
+      "table_registry_sha256": "ea5466ef0c7bf58698bc6f009a54b56eb95ff1584063648c444aabca0620b740"
+    },
+    "portfolio-hidden-conflict-before": {
+      "corpus_registry_sha256": "afe672e5177b3d44dca1f0edcec1a231e8203e18c9f2e71a15f368912cbace14",
+      "dataset_manifest_sha256": null,
+      "dataset_name": "hanbit-portfolio-hidden-conflict-before-v1",
+      "dataset_profile": "portfolio-hidden-conflict-before",
+      "file_count": 30,
+      "parsed_file_count": 30,
+      "scan_report_sha256": "e68480f5ede99d32e229f510e9589ccd742a52fea3ee43db9501e63dc41e331e",
+      "schema_version": "ax-runtime-identity-v1",
+      "search_index_document_count": 30,
+      "search_index_sha256": "f4e02e261702248c2991839696a01946a071a6bd77ce3d419e64bc479c4f56e0",
+      "source_root_name": "hanbit_portfolio_before",
+      "table_count": 11,
+      "table_registry_sha256": "ea5466ef0c7bf58698bc6f009a54b56eb95ff1584063648c444aabca0620b740"
+    }
+  },
+  "schema_version": "ax-phase6-product-demo-freeze-v4",
+  "task_catalog_sha256": "e3d56df124a4c8219264acdcd4f0b587e09e1a1d06b5b15ef762ed067695be9f",
+  "verification": {
+    "evidence_v2_generated_in_new_snapshot": true,
+    "evidence_v2_reproducible": true,
+    "passed": true,
+    "pilot_evidence_reproducible_by_v1_or_v2": true,
+    "v3_preserved": true,
+    "write_once": true
+  }
+}

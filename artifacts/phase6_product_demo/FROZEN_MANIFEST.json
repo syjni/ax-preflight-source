@@ -1,0 +1,195 @@
+{
+  "artifacts": {
+    "files": [
+      {
+        "path": "artifacts/phase6_product_demo/RESULTS.md",
+        "sha256": "99476678b9bbfb3ba339b66273f7e7662148896dcd68fd376e58611f56bc47e0",
+        "size_bytes": 2184
+      },
+      {
+        "path": "artifacts/phase6_product_demo/after-scan-report.json",
+        "sha256": "f060535931bfc62523725f02817d92e0c137ec413500bf167ad7b84f09b4d74a",
+        "size_bytes": 2782
+      },
+      {
+        "path": "artifacts/phase6_product_demo/before-scan-report.json",
+        "sha256": "5c8d6ad1d8a2fed14ca1706b7aa6ab4f2e5fcdbee65fef7ba169d81d940db920",
+        "size_bytes": 3044
+      },
+      {
+        "path": "artifacts/phase6_product_demo/dataset-manifest.json",
+        "size_bytes": 9384,
+        "sha256": "91b3ce089c53db152e8d186d92ab9807ca9eb83646c622b2e5101dee0dbe9552"
+      },
+      {
+        "path": "artifacts/phase6_product_demo/remediation-receipt.json",
+        "sha256": "0c0ae8b40ba2ecf715d5c3fc79083de0223131c27a630a347ee5072cc5c91097",
+        "size_bytes": 1437
+      },
+      {
+        "path": "artifacts/phase6_product_demo/run-manifest.json",
+        "sha256": "6e7384e0aefd9d42d9fa871129c955115f915608bace69ff78a57262e2b077a6",
+        "size_bytes": 8867
+      },
+      {
+        "path": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-01-before-489834b1/delivery.json",
+        "sha256": "5cb9ced15ed36b5f2771d26ba17bdd470910ccb5956c22526b33f1830242c099",
+        "size_bytes": 942
+      },
+      {
+        "path": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-01-before-489834b1/evidence-check.json",
+        "sha256": "0fe6a95fa81f46eed859d2b43b784b3827f27a2d19a32c81e7edfabb13d1ba88",
+        "size_bytes": 1289
+      },
+      {
+        "path": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-01-before-489834b1/tool-responses/000001.json",
+        "sha256": "32606530e2fc57e1a1e5500b02794a5c227495f7c8331a2a2b5a8f21e0965683",
+        "size_bytes": 1288
+      },
+      {
+        "path": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-01-before-489834b1/tool-responses/000002.json",
+        "sha256": "96631c07e9056a16833ccebeae89d002232d561f75cd7ea755deac16f5682182",
+        "size_bytes": 665
+      },
+      {
+        "path": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-01-before-489834b1/tool-responses/000003.json",
+        "sha256": "a5f9496dce7284a25f3195561574c377904e01ddb4289e3e6c75dc1aa082170d",
+        "size_bytes": 665
+      },
+      {
+        "path": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-02-after-02d170f8/delivery.json",
+        "sha256": "1637215744b8d60f9267758fe011b70ab2a02d9531d552391d05e56f8c904701",
+        "size_bytes": 716
+      },
+      {
+        "path": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-02-after-02d170f8/evidence-check.json",
+        "sha256": "9b3cc9ff2a496da779cbdce8bed886c703b2463c3309d42ed223432e6e5bd7f8",
+        "size_bytes": 948
+      },
+      {
+        "path": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-02-after-02d170f8/tool-responses/000001.json",
+        "sha256": "7af6eff8aa5cc882c82135e4c71d7eef11dd39963d5a7bc031f5b47e05a5de0e",
+        "size_bytes": 1567
+      },
+      {
+        "path": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-03-before-1c3baf2d/delivery.json",
+        "sha256": "79bbbb591ccc379764f85705ab290f58e7b242db4fc496faebef5b85ca237cce",
+        "size_bytes": 883
+      },
+      {
+        "path": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-03-before-1c3baf2d/evidence-check.json",
+        "sha256": "d440b39221e172636cdd1701419f4b04fc082af434c4850f2c3cd6581c2d6958",
+        "size_bytes": 1289
+      },
+      {
+        "path": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-03-before-1c3baf2d/tool-responses/000001.json",
+        "sha256": "c082e3786e49175d284ded7387e0a40b2514dcc04f215c59dbae139b084786b8",
+        "size_bytes": 1288
+      },
+      {
+        "path": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-03-before-1c3baf2d/tool-responses/000002.json",
+        "sha256": "2e70b60eefa14d4d0e4721ac4760ae7817c1a7e2bc98d0a230cb14f2034f4568",
+        "size_bytes": 665
+      },
+      {
+        "path": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-03-before-1c3baf2d/tool-responses/000003.json",
+        "sha256": "08697af8911fc2592efc59fd0ccfc6a825c2e3219ea60e45ab024a1b5c313747",
+        "size_bytes": 665
+      },
+      {
+        "path": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-04-after-7b4095d7/delivery.json",
+        "sha256": "8740772e48e7c5f419d00d1dc075d4d19b4b6b84c7c551172c347bcfa6164338",
+        "size_bytes": 674
+      },
+      {
+        "path": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-04-after-7b4095d7/evidence-check.json",
+        "sha256": "651a00d8a98adde72fe06e0121dd64eb97d3b667e0ebc8b78a12b324e8d91cbc",
+        "size_bytes": 960
+      },
+      {
+        "path": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-04-after-7b4095d7/tool-responses/000001.json",
+        "sha256": "bef7c4cee4f3883469d52d5544e6a39cdb14875640dcb3a5536172884a750779",
+        "size_bytes": 1567
+      },
+      {
+        "path": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-05-before-2e03fdf6/delivery.json",
+        "sha256": "5a143a59ade9692edf0be411962916e9a78f77aa2fbac913c257a142bd2752f1",
+        "size_bytes": 973
+      },
+      {
+        "path": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-05-before-2e03fdf6/evidence-check.json",
+        "sha256": "d45e6d994b870a196063c1d3468f70cc362a0242be266968977f92c45124cd45",
+        "size_bytes": 1289
+      },
+      {
+        "path": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-05-before-2e03fdf6/tool-responses/000001.json",
+        "sha256": "2d7d5279c575f62e8c7e40cd1d0ee8e008b323fe56fc2b875172a3d8764de3ca",
+        "size_bytes": 1288
+      },
+      {
+        "path": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-05-before-2e03fdf6/tool-responses/000002.json",
+        "sha256": "a3ba5b8231f77e4a3d732844be81e592d5ee292484c4b4706c0d0dd4f859912e",
+        "size_bytes": 665
+      },
+      {
+        "path": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-05-before-2e03fdf6/tool-responses/000003.json",
+        "sha256": "5853786573bdd4ccee00a4c43a0e69a166e6b18fe21801ff415a713dde0d9bfc",
+        "size_bytes": 665
+      },
+      {
+        "path": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-06-after-233af967/delivery.json",
+        "sha256": "07fa10ce7756f540b33f6a1d976759c48c028085d1ffa1d2f7d49e4203779523",
+        "size_bytes": 775
+      },
+      {
+        "path": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-06-after-233af967/evidence-check.json",
+        "sha256": "6ed3570d2381b855fff43ecd012938986fced46dea13a2e51ca0e16b6987256e",
+        "size_bytes": 960
+      },
+      {
+        "path": "artifacts/phase6_product_demo/runs/phase6demo-official-official-001-06-after-233af967/tool-responses/000001.json",
+        "sha256": "de565aedb03292751dd13bf15290b11a24d09cf7b17cd83c1a49847d0ea6d2e4",
+        "size_bytes": 1567
+      },
+      {
+        "path": "artifacts/phase6_product_demo/summary.json",
+        "sha256": "d6fce238e215b9539a98af735d6ab9c6c15728d512135ce0db57ecd5b0b88348",
+        "size_bytes": 9888
+      }
+    ],
+    "trees": [
+      {
+        "file_count": 24,
+        "path": "artifacts/phase6_product_demo/runs",
+        "sha256": "2ecdf4cdb62d23a6b593bf1dc2326ed6cfb9399111f3ce0b8d8a480806cb4f03"
+      },
+      {
+        "file_count": 2,
+        "path": "sample_data/product_demo/return_policy_after",
+        "sha256": "53ed744968468ae9fdbeeea6e988ac5606f685d8352dde68831f87772eaa351f"
+      },
+      {
+        "file_count": 2,
+        "path": "sample_data/product_demo/return_policy_before",
+        "sha256": "12edf96713d1714d56000fe35e4c4eedaf9f1e5096684cf3390ff44d4477d2f7"
+      }
+    ]
+  },
+  "claim_scope": "PRODUCT_SANITY_DEMO_NOT_RESEARCH_BENCHMARK",
+  "created_at": "2026-09-23T13:25:11.950220Z",
+  "hash_algorithm": "SHA-256",
+  "official_execution_id": "official-001",
+  "run_ids": [
+    "phase6demo-official-official-001-01-before-489834b1",
+    "phase6demo-official-official-001-02-after-02d170f8",
+    "phase6demo-official-official-001-03-before-1c3baf2d",
+    "phase6demo-official-official-001-04-after-7b4095d7",
+    "phase6demo-official-official-001-05-before-2e03fdf6",
+    "phase6demo-official-official-001-06-after-233af967"
+  ],
+  "schema_version": "ax-phase6-product-demo-freeze-v1",
+  "verification": {
+    "official_integrity_checked_before_freeze": true,
+    "passed": true
+  }
+}

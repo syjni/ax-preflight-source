@@ -1,0 +1,195 @@
+{
+  "$defs": {
+    "EvidenceDerivation": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Field"
+        },
+        "operands": {
+          "items": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "title": "Operands",
+          "type": "array"
+        },
+        "operation": {
+          "enum": [
+            "SUM",
+            "DIFFERENCE",
+            "COUNT"
+          ],
+          "title": "Operation",
+          "type": "string"
+        },
+        "result": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Result"
+        }
+      },
+      "required": [
+        "operation",
+        "operands",
+        "result"
+      ],
+      "title": "EvidenceDerivation",
+      "type": "object"
+    },
+    "EvidenceReference": {
+      "additionalProperties": false,
+      "properties": {
+        "match": {
+          "enum": [
+            "CITED_RESPONSE",
+            "DIRECT_VALUE",
+            "DERIVATION_INPUT",
+            "PARTIAL_VALUE"
+          ],
+          "title": "Match",
+          "type": "string"
+        },
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Ids",
+          "type": "array"
+        },
+        "tool_name": {
+          "minLength": 1,
+          "title": "Tool Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "sequence",
+        "tool_name",
+        "source_ids",
+        "match"
+      ],
+      "title": "EvidenceReference",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "cited_source_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Cited Source Ids",
+      "type": "array"
+    },
+    "delivery_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Delivery Sha256",
+      "type": "string"
+    },
+    "derivation": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/EvidenceDerivation"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/EvidenceReference"
+      },
+      "title": "Evidence",
+      "type": "array"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    },
+    "matched_source_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Matched Source Ids",
+      "type": "array"
+    },
+    "run_id": {
+      "minLength": 1,
+      "title": "Run Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "ax-evidence-check-v1",
+      "default": "ax-evidence-check-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "unconfirmed_is_not_incorrect": {
+      "const": true,
+      "default": true,
+      "title": "Unconfirmed Is Not Incorrect",
+      "type": "boolean"
+    },
+    "unmatched_source_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Unmatched Source Ids",
+      "type": "array"
+    },
+    "verdict": {
+      "enum": [
+        "DIRECT_MATCH",
+        "DERIVABLE",
+        "PARTIAL_SUPPORT",
+        "UNCONFIRMED"
+      ],
+      "title": "Verdict",
+      "type": "string"
+    }
+  },
+  "required": [
+    "run_id",
+    "verdict",
+    "delivery_sha256",
+    "cited_source_ids",
+    "matched_source_ids",
+    "unmatched_source_ids",
+    "evidence",
+    "limitations"
+  ],
+  "title": "EvidenceCheckResult",
+  "type": "object"
+}

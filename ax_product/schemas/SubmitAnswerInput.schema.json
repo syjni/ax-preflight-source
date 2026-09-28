@@ -1,0 +1,107 @@
+{
+  "additionalProperties": false,
+  "description": "One authoritative final answer submitted by the product agent.",
+  "properties": {
+    "abstention_reason": {
+      "anyOf": [
+        {
+          "enum": [
+            "NOT_FOUND",
+            "INSUFFICIENT_EVIDENCE",
+            "CONFLICTING_EVIDENCE"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Abstention Reason"
+    },
+    "answer": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "integer"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Answer"
+    },
+    "answer_kind": {
+      "anyOf": [
+        {
+          "enum": [
+            "EXACT_TEXT",
+            "EMPTY_SET",
+            "ID_LIST",
+            "NUMERIC_QUANTITY"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Answer Kind"
+    },
+    "explanation": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "title": "Explanation",
+      "type": "string"
+    },
+    "source_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Source Ids",
+      "type": "array"
+    },
+    "status": {
+      "enum": [
+        "ANSWERED",
+        "ABSTAINED"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "unit": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Unit"
+    }
+  },
+  "required": [
+    "status",
+    "explanation"
+  ],
+  "title": "SubmitAnswerInput",
+  "type": "object"
+}

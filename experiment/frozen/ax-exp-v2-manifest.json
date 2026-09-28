@@ -1,0 +1,1717 @@
+{
+  "schema_version": "ax-experiment-freeze-manifest-v2",
+  "experiment_version": "ax-exp-v2",
+  "freeze_timestamp_utc": "2026-09-19T14:21:43.023649Z",
+  "status": "FROZEN",
+  "ready_for_heldout": true,
+  "git_commit": null,
+  "v1_frozen_manifest": {
+    "path": "experiment/frozen/ax-exp-v1-manifest.json",
+    "sha256": "3202f9df178f07610b09f9a4cb318c0da0b63653e81f9a7f1cc8b6fd62f4d358"
+  },
+  "model": "claude-sonnet-5",
+  "prompt_version": "2",
+  "prompt_hash": "dc783a41a5b06eb871ada33be7dd21aec2e4106757a40921ddf59fcf81176fc8",
+  "tool_surface": [
+    "@ax-tools/search_documents",
+    "@ax-tools/read_document",
+    "@ax-tools/lookup_value",
+    "@ax-tools/query_table"
+  ],
+  "tool_count": 4,
+  "execution_backend": "INTERACTIVE_FRESH_PROCESS",
+  "run_design": "16 tasks x 2 conditions x 2 repetitions = 64 runs",
+  "treated_task_count": 12,
+  "control_task_count": 4,
+  "unique_defect_variant_count": 8,
+  "held_out_task_ids": [
+    "K01_RETURN_WINDOW",
+    "K02_RETURN_REQUIREMENTS",
+    "K03_DELAY_COMPENSATION_THRESHOLD",
+    "K04_DISCOUNT_APPROVER",
+    "K05_STOCK_REFERENCE_FIELD",
+    "K06_FIRST_RESPONSE_TARGET",
+    "O02_SEPTEMBER_ORDER_TOTAL",
+    "O03_GREEN_TABLE_LAST_ORDER",
+    "O04_PRODUCT_MASTER_COUNT",
+    "O06_RETURN_RATE",
+    "O07_SEOUL_LEAD_TIME",
+    "C02_DONGHAE_SEPTEMBER_TOTAL",
+    "C03_TEA_STOCK",
+    "C05_SAEBOM_JULY_TOTAL",
+    "C06_ARAM_AUGUST_RETURNS",
+    "K07_VENDOR_FORECAST_ABSTAIN"
+  ],
+  "held_out_execution_count": 0,
+  "ceiling_runtime_identity": {
+    "schema_version": "ax-runtime-identity-v1",
+    "dataset_profile": "ceiling",
+    "dataset_name": "hanbit-distribution-ceiling-v1",
+    "source_root_name": "ceiling_company",
+    "dataset_manifest_sha256": "bcf60e523ee55951b8bb58fdc9049c667c8902154baab02d745ea7262a44a804",
+    "file_count": 30,
+    "parsed_file_count": 30,
+    "scan_report_sha256": "588c304b97a141a9259f9bd54d02c98c67116e6e58474b90b86f7889a2c5fc52",
+    "search_index_document_count": 30,
+    "search_index_sha256": "242b279069440cbe09ad47749e232b2d95eec0a325e2174360744f9f952babea",
+    "table_count": 11,
+    "table_registry_sha256": "ea5466ef0c7bf58698bc6f009a54b56eb95ff1584063648c444aabca0620b740",
+    "corpus_registry_sha256": "48faec8a16736c2dedebdbaabbc2efba9b83184d491fb987b971cc88cd150909"
+  },
+  "ceiling_runtime_identity_sha256": "baa5078e30d31dcf681a141452fc7f6cc8a9b673c90413e26bcb355c6df9ab99",
+  "before_runtime_identities": {
+    "before-accessibility-0e78131fc878": {
+      "schema_version": "ax-runtime-identity-v1",
+      "dataset_profile": "before-accessibility-0e78131fc878",
+      "dataset_name": "hanbit-distribution-before-accessibility-0e78131fc878-v2",
+      "source_root_name": "before-accessibility-0e78131fc878",
+      "dataset_manifest_sha256": "a8cdfe918f07abab1febe54500b28f24c1145af0c4f88ac755a081acf3119893",
+      "file_count": 30,
+      "parsed_file_count": 29,
+      "scan_report_sha256": "db694d5e57e4fc43ab035cf8da5c6d03546ba43bed0bf3b6567183cbaf37e220",
+      "search_index_document_count": 29,
+      "search_index_sha256": "6a93a4537386e6cc742100392bd9d2cdf7bbf30388a17d6ea7923836f0833db4",
+      "table_count": 11,
+      "table_registry_sha256": "ea5466ef0c7bf58698bc6f009a54b56eb95ff1584063648c444aabca0620b740",
+      "corpus_registry_sha256": "652dd7fd9ae5f34edb22781b8b562905b99e6e6847c5a67ab6b06eef10a6344f"
+    },
+    "before-accessibility-66a46d7e2186": {
+      "schema_version": "ax-runtime-identity-v1",
+      "dataset_profile": "before-accessibility-66a46d7e2186",
+      "dataset_name": "hanbit-distribution-before-accessibility-66a46d7e2186-v2",
+      "source_root_name": "before-accessibility-66a46d7e2186",
+      "dataset_manifest_sha256": "0ff04152ba9a5815a7c4efb9b6f8b6f470f32f5bcba308790cf57b830ae3be87",
+      "file_count": 30,
+      "parsed_file_count": 29,
+      "scan_report_sha256": "be927d21929530851149eb7ea3788787bf6d7aff3b0120375017b0efb2260a0c",
+      "search_index_document_count": 29,
+      "search_index_sha256": "e9cdeb23f26ddf6ff0e90ac5d128b66918b3d8680e1973b0597f8f24b08706cb",
+      "table_count": 10,
+      "table_registry_sha256": "d205f3ad86016f7ca5fc9db04b2468f74addfee09ed4e2f6373f66e6b4226e9c",
+      "corpus_registry_sha256": "d10db6bafbfe7b8da69fd0f5568650229dd468d503b593b7c76c230595ac4e15"
+    },
+    "before-accessibility-7497b2824ba3": {
+      "schema_version": "ax-runtime-identity-v1",
+      "dataset_profile": "before-accessibility-7497b2824ba3",
+      "dataset_name": "hanbit-distribution-before-accessibility-7497b2824ba3-v2",
+      "source_root_name": "before-accessibility-7497b2824ba3",
+      "dataset_manifest_sha256": "12f47f6516b8bed455a202132b1229974bda0dab00cff66084162cc43b272552",
+      "file_count": 30,
+      "parsed_file_count": 28,
+      "scan_report_sha256": "90ce0c9b0474e02aeb21e7df8eed50024fc06f5741e069d7c87cbfd3f7c8ffb5",
+      "search_index_document_count": 28,
+      "search_index_sha256": "c199c5c2a07924be2c908fbdbd3fc98b5cd339b69a604920ffca067adde50d87",
+      "table_count": 9,
+      "table_registry_sha256": "d28fba972274d47186d16746270bc030c2ed9ad2c1cbf22e3bbb193ec97edbef",
+      "corpus_registry_sha256": "6e55f0298c79e07bc2c886ee97ad2f07b49065839c1132fca591299c1dd9137b"
+    },
+    "before-accessibility-91428d0d2d6d": {
+      "schema_version": "ax-runtime-identity-v1",
+      "dataset_profile": "before-accessibility-91428d0d2d6d",
+      "dataset_name": "hanbit-distribution-before-accessibility-91428d0d2d6d-v2",
+      "source_root_name": "before-accessibility-91428d0d2d6d",
+      "dataset_manifest_sha256": "cf76b10d6a7ca6975849640133a285bc520afbb918e1aa2f301ec2ef5825ed16",
+      "file_count": 30,
+      "parsed_file_count": 29,
+      "scan_report_sha256": "59492e5fd0fec1b42c2dc13d4f3f50dcbc42b0bac4c80b501d1a28115f973a62",
+      "search_index_document_count": 29,
+      "search_index_sha256": "12692d17162358b674ee77e0ace12bb8ee52ef7352e64b0f22436885df59fa2e",
+      "table_count": 11,
+      "table_registry_sha256": "ea5466ef0c7bf58698bc6f009a54b56eb95ff1584063648c444aabca0620b740",
+      "corpus_registry_sha256": "725393cacf150601ba9515abd55e0ae1ebe61f8b8298ba724a099a0236562b5c"
+    },
+    "before-accessibility-950a2b2ed909": {
+      "schema_version": "ax-runtime-identity-v1",
+      "dataset_profile": "before-accessibility-950a2b2ed909",
+      "dataset_name": "hanbit-distribution-before-accessibility-950a2b2ed909-v2",
+      "source_root_name": "before-accessibility-950a2b2ed909",
+      "dataset_manifest_sha256": "37d8acbc0a83a08e1facc89b257605a87cb27dd1758e61d85300593deecb5ccd",
+      "file_count": 30,
+      "parsed_file_count": 29,
+      "scan_report_sha256": "8912df8b567026669296ac595aef8785358c18c8671152ddfaa492cc7a4d9060",
+      "search_index_document_count": 29,
+      "search_index_sha256": "88a76c0d58c8d63e1bcf7d0165dafbc74491eee0f0fb6b11d14da52317d3120d",
+      "table_count": 10,
+      "table_registry_sha256": "94f28037e45b2c9775b88f56e60f57dad9a8659a0b70aac1d356b4ee976ff388",
+      "corpus_registry_sha256": "12455ae79df081d7b5f3e65b7c390cc837a1e70e1d4db462273109b9e65c2ba5"
+    },
+    "before-accessibility-a534444afe03": {
+      "schema_version": "ax-runtime-identity-v1",
+      "dataset_profile": "before-accessibility-a534444afe03",
+      "dataset_name": "hanbit-distribution-before-accessibility-a534444afe03-v2",
+      "source_root_name": "before-accessibility-a534444afe03",
+      "dataset_manifest_sha256": "f6ab19c11f07f4ff71606fe701cbc815e63ad4bd0774eaba0d5b6bda1dae027c",
+      "file_count": 30,
+      "parsed_file_count": 28,
+      "scan_report_sha256": "25a117123114cf19c837b6eb3a46790a462839dd67681672da77e3903decc843",
+      "search_index_document_count": 28,
+      "search_index_sha256": "ad8e325a5b6ffa583f5f5e4cd10b3842d7a5dfbbce08b2249e834f0bacb8d180",
+      "table_count": 9,
+      "table_registry_sha256": "6bc2a466ea9201ca12c3a29c4e2bfb29d0201a3a906ceffa049e418e5f9c9723",
+      "corpus_registry_sha256": "8d07bfa0bb9cab6ae7fb15aef5a1f0c1b484a218f1857af081046ac523855c7d"
+    },
+    "before-accessibility-d527640c55b3": {
+      "schema_version": "ax-runtime-identity-v1",
+      "dataset_profile": "before-accessibility-d527640c55b3",
+      "dataset_name": "hanbit-distribution-before-accessibility-d527640c55b3-v2",
+      "source_root_name": "before-accessibility-d527640c55b3",
+      "dataset_manifest_sha256": "05a3d3c7294e33590a9c23bace577fe84fc189731a67a5e5c110e809f778d72f",
+      "file_count": 30,
+      "parsed_file_count": 29,
+      "scan_report_sha256": "a9dc0c35174398ded5faa8907ad8179b9160fb3692132e10020f72a08407f4b0",
+      "search_index_document_count": 29,
+      "search_index_sha256": "21520b7037fb6ffe7576905f39f1594c785892b65b6c7cc541bcdc4125f7a4d2",
+      "table_count": 11,
+      "table_registry_sha256": "ea5466ef0c7bf58698bc6f009a54b56eb95ff1584063648c444aabca0620b740",
+      "corpus_registry_sha256": "02c00a276434e4297d03961eb797f94b2606a800c19eb863ce6fc91dda373cfd"
+    },
+    "before-accessibility-f1d1804d1aa6": {
+      "schema_version": "ax-runtime-identity-v1",
+      "dataset_profile": "before-accessibility-f1d1804d1aa6",
+      "dataset_name": "hanbit-distribution-before-accessibility-f1d1804d1aa6-v2",
+      "source_root_name": "before-accessibility-f1d1804d1aa6",
+      "dataset_manifest_sha256": "d109a397627cc4315033f02e6b0fd0e4395c66fed7f572e0c9cf7ffdcfae7ea8",
+      "file_count": 30,
+      "parsed_file_count": 29,
+      "scan_report_sha256": "37669f57fc35b4a938e3da97a7d42919c3278f4618dd6cf46f789c709c0aa76d",
+      "search_index_document_count": 29,
+      "search_index_sha256": "015a43e35ab6488ebc84e8e287df0a3e0d207a12293739b9ad7ada435d11125d",
+      "table_count": 10,
+      "table_registry_sha256": "0cff35663aec621a99fa9a8152db593f8bb0ec454929068099819f3ee1195a58",
+      "corpus_registry_sha256": "fba6f24a1aa3b086d3c2d84377491ffedc29e05a8073538ce231d8e4008902d2"
+    }
+  },
+  "task_runtime_binding_artifact": {
+    "path": "task_runtime_bindings.json",
+    "sha256": "93755845b12c0552f6a256cb648b301342d307a4f4ee818d7e2299b476703abb"
+  },
+  "defect_injection_spec_artifact": {
+    "path": "DEFECT_INJECTION_SPEC_V2.json",
+    "sha256": "c4961d327dd70e2052ec3979d8dc70546e2ec134c389709c545ac9ded1c6568a"
+  },
+  "runtime_dataset_config_hash": "9b231de90f0429a7eda2cec7d80030f25654dd2934d554be79c68d2aaea35a76",
+  "interactive_recorder_hash": "32632d12aecd7b3e4fd329403ad835a2f86d2f799e45f3072611d6c180b3fd3d",
+  "before_generator_hash": "0e3359b6dfd5d7ffe4266564f159d1b66fd304b0ec66404246895375ca4a6c42",
+  "routing_validator_hash": "c1b544f450c9d7a3c86bec9331bbae5177912883d45fa92447f8142bf643119a",
+  "freeze_script_hash": "345dccc6f4b2d968a7cab91af16747cf0b31903dc957d294186beecc56dba5d2",
+  "routing_validation": {
+    "held_out_tasks_checked": "16/16",
+    "treated_tasks": 12,
+    "control_tasks": 4,
+    "before_bindings": 16,
+    "ceiling_bindings": 16,
+    "unique_defect_variants": 8,
+    "runtime_identity_mismatches": 0,
+    "leakage_violations": 0
+  },
+  "routing_validation_artifact_hash": "e3a2ecc8b0f9983f2f994081c143bad85322f984db239ad92078926f57fc9b2a",
+  "ceiling_readiness": 100.0,
+  "v1_frozen_invariant_components": {
+    "mcp_server_implementation": {
+      "v1_aggregate_sha256": "93dfbbff21e48c4a0aeaaceaf33ca8943c98d28d6f720e2c321a7ec99e317ed0",
+      "v2_current_aggregate_sha256": "93dfbbff21e48c4a0aeaaceaf33ca8943c98d28d6f720e2c321a7ec99e317ed0",
+      "unchanged": true
+    },
+    "mcp_schemas": {
+      "v1_aggregate_sha256": "2ca1ee0a76ab92d8e7a9bab770bc47c82ecd0a65c9f565e53b315b0245aae1d4",
+      "v2_current_aggregate_sha256": "2ca1ee0a76ab92d8e7a9bab770bc47c82ecd0a65c9f565e53b315b0245aae1d4",
+      "unchanged": true
+    },
+    "retrieval_implementation_configuration": {
+      "v1_aggregate_sha256": "a4b615310131e152a798cf18acc54f1987fc30e2e216f537a4d6838a44c9153a",
+      "v2_current_aggregate_sha256": "a4b615310131e152a798cf18acc54f1987fc30e2e216f537a4d6838a44c9153a",
+      "unchanged": true
+    },
+    "scanner_implementation_configuration": {
+      "v1_aggregate_sha256": "429c5bf403c3bf5d2b9a2d3ba785faec096a7e2a8e46d366b3b380b27686aee3",
+      "v2_current_aggregate_sha256": "429c5bf403c3bf5d2b9a2d3ba785faec096a7e2a8e46d366b3b380b27686aee3",
+      "unchanged": true
+    },
+    "ceiling_dataset_manifest": {
+      "v1_aggregate_sha256": "50b452d1f978686b7c978e372b120bccb332bb9d7e475790088f09642e057d6e",
+      "v2_current_aggregate_sha256": "50b452d1f978686b7c978e372b120bccb332bb9d7e475790088f09642e057d6e",
+      "unchanged": true
+    },
+    "benchmark_manifest": {
+      "v1_aggregate_sha256": "81c7a3bd7652a5a20ce37e451ea3a639f84d23d4c54120c75e1ea136f28b1274",
+      "v2_current_aggregate_sha256": "81c7a3bd7652a5a20ce37e451ea3a639f84d23d4c54120c75e1ea136f28b1274",
+      "unchanged": true
+    },
+    "ground_truth": {
+      "v1_aggregate_sha256": "8df1f1de7e9de06f7d4ce1daa6016efdb5cfc966d969460bb2f45eedc05aaaf2",
+      "v2_current_aggregate_sha256": "8df1f1de7e9de06f7d4ce1daa6016efdb5cfc966d969460bb2f45eedc05aaaf2",
+      "unchanged": true
+    },
+    "task_to_defect_manifest": {
+      "v1_aggregate_sha256": "51e7d162cfe0c25ed2749cc61535cf420e6033ec5528cb820f541ef155c498e2",
+      "v2_current_aggregate_sha256": "51e7d162cfe0c25ed2749cc61535cf420e6033ec5528cb820f541ef155c498e2",
+      "unchanged": true
+    },
+    "control_source_manifest": {
+      "v1_aggregate_sha256": "5cb6eb10b448b29f2cccffe379de6448bc652b0122ab2e4cbb7cdb13522b4786",
+      "v2_current_aggregate_sha256": "5cb6eb10b448b29f2cccffe379de6448bc652b0122ab2e4cbb7cdb13522b4786",
+      "unchanged": true
+    },
+    "deterministic_scorer": {
+      "v1_aggregate_sha256": "5d7bc8716f9bd7cc41f517b883d38aae7d44fff7084347578d5b34c34572032d",
+      "v2_current_aggregate_sha256": "5d7bc8716f9bd7cc41f517b883d38aae7d44fff7084347578d5b34c34572032d",
+      "unchanged": true
+    },
+    "output_contract_validator": {
+      "v1_aggregate_sha256": "f4af7b75e7caf80086b089d147a710ff35d5bb73b17fd5ec98efd5411a58b321",
+      "v2_current_aggregate_sha256": "f4af7b75e7caf80086b089d147a710ff35d5bb73b17fd5ec98efd5411a58b321",
+      "unchanged": true
+    },
+    "failure_taxonomy": {
+      "v1_aggregate_sha256": "eb54685f62c4b132242adaa23b30b5b81b30761b52cc0e5e4fb4a548b38b14c5",
+      "v2_current_aggregate_sha256": "eb54685f62c4b132242adaa23b30b5b81b30761b52cc0e5e4fb4a548b38b14c5",
+      "unchanged": true
+    },
+    "runtime_prompt_constructor": {
+      "v1_aggregate_sha256": "1b0bfcfd588da48ec0fc415e7f5852a9066d56e37123d15e74cceccac2c807f6",
+      "v2_current_aggregate_sha256": "1b0bfcfd588da48ec0fc415e7f5852a9066d56e37123d15e74cceccac2c807f6",
+      "unchanged": true
+    },
+    "readiness_score_v1": {
+      "v1_aggregate_sha256": "2ec6b48edbe6e354cf7c59c9be134bdb8ac3f4aa0324fc8bcd4bb834cf8b0919",
+      "v2_current_aggregate_sha256": "2ec6b48edbe6e354cf7c59c9be134bdb8ac3f4aa0324fc8bcd4bb834cf8b0919",
+      "unchanged": true
+    },
+    "readiness_score_specification": {
+      "v1_aggregate_sha256": "5eb7eef2644ea613d70bae31f9d091e1065e2551cc20e3fc0f570840b5587241",
+      "v2_current_aggregate_sha256": "5eb7eef2644ea613d70bae31f9d091e1065e2551cc20e3fc0f570840b5587241",
+      "unchanged": true
+    }
+  },
+  "unchanged_frozen_hashes": {
+    "benchmark_hash": "3fd63ca0b06bb3901238726f3c156372ad768c49c366321cd23c2da470bc2555",
+    "ground_truth_hash": "5efcd216b98b2b31edf5bfd9e2fb3411e1027b74d4b08abb8043b2d15dc58e5d",
+    "failure_taxonomy_hash": "f6ebc193597e393139564bf64378df3d3b096893196dd4e547e573abdb001281",
+    "readiness_implementation_hash": "5b3dd7e7b94d230b855981f1b487b35efc655ed11a3d84d02be7278ba3fc8319",
+    "readiness_spec_hash": "4212c2314136f3c42b828717588e01952d882e392feb9f37e41558438cc07c44",
+    "ceiling_dataset_manifest_hash": "bcf60e523ee55951b8bb58fdc9049c667c8902154baab02d745ea7262a44a804"
+  },
+  "changed_v2_hashes": {
+    "runtime_dataset_configuration": "9b231de90f0429a7eda2cec7d80030f25654dd2934d554be79c68d2aaea35a76",
+    "interactive_run_recorder": "32632d12aecd7b3e4fd329403ad835a2f86d2f799e45f3072611d6c180b3fd3d",
+    "task_runtime_bindings": "93755845b12c0552f6a256cb648b301342d307a4f4ee818d7e2299b476703abb",
+    "defect_injection_spec": "c4961d327dd70e2052ec3979d8dc70546e2ec134c389709c545ac9ded1c6568a"
+  },
+  "test_suite": {
+    "command": "python -m unittest discover -v",
+    "passed": 100,
+    "total": 100,
+    "result": "100/100 PASS"
+  },
+  "validation": {
+    "static_routing_passed": true,
+    "runtime_identity_mismatches": 0,
+    "runtime_leakage_violations": 0,
+    "ceiling_identity_unchanged": true,
+    "prompt_hash_unchanged": true,
+    "model_unchanged": true,
+    "retrieval_unchanged": true,
+    "scanner_unchanged": true,
+    "benchmark_unchanged": true,
+    "ground_truth_unchanged": true,
+    "held_out_execution_count": 0
+  },
+  "v2_artifact_inventory": {
+    "file_count": 278,
+    "aggregate_sha256": "8846f5962444fcca5c432dc2db05cceecf82949a21e80ee860e2cf7e2d546a86",
+    "files": [
+      {
+        "path": "DEFECT_INJECTION_SPEC_V2.json",
+        "size_bytes": 17422,
+        "sha256": "c4961d327dd70e2052ec3979d8dc70546e2ec134c389709c545ac9ded1c6568a"
+      },
+      {
+        "path": "EXPERIMENT_PROTOCOL_V2.md",
+        "size_bytes": 3191,
+        "sha256": "de975a07ae5ae373b9e822ad2ee490bd9348a5a3ebc123dce7da736f4a44c22b"
+      },
+      {
+        "path": "INTERACTIVE_EXECUTION.md",
+        "size_bytes": 3212,
+        "sha256": "6c90935a6d4743d30c5f374a280958f58e424eb3ef411f07c164f8ca54ca4217"
+      },
+      {
+        "path": "experiment/v2/runtime/before-accessibility-0e78131fc878-dataset-manifest.json",
+        "size_bytes": 6106,
+        "sha256": "a8cdfe918f07abab1febe54500b28f24c1145af0c4f88ac755a081acf3119893"
+      },
+      {
+        "path": "experiment/v2/runtime/before-accessibility-0e78131fc878-diff.json",
+        "size_bytes": 2687,
+        "sha256": "441419e918c942e20bc6f64764139bb7c62841548724c22c0504140419553b9d"
+      },
+      {
+        "path": "experiment/v2/runtime/before-accessibility-0e78131fc878-scan-report.json",
+        "size_bytes": 63315,
+        "sha256": "db694d5e57e4fc43ab035cf8da5c6d03546ba43bed0bf3b6567183cbaf37e220"
+      },
+      {
+        "path": "experiment/v2/runtime/before-accessibility-66a46d7e2186-dataset-manifest.json",
+        "size_bytes": 6107,
+        "sha256": "0ff04152ba9a5815a7c4efb9b6f8b6f470f32f5bcba308790cf57b830ae3be87"
+      },
+      {
+        "path": "experiment/v2/runtime/before-accessibility-66a46d7e2186-diff.json",
+        "size_bytes": 2681,
+        "sha256": "0917cb7587af2c078a0ea886524cca19b1db8f333e556ff85dd379fa4d616b62"
+      },
+      {
+        "path": "experiment/v2/runtime/before-accessibility-66a46d7e2186-scan-report.json",
+        "size_bytes": 58786,
+        "sha256": "be927d21929530851149eb7ea3788787bf6d7aff3b0120375017b0efb2260a0c"
+      },
+      {
+        "path": "experiment/v2/runtime/before-accessibility-7497b2824ba3-dataset-manifest.json",
+        "size_bytes": 6105,
+        "sha256": "12f47f6516b8bed455a202132b1229974bda0dab00cff66084162cc43b272552"
+      },
+      {
+        "path": "experiment/v2/runtime/before-accessibility-7497b2824ba3-diff.json",
+        "size_bytes": 2766,
+        "sha256": "98998471cc9c1aca74546d6c2273bd0a42e4772a886dde45456395950a68b871"
+      },
+      {
+        "path": "experiment/v2/runtime/before-accessibility-7497b2824ba3-scan-report.json",
+        "size_bytes": 56673,
+        "sha256": "90ce0c9b0474e02aeb21e7df8eed50024fc06f5741e069d7c87cbfd3f7c8ffb5"
+      },
+      {
+        "path": "experiment/v2/runtime/before-accessibility-91428d0d2d6d-dataset-manifest.json",
+        "size_bytes": 6106,
+        "sha256": "cf76b10d6a7ca6975849640133a285bc520afbb918e1aa2f301ec2ef5825ed16"
+      },
+      {
+        "path": "experiment/v2/runtime/before-accessibility-91428d0d2d6d-diff.json",
+        "size_bytes": 2693,
+        "sha256": "677430d3d478021f06ec11cafa73af78322f8b579e9a1d4fc075a42293a8ff03"
+      },
+      {
+        "path": "experiment/v2/runtime/before-accessibility-91428d0d2d6d-scan-report.json",
+        "size_bytes": 63302,
+        "sha256": "59492e5fd0fec1b42c2dc13d4f3f50dcbc42b0bac4c80b501d1a28115f973a62"
+      },
+      {
+        "path": "experiment/v2/runtime/before-accessibility-950a2b2ed909-dataset-manifest.json",
+        "size_bytes": 6106,
+        "sha256": "37d8acbc0a83a08e1facc89b257605a87cb27dd1758e61d85300593deecb5ccd"
+      },
+      {
+        "path": "experiment/v2/runtime/before-accessibility-950a2b2ed909-diff.json",
+        "size_bytes": 2683,
+        "sha256": "aab26b71a2a4d7002aacd2f998bb043ea450b0b48044b1e8811f0b767d105585"
+      },
+      {
+        "path": "experiment/v2/runtime/before-accessibility-950a2b2ed909-scan-report.json",
+        "size_bytes": 48509,
+        "sha256": "8912df8b567026669296ac595aef8785358c18c8671152ddfaa492cc7a4d9060"
+      },
+      {
+        "path": "experiment/v2/runtime/before-accessibility-a534444afe03-dataset-manifest.json",
+        "size_bytes": 6104,
+        "sha256": "f6ab19c11f07f4ff71606fe701cbc815e63ad4bd0774eaba0d5b6bda1dae027c"
+      },
+      {
+        "path": "experiment/v2/runtime/before-accessibility-a534444afe03-diff.json",
+        "size_bytes": 2768,
+        "sha256": "b31c0cda20ee1f56158643d210398a2664dc58b35b39058c7a4c16b0352bc222"
+      },
+      {
+        "path": "experiment/v2/runtime/before-accessibility-a534444afe03-scan-report.json",
+        "size_bytes": 46396,
+        "sha256": "25a117123114cf19c837b6eb3a46790a462839dd67681672da77e3903decc843"
+      },
+      {
+        "path": "experiment/v2/runtime/before-accessibility-d527640c55b3-dataset-manifest.json",
+        "size_bytes": 6106,
+        "sha256": "05a3d3c7294e33590a9c23bace577fe84fc189731a67a5e5c110e809f778d72f"
+      },
+      {
+        "path": "experiment/v2/runtime/before-accessibility-d527640c55b3-diff.json",
+        "size_bytes": 2697,
+        "sha256": "e3f05474e9957ea3db6b0d883639ea05ebdaed575617532e0b242f95c371926a"
+      },
+      {
+        "path": "experiment/v2/runtime/before-accessibility-d527640c55b3-scan-report.json",
+        "size_bytes": 63271,
+        "sha256": "a9dc0c35174398ded5faa8907ad8179b9160fb3692132e10020f72a08407f4b0"
+      },
+      {
+        "path": "experiment/v2/runtime/before-accessibility-f1d1804d1aa6-dataset-manifest.json",
+        "size_bytes": 6108,
+        "sha256": "d109a397627cc4315033f02e6b0fd0e4395c66fed7f572e0c9cf7ffdcfae7ea8"
+      },
+      {
+        "path": "experiment/v2/runtime/before-accessibility-f1d1804d1aa6-diff.json",
+        "size_bytes": 2695,
+        "sha256": "ea6f1ae5624e04f5c88f9a11a32c63214dcd8cf68a28f2eb23d35af727a1030f"
+      },
+      {
+        "path": "experiment/v2/runtime/before-accessibility-f1d1804d1aa6-scan-report.json",
+        "size_bytes": 62073,
+        "sha256": "37669f57fc35b4a938e3da97a7d42919c3278f4618dd6cf46f789c709c0aa76d"
+      },
+      {
+        "path": "experiment/v2/runtime/generation-summary.json",
+        "size_bytes": 1186,
+        "sha256": "90bb2f8e81041f52b475675b4ed3fb103906561f89693a109047192c6221c464"
+      },
+      {
+        "path": "experiment/v2/runtime/routing-validation.json",
+        "size_bytes": 12619,
+        "sha256": "e3a2ecc8b0f9983f2f994081c143bad85322f984db239ad92078926f57fc9b2a"
+      },
+      {
+        "path": "runtime_datasets.json",
+        "size_bytes": 4465,
+        "sha256": "a0e836201e58c490bcfe6c7ca1e6fdf6eb14e28be0ca5d159e4fb5c96216c78f"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/01_경영관리/2026_사업운영방침.docx",
+        "size_bytes": 37023,
+        "sha256": "6b37222c82a3e1aa669b5e0d78ac5094648e0f130bf9a155b8c8d60dfdf7b957"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/01_경영관리/거래처_관리기준.pdf",
+        "size_bytes": 1495,
+        "sha256": "28d4794876a79a2f14829c850df600d7fb57ad6fd430d29225e2eb497dea2aeb"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/01_경영관리/월간_운영회의록_2026-08.txt",
+        "size_bytes": 204,
+        "sha256": "afd62117c24b4eb03c35ea00d0bf4bcfd32217bd23429c5e1a219e9243f1cb0d"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/01_경영관리/조직_연락망.txt",
+        "size_bytes": 185,
+        "sha256": "98a0908df9c4f3ff2de6a253ee6dc911848079e20b4653178599056a0f1f056f"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/01_경영관리/회사소개_한빛유통.txt",
+        "size_bytes": 226,
+        "sha256": "8a568e21dae1bcfacde4f16eb83bd791dde948da72696d46759eae9022e95c6b"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/02_정책/반품_교환_정책_2026.docx",
+        "size_bytes": 36855,
+        "sha256": "04f6ce1df32f33a52ade0aea8a14e4565d6c5a5f9e595b7a80f673ba8f35edd4"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/02_정책/배송_지연_보상_2026.docx",
+        "size_bytes": 36756,
+        "sha256": "b0679759b829570c6979e7614cba807ec9e760999d40e40acf04ea0e5391ad65"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/02_정책/신규거래처_등록_절차.docx",
+        "size_bytes": 36810,
+        "sha256": "ec5499f30957d44ddc2218049585c2332e65b56b6d324031e86e53785326fb1a"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/02_정책/재고_조정_절차.txt",
+        "size_bytes": 246,
+        "sha256": "964842e7ed4e3bdd233ba32c04bb165328ac5a63de71733e92bf1b07ad06fb51"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/02_정책/할인_승인_규정.docx",
+        "size_bytes": 36,
+        "sha256": "cfa2ab0f48b0bcc21f3314f6771fe5f873191f0fa5769b43d1aa20a6c2863f1c"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/03_영업/거래처_마스터.xlsx",
+        "size_bytes": 5497,
+        "sha256": "0f8ae595489516ca277fb74a24863384c0f67ade352f9c742cc69d4785dd8ddb"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/03_영업/영업_운영_안내.txt",
+        "size_bytes": 237,
+        "sha256": "a7724663963825b8a71e72d2731707204e664c0e6dcac04bae18484494be7ca5"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/03_영업/월별_매출목표_2026.xlsx",
+        "size_bytes": 5219,
+        "sha256": "9c0d1e0bb81e8d56f9c28f5b20946b68fadbd0b88d27fcb03569c8a916259fe4"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/03_영업/품목_마스터.csv",
+        "size_bytes": 621,
+        "sha256": "347c22d71df4082a9f021005097b46cd54f8d1e729489c601b5904afc4744c44"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/03_영업/할인코드_정의.csv",
+        "size_bytes": 146,
+        "sha256": "672144effb2b791cbc2ddb2941337404cf37f034c7d05a89baeb8d1c7911ae85"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/04_주문/8월_주문_검토.pdf",
+        "size_bytes": 1465,
+        "sha256": "fb8e5da70f1bcfaf3971dd14e0ca3e739bddb7a8ca4fda7ffb707935572e7051"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/04_주문/반품_원장_2026.csv",
+        "size_bytes": 1844,
+        "sha256": "727db2884c7bb942d0e8e91b737aa962ec72e2d7339cf476b5aebfb4fce5518f"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/04_주문/주문_상태_기준.txt",
+        "size_bytes": 218,
+        "sha256": "8f4aa2570997cb6be520efb1618fa9bb3c14ef417a583f54f2be979171cfb93a"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/04_주문/주문_원장_2026.xlsx",
+        "size_bytes": 12264,
+        "sha256": "8b3ebc1c4d7a8caa87c7664d8f80772e70b1348c89dd38cb7b6365664dedf789"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/04_주문/출고_요청_2026.xlsx",
+        "size_bytes": 7075,
+        "sha256": "4720da8d2c92c7d42dbf6a4fe0828a61a043ab6e2efb92e5da97b11923a88661"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/05_물류/배송권역_리드타임.csv",
+        "size_bytes": 154,
+        "sha256": "851da6752a62976cc386072419cabfd6f589820a13ff9f33fee8d1c900302b78"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/05_물류/월간_재고_점검.pdf",
+        "size_bytes": 1484,
+        "sha256": "fa65f6dd3bb3dce1c3dd094b36ce82efa9ad01464ace861e298be9f3ce5ce244"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/05_물류/입고_검수_기준.txt",
+        "size_bytes": 181,
+        "sha256": "ba60292dcf5408a9942288fffc247ab26bc21ac1eb23f7ca825c2ddd91430701"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/05_물류/재고_현황_2026-09.xlsx",
+        "size_bytes": 5565,
+        "sha256": "bcc80929e6ec4bf4bdd88bbc4013ed1029c2b245a2bd38163c6edc3116cd07c2"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/05_물류/창고_운영_매뉴얼.docx",
+        "size_bytes": 36836,
+        "sha256": "90805a744afd5108dc3c2b7b4e5f850b62334a94115f36c6148a8bc8dadb470d"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/06_고객지원/CS_유형_코드.csv",
+        "size_bytes": 136,
+        "sha256": "cc2519f09c0b6c51711d6b114d09ccd95da44d929f335a87fae29b8122369c58"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/06_고객지원/FAQ_2026.txt",
+        "size_bytes": 197,
+        "sha256": "8892c3a043fc20bbe96898fdbe30ba7c7c124cf569608b0dfe5662e34157fa0c"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/06_고객지원/고객응대_매뉴얼.docx",
+        "size_bytes": 36792,
+        "sha256": "0f6ca440e8ebf4485bfbd0e4ee69c5dea1ec12355f9610b3bf03246a282533f0"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/07_정산/세금계산서_처리_안내.pdf",
+        "size_bytes": 1495,
+        "sha256": "c5311394d9dfa685c332dd7b77f64ad45cf4433e67ced608600a122a732f8496"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-0e78131fc878/07_정산/정산_캘린더_2026.xlsx",
+        "size_bytes": 5188,
+        "sha256": "674c5fe500f1d9cc6dc8cdff5cbb5754c67fcfdb00d379e0303cbe330dbfe8a6"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/01_경영관리/2026_사업운영방침.docx",
+        "size_bytes": 37023,
+        "sha256": "6b37222c82a3e1aa669b5e0d78ac5094648e0f130bf9a155b8c8d60dfdf7b957"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/01_경영관리/거래처_관리기준.pdf",
+        "size_bytes": 1495,
+        "sha256": "28d4794876a79a2f14829c850df600d7fb57ad6fd430d29225e2eb497dea2aeb"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/01_경영관리/월간_운영회의록_2026-08.txt",
+        "size_bytes": 204,
+        "sha256": "afd62117c24b4eb03c35ea00d0bf4bcfd32217bd23429c5e1a219e9243f1cb0d"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/01_경영관리/조직_연락망.txt",
+        "size_bytes": 185,
+        "sha256": "98a0908df9c4f3ff2de6a253ee6dc911848079e20b4653178599056a0f1f056f"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/01_경영관리/회사소개_한빛유통.txt",
+        "size_bytes": 226,
+        "sha256": "8a568e21dae1bcfacde4f16eb83bd791dde948da72696d46759eae9022e95c6b"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/02_정책/반품_교환_정책_2026.docx",
+        "size_bytes": 36855,
+        "sha256": "04f6ce1df32f33a52ade0aea8a14e4565d6c5a5f9e595b7a80f673ba8f35edd4"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/02_정책/배송_지연_보상_2026.docx",
+        "size_bytes": 36756,
+        "sha256": "b0679759b829570c6979e7614cba807ec9e760999d40e40acf04ea0e5391ad65"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/02_정책/신규거래처_등록_절차.docx",
+        "size_bytes": 36810,
+        "sha256": "ec5499f30957d44ddc2218049585c2332e65b56b6d324031e86e53785326fb1a"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/02_정책/재고_조정_절차.txt",
+        "size_bytes": 246,
+        "sha256": "964842e7ed4e3bdd233ba32c04bb165328ac5a63de71733e92bf1b07ad06fb51"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/02_정책/할인_승인_규정.docx",
+        "size_bytes": 36814,
+        "sha256": "173beb03c435728a4461b22a23cd2e535c485c63b2af7465dcbc41c8f6c8f083"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/03_영업/거래처_마스터.xlsx",
+        "size_bytes": 5497,
+        "sha256": "0f8ae595489516ca277fb74a24863384c0f67ade352f9c742cc69d4785dd8ddb"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/03_영업/영업_운영_안내.txt",
+        "size_bytes": 237,
+        "sha256": "a7724663963825b8a71e72d2731707204e664c0e6dcac04bae18484494be7ca5"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/03_영업/월별_매출목표_2026.xlsx",
+        "size_bytes": 5219,
+        "sha256": "9c0d1e0bb81e8d56f9c28f5b20946b68fadbd0b88d27fcb03569c8a916259fe4"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/03_영업/품목_마스터.csv",
+        "size_bytes": 621,
+        "sha256": "347c22d71df4082a9f021005097b46cd54f8d1e729489c601b5904afc4744c44"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/03_영업/할인코드_정의.csv",
+        "size_bytes": 146,
+        "sha256": "672144effb2b791cbc2ddb2941337404cf37f034c7d05a89baeb8d1c7911ae85"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/04_주문/8월_주문_검토.pdf",
+        "size_bytes": 1465,
+        "sha256": "fb8e5da70f1bcfaf3971dd14e0ca3e739bddb7a8ca4fda7ffb707935572e7051"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/04_주문/반품_원장_2026.csv",
+        "size_bytes": 36,
+        "sha256": "acfd2aa1930f0cd0128671a166035edb0bbdebda0cbec7760deb3851c59baa36"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/04_주문/주문_상태_기준.txt",
+        "size_bytes": 218,
+        "sha256": "8f4aa2570997cb6be520efb1618fa9bb3c14ef417a583f54f2be979171cfb93a"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/04_주문/주문_원장_2026.xlsx",
+        "size_bytes": 12264,
+        "sha256": "8b3ebc1c4d7a8caa87c7664d8f80772e70b1348c89dd38cb7b6365664dedf789"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/04_주문/출고_요청_2026.xlsx",
+        "size_bytes": 7075,
+        "sha256": "4720da8d2c92c7d42dbf6a4fe0828a61a043ab6e2efb92e5da97b11923a88661"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/05_물류/배송권역_리드타임.csv",
+        "size_bytes": 154,
+        "sha256": "851da6752a62976cc386072419cabfd6f589820a13ff9f33fee8d1c900302b78"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/05_물류/월간_재고_점검.pdf",
+        "size_bytes": 1484,
+        "sha256": "fa65f6dd3bb3dce1c3dd094b36ce82efa9ad01464ace861e298be9f3ce5ce244"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/05_물류/입고_검수_기준.txt",
+        "size_bytes": 181,
+        "sha256": "ba60292dcf5408a9942288fffc247ab26bc21ac1eb23f7ca825c2ddd91430701"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/05_물류/재고_현황_2026-09.xlsx",
+        "size_bytes": 5565,
+        "sha256": "bcc80929e6ec4bf4bdd88bbc4013ed1029c2b245a2bd38163c6edc3116cd07c2"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/05_물류/창고_운영_매뉴얼.docx",
+        "size_bytes": 36836,
+        "sha256": "90805a744afd5108dc3c2b7b4e5f850b62334a94115f36c6148a8bc8dadb470d"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/06_고객지원/CS_유형_코드.csv",
+        "size_bytes": 136,
+        "sha256": "cc2519f09c0b6c51711d6b114d09ccd95da44d929f335a87fae29b8122369c58"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/06_고객지원/FAQ_2026.txt",
+        "size_bytes": 197,
+        "sha256": "8892c3a043fc20bbe96898fdbe30ba7c7c124cf569608b0dfe5662e34157fa0c"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/06_고객지원/고객응대_매뉴얼.docx",
+        "size_bytes": 36792,
+        "sha256": "0f6ca440e8ebf4485bfbd0e4ee69c5dea1ec12355f9610b3bf03246a282533f0"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/07_정산/세금계산서_처리_안내.pdf",
+        "size_bytes": 1495,
+        "sha256": "c5311394d9dfa685c332dd7b77f64ad45cf4433e67ced608600a122a732f8496"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-66a46d7e2186/07_정산/정산_캘린더_2026.xlsx",
+        "size_bytes": 5188,
+        "sha256": "674c5fe500f1d9cc6dc8cdff5cbb5754c67fcfdb00d379e0303cbe330dbfe8a6"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/01_경영관리/2026_사업운영방침.docx",
+        "size_bytes": 37023,
+        "sha256": "6b37222c82a3e1aa669b5e0d78ac5094648e0f130bf9a155b8c8d60dfdf7b957"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/01_경영관리/거래처_관리기준.pdf",
+        "size_bytes": 1495,
+        "sha256": "28d4794876a79a2f14829c850df600d7fb57ad6fd430d29225e2eb497dea2aeb"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/01_경영관리/월간_운영회의록_2026-08.txt",
+        "size_bytes": 204,
+        "sha256": "afd62117c24b4eb03c35ea00d0bf4bcfd32217bd23429c5e1a219e9243f1cb0d"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/01_경영관리/조직_연락망.txt",
+        "size_bytes": 185,
+        "sha256": "98a0908df9c4f3ff2de6a253ee6dc911848079e20b4653178599056a0f1f056f"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/01_경영관리/회사소개_한빛유통.txt",
+        "size_bytes": 226,
+        "sha256": "8a568e21dae1bcfacde4f16eb83bd791dde948da72696d46759eae9022e95c6b"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/02_정책/반품_교환_정책_2026.docx",
+        "size_bytes": 36855,
+        "sha256": "04f6ce1df32f33a52ade0aea8a14e4565d6c5a5f9e595b7a80f673ba8f35edd4"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/02_정책/배송_지연_보상_2026.docx",
+        "size_bytes": 36756,
+        "sha256": "b0679759b829570c6979e7614cba807ec9e760999d40e40acf04ea0e5391ad65"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/02_정책/신규거래처_등록_절차.docx",
+        "size_bytes": 36810,
+        "sha256": "ec5499f30957d44ddc2218049585c2332e65b56b6d324031e86e53785326fb1a"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/02_정책/재고_조정_절차.txt",
+        "size_bytes": 246,
+        "sha256": "964842e7ed4e3bdd233ba32c04bb165328ac5a63de71733e92bf1b07ad06fb51"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/02_정책/할인_승인_규정.docx",
+        "size_bytes": 36814,
+        "sha256": "173beb03c435728a4461b22a23cd2e535c485c63b2af7465dcbc41c8f6c8f083"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/03_영업/거래처_마스터.xlsx",
+        "size_bytes": 36,
+        "sha256": "5e917d265d993236b997473b90a8d726d4a92bf9a0373857979b9e10649f1d24"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/03_영업/영업_운영_안내.txt",
+        "size_bytes": 237,
+        "sha256": "a7724663963825b8a71e72d2731707204e664c0e6dcac04bae18484494be7ca5"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/03_영업/월별_매출목표_2026.xlsx",
+        "size_bytes": 5219,
+        "sha256": "9c0d1e0bb81e8d56f9c28f5b20946b68fadbd0b88d27fcb03569c8a916259fe4"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/03_영업/품목_마스터.csv",
+        "size_bytes": 621,
+        "sha256": "347c22d71df4082a9f021005097b46cd54f8d1e729489c601b5904afc4744c44"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/03_영업/할인코드_정의.csv",
+        "size_bytes": 146,
+        "sha256": "672144effb2b791cbc2ddb2941337404cf37f034c7d05a89baeb8d1c7911ae85"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/04_주문/8월_주문_검토.pdf",
+        "size_bytes": 1465,
+        "sha256": "fb8e5da70f1bcfaf3971dd14e0ca3e739bddb7a8ca4fda7ffb707935572e7051"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/04_주문/반품_원장_2026.csv",
+        "size_bytes": 36,
+        "sha256": "acfd2aa1930f0cd0128671a166035edb0bbdebda0cbec7760deb3851c59baa36"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/04_주문/주문_상태_기준.txt",
+        "size_bytes": 218,
+        "sha256": "8f4aa2570997cb6be520efb1618fa9bb3c14ef417a583f54f2be979171cfb93a"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/04_주문/주문_원장_2026.xlsx",
+        "size_bytes": 12264,
+        "sha256": "8b3ebc1c4d7a8caa87c7664d8f80772e70b1348c89dd38cb7b6365664dedf789"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/04_주문/출고_요청_2026.xlsx",
+        "size_bytes": 7075,
+        "sha256": "4720da8d2c92c7d42dbf6a4fe0828a61a043ab6e2efb92e5da97b11923a88661"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/05_물류/배송권역_리드타임.csv",
+        "size_bytes": 154,
+        "sha256": "851da6752a62976cc386072419cabfd6f589820a13ff9f33fee8d1c900302b78"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/05_물류/월간_재고_점검.pdf",
+        "size_bytes": 1484,
+        "sha256": "fa65f6dd3bb3dce1c3dd094b36ce82efa9ad01464ace861e298be9f3ce5ce244"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/05_물류/입고_검수_기준.txt",
+        "size_bytes": 181,
+        "sha256": "ba60292dcf5408a9942288fffc247ab26bc21ac1eb23f7ca825c2ddd91430701"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/05_물류/재고_현황_2026-09.xlsx",
+        "size_bytes": 5565,
+        "sha256": "bcc80929e6ec4bf4bdd88bbc4013ed1029c2b245a2bd38163c6edc3116cd07c2"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/05_물류/창고_운영_매뉴얼.docx",
+        "size_bytes": 36836,
+        "sha256": "90805a744afd5108dc3c2b7b4e5f850b62334a94115f36c6148a8bc8dadb470d"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/06_고객지원/CS_유형_코드.csv",
+        "size_bytes": 136,
+        "sha256": "cc2519f09c0b6c51711d6b114d09ccd95da44d929f335a87fae29b8122369c58"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/06_고객지원/FAQ_2026.txt",
+        "size_bytes": 197,
+        "sha256": "8892c3a043fc20bbe96898fdbe30ba7c7c124cf569608b0dfe5662e34157fa0c"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/06_고객지원/고객응대_매뉴얼.docx",
+        "size_bytes": 36792,
+        "sha256": "0f6ca440e8ebf4485bfbd0e4ee69c5dea1ec12355f9610b3bf03246a282533f0"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/07_정산/세금계산서_처리_안내.pdf",
+        "size_bytes": 1495,
+        "sha256": "c5311394d9dfa685c332dd7b77f64ad45cf4433e67ced608600a122a732f8496"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-7497b2824ba3/07_정산/정산_캘린더_2026.xlsx",
+        "size_bytes": 5188,
+        "sha256": "674c5fe500f1d9cc6dc8cdff5cbb5754c67fcfdb00d379e0303cbe330dbfe8a6"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/01_경영관리/2026_사업운영방침.docx",
+        "size_bytes": 37023,
+        "sha256": "6b37222c82a3e1aa669b5e0d78ac5094648e0f130bf9a155b8c8d60dfdf7b957"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/01_경영관리/거래처_관리기준.pdf",
+        "size_bytes": 1495,
+        "sha256": "28d4794876a79a2f14829c850df600d7fb57ad6fd430d29225e2eb497dea2aeb"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/01_경영관리/월간_운영회의록_2026-08.txt",
+        "size_bytes": 204,
+        "sha256": "afd62117c24b4eb03c35ea00d0bf4bcfd32217bd23429c5e1a219e9243f1cb0d"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/01_경영관리/조직_연락망.txt",
+        "size_bytes": 185,
+        "sha256": "98a0908df9c4f3ff2de6a253ee6dc911848079e20b4653178599056a0f1f056f"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/01_경영관리/회사소개_한빛유통.txt",
+        "size_bytes": 226,
+        "sha256": "8a568e21dae1bcfacde4f16eb83bd791dde948da72696d46759eae9022e95c6b"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/02_정책/반품_교환_정책_2026.docx",
+        "size_bytes": 36855,
+        "sha256": "04f6ce1df32f33a52ade0aea8a14e4565d6c5a5f9e595b7a80f673ba8f35edd4"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/02_정책/배송_지연_보상_2026.docx",
+        "size_bytes": 36756,
+        "sha256": "b0679759b829570c6979e7614cba807ec9e760999d40e40acf04ea0e5391ad65"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/02_정책/신규거래처_등록_절차.docx",
+        "size_bytes": 36810,
+        "sha256": "ec5499f30957d44ddc2218049585c2332e65b56b6d324031e86e53785326fb1a"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/02_정책/재고_조정_절차.txt",
+        "size_bytes": 246,
+        "sha256": "964842e7ed4e3bdd233ba32c04bb165328ac5a63de71733e92bf1b07ad06fb51"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/02_정책/할인_승인_규정.docx",
+        "size_bytes": 36814,
+        "sha256": "173beb03c435728a4461b22a23cd2e535c485c63b2af7465dcbc41c8f6c8f083"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/03_영업/거래처_마스터.xlsx",
+        "size_bytes": 5497,
+        "sha256": "0f8ae595489516ca277fb74a24863384c0f67ade352f9c742cc69d4785dd8ddb"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/03_영업/영업_운영_안내.txt",
+        "size_bytes": 237,
+        "sha256": "a7724663963825b8a71e72d2731707204e664c0e6dcac04bae18484494be7ca5"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/03_영업/월별_매출목표_2026.xlsx",
+        "size_bytes": 5219,
+        "sha256": "9c0d1e0bb81e8d56f9c28f5b20946b68fadbd0b88d27fcb03569c8a916259fe4"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/03_영업/품목_마스터.csv",
+        "size_bytes": 621,
+        "sha256": "347c22d71df4082a9f021005097b46cd54f8d1e729489c601b5904afc4744c44"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/03_영업/할인코드_정의.csv",
+        "size_bytes": 146,
+        "sha256": "672144effb2b791cbc2ddb2941337404cf37f034c7d05a89baeb8d1c7911ae85"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/04_주문/8월_주문_검토.pdf",
+        "size_bytes": 1465,
+        "sha256": "fb8e5da70f1bcfaf3971dd14e0ca3e739bddb7a8ca4fda7ffb707935572e7051"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/04_주문/반품_원장_2026.csv",
+        "size_bytes": 1844,
+        "sha256": "727db2884c7bb942d0e8e91b737aa962ec72e2d7339cf476b5aebfb4fce5518f"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/04_주문/주문_상태_기준.txt",
+        "size_bytes": 218,
+        "sha256": "8f4aa2570997cb6be520efb1618fa9bb3c14ef417a583f54f2be979171cfb93a"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/04_주문/주문_원장_2026.xlsx",
+        "size_bytes": 12264,
+        "sha256": "8b3ebc1c4d7a8caa87c7664d8f80772e70b1348c89dd38cb7b6365664dedf789"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/04_주문/출고_요청_2026.xlsx",
+        "size_bytes": 7075,
+        "sha256": "4720da8d2c92c7d42dbf6a4fe0828a61a043ab6e2efb92e5da97b11923a88661"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/05_물류/배송권역_리드타임.csv",
+        "size_bytes": 154,
+        "sha256": "851da6752a62976cc386072419cabfd6f589820a13ff9f33fee8d1c900302b78"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/05_물류/월간_재고_점검.pdf",
+        "size_bytes": 1484,
+        "sha256": "fa65f6dd3bb3dce1c3dd094b36ce82efa9ad01464ace861e298be9f3ce5ce244"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/05_물류/입고_검수_기준.txt",
+        "size_bytes": 181,
+        "sha256": "ba60292dcf5408a9942288fffc247ab26bc21ac1eb23f7ca825c2ddd91430701"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/05_물류/재고_현황_2026-09.xlsx",
+        "size_bytes": 5565,
+        "sha256": "bcc80929e6ec4bf4bdd88bbc4013ed1029c2b245a2bd38163c6edc3116cd07c2"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/05_물류/창고_운영_매뉴얼.docx",
+        "size_bytes": 36,
+        "sha256": "81035114380403f4eeab6d320d05366319a4656271958571a36c495de5afa3b5"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/06_고객지원/CS_유형_코드.csv",
+        "size_bytes": 136,
+        "sha256": "cc2519f09c0b6c51711d6b114d09ccd95da44d929f335a87fae29b8122369c58"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/06_고객지원/FAQ_2026.txt",
+        "size_bytes": 197,
+        "sha256": "8892c3a043fc20bbe96898fdbe30ba7c7c124cf569608b0dfe5662e34157fa0c"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/06_고객지원/고객응대_매뉴얼.docx",
+        "size_bytes": 36792,
+        "sha256": "0f6ca440e8ebf4485bfbd0e4ee69c5dea1ec12355f9610b3bf03246a282533f0"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/07_정산/세금계산서_처리_안내.pdf",
+        "size_bytes": 1495,
+        "sha256": "c5311394d9dfa685c332dd7b77f64ad45cf4433e67ced608600a122a732f8496"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-91428d0d2d6d/07_정산/정산_캘린더_2026.xlsx",
+        "size_bytes": 5188,
+        "sha256": "674c5fe500f1d9cc6dc8cdff5cbb5754c67fcfdb00d379e0303cbe330dbfe8a6"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/01_경영관리/2026_사업운영방침.docx",
+        "size_bytes": 37023,
+        "sha256": "6b37222c82a3e1aa669b5e0d78ac5094648e0f130bf9a155b8c8d60dfdf7b957"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/01_경영관리/거래처_관리기준.pdf",
+        "size_bytes": 1495,
+        "sha256": "28d4794876a79a2f14829c850df600d7fb57ad6fd430d29225e2eb497dea2aeb"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/01_경영관리/월간_운영회의록_2026-08.txt",
+        "size_bytes": 204,
+        "sha256": "afd62117c24b4eb03c35ea00d0bf4bcfd32217bd23429c5e1a219e9243f1cb0d"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/01_경영관리/조직_연락망.txt",
+        "size_bytes": 185,
+        "sha256": "98a0908df9c4f3ff2de6a253ee6dc911848079e20b4653178599056a0f1f056f"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/01_경영관리/회사소개_한빛유통.txt",
+        "size_bytes": 226,
+        "sha256": "8a568e21dae1bcfacde4f16eb83bd791dde948da72696d46759eae9022e95c6b"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/02_정책/반품_교환_정책_2026.docx",
+        "size_bytes": 36855,
+        "sha256": "04f6ce1df32f33a52ade0aea8a14e4565d6c5a5f9e595b7a80f673ba8f35edd4"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/02_정책/배송_지연_보상_2026.docx",
+        "size_bytes": 36756,
+        "sha256": "b0679759b829570c6979e7614cba807ec9e760999d40e40acf04ea0e5391ad65"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/02_정책/신규거래처_등록_절차.docx",
+        "size_bytes": 36810,
+        "sha256": "ec5499f30957d44ddc2218049585c2332e65b56b6d324031e86e53785326fb1a"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/02_정책/재고_조정_절차.txt",
+        "size_bytes": 246,
+        "sha256": "964842e7ed4e3bdd233ba32c04bb165328ac5a63de71733e92bf1b07ad06fb51"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/02_정책/할인_승인_규정.docx",
+        "size_bytes": 36814,
+        "sha256": "173beb03c435728a4461b22a23cd2e535c485c63b2af7465dcbc41c8f6c8f083"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/03_영업/거래처_마스터.xlsx",
+        "size_bytes": 5497,
+        "sha256": "0f8ae595489516ca277fb74a24863384c0f67ade352f9c742cc69d4785dd8ddb"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/03_영업/영업_운영_안내.txt",
+        "size_bytes": 237,
+        "sha256": "a7724663963825b8a71e72d2731707204e664c0e6dcac04bae18484494be7ca5"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/03_영업/월별_매출목표_2026.xlsx",
+        "size_bytes": 5219,
+        "sha256": "9c0d1e0bb81e8d56f9c28f5b20946b68fadbd0b88d27fcb03569c8a916259fe4"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/03_영업/품목_마스터.csv",
+        "size_bytes": 621,
+        "sha256": "347c22d71df4082a9f021005097b46cd54f8d1e729489c601b5904afc4744c44"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/03_영업/할인코드_정의.csv",
+        "size_bytes": 146,
+        "sha256": "672144effb2b791cbc2ddb2941337404cf37f034c7d05a89baeb8d1c7911ae85"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/04_주문/8월_주문_검토.pdf",
+        "size_bytes": 1465,
+        "sha256": "fb8e5da70f1bcfaf3971dd14e0ca3e739bddb7a8ca4fda7ffb707935572e7051"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/04_주문/반품_원장_2026.csv",
+        "size_bytes": 1844,
+        "sha256": "727db2884c7bb942d0e8e91b737aa962ec72e2d7339cf476b5aebfb4fce5518f"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/04_주문/주문_상태_기준.txt",
+        "size_bytes": 218,
+        "sha256": "8f4aa2570997cb6be520efb1618fa9bb3c14ef417a583f54f2be979171cfb93a"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/04_주문/주문_원장_2026.xlsx",
+        "size_bytes": 36,
+        "sha256": "41c5d271ab60b5ce95e8a80df297e6d11e0fb87fbab14eac7298d6be58b700cb"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/04_주문/출고_요청_2026.xlsx",
+        "size_bytes": 7075,
+        "sha256": "4720da8d2c92c7d42dbf6a4fe0828a61a043ab6e2efb92e5da97b11923a88661"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/05_물류/배송권역_리드타임.csv",
+        "size_bytes": 154,
+        "sha256": "851da6752a62976cc386072419cabfd6f589820a13ff9f33fee8d1c900302b78"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/05_물류/월간_재고_점검.pdf",
+        "size_bytes": 1484,
+        "sha256": "fa65f6dd3bb3dce1c3dd094b36ce82efa9ad01464ace861e298be9f3ce5ce244"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/05_물류/입고_검수_기준.txt",
+        "size_bytes": 181,
+        "sha256": "ba60292dcf5408a9942288fffc247ab26bc21ac1eb23f7ca825c2ddd91430701"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/05_물류/재고_현황_2026-09.xlsx",
+        "size_bytes": 5565,
+        "sha256": "bcc80929e6ec4bf4bdd88bbc4013ed1029c2b245a2bd38163c6edc3116cd07c2"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/05_물류/창고_운영_매뉴얼.docx",
+        "size_bytes": 36836,
+        "sha256": "90805a744afd5108dc3c2b7b4e5f850b62334a94115f36c6148a8bc8dadb470d"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/06_고객지원/CS_유형_코드.csv",
+        "size_bytes": 136,
+        "sha256": "cc2519f09c0b6c51711d6b114d09ccd95da44d929f335a87fae29b8122369c58"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/06_고객지원/FAQ_2026.txt",
+        "size_bytes": 197,
+        "sha256": "8892c3a043fc20bbe96898fdbe30ba7c7c124cf569608b0dfe5662e34157fa0c"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/06_고객지원/고객응대_매뉴얼.docx",
+        "size_bytes": 36792,
+        "sha256": "0f6ca440e8ebf4485bfbd0e4ee69c5dea1ec12355f9610b3bf03246a282533f0"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/07_정산/세금계산서_처리_안내.pdf",
+        "size_bytes": 1495,
+        "sha256": "c5311394d9dfa685c332dd7b77f64ad45cf4433e67ced608600a122a732f8496"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-950a2b2ed909/07_정산/정산_캘린더_2026.xlsx",
+        "size_bytes": 5188,
+        "sha256": "674c5fe500f1d9cc6dc8cdff5cbb5754c67fcfdb00d379e0303cbe330dbfe8a6"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/01_경영관리/2026_사업운영방침.docx",
+        "size_bytes": 37023,
+        "sha256": "6b37222c82a3e1aa669b5e0d78ac5094648e0f130bf9a155b8c8d60dfdf7b957"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/01_경영관리/거래처_관리기준.pdf",
+        "size_bytes": 1495,
+        "sha256": "28d4794876a79a2f14829c850df600d7fb57ad6fd430d29225e2eb497dea2aeb"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/01_경영관리/월간_운영회의록_2026-08.txt",
+        "size_bytes": 204,
+        "sha256": "afd62117c24b4eb03c35ea00d0bf4bcfd32217bd23429c5e1a219e9243f1cb0d"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/01_경영관리/조직_연락망.txt",
+        "size_bytes": 185,
+        "sha256": "98a0908df9c4f3ff2de6a253ee6dc911848079e20b4653178599056a0f1f056f"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/01_경영관리/회사소개_한빛유통.txt",
+        "size_bytes": 226,
+        "sha256": "8a568e21dae1bcfacde4f16eb83bd791dde948da72696d46759eae9022e95c6b"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/02_정책/반품_교환_정책_2026.docx",
+        "size_bytes": 36855,
+        "sha256": "04f6ce1df32f33a52ade0aea8a14e4565d6c5a5f9e595b7a80f673ba8f35edd4"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/02_정책/배송_지연_보상_2026.docx",
+        "size_bytes": 36756,
+        "sha256": "b0679759b829570c6979e7614cba807ec9e760999d40e40acf04ea0e5391ad65"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/02_정책/신규거래처_등록_절차.docx",
+        "size_bytes": 36810,
+        "sha256": "ec5499f30957d44ddc2218049585c2332e65b56b6d324031e86e53785326fb1a"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/02_정책/재고_조정_절차.txt",
+        "size_bytes": 246,
+        "sha256": "964842e7ed4e3bdd233ba32c04bb165328ac5a63de71733e92bf1b07ad06fb51"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/02_정책/할인_승인_규정.docx",
+        "size_bytes": 36814,
+        "sha256": "173beb03c435728a4461b22a23cd2e535c485c63b2af7465dcbc41c8f6c8f083"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/03_영업/거래처_마스터.xlsx",
+        "size_bytes": 36,
+        "sha256": "5e917d265d993236b997473b90a8d726d4a92bf9a0373857979b9e10649f1d24"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/03_영업/영업_운영_안내.txt",
+        "size_bytes": 237,
+        "sha256": "a7724663963825b8a71e72d2731707204e664c0e6dcac04bae18484494be7ca5"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/03_영업/월별_매출목표_2026.xlsx",
+        "size_bytes": 5219,
+        "sha256": "9c0d1e0bb81e8d56f9c28f5b20946b68fadbd0b88d27fcb03569c8a916259fe4"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/03_영업/품목_마스터.csv",
+        "size_bytes": 621,
+        "sha256": "347c22d71df4082a9f021005097b46cd54f8d1e729489c601b5904afc4744c44"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/03_영업/할인코드_정의.csv",
+        "size_bytes": 146,
+        "sha256": "672144effb2b791cbc2ddb2941337404cf37f034c7d05a89baeb8d1c7911ae85"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/04_주문/8월_주문_검토.pdf",
+        "size_bytes": 1465,
+        "sha256": "fb8e5da70f1bcfaf3971dd14e0ca3e739bddb7a8ca4fda7ffb707935572e7051"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/04_주문/반품_원장_2026.csv",
+        "size_bytes": 1844,
+        "sha256": "727db2884c7bb942d0e8e91b737aa962ec72e2d7339cf476b5aebfb4fce5518f"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/04_주문/주문_상태_기준.txt",
+        "size_bytes": 218,
+        "sha256": "8f4aa2570997cb6be520efb1618fa9bb3c14ef417a583f54f2be979171cfb93a"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/04_주문/주문_원장_2026.xlsx",
+        "size_bytes": 36,
+        "sha256": "41c5d271ab60b5ce95e8a80df297e6d11e0fb87fbab14eac7298d6be58b700cb"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/04_주문/출고_요청_2026.xlsx",
+        "size_bytes": 7075,
+        "sha256": "4720da8d2c92c7d42dbf6a4fe0828a61a043ab6e2efb92e5da97b11923a88661"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/05_물류/배송권역_리드타임.csv",
+        "size_bytes": 154,
+        "sha256": "851da6752a62976cc386072419cabfd6f589820a13ff9f33fee8d1c900302b78"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/05_물류/월간_재고_점검.pdf",
+        "size_bytes": 1484,
+        "sha256": "fa65f6dd3bb3dce1c3dd094b36ce82efa9ad01464ace861e298be9f3ce5ce244"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/05_물류/입고_검수_기준.txt",
+        "size_bytes": 181,
+        "sha256": "ba60292dcf5408a9942288fffc247ab26bc21ac1eb23f7ca825c2ddd91430701"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/05_물류/재고_현황_2026-09.xlsx",
+        "size_bytes": 5565,
+        "sha256": "bcc80929e6ec4bf4bdd88bbc4013ed1029c2b245a2bd38163c6edc3116cd07c2"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/05_물류/창고_운영_매뉴얼.docx",
+        "size_bytes": 36836,
+        "sha256": "90805a744afd5108dc3c2b7b4e5f850b62334a94115f36c6148a8bc8dadb470d"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/06_고객지원/CS_유형_코드.csv",
+        "size_bytes": 136,
+        "sha256": "cc2519f09c0b6c51711d6b114d09ccd95da44d929f335a87fae29b8122369c58"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/06_고객지원/FAQ_2026.txt",
+        "size_bytes": 197,
+        "sha256": "8892c3a043fc20bbe96898fdbe30ba7c7c124cf569608b0dfe5662e34157fa0c"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/06_고객지원/고객응대_매뉴얼.docx",
+        "size_bytes": 36792,
+        "sha256": "0f6ca440e8ebf4485bfbd0e4ee69c5dea1ec12355f9610b3bf03246a282533f0"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/07_정산/세금계산서_처리_안내.pdf",
+        "size_bytes": 1495,
+        "sha256": "c5311394d9dfa685c332dd7b77f64ad45cf4433e67ced608600a122a732f8496"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-a534444afe03/07_정산/정산_캘린더_2026.xlsx",
+        "size_bytes": 5188,
+        "sha256": "674c5fe500f1d9cc6dc8cdff5cbb5754c67fcfdb00d379e0303cbe330dbfe8a6"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/01_경영관리/2026_사업운영방침.docx",
+        "size_bytes": 37023,
+        "sha256": "6b37222c82a3e1aa669b5e0d78ac5094648e0f130bf9a155b8c8d60dfdf7b957"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/01_경영관리/거래처_관리기준.pdf",
+        "size_bytes": 1495,
+        "sha256": "28d4794876a79a2f14829c850df600d7fb57ad6fd430d29225e2eb497dea2aeb"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/01_경영관리/월간_운영회의록_2026-08.txt",
+        "size_bytes": 204,
+        "sha256": "afd62117c24b4eb03c35ea00d0bf4bcfd32217bd23429c5e1a219e9243f1cb0d"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/01_경영관리/조직_연락망.txt",
+        "size_bytes": 185,
+        "sha256": "98a0908df9c4f3ff2de6a253ee6dc911848079e20b4653178599056a0f1f056f"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/01_경영관리/회사소개_한빛유통.txt",
+        "size_bytes": 226,
+        "sha256": "8a568e21dae1bcfacde4f16eb83bd791dde948da72696d46759eae9022e95c6b"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/02_정책/반품_교환_정책_2026.docx",
+        "size_bytes": 36,
+        "sha256": "ec44e5859bc8b90353b3726e8d8f5f1b565c59c35b95ce571c289e3f65819c24"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/02_정책/배송_지연_보상_2026.docx",
+        "size_bytes": 36756,
+        "sha256": "b0679759b829570c6979e7614cba807ec9e760999d40e40acf04ea0e5391ad65"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/02_정책/신규거래처_등록_절차.docx",
+        "size_bytes": 36810,
+        "sha256": "ec5499f30957d44ddc2218049585c2332e65b56b6d324031e86e53785326fb1a"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/02_정책/재고_조정_절차.txt",
+        "size_bytes": 246,
+        "sha256": "964842e7ed4e3bdd233ba32c04bb165328ac5a63de71733e92bf1b07ad06fb51"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/02_정책/할인_승인_규정.docx",
+        "size_bytes": 36814,
+        "sha256": "173beb03c435728a4461b22a23cd2e535c485c63b2af7465dcbc41c8f6c8f083"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/03_영업/거래처_마스터.xlsx",
+        "size_bytes": 5497,
+        "sha256": "0f8ae595489516ca277fb74a24863384c0f67ade352f9c742cc69d4785dd8ddb"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/03_영업/영업_운영_안내.txt",
+        "size_bytes": 237,
+        "sha256": "a7724663963825b8a71e72d2731707204e664c0e6dcac04bae18484494be7ca5"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/03_영업/월별_매출목표_2026.xlsx",
+        "size_bytes": 5219,
+        "sha256": "9c0d1e0bb81e8d56f9c28f5b20946b68fadbd0b88d27fcb03569c8a916259fe4"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/03_영업/품목_마스터.csv",
+        "size_bytes": 621,
+        "sha256": "347c22d71df4082a9f021005097b46cd54f8d1e729489c601b5904afc4744c44"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/03_영업/할인코드_정의.csv",
+        "size_bytes": 146,
+        "sha256": "672144effb2b791cbc2ddb2941337404cf37f034c7d05a89baeb8d1c7911ae85"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/04_주문/8월_주문_검토.pdf",
+        "size_bytes": 1465,
+        "sha256": "fb8e5da70f1bcfaf3971dd14e0ca3e739bddb7a8ca4fda7ffb707935572e7051"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/04_주문/반품_원장_2026.csv",
+        "size_bytes": 1844,
+        "sha256": "727db2884c7bb942d0e8e91b737aa962ec72e2d7339cf476b5aebfb4fce5518f"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/04_주문/주문_상태_기준.txt",
+        "size_bytes": 218,
+        "sha256": "8f4aa2570997cb6be520efb1618fa9bb3c14ef417a583f54f2be979171cfb93a"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/04_주문/주문_원장_2026.xlsx",
+        "size_bytes": 12264,
+        "sha256": "8b3ebc1c4d7a8caa87c7664d8f80772e70b1348c89dd38cb7b6365664dedf789"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/04_주문/출고_요청_2026.xlsx",
+        "size_bytes": 7075,
+        "sha256": "4720da8d2c92c7d42dbf6a4fe0828a61a043ab6e2efb92e5da97b11923a88661"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/05_물류/배송권역_리드타임.csv",
+        "size_bytes": 154,
+        "sha256": "851da6752a62976cc386072419cabfd6f589820a13ff9f33fee8d1c900302b78"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/05_물류/월간_재고_점검.pdf",
+        "size_bytes": 1484,
+        "sha256": "fa65f6dd3bb3dce1c3dd094b36ce82efa9ad01464ace861e298be9f3ce5ce244"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/05_물류/입고_검수_기준.txt",
+        "size_bytes": 181,
+        "sha256": "ba60292dcf5408a9942288fffc247ab26bc21ac1eb23f7ca825c2ddd91430701"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/05_물류/재고_현황_2026-09.xlsx",
+        "size_bytes": 5565,
+        "sha256": "bcc80929e6ec4bf4bdd88bbc4013ed1029c2b245a2bd38163c6edc3116cd07c2"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/05_물류/창고_운영_매뉴얼.docx",
+        "size_bytes": 36836,
+        "sha256": "90805a744afd5108dc3c2b7b4e5f850b62334a94115f36c6148a8bc8dadb470d"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/06_고객지원/CS_유형_코드.csv",
+        "size_bytes": 136,
+        "sha256": "cc2519f09c0b6c51711d6b114d09ccd95da44d929f335a87fae29b8122369c58"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/06_고객지원/FAQ_2026.txt",
+        "size_bytes": 197,
+        "sha256": "8892c3a043fc20bbe96898fdbe30ba7c7c124cf569608b0dfe5662e34157fa0c"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/06_고객지원/고객응대_매뉴얼.docx",
+        "size_bytes": 36792,
+        "sha256": "0f6ca440e8ebf4485bfbd0e4ee69c5dea1ec12355f9610b3bf03246a282533f0"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/07_정산/세금계산서_처리_안내.pdf",
+        "size_bytes": 1495,
+        "sha256": "c5311394d9dfa685c332dd7b77f64ad45cf4433e67ced608600a122a732f8496"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-d527640c55b3/07_정산/정산_캘린더_2026.xlsx",
+        "size_bytes": 5188,
+        "sha256": "674c5fe500f1d9cc6dc8cdff5cbb5754c67fcfdb00d379e0303cbe330dbfe8a6"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/01_경영관리/2026_사업운영방침.docx",
+        "size_bytes": 37023,
+        "sha256": "6b37222c82a3e1aa669b5e0d78ac5094648e0f130bf9a155b8c8d60dfdf7b957"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/01_경영관리/거래처_관리기준.pdf",
+        "size_bytes": 1495,
+        "sha256": "28d4794876a79a2f14829c850df600d7fb57ad6fd430d29225e2eb497dea2aeb"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/01_경영관리/월간_운영회의록_2026-08.txt",
+        "size_bytes": 204,
+        "sha256": "afd62117c24b4eb03c35ea00d0bf4bcfd32217bd23429c5e1a219e9243f1cb0d"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/01_경영관리/조직_연락망.txt",
+        "size_bytes": 185,
+        "sha256": "98a0908df9c4f3ff2de6a253ee6dc911848079e20b4653178599056a0f1f056f"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/01_경영관리/회사소개_한빛유통.txt",
+        "size_bytes": 226,
+        "sha256": "8a568e21dae1bcfacde4f16eb83bd791dde948da72696d46759eae9022e95c6b"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/02_정책/반품_교환_정책_2026.docx",
+        "size_bytes": 36855,
+        "sha256": "04f6ce1df32f33a52ade0aea8a14e4565d6c5a5f9e595b7a80f673ba8f35edd4"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/02_정책/배송_지연_보상_2026.docx",
+        "size_bytes": 36756,
+        "sha256": "b0679759b829570c6979e7614cba807ec9e760999d40e40acf04ea0e5391ad65"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/02_정책/신규거래처_등록_절차.docx",
+        "size_bytes": 36810,
+        "sha256": "ec5499f30957d44ddc2218049585c2332e65b56b6d324031e86e53785326fb1a"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/02_정책/재고_조정_절차.txt",
+        "size_bytes": 246,
+        "sha256": "964842e7ed4e3bdd233ba32c04bb165328ac5a63de71733e92bf1b07ad06fb51"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/02_정책/할인_승인_규정.docx",
+        "size_bytes": 36814,
+        "sha256": "173beb03c435728a4461b22a23cd2e535c485c63b2af7465dcbc41c8f6c8f083"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/03_영업/거래처_마스터.xlsx",
+        "size_bytes": 5497,
+        "sha256": "0f8ae595489516ca277fb74a24863384c0f67ade352f9c742cc69d4785dd8ddb"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/03_영업/영업_운영_안내.txt",
+        "size_bytes": 237,
+        "sha256": "a7724663963825b8a71e72d2731707204e664c0e6dcac04bae18484494be7ca5"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/03_영업/월별_매출목표_2026.xlsx",
+        "size_bytes": 5219,
+        "sha256": "9c0d1e0bb81e8d56f9c28f5b20946b68fadbd0b88d27fcb03569c8a916259fe4"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/03_영업/품목_마스터.csv",
+        "size_bytes": 621,
+        "sha256": "347c22d71df4082a9f021005097b46cd54f8d1e729489c601b5904afc4744c44"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/03_영업/할인코드_정의.csv",
+        "size_bytes": 146,
+        "sha256": "672144effb2b791cbc2ddb2941337404cf37f034c7d05a89baeb8d1c7911ae85"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/04_주문/8월_주문_검토.pdf",
+        "size_bytes": 1465,
+        "sha256": "fb8e5da70f1bcfaf3971dd14e0ca3e739bddb7a8ca4fda7ffb707935572e7051"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/04_주문/반품_원장_2026.csv",
+        "size_bytes": 1844,
+        "sha256": "727db2884c7bb942d0e8e91b737aa962ec72e2d7339cf476b5aebfb4fce5518f"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/04_주문/주문_상태_기준.txt",
+        "size_bytes": 218,
+        "sha256": "8f4aa2570997cb6be520efb1618fa9bb3c14ef417a583f54f2be979171cfb93a"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/04_주문/주문_원장_2026.xlsx",
+        "size_bytes": 12264,
+        "sha256": "8b3ebc1c4d7a8caa87c7664d8f80772e70b1348c89dd38cb7b6365664dedf789"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/04_주문/출고_요청_2026.xlsx",
+        "size_bytes": 7075,
+        "sha256": "4720da8d2c92c7d42dbf6a4fe0828a61a043ab6e2efb92e5da97b11923a88661"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/05_물류/배송권역_리드타임.csv",
+        "size_bytes": 36,
+        "sha256": "62416e297063244fbcf29de5f3cc0f21cf36c41e312637766baf53f8501c848b"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/05_물류/월간_재고_점검.pdf",
+        "size_bytes": 1484,
+        "sha256": "fa65f6dd3bb3dce1c3dd094b36ce82efa9ad01464ace861e298be9f3ce5ce244"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/05_물류/입고_검수_기준.txt",
+        "size_bytes": 181,
+        "sha256": "ba60292dcf5408a9942288fffc247ab26bc21ac1eb23f7ca825c2ddd91430701"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/05_물류/재고_현황_2026-09.xlsx",
+        "size_bytes": 5565,
+        "sha256": "bcc80929e6ec4bf4bdd88bbc4013ed1029c2b245a2bd38163c6edc3116cd07c2"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/05_물류/창고_운영_매뉴얼.docx",
+        "size_bytes": 36836,
+        "sha256": "90805a744afd5108dc3c2b7b4e5f850b62334a94115f36c6148a8bc8dadb470d"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/06_고객지원/CS_유형_코드.csv",
+        "size_bytes": 136,
+        "sha256": "cc2519f09c0b6c51711d6b114d09ccd95da44d929f335a87fae29b8122369c58"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/06_고객지원/FAQ_2026.txt",
+        "size_bytes": 197,
+        "sha256": "8892c3a043fc20bbe96898fdbe30ba7c7c124cf569608b0dfe5662e34157fa0c"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/06_고객지원/고객응대_매뉴얼.docx",
+        "size_bytes": 36792,
+        "sha256": "0f6ca440e8ebf4485bfbd0e4ee69c5dea1ec12355f9610b3bf03246a282533f0"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/07_정산/세금계산서_처리_안내.pdf",
+        "size_bytes": 1495,
+        "sha256": "c5311394d9dfa685c332dd7b77f64ad45cf4433e67ced608600a122a732f8496"
+      },
+      {
+        "path": "sample_data/before_variants/before-accessibility-f1d1804d1aa6/07_정산/정산_캘린더_2026.xlsx",
+        "size_bytes": 5188,
+        "sha256": "674c5fe500f1d9cc6dc8cdff5cbb5754c67fcfdb00d379e0303cbe330dbfe8a6"
+      },
+      {
+        "path": "scripts/freeze_experiment_v2.py",
+        "size_bytes": 12982,
+        "sha256": "345dccc6f4b2d968a7cab91af16747cf0b31903dc957d294186beecc56dba5d2"
+      },
+      {
+        "path": "scripts/generate_before_variants.py",
+        "size_bytes": 17866,
+        "sha256": "0e3359b6dfd5d7ffe4266564f159d1b66fd304b0ec66404246895375ca4a6c42"
+      },
+      {
+        "path": "scripts/interactive_run.py",
+        "size_bytes": 17819,
+        "sha256": "32632d12aecd7b3e4fd329403ad835a2f86d2f799e45f3072611d6c180b3fd3d"
+      },
+      {
+        "path": "scripts/runtime_binding.py",
+        "size_bytes": 2903,
+        "sha256": "de351223217b1145908776b2984b6eb755c21e336a93ee5eec6ef4d2b5abe046"
+      },
+      {
+        "path": "scripts/validate_runtime_routing.py",
+        "size_bytes": 7792,
+        "sha256": "c1b544f450c9d7a3c86bec9331bbae5177912883d45fa92447f8142bf643119a"
+      },
+      {
+        "path": "task_runtime_bindings.json",
+        "size_bytes": 6135,
+        "sha256": "93755845b12c0552f6a256cb648b301342d307a4f4ee818d7e2299b476703abb"
+      },
+      {
+        "path": "tests/test_interactive_run.py",
+        "size_bytes": 5152,
+        "sha256": "18ea62ff2311e8a020603c3257bd412d720f88844964965f483328f3bb0a135b"
+      },
+      {
+        "path": "tests/test_runtime_routing_v2.py",
+        "size_bytes": 5087,
+        "sha256": "4e5cf9396e27a054b45b406e0d3048358216ddd3a87d2e56d5ff3e572a13b071"
+      }
+    ]
+  },
+  "out_of_scope_findings": [],
+  "next_safe_action": "Held-out execution may begin only under the frozen v2 interactive protocol; none was run during v2 preparation."
+}

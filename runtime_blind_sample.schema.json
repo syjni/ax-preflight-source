@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AX blind runtime sample",
+  "type": "object",
+  "required": [
+    "category",
+    "question",
+    "runtime_prompt"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "category": {
+      "enum": [
+        "knowledge",
+        "operations",
+        "cross_file"
+      ]
+    },
+    "question": {
+      "type": "string",
+      "minLength": 1
+    },
+    "runtime_prompt": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

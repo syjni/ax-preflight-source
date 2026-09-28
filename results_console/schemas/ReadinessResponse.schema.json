@@ -1,0 +1,379 @@
+{
+  "$defs": {
+    "AccessibilityCounts": {
+      "additionalProperties": false,
+      "properties": {
+        "accessible_files": {
+          "title": "Accessible Files",
+          "type": "integer"
+        },
+        "ocr_required_files": {
+          "title": "Ocr Required Files",
+          "type": "integer"
+        },
+        "parsed_files": {
+          "title": "Parsed Files",
+          "type": "integer"
+        },
+        "total_files": {
+          "title": "Total Files",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "total_files",
+        "parsed_files",
+        "ocr_required_files",
+        "accessible_files"
+      ],
+      "title": "AccessibilityCounts",
+      "type": "object"
+    },
+    "CompletenessCounts": {
+      "additionalProperties": false,
+      "properties": {
+        "eligible_tables": {
+          "title": "Eligible Tables",
+          "type": "integer"
+        },
+        "estimated_missing_cells": {
+          "title": "Estimated Missing Cells",
+          "type": "number"
+        },
+        "total_cells": {
+          "title": "Total Cells",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "eligible_tables",
+        "total_cells",
+        "estimated_missing_cells"
+      ],
+      "title": "CompletenessCounts",
+      "type": "object"
+    },
+    "ReadinessCounts": {
+      "additionalProperties": false,
+      "properties": {
+        "accessibility": {
+          "$ref": "#/$defs/AccessibilityCounts"
+        },
+        "completeness": {
+          "$ref": "#/$defs/CompletenessCounts"
+        },
+        "redundancy": {
+          "$ref": "#/$defs/RedundancyCounts"
+        },
+        "safety": {
+          "$ref": "#/$defs/SafetyCounts"
+        },
+        "timeliness": {
+          "$ref": "#/$defs/TimelinessCounts"
+        }
+      },
+      "required": [
+        "accessibility",
+        "completeness",
+        "redundancy",
+        "timeliness",
+        "safety"
+      ],
+      "title": "ReadinessCounts",
+      "type": "object"
+    },
+    "ReadinessDimensions": {
+      "additionalProperties": false,
+      "properties": {
+        "accessibility": {
+          "title": "Accessibility",
+          "type": "number"
+        },
+        "completeness": {
+          "title": "Completeness",
+          "type": "number"
+        },
+        "redundancy": {
+          "title": "Redundancy",
+          "type": "number"
+        },
+        "safety": {
+          "title": "Safety",
+          "type": "number"
+        },
+        "timeliness": {
+          "title": "Timeliness",
+          "type": "number"
+        }
+      },
+      "required": [
+        "accessibility",
+        "completeness",
+        "redundancy",
+        "timeliness",
+        "safety"
+      ],
+      "title": "ReadinessDimensions",
+      "type": "object"
+    },
+    "ReadinessFlags": {
+      "additionalProperties": false,
+      "properties": {
+        "completeness_not_applicable": {
+          "title": "Completeness Not Applicable",
+          "type": "boolean"
+        },
+        "empty_file_set": {
+          "title": "Empty File Set",
+          "type": "boolean"
+        },
+        "future_modified_at_count": {
+          "title": "Future Modified At Count",
+          "type": "integer"
+        },
+        "invalid_modified_at_count": {
+          "title": "Invalid Modified At Count",
+          "type": "integer"
+        },
+        "missing_modified_at_count": {
+          "title": "Missing Modified At Count",
+          "type": "integer"
+        },
+        "no_valid_modified_at": {
+          "title": "No Valid Modified At",
+          "type": "boolean"
+        },
+        "scan_metadata_file_count_mismatch": {
+          "title": "Scan Metadata File Count Mismatch",
+          "type": "boolean"
+        },
+        "unknown_ocr_file_id_count": {
+          "title": "Unknown Ocr File Id Count",
+          "type": "integer"
+        },
+        "unknown_pii_file_id_count": {
+          "title": "Unknown Pii File Id Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "empty_file_set",
+        "completeness_not_applicable",
+        "no_valid_modified_at",
+        "missing_modified_at_count",
+        "invalid_modified_at_count",
+        "future_modified_at_count",
+        "unknown_ocr_file_id_count",
+        "unknown_pii_file_id_count",
+        "scan_metadata_file_count_mismatch"
+      ],
+      "title": "ReadinessFlags",
+      "type": "object"
+    },
+    "ReadinessScore": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of_date": {
+          "title": "As Of Date",
+          "type": "string"
+        },
+        "counts": {
+          "$ref": "#/$defs/ReadinessCounts"
+        },
+        "dimension_weights": {
+          "$ref": "#/$defs/ReadinessDimensions"
+        },
+        "dimensions": {
+          "$ref": "#/$defs/ReadinessDimensions"
+        },
+        "flags": {
+          "$ref": "#/$defs/ReadinessFlags"
+        },
+        "readiness_score": {
+          "title": "Readiness Score",
+          "type": "number"
+        },
+        "schema_version": {
+          "const": "ax-readiness-score-v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "stale_threshold_days": {
+          "title": "Stale Threshold Days",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schema_version",
+        "readiness_score",
+        "dimensions",
+        "dimension_weights",
+        "counts",
+        "as_of_date",
+        "stale_threshold_days",
+        "flags"
+      ],
+      "title": "ReadinessScore",
+      "type": "object"
+    },
+    "RedundancyCounts": {
+      "additionalProperties": false,
+      "properties": {
+        "exact_duplicate_groups": {
+          "title": "Exact Duplicate Groups",
+          "type": "integer"
+        },
+        "redundant_files": {
+          "title": "Redundant Files",
+          "type": "integer"
+        },
+        "total_files": {
+          "title": "Total Files",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "total_files",
+        "exact_duplicate_groups",
+        "redundant_files"
+      ],
+      "title": "RedundancyCounts",
+      "type": "object"
+    },
+    "SafetyCounts": {
+      "additionalProperties": false,
+      "properties": {
+        "files_without_detected_pii": {
+          "title": "Files Without Detected Pii",
+          "type": "integer"
+        },
+        "pii_affected_files": {
+          "title": "Pii Affected Files",
+          "type": "integer"
+        },
+        "total_files": {
+          "title": "Total Files",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "total_files",
+        "pii_affected_files",
+        "files_without_detected_pii"
+      ],
+      "title": "SafetyCounts",
+      "type": "object"
+    },
+    "TimelinessCounts": {
+      "additionalProperties": false,
+      "properties": {
+        "files_with_valid_modified_at": {
+          "title": "Files With Valid Modified At",
+          "type": "integer"
+        },
+        "future_timestamp_files": {
+          "title": "Future Timestamp Files",
+          "type": "integer"
+        },
+        "invalid_timestamp_files": {
+          "title": "Invalid Timestamp Files",
+          "type": "integer"
+        },
+        "missing_timestamp_files": {
+          "title": "Missing Timestamp Files",
+          "type": "integer"
+        },
+        "non_stale_files": {
+          "title": "Non Stale Files",
+          "type": "integer"
+        },
+        "stale_files": {
+          "title": "Stale Files",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "files_with_valid_modified_at",
+        "non_stale_files",
+        "stale_files",
+        "future_timestamp_files",
+        "missing_timestamp_files",
+        "invalid_timestamp_files"
+      ],
+      "title": "TimelinessCounts",
+      "type": "object"
+    },
+    "UnscoredObservation": {
+      "additionalProperties": false,
+      "description": "Static observation outside the frozen readiness score dimensions.",
+      "properties": {
+        "code": {
+          "examples": [
+            "PROBABLE_VERSION_GROUP"
+          ],
+          "minLength": 1,
+          "pattern": "^[A-Z][A-Z0-9_]*$",
+          "title": "Code",
+          "type": "string"
+        },
+        "file_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "File Ids",
+          "type": "array"
+        },
+        "message": {
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "warning",
+            "error"
+          ],
+          "title": "Severity",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "severity",
+        "message"
+      ],
+      "title": "UnscoredObservation",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "dataset": {
+      "title": "Dataset",
+      "type": "string"
+    },
+    "dataset_name": {
+      "title": "Dataset Name",
+      "type": "string"
+    },
+    "readiness": {
+      "$ref": "#/$defs/ReadinessScore"
+    },
+    "unscored_observations": {
+      "items": {
+        "$ref": "#/$defs/UnscoredObservation"
+      },
+      "title": "Unscored Observations",
+      "type": "array"
+    }
+  },
+  "required": [
+    "dataset",
+    "dataset_name",
+    "readiness",
+    "unscored_observations"
+  ],
+  "title": "ReadinessResponse",
+  "type": "object"
+}

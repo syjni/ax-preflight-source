@@ -1,0 +1,1302 @@
+{
+  "scan_metadata": {
+    "schema_version": "ax-scan-report-v1",
+    "scanner_version": "0.1.0",
+    "source_root_name": "before-accessibility-f1d1804d1aa6",
+    "supported_extensions": [
+      ".txt",
+      ".pdf",
+      ".docx",
+      ".csv",
+      ".xlsx"
+    ],
+    "ocr_min_chars_per_page": 20,
+    "file_count": 30,
+    "parsed_file_count": 29,
+    "unsupported_file_count": 0,
+    "error_file_count": 1,
+    "local_only": true,
+    "llm_dependency_required": false
+  },
+  "files": [
+    {
+      "file_id": "FILE_d5094868d77c1778",
+      "relative_path": "01_경영관리/2026_사업운영방침.docx",
+      "filename": "2026_사업운영방침.docx",
+      "extension": ".docx",
+      "size": 37023,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "6b37222c82a3e1aa669b5e0d78ac5094648e0f130bf9a155b8c8d60dfdf7b957",
+      "parse_status": "PARSED",
+      "parser": "docx",
+      "text": "2026 사업운영방침\n한빛유통은 거래처·상품·주문 식별자를 기준으로 영업과 물류 데이터를 연결합니다.\n운영 판단에는 승인된 마스터와 당일 재고 현황을 사용합니다.\n지표 | 2026 기준\n주문 기준 | 주문원장_2026\n재고 기준 | 재고현황_2026-09",
+      "text_char_count": 142,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "paragraph_count": 3,
+        "table_count": 1
+      }
+    },
+    {
+      "file_id": "FILE_f4883661ccd5ae02",
+      "relative_path": "01_경영관리/거래처_관리기준.pdf",
+      "filename": "거래처_관리기준.pdf",
+      "extension": ".pdf",
+      "size": 1495,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "28d4794876a79a2f14829c850df600d7fb57ad6fd430d29225e2eb497dea2aeb",
+      "parse_status": "PARSED",
+      "parser": "pdf",
+      "text": "Customer management standard\nUse the approved customer ID for sales and operations reporting.\nPayment terms are maintained in the customer master workbook.",
+      "text_char_count": 155,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "page_count": 1,
+        "non_whitespace_char_count": 134,
+        "ocr_threshold": 20
+      }
+    },
+    {
+      "file_id": "FILE_21662cf4f9e3a227",
+      "relative_path": "01_경영관리/월간_운영회의록_2026-08.txt",
+      "filename": "월간_운영회의록_2026-08.txt",
+      "extension": ".txt",
+      "size": 204,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "afd62117c24b4eb03c35ea00d0bf4bcfd32217bd23429c5e1a219e9243f1cb0d",
+      "parse_status": "PARSED",
+      "parser": "txt",
+      "text": "2026년 8월 운영회의록\n주문원장의 customer_id와 품목마스터의 product_id를 공통 운영 식별자로 사용한다.\n9월 재고 점검은 2026-09-21 기준 수량으로 진행한다.\n",
+      "text_char_count": 105,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig"
+      }
+    },
+    {
+      "file_id": "FILE_f19d3fff977e4a04",
+      "relative_path": "01_경영관리/조직_연락망.txt",
+      "filename": "조직_연락망.txt",
+      "extension": ".txt",
+      "size": 185,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "98a0908df9c4f3ff2de6a253ee6dc911848079e20b4653178599056a0f1f056f",
+      "parse_status": "PARSED",
+      "parser": "txt",
+      "text": "운영조직 역할 안내\n영업운영팀: 할인 승인과 거래처 기준 관리\n물류운영팀: 출고 요청과 재고 조정\n고객지원팀: 반품 접수와 고객 응대\n",
+      "text_char_count": 75,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig"
+      }
+    },
+    {
+      "file_id": "FILE_29d2ea0b6062d1fb",
+      "relative_path": "01_경영관리/회사소개_한빛유통.txt",
+      "filename": "회사소개_한빛유통.txt",
+      "extension": ".txt",
+      "size": 226,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "8a568e21dae1bcfacde4f16eb83bd791dde948da72696d46759eae9022e95c6b",
+      "parse_status": "PARSED",
+      "parser": "txt",
+      "text": "한빛유통은 수도권 소매 거래처에 식품·생활용품을 공급하는 직원 45명 규모의 유통기업입니다.\n기준일은 2026-09-21이며, 모든 운영 자료는 해당 기준일의 승인본입니다.\n",
+      "text_char_count": 97,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig"
+      }
+    },
+    {
+      "file_id": "FILE_d527640c55b31252",
+      "relative_path": "02_정책/반품_교환_정책_2026.docx",
+      "filename": "반품_교환_정책_2026.docx",
+      "extension": ".docx",
+      "size": 36855,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "04f6ce1df32f33a52ade0aea8a14e4565d6c5a5f9e595b7a80f673ba8f35edd4",
+      "parse_status": "PARSED",
+      "parser": "docx",
+      "text": "반품·교환 정책 2026\n반품 가능 기간은 구매일로부터 30일입니다.\n반품 대상 상품은 미개봉, 미사용, 재판매 가능 상태여야 하며 원본 영수증을 함께 제출해야 합니다.\n훼손되었거나 변경된 상품은 반품 대상이 아닙니다.",
+      "text_char_count": 122,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "paragraph_count": 4,
+        "table_count": 0
+      }
+    },
+    {
+      "file_id": "FILE_ad3f3bc4e0042cdf",
+      "relative_path": "02_정책/배송_지연_보상_2026.docx",
+      "filename": "배송_지연_보상_2026.docx",
+      "extension": ".docx",
+      "size": 36756,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "b0679759b829570c6979e7614cba807ec9e760999d40e40acf04ea0e5391ad65",
+      "parse_status": "PARSED",
+      "parser": "docx",
+      "text": "배송 지연 보상 정책 2026\n배송 지연 보상은 배송 지연이 3영업일을 초과하면 시작됩니다.\n승인된 보상은 적립금으로 제공합니다.",
+      "text_char_count": 72,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "paragraph_count": 3,
+        "table_count": 0
+      }
+    },
+    {
+      "file_id": "FILE_2e83f1278d225ef5",
+      "relative_path": "02_정책/신규거래처_등록_절차.docx",
+      "filename": "신규거래처_등록_절차.docx",
+      "extension": ".docx",
+      "size": 36810,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "ec5499f30957d44ddc2218049585c2332e65b56b6d324031e86e53785326fb1a",
+      "parse_status": "PARSED",
+      "parser": "docx",
+      "text": "신규 거래처 등록 절차\n신규 거래처는 거래처마스터에서 customer_id를 발급받은 뒤 주문을 등록합니다.\n동일 상호의 중복 등록 여부와 결제조건을 영업운영팀이 확인합니다.",
+      "text_char_count": 97,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "paragraph_count": 3,
+        "table_count": 0
+      }
+    },
+    {
+      "file_id": "FILE_2b32039c2c5d02a2",
+      "relative_path": "02_정책/재고_조정_절차.txt",
+      "filename": "재고_조정_절차.txt",
+      "extension": ".txt",
+      "size": 246,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "964842e7ed4e3bdd233ba32c04bb165328ac5a63de71733e92bf1b07ad06fb51",
+      "parse_status": "PARSED",
+      "parser": "txt",
+      "text": "재고 조정 절차\n실사 차이가 확인되면 물류운영팀이 재고 조정 요청서를 작성한다.\n안전재고 이하 품목은 발주 검토 목록에 올리고, 승인 전에는 가용수량을 임의로 변경하지 않는다.\n",
+      "text_char_count": 99,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig"
+      }
+    },
+    {
+      "file_id": "FILE_0e78131fc8789e0c",
+      "relative_path": "02_정책/할인_승인_규정.docx",
+      "filename": "할인_승인_규정.docx",
+      "extension": ".docx",
+      "size": 36814,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "173beb03c435728a4461b22a23cd2e535c485c63b2af7465dcbc41c8f6c8f083",
+      "parse_status": "PARSED",
+      "parser": "docx",
+      "text": "할인 승인 규정\n주문금액이 1,000,000원 이상인 개별 할인 요청은 영업운영팀장의 승인을 받아야 합니다.\n승인 후 할인코드를 주문 메모가 아닌 주문 시스템의 승인 필드에 기록합니다.",
+      "text_char_count": 103,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "paragraph_count": 3,
+        "table_count": 0
+      }
+    },
+    {
+      "file_id": "FILE_79c849b8a094119f",
+      "relative_path": "03_영업/거래처_마스터.xlsx",
+      "filename": "거래처_마스터.xlsx",
+      "extension": ".xlsx",
+      "size": 5497,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "0f8ae595489516ca277fb74a24863384c0f67ade352f9c742cc69d4785dd8ddb",
+      "parse_status": "PARSED",
+      "parser": "xlsx",
+      "text": "customer_id | customer_name | sales_tier | city | payment_terms\nC001 | 한빛상사 | A | 서울 | 30일\nC002 | 새봄마트 | B | 성남 | 30일\nC003 | 동해상사 | A | 인천 | 45일\nC004 | 미래식품 | B | 수원 | 30일\nC005 | 그린테이블 | B | 고양 | 30일\nC006 | 윤성마트 | C | 용인 | 15일\nC007 | 아람리빙 | A | 서울 | 45일\nC008 | 행복상점 | C | 의정부 | 15일\nC009 | 다온유통 | B | 부천 | 30일\nC010 | 새길상회 | C | 안양 | 15일",
+      "text_char_count": 335,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "sheet_count": 1
+      }
+    },
+    {
+      "file_id": "FILE_632150f2958223ec",
+      "relative_path": "03_영업/영업_운영_안내.txt",
+      "filename": "영업_운영_안내.txt",
+      "extension": ".txt",
+      "size": 237,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "a7724663963825b8a71e72d2731707204e664c0e6dcac04bae18484494be7ca5",
+      "parse_status": "PARSED",
+      "parser": "txt",
+      "text": "영업 운영 안내\n거래처명으로 주문을 조회할 때에는 먼저 거래처마스터에서 customer_id를 확인한다.\n상품명으로 재고를 확인할 때에는 먼저 품목마스터에서 product_id를 확인한다.\n",
+      "text_char_count": 106,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig"
+      }
+    },
+    {
+      "file_id": "FILE_0a1b067e7c4c082a",
+      "relative_path": "03_영업/월별_매출목표_2026.xlsx",
+      "filename": "월별_매출목표_2026.xlsx",
+      "extension": ".xlsx",
+      "size": 5219,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "9c0d1e0bb81e8d56f9c28f5b20946b68fadbd0b88d27fcb03569c8a916259fe4",
+      "parse_status": "PARSED",
+      "parser": "xlsx",
+      "text": "month | sales_target | gross_margin_target\n2026-01 | 83500000 | 0.31\n2026-02 | 85000000 | 0.31\n2026-03 | 86500000 | 0.31\n2026-04 | 88000000 | 0.31\n2026-05 | 89500000 | 0.31\n2026-06 | 91000000 | 0.31\n2026-07 | 92500000 | 0.31\n2026-08 | 94000000 | 0.31\n2026-09 | 95500000 | 0.31\n2026-10 | 97000000 | 0.31\n2026-11 | 98500000 | 0.31\n2026-12 | 100000000 | 0.31",
+      "text_char_count": 355,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "sheet_count": 1
+      }
+    },
+    {
+      "file_id": "FILE_b13eb6275d0074df",
+      "relative_path": "03_영업/품목_마스터.csv",
+      "filename": "품목_마스터.csv",
+      "extension": ".csv",
+      "size": 621,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "347c22d71df4082a9f021005097b46cd54f8d1e729489c601b5904afc4744c44",
+      "parse_status": "PARSED",
+      "parser": "csv",
+      "text": "product_id | product_name | category | unit_price | standard_cost\nP001 | 무가당 현미차 20입 | 음료 | 9800 | 5100\nP002 | 저온착즙 사과주스 | 음료 | 24000 | 13300\nP003 | 프리미엄 홍차 세트 | 선물 | 46500 | 25900\nP004 | 국산 들기름 180ml | 식품 | 17800 | 9900\nP005 | 유기농 그래놀라 | 식품 | 12900 | 6900\nP006 | 천연 수세미 3입 | 생활 | 8600 | 4100\nP007 | 대나무 키친타월 | 생활 | 15200 | 8100\nP008 | 냉동 블루베리 1kg | 식품 | 19800 | 11200\nP009 | 제주 감귤칩 | 간식 | 11300 | 5900\nP010 | 수제 비누 선물세트 | 선물 | 32500 | 17500\nP011 | 저자극 세탁세제 | 생활 | 21900 | 12100\nP012 | 콜드브루 원액 | 음료 | 14500 | 7700",
+      "text_char_count": 513,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig",
+        "delimiter": ","
+      }
+    },
+    {
+      "file_id": "FILE_e08b2235c12f49d6",
+      "relative_path": "03_영업/할인코드_정의.csv",
+      "filename": "할인코드_정의.csv",
+      "extension": ".csv",
+      "size": 146,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "672144effb2b791cbc2ddb2941337404cf37f034c7d05a89baeb8d1c7911ae85",
+      "parse_status": "PARSED",
+      "parser": "csv",
+      "text": "discount_code | discount_name | discount_rate | approval_required\nDISC05 | 정기거래처 | 0.05 | N\nDISC10 | 계절행사 | 0.1 | Y\nDISC15 | 대량주문 | 0.15 | Y",
+      "text_char_count": 140,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig",
+        "delimiter": ","
+      }
+    },
+    {
+      "file_id": "FILE_2ffce1c25d807d62",
+      "relative_path": "04_주문/8월_주문_검토.pdf",
+      "filename": "8월_주문_검토.pdf",
+      "extension": ".pdf",
+      "size": 1465,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "fb8e5da70f1bcfaf3971dd14e0ca3e739bddb7a8ca4fda7ffb707935572e7051",
+      "parse_status": "PARSED",
+      "parser": "pdf",
+      "text": "August 2026 order review\nRecorded August order amount: KRW 6,876,900.\nDetailed evidence remains in the approved order ledger.",
+      "text_char_count": 125,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "page_count": 1,
+        "non_whitespace_char_count": 108,
+        "ocr_threshold": 20
+      }
+    },
+    {
+      "file_id": "FILE_66a46d7e2186df99",
+      "relative_path": "04_주문/반품_원장_2026.csv",
+      "filename": "반품_원장_2026.csv",
+      "extension": ".csv",
+      "size": 1844,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "727db2884c7bb942d0e8e91b737aa962ec72e2d7339cf476b5aebfb4fce5518f",
+      "parse_status": "PARSED",
+      "parser": "csv",
+      "text": "return_id | order_id | customer_id | product_id | return_date | returned_qty | shipped_qty | return_reason\nR0501 | O1014 | C010 | P001 | 2026-07-04 | 2 | 17 | 품질문의\nR0502 | O1030 | C004 | P001 | 2026-06-07 | 1 | 1 | 파손\nR0503 | O1031 | C001 | P012 | 2026-06-04 | 2 | 19 | 오배송\nR0504 | O1036 | C005 | P002 | 2026-06-28 | 2 | 11 | 오배송\nR0505 | O1047 | C004 | P012 | 2026-06-23 | 1 | 9 | 품질문의\nR0506 | O1055 | C007 | P003 | 2026-07-11 | 1 | 4 | 품질문의\nR0507 | O1058 | C002 | P001 | 2026-09-06 | 2 | 9 | 단순변심\nR0508 | O1059 | C003 | P010 | 2026-08-22 | 1 | 8 | 단순변심\nR0509 | O1064 | C006 | P007 | 2026-06-22 | 1 | 8 | 오배송\nR0510 | O1068 | C009 | P007 | 2026-05-09 | 1 | 2 | 파손\nR0511 | O1069 | C002 | P009 | 2026-05-19 | 1 | 7 | 파손\nR0512 | O1072 | C004 | P005 | 2026-07-07 | 1 | 25 | 단순변심\nR0513 | O1086 | C002 | P009 | 2026-05-27 | 1 | 4 | 오배송\nR0514 | O1092 | C002 | P002 | 2026-09-07 | 3 | 20 | 품질문의\nR0515 | O1095 | C010 | P008 | 2026-05-31 | 1 | 19 | 단순변심\nR0516 | O1100 | C008 | P010 | 2026-06-01 | 2 | 9 | 품질문의\nR0517 | O1102 | C001 | P008 | 2026-07-09 | 1 | 1 | 품질문의\nR0518 | O1104 | C001 | P012 | 2026-07-31 | 1 | 7 | 단순변심\nR0519 | O1106 | C003 | P010 | 2026-09-01 | 2 | 8 | 파손\nR0520 | O1108 | C008 | P001 | 2026-07-16 | 1 | 4 | 단순변심\nR0521 | O1115 | C001 | P004 | 2026-09-05 | 1 | 6 | 품질문의\nR0522 | O1118 | C002 | P012 | 2026-06-17 | 1 | 13 | 단순변심\nR0523 | O1119 | C005 | P012 | 2026-08-05 | 1 | 9 | 오배송\nR0524 | O1130 | C008 | P002 | 2026-09-20 | 1 | 9 | 품질문의\nR0525 | O1134 | C009 | P007 | 2026-06-23 | 1 | 4 | 오배송\nR0526 | O1136 | C009 | P011 | 2026-09-07 | 2 | 8 | 품질문의\nR0527 | O1140 | C010 | P006 | 2026-05-09 | 1 | 11 | 오배송\nR0528 | O1145 | C002 | P001 | 2026-09-03 | 1 | 4 | 파손\nR0529 | O1148 | C010 | P001 | 2026-08-19 | 1 | 6 | 오배송\nR0530 | O1157 | C001 | P001 | 2026-05-19 | 1 | 9 | 파손\nR0531 | O1161 | C006 | P006 | 2026-07-25 | 3 | 15 | 품질문의\nR0532 | O1167 | C002 | P009 | 2026-07-27 | 1 | 3 | 단순변심\nR0533 | O1169 | C002 | P009 | 2026-05-08 | 4 | 25 | 오배송\nR0534 | O1171 | C001 | P002 | 2026-05-13 | 1 | 8 | 품질문의\nR0535 | O1172 | C004 | P001 | 2026-07-27 | 1 | 6 | 품질문의\nR0536 | O1174 | C004 | P001 | 2026-08-02 | 3 | 18 | 품질문의",
+      "text_char_count": 2112,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig",
+        "delimiter": ","
+      }
+    },
+    {
+      "file_id": "FILE_27cec7fb6cde6169",
+      "relative_path": "04_주문/주문_상태_기준.txt",
+      "filename": "주문_상태_기준.txt",
+      "extension": ".txt",
+      "size": 218,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "8f4aa2570997cb6be520efb1618fa9bb3c14ef417a583f54f2be979171cfb93a",
+      "parse_status": "PARSED",
+      "parser": "txt",
+      "text": "주문 상태 기준\n주문확정: 결제와 재고 예약이 완료된 주문\n출고완료: 창고에서 출고 요청이 완료된 주문\n취소: 출고 전 고객 요청 또는 승인 오류로 취소된 주문\n",
+      "text_char_count": 90,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig"
+      }
+    },
+    {
+      "file_id": "FILE_950a2b2ed909ef4c",
+      "relative_path": "04_주문/주문_원장_2026.xlsx",
+      "filename": "주문_원장_2026.xlsx",
+      "extension": ".xlsx",
+      "size": 12264,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "8b3ebc1c4d7a8caa87c7664d8f80772e70b1348c89dd38cb7b6365664dedf789",
+      "parse_status": "PARSED",
+      "parser": "xlsx",
+      "text": "order_id | customer_id | product_id | order_date | quantity | unit_price | amount | order_status\nO1169 | C002 | P009 | 2026-05-01 | 25 | 11300 | 282500 | 출고완료\nO1068 | C009 | P007 | 2026-05-02 | 2 | 15200 | 30400 | 출고완료\nO1091 | C005 | P004 | 2026-05-02 | 10 | 17800 | 178000 | 출고완료\nO1140 | C010 | P006 | 2026-05-02 | 11 | 8600 | 94600 | 출고완료\nO1089 | C010 | P005 | 2026-05-04 | 7 | 12900 | 90300 | 출고완료\nO1139 | C007 | P006 | 2026-05-06 | 6 | 8600 | 51600 | 출고완료\nO1171 | C001 | P002 | 2026-05-06 | 8 | 24000 | 192000 | 출고완료\nO1151 | C007 | P008 | 2026-05-07 | 5 | 19800 | 99000 | 출고완료\nO1004 | C005 | P007 | 2026-05-08 | 4 | 15200 | 60800 | 출고완료\nO1144 | C007 | P001 | 2026-05-08 | 6 | 9800 | 58800 | 출고완료\nO1176 | C010 | P012 | 2026-05-08 | 4 | 14500 | 58000 | 출고완료\nO1083 | C003 | P004 | 2026-05-11 | 7 | 17800 | 124600 | 출고완료\nO1069 | C002 | P009 | 2026-05-12 | 7 | 11300 | 79100 | 출고완료\nO1097 | C002 | P009 | 2026-05-12 | 6 | 11300 | 67800 | 출고완료\nO1157 | C001 | P001 | 2026-05-12 | 9 | 9800 | 88200 | 출고완료\nO1170 | C002 | P002 | 2026-05-12 | 7 | 24000 | 168000 | 출고완료\nO1019 | C007 | P002 | 2026-05-14 | 9 | 24000 | 216000 | 출고완료\nO1107 | C009 | P003 | 2026-05-14 | 2 | 46500 | 93000 | 출고완료\nO1041 | C007 | P004 | 2026-05-15 | 3 | 17800 | 53400 | 출고완료\nO1153 | C003 | P012 | 2026-05-16 | 38 | 14500 | 551000 | 출고완료\nO1154 | C001 | P001 | 2026-05-17 | 6 | 9800 | 58800 | 출고완료\nO1056 | C001 | P012 | 2026-05-18 | 19 | 14500 | 275500 | 출고완료\nO1086 | C002 | P009 | 2026-05-20 | 4 | 11300 | 45200 | 출고완료\nO1112 | C003 | P009 | 2026-05-20 | 6 | 11300 | 67800 | 출고완료\nO1095 | C010 | P008 | 2026-05-24 | 19 | 19800 | 376200 | 출고완료\nO1038 | C001 | P005 | 2026-05-25 | 4 | 12900 | 51600 | 출고완료\nO1049 | C005 | P001 | 2026-05-25 | 8 | 9800 | 78400 | 출고완료\nO1100 | C008 | P010 | 2026-05-25 | 9 | 32500 | 292500 | 출고완료\nO1146 | C009 | P001 | 2026-05-26 | 12 | 9800 | 117600 | 출고완료\nO1037 | C010 | P010 | 2026-05-27 | 8 | 32500 | 260000 | 출고완료\nO1031 | C001 | P012 | 2026-05-28 | 19 | 14500 | 275500 | 출고완료\nO1021 | C007 | P011 | 2026-05-30 | 17 | 21900 | 372300 | 출고완료\nO1028 | C009 | P010 | 2026-05-31 | 12 | 32500 | 390000 | 출고완료\nO1030 | C004 | P001 | 2026-05-31 | 1 | 9800 | 9800 | 출고완료\nO1006 | C001 | P011 | 2026-06-02 | 8 | 21900 | 175200 | 출고완료\nO1040 | C009 | P002 | 2026-06-03 | 8 | 24000 | 192000 | 출고완료\nO1094 | C010 | P012 | 2026-06-05 | 16 | 14500 | 232000 | 출고완료\nO1120 | C009 | P004 | 2026-06-05 | 6 | 17800 | 106800 | 출고완료\nO1039 | C006 | P009 | 2026-06-07 | 2 | 11300 | 22600 | 출고완료\nO1088 | C002 | P009 | 2026-06-07 | 9 | 11300 | 101700 | 출고완료\nO1117 | C008 | P012 | 2026-06-07 | 4 | 14500 | 58000 | 출고완료\nO1054 | C005 | P001 | 2026-06-08 | 7 | 9800 | 68600 | 출고완료\nO1124 | C004 | P006 | 2026-06-08 | 8 | 8600 | 68800 | 출고완료\nO1132 | C003 | P004 | 2026-06-08 | 7 | 17800 | 124600 | 출고완료\nO1015 | C003 | P008 | 2026-06-09 | 6 | 19800 | 118800 | 출고완료\nO1043 | C001 | P005 | 2026-06-09 | 3 | 12900 | 38700 | 출고완료\nO1085 | C004 | P005 | 2026-06-09 | 18 | 12900 | 232200 | 출고완료\nO1012 | C010 | P002 | 2026-06-10 | 4 | 24000 | 96000 | 출고완료\nO1033 | C007 | P011 | 2026-06-10 | 6 | 21900 | 131400 | 출고완료\nO1118 | C002 | P012 | 2026-06-10 | 13 | 14500 | 188500 | 출고완료\nO1050 | C009 | P010 | 2026-06-11 | 11 | 32500 | 357500 | 출고완료\nO1060 | C009 | P001 | 2026-06-12 | 7 | 9800 | 68600 | 출고완료\nO1071 | C005 | P012 | 2026-06-12 | 4 | 14500 | 58000 | 출고완료\nO1008 | C007 | P008 | 2026-06-13 | 10 | 19800 | 198000 | 출고완료\nO1129 | C003 | P003 | 2026-06-14 | 14 | 46500 | 651000 | 출고완료\nO1064 | C006 | P007 | 2026-06-15 | 8 | 15200 | 121600 | 출고완료\nO1111 | C004 | P002 | 2026-06-15 | 11 | 24000 | 264000 | 출고완료\nO1047 | C004 | P012 | 2026-06-16 | 9 | 14500 | 130500 | 출고완료\nO1134 | C009 | P007 | 2026-06-16 | 4 | 15200 | 60800 | 출고완료\nO1156 | C001 | P001 | 2026-06-18 | 17 | 9800 | 166600 | 출고완료\nO1045 | C005 | P010 | 2026-06-20 | 9 | 32500 | 292500 | 출고완료\nO1036 | C005 | P002 | 2026-06-21 | 11 | 24000 | 264000 | 출고완료\nO1141 | C007 | P004 | 2026-06-23 | 7 | 17800 | 124600 | 출고완료\nO1114 | C007 | P009 | 2026-06-24 | 12 | 11300 | 135600 | 출고완료\nO1147 | C009 | P005 | 2026-06-24 | 6 | 12900 | 77400 | 출고완료\nO1125 | C002 | P001 | 2026-06-25 | 15 | 9800 | 147000 | 출고완료\nO1014 | C010 | P001 | 2026-06-27 | 17 | 9800 | 166600 | 출고완료\nO1029 | C009 | P006 | 2026-06-27 | 10 | 8600 | 86000 | 출고완료\nO1122 | C001 | P010 | 2026-06-28 | 4 | 32500 | 130000 | 출고완료\nO1072 | C004 | P005 | 2026-06-30 | 25 | 12900 | 322500 | 출고완료\nO1160 | C010 | P006 | 2026-06-30 | 15 | 8600 | 129000 | 출고완료\nO1001 | C001 | P001 | 2026-07-01 | 2 | 9800 | 19600 | 출고완료\nO1133 | C008 | P011 | 2026-07-01 | 20 | 21900 | 438000 | 출고완료\nO1102 | C001 | P008 | 2026-07-02 | 1 | 19800 | 19800 | 출고완료\nO1166 | C004 | P004 | 2026-07-02 | 3 | 17800 | 53400 | 출고완료\nO1055 | C007 | P003 | 2026-07-04 | 4 | 46500 | 186000 | 출고완료\nO1096 | C007 | P005 | 2026-07-05 | 11 | 12900 | 141900 | 출고완료\nO1066 | C004 | P001 | 2026-07-06 | 8 | 9800 | 78400 | 출고완료\nO1074 | C005 | P008 | 2026-07-06 | 2 | 19800 | 39600 | 출고완료\nO1078 | C006 | P007 | 2026-07-06 | 12 | 15200 | 182400 | 출고완료\nO1013 | C003 | P012 | 2026-07-07 | 24 | 14500 | 348000 | 출고완료\nO1080 | C001 | P008 | 2026-07-07 | 23 | 19800 | 455400 | 출고완료\nO1087 | C001 | P009 | 2026-07-07 | 20 | 11300 | 226000 | 출고완료\nO1110 | C001 | P008 | 2026-07-07 | 4 | 19800 | 79200 | 출고완료\nO1108 | C008 | P001 | 2026-07-09 | 4 | 9800 | 39200 | 출고완료\nO1128 | C001 | P004 | 2026-07-09 | 9 | 17800 | 160200 | 출고완료\nO1135 | C010 | P002 | 2026-07-09 | 10 | 24000 | 240000 | 출고완료\nO1018 | C009 | P007 | 2026-07-12 | 5 | 15200 | 76000 | 출고완료\nO1003 | C007 | P005 | 2026-07-13 | 11 | 12900 | 141900 | 출고완료\nO1005 | C010 | P006 | 2026-07-13 | 15 | 8600 | 129000 | 출고완료\nO1149 | C004 | P002 | 2026-07-13 | 5 | 24000 | 120000 | 출고완료\nO1061 | C004 | P006 | 2026-07-15 | 9 | 8600 | 77400 | 출고완료\nO1062 | C010 | P007 | 2026-07-15 | 9 | 15200 | 136800 | 출고완료\nO1073 | C005 | P012 | 2026-07-16 | 20 | 14500 | 290000 | 출고완료\nO1161 | C006 | P006 | 2026-07-18 | 15 | 8600 | 129000 | 출고완료\nO1044 | C003 | P004 | 2026-07-19 | 2 | 17800 | 35600 | 출고완료\nO1065 | C001 | P001 | 2026-07-20 | 10 | 9800 | 98000 | 출고완료\nO1167 | C002 | P009 | 2026-07-20 | 3 | 11300 | 33900 | 출고완료\nO1172 | C004 | P001 | 2026-07-20 | 6 | 9800 | 58800 | 출고완료\nO1155 | C009 | P003 | 2026-07-21 | 5 | 46500 | 232500 | 출고완료\nO1121 | C001 | P008 | 2026-07-22 | 10 | 19800 | 198000 | 출고완료\nO1104 | C001 | P012 | 2026-07-24 | 7 | 14500 | 101500 | 출고완료\nO1143 | C007 | P002 | 2026-07-26 | 8 | 24000 | 192000 | 출고완료\nO1174 | C004 | P001 | 2026-07-26 | 18 | 9800 | 176400 | 출고완료\nO1119 | C005 | P012 | 2026-07-29 | 9 | 14500 | 130500 | 출고완료\nO1180 | C002 | P004 | 2026-07-29 | 5 | 17800 | 89000 | 출고완료\nO1123 | C002 | P001 | 2026-07-30 | 8 | 9800 | 78400 | 출고완료\nO1152 | C009 | P005 | 2026-07-31 | 25 | 12900 | 322500 | 출고완료\nO1105 | C009 | P007 | 2026-08-01 | 3 | 15200 | 45600 | 출고완료\nO1131 | C010 | P005 | 2026-08-02 | 8 | 12900 | 103200 | 출고완료\nO1079 | C010 | P008 | 2026-08-03 | 2 | 19800 | 39600 | 출고완료\nO1002 | C003 | P008 | 2026-08-06 | 6 | 19800 | 118800 | 출고완료\nO1009 | C001 | P010 | 2026-08-06 | 9 | 32500 | 292500 | 출고완료\nO1011 | C001 | P001 | 2026-08-06 | 18 | 9800 | 176400 | 출고완료\nO1023 | C003 | P008 | 2026-08-06 | 25 | 19800 | 495000 | 출고완료\nO1103 | C005 | P007 | 2026-08-08 | 3 | 15200 | 45600 | 출고완료\nO1179 | C005 | P009 | 2026-08-09 | 4 | 11300 | 45200 | 출고완료\nO1025 | C009 | P005 | 2026-08-10 | 8 | 12900 | 103200 | 출고완료\nO1081 | C009 | P009 | 2026-08-10 | 9 | 11300 | 101700 | 출고완료\nO1034 | C003 | P007 | 2026-08-11 | 27 | 15200 | 410400 | 출고완료\nO1138 | C009 | P004 | 2026-08-11 | 5 | 17800 | 89000 | 출고완료\nO1162 | C007 | P002 | 2026-08-11 | 13 | 24000 | 312000 | 출고완료\nO1017 | C004 | P008 | 2026-08-12 | 17 | 19800 | 336600 | 출고완료\nO1076 | C003 | P005 | 2026-08-12 | 4 | 12900 | 51600 | 출고완료\nO1148 | C010 | P001 | 2026-08-12 | 6 | 9800 | 58800 | 출고완료\nO1059 | C003 | P010 | 2026-08-15 | 8 | 32500 | 260000 | 출고완료\nO1042 | C010 | P010 | 2026-08-16 | 8 | 32500 | 260000 | 출고완료\nO1084 | C002 | P012 | 2026-08-16 | 9 | 14500 | 130500 | 출고완료\nO1158 | C007 | P001 | 2026-08-16 | 5 | 9800 | 49000 | 출고완료\nO1007 | C007 | P007 | 2026-08-17 | 9 | 15200 | 136800 | 출고완료\nO1163 | C002 | P012 | 2026-08-17 | 4 | 14500 | 58000 | 출고완료\nO1024 | C003 | P005 | 2026-08-21 | 16 | 12900 | 206400 | 출고완료\nO1067 | C006 | P009 | 2026-08-22 | 11 | 11300 | 124300 | 출고완료\nO1113 | C005 | P012 | 2026-08-22 | 17 | 14500 | 246500 | 출고완료\nO1150 | C008 | P001 | 2026-08-22 | 9 | 9800 | 88200 | 출고완료\nO1159 | C003 | P007 | 2026-08-22 | 16 | 15200 | 243200 | 출고완료\nO1164 | C003 | P007 | 2026-08-24 | 17 | 15200 | 258400 | 출고완료\nO1048 | C003 | P004 | 2026-08-25 | 1 | 17800 | 17800 | 출고완료\nO1053 | C004 | P012 | 2026-08-25 | 8 | 14500 | 116000 | 출고완료\nO1106 | C003 | P010 | 2026-08-25 | 8 | 32500 | 260000 | 출고완료\nO1051 | C005 | P006 | 2026-08-26 | 9 | 8600 | 77400 | 출고완료\nO1075 | C001 | P004 | 2026-08-26 | 3 | 17800 | 53400 | 출고완료\nO1052 | C007 | P002 | 2026-08-27 | 5 | 24000 | 120000 | 출고완료\nO1142 | C010 | P012 | 2026-08-27 | 5 | 14500 | 72500 | 출고완료\nO1145 | C002 | P001 | 2026-08-27 | 4 | 9800 | 39200 | 출고완료\nO1126 | C003 | P006 | 2026-08-28 | 1 | 8600 | 8600 | 출고완료\nO1010 | C003 | P002 | 2026-08-29 | 3 | 24000 | 72000 | 출고완료\nO1098 | C003 | P006 | 2026-08-29 | 4 | 8600 | 34400 | 출고완료\nO1115 | C001 | P004 | 2026-08-29 | 6 | 17800 | 106800 | 출고완료\nO1058 | C002 | P001 | 2026-08-30 | 9 | 9800 | 88200 | 출고완료\nO1090 | C003 | P008 | 2026-08-30 | 6 | 19800 | 118800 | 출고완료\nO1020 | C006 | P001 | 2026-08-31 | 14 | 9800 | 137200 | 출고완료\nO1092 | C002 | P002 | 2026-08-31 | 20 | 24000 | 480000 | 출고완료\nO1127 | C001 | P005 | 2026-08-31 | 1 | 12900 | 12900 | 출고완료\nO1136 | C009 | P011 | 2026-08-31 | 8 | 21900 | 175200 | 출고완료\nO1077 | C001 | P010 | 2026-09-01 | 16 | 32500 | 520000 | 출고완료\nO1099 | C006 | P007 | 2026-09-01 | 6 | 15200 | 91200 | 출고완료\nO1168 | C006 | P008 | 2026-09-03 | 7 | 19800 | 138600 | 출고완료\nO1032 | C005 | P002 | 2026-09-04 | 8 | 24000 | 192000 | 출고완료\nO1165 | C004 | P005 | 2026-09-04 | 24 | 12900 | 309600 | 출고완료\nO1178 | C001 | P002 | 2026-09-05 | 12 | 24000 | 288000 | 출고완료\nO1027 | C001 | P012 | 2026-09-07 | 7 | 14500 | 101500 | 출고완료\nO1177 | C005 | P001 | 2026-09-08 | 4 | 9800 | 39200 | 출고완료\nO1093 | C009 | P004 | 2026-09-09 | 9 | 17800 | 160200 | 출고완료\nO1109 | C004 | P002 | 2026-09-09 | 15 | 24000 | 360000 | 출고완료\nO1116 | C008 | P006 | 2026-09-10 | 11 | 8600 | 94600 | 출고완료\nO1082 | C001 | P001 | 2026-09-11 | 8 | 9800 | 78400 | 출고완료\nO1046 | C003 | P011 | 2026-09-12 | 27 | 21900 | 591300 | 출고완료\nO1070 | C009 | P006 | 2026-09-13 | 8 | 8600 | 68800 | 주문확정\nO1130 | C008 | P002 | 2026-09-13 | 9 | 24000 | 216000 | 주문확정\nO1137 | C001 | P005 | 2026-09-13 | 18 | 12900 | 232200 | 주문확정\nO1022 | C002 | P004 | 2026-09-15 | 13 | 17800 | 231400 | 주문확정\nO1016 | C002 | P001 | 2026-09-16 | 3 | 9800 | 29400 | 주문확정\nO1175 | C006 | P008 | 2026-09-16 | 8 | 19800 | 158400 | 주문확정\nO1057 | C004 | P007 | 2026-09-17 | 5 | 15200 | 76000 | 주문확정\nO1063 | C008 | P002 | 2026-09-17 | 14 | 24000 | 336000 | 주문확정\nO1026 | C007 | P001 | 2026-09-19 | 4 | 9800 | 39200 | 주문확정\nO1173 | C007 | P009 | 2026-09-19 | 9 | 11300 | 101700 | 주문확정\nO1035 | C001 | P002 | 2026-09-21 | 3 | 24000 | 72000 | 주문확정\nO1101 | C010 | P010 | 2026-09-21 | 14 | 32500 | 455000 | 주문확정",
+      "text_char_count": 11020,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "sheet_count": 1
+      }
+    },
+    {
+      "file_id": "FILE_b6c224f007768417",
+      "relative_path": "04_주문/출고_요청_2026.xlsx",
+      "filename": "출고_요청_2026.xlsx",
+      "extension": ".xlsx",
+      "size": 7075,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "4720da8d2c92c7d42dbf6a4fe0828a61a043ab6e2efb92e5da97b11923a88661",
+      "parse_status": "PARSED",
+      "parser": "xlsx",
+      "text": "request_id | order_id | warehouse_code | requested_ship_date | status\nS0801 | O1105 | WH-SEOUL | 2026-08-01 | 출고완료\nS0802 | O1131 | WH-SEOUL | 2026-08-02 | 출고완료\nS0803 | O1079 | WH-ICN | 2026-08-03 | 출고완료\nS0804 | O1002 | WH-ICN | 2026-08-06 | 출고완료\nS0805 | O1009 | WH-ICN | 2026-08-06 | 출고완료\nS0806 | O1011 | WH-SEOUL | 2026-08-06 | 출고완료\nS0807 | O1023 | WH-ICN | 2026-08-06 | 출고완료\nS0808 | O1103 | WH-SEOUL | 2026-08-08 | 출고완료\nS0809 | O1179 | WH-ICN | 2026-08-09 | 출고완료\nS0810 | O1025 | WH-SEOUL | 2026-08-10 | 출고완료\nS0811 | O1081 | WH-ICN | 2026-08-10 | 출고완료\nS0812 | O1034 | WH-SEOUL | 2026-08-11 | 출고완료\nS0813 | O1138 | WH-SEOUL | 2026-08-11 | 출고완료\nS0814 | O1162 | WH-SEOUL | 2026-08-11 | 출고완료\nS0815 | O1017 | WH-ICN | 2026-08-12 | 출고완료\nS0816 | O1076 | WH-SEOUL | 2026-08-12 | 출고완료\nS0817 | O1148 | WH-SEOUL | 2026-08-12 | 출고완료\nS0818 | O1059 | WH-ICN | 2026-08-15 | 출고완료\nS0819 | O1042 | WH-ICN | 2026-08-16 | 출고완료\nS0820 | O1084 | WH-ICN | 2026-08-16 | 출고완료\nS0821 | O1158 | WH-SEOUL | 2026-08-16 | 출고완료\nS0822 | O1007 | WH-SEOUL | 2026-08-17 | 출고완료\nS0823 | O1163 | WH-ICN | 2026-08-17 | 출고완료\nS0824 | O1024 | WH-SEOUL | 2026-08-21 | 출고완료\nS0825 | O1067 | WH-ICN | 2026-08-22 | 출고완료\nS0826 | O1113 | WH-ICN | 2026-08-22 | 출고완료\nS0827 | O1150 | WH-SEOUL | 2026-08-22 | 출고완료\nS0828 | O1159 | WH-SEOUL | 2026-08-22 | 출고완료\nS0829 | O1164 | WH-SEOUL | 2026-08-24 | 출고완료\nS0830 | O1048 | WH-SEOUL | 2026-08-25 | 출고완료\nS0831 | O1053 | WH-ICN | 2026-08-25 | 출고완료\nS0832 | O1106 | WH-ICN | 2026-08-25 | 출고완료\nS0833 | O1051 | WH-SEOUL | 2026-08-26 | 출고완료\nS0834 | O1075 | WH-SEOUL | 2026-08-26 | 출고완료\nS0835 | O1052 | WH-SEOUL | 2026-08-27 | 출고완료\nS0836 | O1142 | WH-ICN | 2026-08-27 | 출고완료\nS0837 | O1145 | WH-SEOUL | 2026-08-27 | 출고완료\nS0838 | O1126 | WH-SEOUL | 2026-08-28 | 출고완료\nS0839 | O1010 | WH-SEOUL | 2026-08-29 | 출고완료\nS0840 | O1098 | WH-SEOUL | 2026-08-29 | 출고완료\nS0841 | O1115 | WH-SEOUL | 2026-08-29 | 출고완료\nS0842 | O1058 | WH-SEOUL | 2026-08-30 | 출고완료\nS0843 | O1090 | WH-ICN | 2026-08-30 | 출고완료\nS0844 | O1020 | WH-SEOUL | 2026-08-31 | 출고완료\nS0845 | O1092 | WH-SEOUL | 2026-08-31 | 출고완료\nS0846 | O1127 | WH-SEOUL | 2026-08-31 | 출고완료\nS0847 | O1136 | WH-ICN | 2026-08-31 | 출고완료\nS0848 | O1077 | WH-ICN | 2026-09-01 | 출고완료\nS0849 | O1099 | WH-SEOUL | 2026-09-01 | 출고완료\nS0850 | O1168 | WH-ICN | 2026-09-03 | 출고완료\nS0851 | O1032 | WH-SEOUL | 2026-09-04 | 출고완료\nS0852 | O1165 | WH-SEOUL | 2026-09-04 | 출고완료\nS0853 | O1178 | WH-SEOUL | 2026-09-05 | 출고완료\nS0854 | O1027 | WH-ICN | 2026-09-07 | 출고완료\nS0855 | O1177 | WH-SEOUL | 2026-09-08 | 출고완료\nS0856 | O1093 | WH-SEOUL | 2026-09-09 | 출고완료\nS0857 | O1109 | WH-SEOUL | 2026-09-09 | 출고완료\nS0858 | O1116 | WH-SEOUL | 2026-09-10 | 출고완료\nS0859 | O1082 | WH-SEOUL | 2026-09-11 | 출고완료\nS0860 | O1046 | WH-ICN | 2026-09-12 | 출고완료\nS0861 | O1070 | WH-SEOUL | 2026-09-13 | 주문확정\nS0862 | O1130 | WH-SEOUL | 2026-09-13 | 주문확정\nS0863 | O1137 | WH-SEOUL | 2026-09-13 | 주문확정\nS0864 | O1022 | WH-SEOUL | 2026-09-15 | 주문확정\nS0865 | O1016 | WH-SEOUL | 2026-09-16 | 주문확정\nS0866 | O1175 | WH-ICN | 2026-09-16 | 주문확정\nS0867 | O1057 | WH-SEOUL | 2026-09-17 | 주문확정\nS0868 | O1063 | WH-SEOUL | 2026-09-17 | 주문확정\nS0869 | O1026 | WH-SEOUL | 2026-09-19 | 주문확정\nS0870 | O1173 | WH-ICN | 2026-09-19 | 주문확정\nS0871 | O1035 | WH-SEOUL | 2026-09-21 | 주문확정\nS0872 | O1101 | WH-ICN | 2026-09-21 | 주문확정",
+      "text_char_count": 3259,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "sheet_count": 1
+      }
+    },
+    {
+      "file_id": "FILE_f1d1804d1aa63060",
+      "relative_path": "05_물류/배송권역_리드타임.csv",
+      "filename": "배송권역_리드타임.csv",
+      "extension": ".csv",
+      "size": 36,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "62416e297063244fbcf29de5f3cc0f21cf36c41e312637766baf53f8501c848b",
+      "parse_status": "ERROR",
+      "parser": null,
+      "text": "",
+      "text_char_count": 0,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": "ValueError: Unable to decode CSV with utf-8 or cp949: 'cp949' codec can't decode byte 0xff in position 0: illegal multibyte sequence",
+      "parser_metadata": {}
+    },
+    {
+      "file_id": "FILE_04ee2b4a75691e45",
+      "relative_path": "05_물류/월간_재고_점검.pdf",
+      "filename": "월간_재고_점검.pdf",
+      "extension": ".pdf",
+      "size": 1484,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "fa65f6dd3bb3dce1c3dd094b36ce82efa9ad01464ace861e298be9f3ce5ce244",
+      "parse_status": "PARSED",
+      "parser": "pdf",
+      "text": "Monthly inventory inspection\nCount available stock by product and warehouse.\nEscalate any count below the reorder point to logistics operations.",
+      "text_char_count": 144,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "page_count": 1,
+        "non_whitespace_char_count": 125,
+        "ocr_threshold": 20
+      }
+    },
+    {
+      "file_id": "FILE_fc7019b0b72b2be8",
+      "relative_path": "05_물류/입고_검수_기준.txt",
+      "filename": "입고_검수_기준.txt",
+      "extension": ".txt",
+      "size": 181,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "ba60292dcf5408a9942288fffc247ab26bc21ac1eb23f7ca825c2ddd91430701",
+      "parse_status": "PARSED",
+      "parser": "txt",
+      "text": "입고 검수 기준\n수량, 외관, 유통기한을 확인한다.\n검수 완료 수량은 재고현황에 반영하며, 훼손 수량은 가용수량에 포함하지 않는다.\n",
+      "text_char_count": 74,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig"
+      }
+    },
+    {
+      "file_id": "FILE_1c3edebcf446bef5",
+      "relative_path": "05_물류/재고_현황_2026-09.xlsx",
+      "filename": "재고_현황_2026-09.xlsx",
+      "extension": ".xlsx",
+      "size": 5565,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "bcc80929e6ec4bf4bdd88bbc4013ed1029c2b245a2bd38163c6edc3116cd07c2",
+      "parse_status": "PARSED",
+      "parser": "xlsx",
+      "text": "product_id | warehouse_code | available_qty | reserved_qty | reorder_point | unit_cost | last_receipt_date\nP001 | WH-SEOUL | 250 | 34 | 65 | 5100 | 2026-08-17\nP002 | WH-SEOUL | 148 | 11 | 80 | 13300 | 2026-08-18\nP003 | WH-SEOUL | 105 | 35 | 95 | 25900 | 2026-08-19\nP004 | WH-SEOUL | 236 | 35 | 110 | 9900 | 2026-08-20\nP005 | WH-SEOUL | 281 | 13 | 65 | 6900 | 2026-08-21\nP006 | WH-SEOUL | 157 | 22 | 80 | 4100 | 2026-08-22\nP007 | WH-SEOUL | 218 | 30 | 95 | 8100 | 2026-08-23\nP008 | WH-ICN | 182 | 21 | 110 | 11200 | 2026-08-24\nP009 | WH-ICN | 256 | 32 | 65 | 5900 | 2026-08-25\nP010 | WH-ICN | 161 | 23 | 80 | 17500 | 2026-08-26\nP011 | WH-ICN | 255 | 13 | 95 | 12100 | 2026-08-27\nP012 | WH-ICN | 268 | 10 | 110 | 7700 | 2026-08-28",
+      "text_char_count": 728,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "sheet_count": 1
+      }
+    },
+    {
+      "file_id": "FILE_91428d0d2d6d15c7",
+      "relative_path": "05_물류/창고_운영_매뉴얼.docx",
+      "filename": "창고_운영_매뉴얼.docx",
+      "extension": ".docx",
+      "size": 36836,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "90805a744afd5108dc3c2b7b4e5f850b62334a94115f36c6148a8bc8dadb470d",
+      "parse_status": "PARSED",
+      "parser": "docx",
+      "text": "창고 운영 매뉴얼\n재고 조회는 재고현황 파일의 available_qty를 기준으로 합니다.\n출고 우선순위는 주문확정일과 고객 납기 약속을 함께 확인합니다.\n입고 완료 후에는 last_receipt_date를 갱신합니다.",
+      "text_char_count": 122,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "paragraph_count": 4,
+        "table_count": 0
+      }
+    },
+    {
+      "file_id": "FILE_7038ab76eb30cb43",
+      "relative_path": "06_고객지원/CS_유형_코드.csv",
+      "filename": "CS_유형_코드.csv",
+      "extension": ".csv",
+      "size": 136,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "cc2519f09c0b6c51711d6b114d09ccd95da44d929f335a87fae29b8122369c58",
+      "parse_status": "PARSED",
+      "parser": "csv",
+      "text": "cs_code | cs_category | owner_team\nCS01 | 배송문의 | 고객지원팀\nCS02 | 반품문의 | 고객지원팀\nCS03 | 상품문의 | 영업운영팀",
+      "text_char_count": 94,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig",
+        "delimiter": ","
+      }
+    },
+    {
+      "file_id": "FILE_016dff0726eea674",
+      "relative_path": "06_고객지원/FAQ_2026.txt",
+      "filename": "FAQ_2026.txt",
+      "extension": ".txt",
+      "size": 197,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "8892c3a043fc20bbe96898fdbe30ba7c7c124cf569608b0dfe5662e34157fa0c",
+      "parse_status": "PARSED",
+      "parser": "txt",
+      "text": "고객지원 FAQ\n배송 지연 보상은 승인된 배송 지연 보상 정책을 확인한다.\n반품 가능 여부는 구매일, 상품 상태, 영수증 보유 여부를 함께 확인한다.\n",
+      "text_char_count": 84,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig"
+      }
+    },
+    {
+      "file_id": "FILE_b9ed0f031ae9fe98",
+      "relative_path": "06_고객지원/고객응대_매뉴얼.docx",
+      "filename": "고객응대_매뉴얼.docx",
+      "extension": ".docx",
+      "size": 36792,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "0f6ca440e8ebf4485bfbd0e4ee69c5dea1ec12355f9610b3bf03246a282533f0",
+      "parse_status": "PARSED",
+      "parser": "docx",
+      "text": "고객응대 매뉴얼\n일반 문의의 최초 응답 목표는 영업일 기준 4시간 이내입니다.\n반품 문의는 승인된 반품·교환 정책을 기준으로 안내합니다.",
+      "text_char_count": 76,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "paragraph_count": 3,
+        "table_count": 0
+      }
+    },
+    {
+      "file_id": "FILE_9b04d01aea38a735",
+      "relative_path": "07_정산/세금계산서_처리_안내.pdf",
+      "filename": "세금계산서_처리_안내.pdf",
+      "extension": ".pdf",
+      "size": 1495,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "c5311394d9dfa685c332dd7b77f64ad45cf4433e67ced608600a122a732f8496",
+      "parse_status": "PARSED",
+      "parser": "pdf",
+      "text": "Tax invoice processing guide\nConfirm the customer ID before issuing a tax invoice.\nClose monthly invoices on the fifth business day of the following month.",
+      "text_char_count": 155,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "page_count": 1,
+        "non_whitespace_char_count": 131,
+        "ocr_threshold": 20
+      }
+    },
+    {
+      "file_id": "FILE_6ac6f3026a34d94f",
+      "relative_path": "07_정산/정산_캘린더_2026.xlsx",
+      "filename": "정산_캘린더_2026.xlsx",
+      "extension": ".xlsx",
+      "size": 5188,
+      "modified_at": "2026-09-21T00:00:00Z",
+      "sha256": "674c5fe500f1d9cc6dc8cdff5cbb5754c67fcfdb00d379e0303cbe330dbfe8a6",
+      "parse_status": "PARSED",
+      "parser": "xlsx",
+      "text": "month | invoice_close_day | payment_review_day\n2026-01 | 5 | 10\n2026-02 | 5 | 10\n2026-03 | 5 | 10\n2026-04 | 5 | 10\n2026-05 | 5 | 10\n2026-06 | 5 | 10\n2026-07 | 5 | 10\n2026-08 | 5 | 10\n2026-09 | 5 | 10\n2026-10 | 5 | 10\n2026-11 | 5 | 10\n2026-12 | 5 | 10",
+      "text_char_count": 250,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "sheet_count": 1
+      }
+    }
+  ],
+  "duplicates": [],
+  "probable_version_groups": [],
+  "pii_findings": [],
+  "unreadable_sources": [],
+  "tables": [
+    {
+      "table_id": "TABLE_FILE_0a1b067e7c4c082a_Targets",
+      "file_id": "FILE_0a1b067e7c4c082a",
+      "sheet_name": "Targets",
+      "row_count": 12,
+      "column_count": 3,
+      "column_names": [
+        "month",
+        "sales_target",
+        "gross_margin_target"
+      ],
+      "columns": [
+        {
+          "name": "month",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "2026-01",
+            "2026-02",
+            "2026-03"
+          ]
+        },
+        {
+          "name": "sales_target",
+          "inferred_type": "integer",
+          "null_ratio": 0.0,
+          "sample_values": [
+            83500000,
+            85000000,
+            86500000
+          ]
+        },
+        {
+          "name": "gross_margin_target",
+          "inferred_type": "number",
+          "null_ratio": 0.0,
+          "sample_values": [
+            0.31
+          ]
+        }
+      ],
+      "merged_cell_present": false,
+      "merged_ranges": []
+    },
+    {
+      "table_id": "TABLE_FILE_1c3edebcf446bef5_Inventory",
+      "file_id": "FILE_1c3edebcf446bef5",
+      "sheet_name": "Inventory",
+      "row_count": 12,
+      "column_count": 7,
+      "column_names": [
+        "product_id",
+        "warehouse_code",
+        "available_qty",
+        "reserved_qty",
+        "reorder_point",
+        "unit_cost",
+        "last_receipt_date"
+      ],
+      "columns": [
+        {
+          "name": "product_id",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "P001",
+            "P002",
+            "P003"
+          ]
+        },
+        {
+          "name": "warehouse_code",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "WH-SEOUL",
+            "WH-ICN"
+          ]
+        },
+        {
+          "name": "available_qty",
+          "inferred_type": "integer",
+          "null_ratio": 0.0,
+          "sample_values": [
+            250,
+            148,
+            105
+          ]
+        },
+        {
+          "name": "reserved_qty",
+          "inferred_type": "integer",
+          "null_ratio": 0.0,
+          "sample_values": [
+            34,
+            11,
+            35
+          ]
+        },
+        {
+          "name": "reorder_point",
+          "inferred_type": "integer",
+          "null_ratio": 0.0,
+          "sample_values": [
+            65,
+            80,
+            95
+          ]
+        },
+        {
+          "name": "unit_cost",
+          "inferred_type": "integer",
+          "null_ratio": 0.0,
+          "sample_values": [
+            5100,
+            13300,
+            25900
+          ]
+        },
+        {
+          "name": "last_receipt_date",
+          "inferred_type": "date",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "2026-08-17",
+            "2026-08-18",
+            "2026-08-19"
+          ]
+        }
+      ],
+      "merged_cell_present": false,
+      "merged_ranges": []
+    },
+    {
+      "table_id": "TABLE_FILE_66a46d7e2186df99_CSV",
+      "file_id": "FILE_66a46d7e2186df99",
+      "sheet_name": "CSV",
+      "row_count": 36,
+      "column_count": 8,
+      "column_names": [
+        "return_id",
+        "order_id",
+        "customer_id",
+        "product_id",
+        "return_date",
+        "returned_qty",
+        "shipped_qty",
+        "return_reason"
+      ],
+      "columns": [
+        {
+          "name": "return_id",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "R0501",
+            "R0502",
+            "R0503"
+          ]
+        },
+        {
+          "name": "order_id",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "O1014",
+            "O1030",
+            "O1031"
+          ]
+        },
+        {
+          "name": "customer_id",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "C010",
+            "C004",
+            "C001"
+          ]
+        },
+        {
+          "name": "product_id",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "P001",
+            "P012",
+            "P002"
+          ]
+        },
+        {
+          "name": "return_date",
+          "inferred_type": "date",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "2026-07-04",
+            "2026-06-07",
+            "2026-06-04"
+          ]
+        },
+        {
+          "name": "returned_qty",
+          "inferred_type": "integer",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "2",
+            "1",
+            "3"
+          ]
+        },
+        {
+          "name": "shipped_qty",
+          "inferred_type": "integer",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "17",
+            "1",
+            "19"
+          ]
+        },
+        {
+          "name": "return_reason",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "품질문의",
+            "파손",
+            "오배송"
+          ]
+        }
+      ],
+      "merged_cell_present": false,
+      "merged_ranges": []
+    },
+    {
+      "table_id": "TABLE_FILE_6ac6f3026a34d94f_SettlementCalendar",
+      "file_id": "FILE_6ac6f3026a34d94f",
+      "sheet_name": "SettlementCalendar",
+      "row_count": 12,
+      "column_count": 3,
+      "column_names": [
+        "month",
+        "invoice_close_day",
+        "payment_review_day"
+      ],
+      "columns": [
+        {
+          "name": "month",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "2026-01",
+            "2026-02",
+            "2026-03"
+          ]
+        },
+        {
+          "name": "invoice_close_day",
+          "inferred_type": "integer",
+          "null_ratio": 0.0,
+          "sample_values": [
+            5
+          ]
+        },
+        {
+          "name": "payment_review_day",
+          "inferred_type": "integer",
+          "null_ratio": 0.0,
+          "sample_values": [
+            10
+          ]
+        }
+      ],
+      "merged_cell_present": false,
+      "merged_ranges": []
+    },
+    {
+      "table_id": "TABLE_FILE_7038ab76eb30cb43_CSV",
+      "file_id": "FILE_7038ab76eb30cb43",
+      "sheet_name": "CSV",
+      "row_count": 3,
+      "column_count": 3,
+      "column_names": [
+        "cs_code",
+        "cs_category",
+        "owner_team"
+      ],
+      "columns": [
+        {
+          "name": "cs_code",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "CS01",
+            "CS02",
+            "CS03"
+          ]
+        },
+        {
+          "name": "cs_category",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "배송문의",
+            "반품문의",
+            "상품문의"
+          ]
+        },
+        {
+          "name": "owner_team",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "고객지원팀",
+            "영업운영팀"
+          ]
+        }
+      ],
+      "merged_cell_present": false,
+      "merged_ranges": []
+    },
+    {
+      "table_id": "TABLE_FILE_79c849b8a094119f_Customers",
+      "file_id": "FILE_79c849b8a094119f",
+      "sheet_name": "Customers",
+      "row_count": 10,
+      "column_count": 5,
+      "column_names": [
+        "customer_id",
+        "customer_name",
+        "sales_tier",
+        "city",
+        "payment_terms"
+      ],
+      "columns": [
+        {
+          "name": "customer_id",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "C001",
+            "C002",
+            "C003"
+          ]
+        },
+        {
+          "name": "customer_name",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "한빛상사",
+            "새봄마트",
+            "동해상사"
+          ]
+        },
+        {
+          "name": "sales_tier",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        {
+          "name": "city",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "서울",
+            "성남",
+            "인천"
+          ]
+        },
+        {
+          "name": "payment_terms",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "30일",
+            "45일",
+            "15일"
+          ]
+        }
+      ],
+      "merged_cell_present": false,
+      "merged_ranges": []
+    },
+    {
+      "table_id": "TABLE_FILE_950a2b2ed909ef4c_Orders",
+      "file_id": "FILE_950a2b2ed909ef4c",
+      "sheet_name": "Orders",
+      "row_count": 180,
+      "column_count": 8,
+      "column_names": [
+        "order_id",
+        "customer_id",
+        "product_id",
+        "order_date",
+        "quantity",
+        "unit_price",
+        "amount",
+        "order_status"
+      ],
+      "columns": [
+        {
+          "name": "order_id",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "O1169",
+            "O1068",
+            "O1091"
+          ]
+        },
+        {
+          "name": "customer_id",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "C002",
+            "C009",
+            "C005"
+          ]
+        },
+        {
+          "name": "product_id",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "P009",
+            "P007",
+            "P004"
+          ]
+        },
+        {
+          "name": "order_date",
+          "inferred_type": "date",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "2026-05-01",
+            "2026-05-02",
+            "2026-05-04"
+          ]
+        },
+        {
+          "name": "quantity",
+          "inferred_type": "integer",
+          "null_ratio": 0.0,
+          "sample_values": [
+            25,
+            2,
+            10
+          ]
+        },
+        {
+          "name": "unit_price",
+          "inferred_type": "integer",
+          "null_ratio": 0.0,
+          "sample_values": [
+            11300,
+            15200,
+            17800
+          ]
+        },
+        {
+          "name": "amount",
+          "inferred_type": "integer",
+          "null_ratio": 0.0,
+          "sample_values": [
+            282500,
+            30400,
+            178000
+          ]
+        },
+        {
+          "name": "order_status",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "출고완료",
+            "주문확정"
+          ]
+        }
+      ],
+      "merged_cell_present": false,
+      "merged_ranges": []
+    },
+    {
+      "table_id": "TABLE_FILE_b13eb6275d0074df_CSV",
+      "file_id": "FILE_b13eb6275d0074df",
+      "sheet_name": "CSV",
+      "row_count": 12,
+      "column_count": 5,
+      "column_names": [
+        "product_id",
+        "product_name",
+        "category",
+        "unit_price",
+        "standard_cost"
+      ],
+      "columns": [
+        {
+          "name": "product_id",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "P001",
+            "P002",
+            "P003"
+          ]
+        },
+        {
+          "name": "product_name",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "무가당 현미차 20입",
+            "저온착즙 사과주스",
+            "프리미엄 홍차 세트"
+          ]
+        },
+        {
+          "name": "category",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "음료",
+            "선물",
+            "식품"
+          ]
+        },
+        {
+          "name": "unit_price",
+          "inferred_type": "integer",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "9800",
+            "24000",
+            "46500"
+          ]
+        },
+        {
+          "name": "standard_cost",
+          "inferred_type": "integer",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "5100",
+            "13300",
+            "25900"
+          ]
+        }
+      ],
+      "merged_cell_present": false,
+      "merged_ranges": []
+    },
+    {
+      "table_id": "TABLE_FILE_b6c224f007768417_OutboundRequests",
+      "file_id": "FILE_b6c224f007768417",
+      "sheet_name": "OutboundRequests",
+      "row_count": 72,
+      "column_count": 5,
+      "column_names": [
+        "request_id",
+        "order_id",
+        "warehouse_code",
+        "requested_ship_date",
+        "status"
+      ],
+      "columns": [
+        {
+          "name": "request_id",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "S0801",
+            "S0802",
+            "S0803"
+          ]
+        },
+        {
+          "name": "order_id",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "O1105",
+            "O1131",
+            "O1079"
+          ]
+        },
+        {
+          "name": "warehouse_code",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "WH-SEOUL",
+            "WH-ICN"
+          ]
+        },
+        {
+          "name": "requested_ship_date",
+          "inferred_type": "date",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "2026-08-01",
+            "2026-08-02",
+            "2026-08-03"
+          ]
+        },
+        {
+          "name": "status",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "출고완료",
+            "주문확정"
+          ]
+        }
+      ],
+      "merged_cell_present": false,
+      "merged_ranges": []
+    },
+    {
+      "table_id": "TABLE_FILE_e08b2235c12f49d6_CSV",
+      "file_id": "FILE_e08b2235c12f49d6",
+      "sheet_name": "CSV",
+      "row_count": 3,
+      "column_count": 4,
+      "column_names": [
+        "discount_code",
+        "discount_name",
+        "discount_rate",
+        "approval_required"
+      ],
+      "columns": [
+        {
+          "name": "discount_code",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "DISC05",
+            "DISC10",
+            "DISC15"
+          ]
+        },
+        {
+          "name": "discount_name",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "정기거래처",
+            "계절행사",
+            "대량주문"
+          ]
+        },
+        {
+          "name": "discount_rate",
+          "inferred_type": "number",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "0.05",
+            "0.1",
+            "0.15"
+          ]
+        },
+        {
+          "name": "approval_required",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "N",
+            "Y"
+          ]
+        }
+      ],
+      "merged_cell_present": false,
+      "merged_ranges": []
+    }
+  ],
+  "live_llm": {
+    "status": "LIVE_LLM_PENDING",
+    "provider": null,
+    "model": null,
+    "reason": "Static ax-exp-v2 variant generation; no live LLM is invoked.",
+    "tasks": []
+  }
+}

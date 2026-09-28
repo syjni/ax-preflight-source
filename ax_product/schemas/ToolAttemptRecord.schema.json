@@ -1,0 +1,124 @@
+{
+  "$defs": {
+    "ToolRequestSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "filter_fields": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Filter Fields",
+          "type": "array"
+        },
+        "parameter_names": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Parameter Names",
+          "type": "array"
+        },
+        "query_character_count": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query Character Count"
+        },
+        "result_limit": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Result Limit"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "parameter_names",
+        "source_ids",
+        "filter_fields"
+      ],
+      "title": "ToolRequestSummary",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "error_code": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Error Code"
+    },
+    "request_summary": {
+      "$ref": "#/$defs/ToolRequestSummary"
+    },
+    "run_id": {
+      "minLength": 1,
+      "title": "Run Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "ax-tool-attempt-v1",
+      "default": "ax-tool-attempt-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "sequence": {
+      "minimum": 1,
+      "title": "Sequence",
+      "type": "integer"
+    },
+    "status": {
+      "enum": [
+        "SUCCESS",
+        "ERROR"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "tool_name": {
+      "enum": [
+        "search_documents",
+        "read_document",
+        "lookup_value",
+        "query_table"
+      ],
+      "title": "Tool Name",
+      "type": "string"
+    }
+  },
+  "required": [
+    "run_id",
+    "sequence",
+    "tool_name",
+    "status",
+    "request_summary"
+  ],
+  "title": "ToolAttemptRecord",
+  "type": "object"
+}

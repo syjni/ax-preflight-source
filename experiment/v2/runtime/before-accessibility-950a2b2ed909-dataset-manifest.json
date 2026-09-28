@@ -1,0 +1,161 @@
+{
+  "schema_version": "ax-before-dataset-manifest-v2",
+  "experiment_version": "ax-exp-v2",
+  "dataset_id": "hanbit-distribution-before-accessibility-950a2b2ed909-v2",
+  "condition": "Before",
+  "runtime_profile": "before-accessibility-950a2b2ed909",
+  "source_root": "sample_data/before_variants/before-accessibility-950a2b2ed909",
+  "file_count": 30,
+  "files": [
+    {
+      "relative_path": "01_경영관리/2026_사업운영방침.docx",
+      "size_bytes": 37023,
+      "sha256": "6b37222c82a3e1aa669b5e0d78ac5094648e0f130bf9a155b8c8d60dfdf7b957"
+    },
+    {
+      "relative_path": "01_경영관리/거래처_관리기준.pdf",
+      "size_bytes": 1495,
+      "sha256": "28d4794876a79a2f14829c850df600d7fb57ad6fd430d29225e2eb497dea2aeb"
+    },
+    {
+      "relative_path": "01_경영관리/월간_운영회의록_2026-08.txt",
+      "size_bytes": 204,
+      "sha256": "afd62117c24b4eb03c35ea00d0bf4bcfd32217bd23429c5e1a219e9243f1cb0d"
+    },
+    {
+      "relative_path": "01_경영관리/조직_연락망.txt",
+      "size_bytes": 185,
+      "sha256": "98a0908df9c4f3ff2de6a253ee6dc911848079e20b4653178599056a0f1f056f"
+    },
+    {
+      "relative_path": "01_경영관리/회사소개_한빛유통.txt",
+      "size_bytes": 226,
+      "sha256": "8a568e21dae1bcfacde4f16eb83bd791dde948da72696d46759eae9022e95c6b"
+    },
+    {
+      "relative_path": "02_정책/반품_교환_정책_2026.docx",
+      "size_bytes": 36855,
+      "sha256": "04f6ce1df32f33a52ade0aea8a14e4565d6c5a5f9e595b7a80f673ba8f35edd4"
+    },
+    {
+      "relative_path": "02_정책/배송_지연_보상_2026.docx",
+      "size_bytes": 36756,
+      "sha256": "b0679759b829570c6979e7614cba807ec9e760999d40e40acf04ea0e5391ad65"
+    },
+    {
+      "relative_path": "02_정책/신규거래처_등록_절차.docx",
+      "size_bytes": 36810,
+      "sha256": "ec5499f30957d44ddc2218049585c2332e65b56b6d324031e86e53785326fb1a"
+    },
+    {
+      "relative_path": "02_정책/재고_조정_절차.txt",
+      "size_bytes": 246,
+      "sha256": "964842e7ed4e3bdd233ba32c04bb165328ac5a63de71733e92bf1b07ad06fb51"
+    },
+    {
+      "relative_path": "02_정책/할인_승인_규정.docx",
+      "size_bytes": 36814,
+      "sha256": "173beb03c435728a4461b22a23cd2e535c485c63b2af7465dcbc41c8f6c8f083"
+    },
+    {
+      "relative_path": "03_영업/거래처_마스터.xlsx",
+      "size_bytes": 5497,
+      "sha256": "0f8ae595489516ca277fb74a24863384c0f67ade352f9c742cc69d4785dd8ddb"
+    },
+    {
+      "relative_path": "03_영업/영업_운영_안내.txt",
+      "size_bytes": 237,
+      "sha256": "a7724663963825b8a71e72d2731707204e664c0e6dcac04bae18484494be7ca5"
+    },
+    {
+      "relative_path": "03_영업/월별_매출목표_2026.xlsx",
+      "size_bytes": 5219,
+      "sha256": "9c0d1e0bb81e8d56f9c28f5b20946b68fadbd0b88d27fcb03569c8a916259fe4"
+    },
+    {
+      "relative_path": "03_영업/품목_마스터.csv",
+      "size_bytes": 621,
+      "sha256": "347c22d71df4082a9f021005097b46cd54f8d1e729489c601b5904afc4744c44"
+    },
+    {
+      "relative_path": "03_영업/할인코드_정의.csv",
+      "size_bytes": 146,
+      "sha256": "672144effb2b791cbc2ddb2941337404cf37f034c7d05a89baeb8d1c7911ae85"
+    },
+    {
+      "relative_path": "04_주문/8월_주문_검토.pdf",
+      "size_bytes": 1465,
+      "sha256": "fb8e5da70f1bcfaf3971dd14e0ca3e739bddb7a8ca4fda7ffb707935572e7051"
+    },
+    {
+      "relative_path": "04_주문/반품_원장_2026.csv",
+      "size_bytes": 1844,
+      "sha256": "727db2884c7bb942d0e8e91b737aa962ec72e2d7339cf476b5aebfb4fce5518f"
+    },
+    {
+      "relative_path": "04_주문/주문_상태_기준.txt",
+      "size_bytes": 218,
+      "sha256": "8f4aa2570997cb6be520efb1618fa9bb3c14ef417a583f54f2be979171cfb93a"
+    },
+    {
+      "relative_path": "04_주문/주문_원장_2026.xlsx",
+      "size_bytes": 36,
+      "sha256": "41c5d271ab60b5ce95e8a80df297e6d11e0fb87fbab14eac7298d6be58b700cb"
+    },
+    {
+      "relative_path": "04_주문/출고_요청_2026.xlsx",
+      "size_bytes": 7075,
+      "sha256": "4720da8d2c92c7d42dbf6a4fe0828a61a043ab6e2efb92e5da97b11923a88661"
+    },
+    {
+      "relative_path": "05_물류/배송권역_리드타임.csv",
+      "size_bytes": 154,
+      "sha256": "851da6752a62976cc386072419cabfd6f589820a13ff9f33fee8d1c900302b78"
+    },
+    {
+      "relative_path": "05_물류/월간_재고_점검.pdf",
+      "size_bytes": 1484,
+      "sha256": "fa65f6dd3bb3dce1c3dd094b36ce82efa9ad01464ace861e298be9f3ce5ce244"
+    },
+    {
+      "relative_path": "05_물류/입고_검수_기준.txt",
+      "size_bytes": 181,
+      "sha256": "ba60292dcf5408a9942288fffc247ab26bc21ac1eb23f7ca825c2ddd91430701"
+    },
+    {
+      "relative_path": "05_물류/재고_현황_2026-09.xlsx",
+      "size_bytes": 5565,
+      "sha256": "bcc80929e6ec4bf4bdd88bbc4013ed1029c2b245a2bd38163c6edc3116cd07c2"
+    },
+    {
+      "relative_path": "05_물류/창고_운영_매뉴얼.docx",
+      "size_bytes": 36836,
+      "sha256": "90805a744afd5108dc3c2b7b4e5f850b62334a94115f36c6148a8bc8dadb470d"
+    },
+    {
+      "relative_path": "06_고객지원/CS_유형_코드.csv",
+      "size_bytes": 136,
+      "sha256": "cc2519f09c0b6c51711d6b114d09ccd95da44d929f335a87fae29b8122369c58"
+    },
+    {
+      "relative_path": "06_고객지원/FAQ_2026.txt",
+      "size_bytes": 197,
+      "sha256": "8892c3a043fc20bbe96898fdbe30ba7c7c124cf569608b0dfe5662e34157fa0c"
+    },
+    {
+      "relative_path": "06_고객지원/고객응대_매뉴얼.docx",
+      "size_bytes": 36792,
+      "sha256": "0f6ca440e8ebf4485bfbd0e4ee69c5dea1ec12355f9610b3bf03246a282533f0"
+    },
+    {
+      "relative_path": "07_정산/세금계산서_처리_안내.pdf",
+      "size_bytes": 1495,
+      "sha256": "c5311394d9dfa685c332dd7b77f64ad45cf4433e67ced608600a122a732f8496"
+    },
+    {
+      "relative_path": "07_정산/정산_캘린더_2026.xlsx",
+      "size_bytes": 5188,
+      "sha256": "674c5fe500f1d9cc6dc8cdff5cbb5754c67fcfdb00d379e0303cbe330dbfe8a6"
+    }
+  ]
+}

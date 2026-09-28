@@ -1,0 +1,280 @@
+{
+  "experiment": "9/20 Agent Tools + Context Policy",
+  "scanner_contract": {
+    "schema_version": "ax-scan-report-v1",
+    "scanner_version": "0.1.0",
+    "report": "scan_report.json",
+    "scanner_refactored": false,
+    "contract_hashes": {
+      "scan_report.json": "f7d0e9d507f582d047d33f7bf18423bedfb9018f2a176c54b2ba1085ba752c0f",
+      "scan_report.schema.json": "eed852c9300b950eb2acc387f533a963d1f4fb013b4d07ab45831cdb8356d566",
+      "ax_scanner/models.py": "3f965d4ba9a5c74bf5958311baeb39ffc8a9fe0ee7b036b617d12d7ac7c096a8",
+      "ax_scanner/scanner.py": "cb83b601a25e0d02c4a4abe5e4475726a5475fbd7a34026fcd6d6a866b7f27b3"
+    }
+  },
+  "policies": {
+    "search_default_top_k": 5,
+    "search_max_top_k": 10,
+    "read_document_max_characters": 2500,
+    "query_table_max_rows": 10,
+    "tool_budgets": {
+      "knowledge": 6,
+      "operations": 8,
+      "cross_file": 12
+    },
+    "model_callable_tools": [
+      "lookup_value",
+      "query_table",
+      "read_document",
+      "search_documents"
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "K_RETURN_POLICY",
+      "output": {
+        "final_answer": "30",
+        "unit": "days",
+        "explanation": "현재본 반품 정책의 기간입니다.",
+        "source_ids": [
+          "FILE_2595481c695ba10d"
+        ],
+        "abstain": false
+      },
+      "metrics": {
+        "task_id": "K_RETURN_POLICY",
+        "category": "knowledge",
+        "budget": 6,
+        "tool_calls": 2,
+        "budget_exceeded": false,
+        "events": [
+          {
+            "sequence": 1,
+            "tool": "search_documents",
+            "arguments": {
+              "query": "현재 반품 기간",
+              "top_k": 5
+            },
+            "latency_ms": 0.176,
+            "success": true,
+            "error_code": null,
+            "source_ids": [
+              "FILE_2595481c695ba10d",
+              "FILE_084aace9889c4091"
+            ],
+            "result_summary": {
+              "results_returned": 2
+            }
+          },
+          {
+            "sequence": 2,
+            "tool": "read_document",
+            "arguments": {
+              "document_id": "FILE_2595481c695ba10d",
+              "section": null
+            },
+            "latency_ms": 0.016,
+            "success": true,
+            "error_code": null,
+            "source_ids": [
+              "FILE_2595481c695ba10d"
+            ],
+            "result_summary": {
+              "characters_returned": 21,
+              "section": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "O_LAST_ORDER",
+      "output": {
+        "final_answer": "2026-08-11",
+        "unit": null,
+        "explanation": "주문 테이블에서 고객별 마지막 주문일을 집계했습니다.",
+        "source_ids": [
+          "TABLE_FILE_c0f51c3b1a7dfd98_Orders"
+        ],
+        "abstain": false
+      },
+      "metrics": {
+        "task_id": "O_LAST_ORDER",
+        "category": "operations",
+        "budget": 8,
+        "tool_calls": 1,
+        "budget_exceeded": false,
+        "events": [
+          {
+            "sequence": 1,
+            "tool": "query_table",
+            "arguments": {
+              "table_id": "TABLE_FILE_c0f51c3b1a7dfd98_Orders",
+              "filters": [
+                {
+                  "field": "customer_id",
+                  "op": "eq",
+                  "value": "C021"
+                }
+              ],
+              "select": [
+                "last_order_date"
+              ],
+              "aggregation": {
+                "op": "max",
+                "field": "order_date",
+                "numerator_field": null,
+                "denominator_field": null,
+                "alias": "last_order_date"
+              },
+              "group_by": null,
+              "order_by": null,
+              "limit": null
+            },
+            "latency_ms": 3.086,
+            "success": true,
+            "error_code": null,
+            "source_ids": [
+              "TABLE_FILE_c0f51c3b1a7dfd98_Orders"
+            ],
+            "result_summary": {
+              "rows_returned": 1,
+              "source_rows_matched": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "task_id": "C_CUSTOMER_ORDER_SUM",
+      "output": {
+        "final_answer": 200000,
+        "unit": "KRW",
+        "explanation": "정규화된 고객명으로 고객 ID를 찾고 해당 주문액을 합산했습니다.",
+        "source_ids": [
+          "TABLE_FILE_5e9eb5e48e1cf2e4_CSV",
+          "TABLE_FILE_c0f51c3b1a7dfd98_Orders"
+        ],
+        "abstain": false
+      },
+      "metrics": {
+        "task_id": "C_CUSTOMER_ORDER_SUM",
+        "category": "cross_file",
+        "budget": 12,
+        "tool_calls": 2,
+        "budget_exceeded": false,
+        "events": [
+          {
+            "sequence": 1,
+            "tool": "lookup_value",
+            "arguments": {
+              "table_id": "TABLE_FILE_5e9eb5e48e1cf2e4_CSV",
+              "match_column": "customer_name",
+              "value": "(주) 한빛상사",
+              "return_column": "customer_id"
+            },
+            "latency_ms": 0.469,
+            "success": true,
+            "error_code": null,
+            "source_ids": [
+              "TABLE_FILE_5e9eb5e48e1cf2e4_CSV"
+            ],
+            "result_summary": {
+              "matched_rows": 1,
+              "ambiguous": false
+            }
+          },
+          {
+            "sequence": 2,
+            "tool": "query_table",
+            "arguments": {
+              "table_id": "TABLE_FILE_c0f51c3b1a7dfd98_Orders",
+              "filters": [
+                {
+                  "field": "customer_id",
+                  "op": "eq",
+                  "value": "C013"
+                },
+                {
+                  "field": "order_date",
+                  "op": "prefix",
+                  "value": "2026-08"
+                }
+              ],
+              "select": [
+                "total_amount"
+              ],
+              "aggregation": {
+                "op": "sum",
+                "field": "amount",
+                "numerator_field": null,
+                "denominator_field": null,
+                "alias": "total_amount"
+              },
+              "group_by": null,
+              "order_by": null,
+              "limit": null
+            },
+            "latency_ms": 0.037,
+            "success": true,
+            "error_code": null,
+            "source_ids": [
+              "TABLE_FILE_c0f51c3b1a7dfd98_Orders"
+            ],
+            "result_summary": {
+              "rows_returned": 1,
+              "source_rows_matched": 2
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "observed_tool_call_distribution": {
+    "knowledge": {
+      "observations": [
+        2
+      ],
+      "mean": 2.0,
+      "median": 2,
+      "p95_nearest_rank": 2,
+      "max": 2,
+      "budget": 6
+    },
+    "operations": {
+      "observations": [
+        1
+      ],
+      "mean": 1.0,
+      "median": 1,
+      "p95_nearest_rank": 1,
+      "max": 1,
+      "budget": 8
+    },
+    "cross_file": {
+      "observations": [
+        2
+      ],
+      "mean": 2.0,
+      "median": 2,
+      "p95_nearest_rank": 2,
+      "max": 2,
+      "budget": 12
+    }
+  },
+  "budget_enforcement_probe": {
+    "category": "knowledge",
+    "executed_tool_calls": 6,
+    "rejected_call_error": "AGENT_BUDGET_EXCEEDED",
+    "budget_exceeded": true
+  },
+  "cross_file_assertion": {
+    "customer_input": "(주) 한빛상사",
+    "normalized_lookup_result": "C013",
+    "order_total": 200000,
+    "expected_order_total": 200000,
+    "passed": true,
+    "actual_tool_calls": 2,
+    "budget": 12
+  }
+}

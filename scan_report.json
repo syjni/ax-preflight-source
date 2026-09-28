@@ -1,0 +1,493 @@
+{
+  "scan_metadata": {
+    "schema_version": "ax-scan-report-v1",
+    "scanner_version": "0.1.0",
+    "source_root_name": "mini_company",
+    "supported_extensions": [
+      ".txt",
+      ".pdf",
+      ".docx",
+      ".csv",
+      ".xlsx"
+    ],
+    "ocr_min_chars_per_page": 20,
+    "file_count": 10,
+    "parsed_file_count": 9,
+    "unsupported_file_count": 1,
+    "error_file_count": 0,
+    "local_only": true,
+    "llm_dependency_required": false
+  },
+  "files": [
+    {
+      "file_id": "FILE_abe2f798dd5e85e3",
+      "relative_path": "archive/contact_copy.txt",
+      "filename": "contact_copy.txt",
+      "extension": ".txt",
+      "size": 120,
+      "modified_at": "2026-09-19T00:00:00Z",
+      "sha256": "bc0498b5f0a6a4f6f7f3a4419425e0aae5732582fc5e87b463bda26371184e20",
+      "parse_status": "PARSED",
+      "parser": "txt",
+      "text": "담당자 주민번호 [RRN_MASKED]\n전화 [PHONE_MASKED]\n이메일 [EMAIL_MASKED]\n계좌 후보 [ACCOUNT_MASKED]\n",
+      "text_char_count": 84,
+      "text_is_masked": true,
+      "pii_finding_count": 4,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig"
+      }
+    },
+    {
+      "file_id": "FILE_175704fe8a7c331d",
+      "relative_path": "docs/contact.txt",
+      "filename": "contact.txt",
+      "extension": ".txt",
+      "size": 120,
+      "modified_at": "2026-09-19T00:00:00Z",
+      "sha256": "bc0498b5f0a6a4f6f7f3a4419425e0aae5732582fc5e87b463bda26371184e20",
+      "parse_status": "PARSED",
+      "parser": "txt",
+      "text": "담당자 주민번호 [RRN_MASKED]\n전화 [PHONE_MASKED]\n이메일 [EMAIL_MASKED]\n계좌 후보 [ACCOUNT_MASKED]\n",
+      "text_char_count": 84,
+      "text_is_masked": true,
+      "pii_finding_count": 4,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig"
+      }
+    },
+    {
+      "file_id": "FILE_2595481c695ba10d",
+      "relative_path": "docs/return_policy_final_2026.txt",
+      "filename": "return_policy_final_2026.txt",
+      "extension": ".txt",
+      "size": 48,
+      "modified_at": "2026-09-19T00:00:00Z",
+      "sha256": "940f8a5d14e019b398815cbbd90ce71d3ff5ead804a9408c76f7ff9967c6fffa",
+      "parse_status": "PARSED",
+      "parser": "txt",
+      "text": "현재 반품 가능 기간은 30일입니다.\n",
+      "text_char_count": 21,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig"
+      }
+    },
+    {
+      "file_id": "FILE_084aace9889c4091",
+      "relative_path": "docs/return_policy_v1.txt",
+      "filename": "return_policy_v1.txt",
+      "extension": ".txt",
+      "size": 51,
+      "modified_at": "2026-09-19T00:00:00Z",
+      "sha256": "4754d2c782b9697cb02cb92d4828df4200d8d8265dacce0413e65b9a6deec7b3",
+      "parse_status": "PARSED",
+      "parser": "txt",
+      "text": "구버전 반품 가능 기간은 14일입니다.\n",
+      "text_char_count": 22,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig"
+      }
+    },
+    {
+      "file_id": "FILE_61a72ae90dd6d8bb",
+      "relative_path": "docs/shipping_policy.pdf",
+      "filename": "shipping_policy.pdf",
+      "extension": ".pdf",
+      "size": 1396,
+      "modified_at": "2026-09-19T00:00:00Z",
+      "sha256": "ab47c6eded1dee3b8962832de2cce7e2580efacca5c315bb0093348444be0a52",
+      "parse_status": "PARSED",
+      "parser": "pdf",
+      "text": "Shipping delay compensation starts after 3 days.\nCompensation is issued as store credit.",
+      "text_char_count": 88,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "page_count": 1,
+        "non_whitespace_char_count": 76,
+        "ocr_threshold": 20
+      }
+    },
+    {
+      "file_id": "FILE_1dcf981cd96753a9",
+      "relative_path": "docs/warehouse_guide.docx",
+      "filename": "warehouse_guide.docx",
+      "extension": ".docx",
+      "size": 36796,
+      "modified_at": "2026-09-19T00:00:00Z",
+      "sha256": "c164efd8cb361f567f8ce235de934e306ea011ad4008ab501e2cf78880f73ac8",
+      "parse_status": "PARSED",
+      "parser": "docx",
+      "text": "Warehouse operating guide\nUse the approved customer identifier before aggregating orders.\nCode | Meaning\nC013 | Hanbit Trading",
+      "text_char_count": 126,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "paragraph_count": 2,
+        "table_count": 1
+      }
+    },
+    {
+      "file_id": "FILE_17d0406606fee814",
+      "relative_path": "scans/invoice_scan.pdf",
+      "filename": "invoice_scan.pdf",
+      "extension": ".pdf",
+      "size": 431,
+      "modified_at": "2026-09-19T00:00:00Z",
+      "sha256": "b37a58fb510237b6b60b1e610deecd3eb013ff71836b831faf66958f83affbe3",
+      "parse_status": "PARSED",
+      "parser": "pdf",
+      "text": "",
+      "text_char_count": 0,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "page_count": 1,
+        "non_whitespace_char_count": 0,
+        "ocr_threshold": 20
+      }
+    },
+    {
+      "file_id": "FILE_5e9eb5e48e1cf2e4",
+      "relative_path": "tables/customers.csv",
+      "filename": "customers.csv",
+      "extension": ".csv",
+      "size": 111,
+      "modified_at": "2026-09-19T00:00:00Z",
+      "sha256": "80a380d9d751734a4eb66a5c86bde0846bd73881928da5ba38f19a392b6d5a81",
+      "parse_status": "PARSED",
+      "parser": "csv",
+      "text": "customer_id | customer_name | email | active\nC013 | 한빛상사 | [EMAIL_MASKED] | true\nC021 | 새봄마트 |  | false",
+      "text_char_count": 109,
+      "text_is_masked": true,
+      "pii_finding_count": 1,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig",
+        "delimiter": ","
+      }
+    },
+    {
+      "file_id": "FILE_c0f51c3b1a7dfd98",
+      "relative_path": "tables/orders.xlsx",
+      "filename": "orders.xlsx",
+      "extension": ".xlsx",
+      "size": 5483,
+      "modified_at": "2026-09-19T00:00:00Z",
+      "sha256": "474f763203a8d375ca2d2484857eb16f3d4178b90d2bc763c6ac733a8718ee9b",
+      "parse_status": "PARSED",
+      "parser": "xlsx",
+      "text": "order_id | customer_id | order_date | amount | memo\nO100 | C013 | 2026-08-03 | 125000\nO101 | C013 | 2026-08-29 | 75000 | repeat\nO102 | C021 | 2026-08-11 | 99000\nMonthly summary",
+      "text_char_count": 176,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "sheet_count": 2
+      }
+    },
+    {
+      "file_id": "FILE_188650ec5d13e415",
+      "relative_path": "unsupported.bin",
+      "filename": "unsupported.bin",
+      "extension": ".bin",
+      "size": 23,
+      "modified_at": "2026-09-19T00:00:00Z",
+      "sha256": "18752bddfca29d1777f9533f7f9eef4f8a45ddb22e32c409c04c84b007be4412",
+      "parse_status": "UNSUPPORTED",
+      "parser": null,
+      "text": "",
+      "text_char_count": 0,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": "Unsupported extension: .bin",
+      "parser_metadata": {}
+    }
+  ],
+  "duplicates": [
+    {
+      "duplicate_group_id": "DUP_bc0498b5f0a6a4f6",
+      "sha256": "bc0498b5f0a6a4f6f7f3a4419425e0aae5732582fc5e87b463bda26371184e20",
+      "file_ids": [
+        "FILE_abe2f798dd5e85e3",
+        "FILE_175704fe8a7c331d"
+      ],
+      "relative_paths": [
+        "archive/contact_copy.txt",
+        "docs/contact.txt"
+      ],
+      "copy_count": 2
+    }
+  ],
+  "probable_version_groups": [
+    {
+      "version_group_id": "VERSION_39750d9e68dbcef2",
+      "normalized_name": "return policy",
+      "candidates": [
+        {
+          "file_id": "FILE_2595481c695ba10d",
+          "relative_path": "docs/return_policy_final_2026.txt",
+          "signals": [
+            "final",
+            "year"
+          ]
+        },
+        {
+          "file_id": "FILE_084aace9889c4091",
+          "relative_path": "docs/return_policy_v1.txt",
+          "signals": [
+            "version_number"
+          ]
+        }
+      ]
+    }
+  ],
+  "pii_findings": [
+    {
+      "file_id": "FILE_175704fe8a7c331d",
+      "pii_type": "resident_registration_number",
+      "start": 9,
+      "end": 23,
+      "match_length": 14,
+      "masked_token": "[RRN_MASKED]"
+    },
+    {
+      "file_id": "FILE_175704fe8a7c331d",
+      "pii_type": "phone",
+      "start": 27,
+      "end": 40,
+      "match_length": 13,
+      "masked_token": "[PHONE_MASKED]"
+    },
+    {
+      "file_id": "FILE_175704fe8a7c331d",
+      "pii_type": "email",
+      "start": 45,
+      "end": 62,
+      "match_length": 17,
+      "masked_token": "[EMAIL_MASKED]"
+    },
+    {
+      "file_id": "FILE_175704fe8a7c331d",
+      "pii_type": "account_number_candidate",
+      "start": 69,
+      "end": 83,
+      "match_length": 14,
+      "masked_token": "[ACCOUNT_MASKED]"
+    },
+    {
+      "file_id": "FILE_5e9eb5e48e1cf2e4",
+      "pii_type": "email",
+      "start": 59,
+      "end": 79,
+      "match_length": 20,
+      "masked_token": "[EMAIL_MASKED]"
+    },
+    {
+      "file_id": "FILE_abe2f798dd5e85e3",
+      "pii_type": "resident_registration_number",
+      "start": 9,
+      "end": 23,
+      "match_length": 14,
+      "masked_token": "[RRN_MASKED]"
+    },
+    {
+      "file_id": "FILE_abe2f798dd5e85e3",
+      "pii_type": "phone",
+      "start": 27,
+      "end": 40,
+      "match_length": 13,
+      "masked_token": "[PHONE_MASKED]"
+    },
+    {
+      "file_id": "FILE_abe2f798dd5e85e3",
+      "pii_type": "email",
+      "start": 45,
+      "end": 62,
+      "match_length": 17,
+      "masked_token": "[EMAIL_MASKED]"
+    },
+    {
+      "file_id": "FILE_abe2f798dd5e85e3",
+      "pii_type": "account_number_candidate",
+      "start": 69,
+      "end": 83,
+      "match_length": 14,
+      "masked_token": "[ACCOUNT_MASKED]"
+    }
+  ],
+  "unreadable_sources": [
+    {
+      "file_id": "FILE_17d0406606fee814",
+      "relative_path": "scans/invoice_scan.pdf",
+      "reason": "PDF_TEXT_BELOW_OCR_THRESHOLD",
+      "extracted_char_count": 0,
+      "requires_ocr": true
+    }
+  ],
+  "tables": [
+    {
+      "table_id": "TABLE_FILE_5e9eb5e48e1cf2e4_CSV",
+      "file_id": "FILE_5e9eb5e48e1cf2e4",
+      "sheet_name": "CSV",
+      "row_count": 2,
+      "column_count": 4,
+      "column_names": [
+        "customer_id",
+        "customer_name",
+        "email",
+        "active"
+      ],
+      "columns": [
+        {
+          "name": "customer_id",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "C013",
+            "C021"
+          ]
+        },
+        {
+          "name": "customer_name",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "한빛상사",
+            "새봄마트"
+          ]
+        },
+        {
+          "name": "email",
+          "inferred_type": "string",
+          "null_ratio": 0.5,
+          "sample_values": [
+            "[EMAIL_MASKED]"
+          ]
+        },
+        {
+          "name": "active",
+          "inferred_type": "boolean",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "true",
+            "false"
+          ]
+        }
+      ],
+      "merged_cell_present": false,
+      "merged_ranges": []
+    },
+    {
+      "table_id": "TABLE_FILE_c0f51c3b1a7dfd98_MergedNote",
+      "file_id": "FILE_c0f51c3b1a7dfd98",
+      "sheet_name": "MergedNote",
+      "row_count": 0,
+      "column_count": 2,
+      "column_names": [
+        "Monthly summary",
+        "column_2"
+      ],
+      "columns": [
+        {
+          "name": "Monthly summary",
+          "inferred_type": "empty",
+          "null_ratio": 0.0,
+          "sample_values": []
+        },
+        {
+          "name": "column_2",
+          "inferred_type": "empty",
+          "null_ratio": 0.0,
+          "sample_values": []
+        }
+      ],
+      "merged_cell_present": true,
+      "merged_ranges": [
+        "A1:B1"
+      ]
+    },
+    {
+      "table_id": "TABLE_FILE_c0f51c3b1a7dfd98_Orders",
+      "file_id": "FILE_c0f51c3b1a7dfd98",
+      "sheet_name": "Orders",
+      "row_count": 3,
+      "column_count": 5,
+      "column_names": [
+        "order_id",
+        "customer_id",
+        "order_date",
+        "amount",
+        "memo"
+      ],
+      "columns": [
+        {
+          "name": "order_id",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "O100",
+            "O101",
+            "O102"
+          ]
+        },
+        {
+          "name": "customer_id",
+          "inferred_type": "string",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "C013",
+            "C021"
+          ]
+        },
+        {
+          "name": "order_date",
+          "inferred_type": "date",
+          "null_ratio": 0.0,
+          "sample_values": [
+            "2026-08-03",
+            "2026-08-29",
+            "2026-08-11"
+          ]
+        },
+        {
+          "name": "amount",
+          "inferred_type": "integer",
+          "null_ratio": 0.0,
+          "sample_values": [
+            125000,
+            75000,
+            99000
+          ]
+        },
+        {
+          "name": "memo",
+          "inferred_type": "string",
+          "null_ratio": 0.6666666666666666,
+          "sample_values": [
+            "repeat"
+          ]
+        }
+      ],
+      "merged_cell_present": false,
+      "merged_ranges": []
+    }
+  ],
+  "live_llm": {
+    "status": "LIVE_LLM_PENDING",
+    "provider": null,
+    "model": null,
+    "reason": "No OpenAI API key, AWS credential/profile, or supported local LLM runtime was available.",
+    "tasks": []
+  }
+}

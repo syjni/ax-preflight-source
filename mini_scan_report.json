@@ -1,0 +1,39 @@
+{
+  "schema_version": "feasibility-2026-09-18-v1",
+  "run_id": "2026-09-18T14:23:20.459898+00:00",
+  "scope": "9/18 feasibility test only",
+  "dataset": {
+    "synthetic": true,
+    "company": "한빛유통",
+    "document_count": 9,
+    "table_count": 2,
+    "table_row_counts": {
+      "customers": 2,
+      "orders": 3
+    }
+  },
+  "findings": {
+    "version_conflicts": [
+      {
+        "family": "return_policy",
+        "values": [
+          {
+            "document_id": "DOC_006",
+            "days": 14,
+            "effective_date": "2024-01-01"
+          },
+          {
+            "document_id": "DOC_007",
+            "days": 30,
+            "effective_date": "2026-07-01"
+          }
+        ],
+        "current_document_id": "DOC_007"
+      }
+    ],
+    "missing_information_cases": [
+      "제주 지역 추가 배송비",
+      "부산 물류센터 코드"
+    ]
+  }
+}

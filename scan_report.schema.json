@@ -1,0 +1,656 @@
+{
+  "$defs": {
+    "ColumnProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "inferred_type": {
+          "$ref": "#/$defs/DataType"
+        },
+        "null_ratio": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Null Ratio",
+          "type": "number"
+        },
+        "sample_values": {
+          "items": {},
+          "title": "Sample Values",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "inferred_type",
+        "null_ratio"
+      ],
+      "title": "ColumnProfile",
+      "type": "object"
+    },
+    "DataType": {
+      "enum": [
+        "empty",
+        "boolean",
+        "integer",
+        "number",
+        "date",
+        "datetime",
+        "string",
+        "mixed"
+      ],
+      "title": "DataType",
+      "type": "string"
+    },
+    "DuplicateGroup": {
+      "additionalProperties": false,
+      "properties": {
+        "duplicate_group_id": {
+          "title": "Duplicate Group Id",
+          "type": "string"
+        },
+        "sha256": {
+          "title": "Sha256",
+          "type": "string"
+        },
+        "file_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "File Ids",
+          "type": "array"
+        },
+        "relative_paths": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Relative Paths",
+          "type": "array"
+        },
+        "copy_count": {
+          "minimum": 2,
+          "title": "Copy Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "duplicate_group_id",
+        "sha256",
+        "file_ids",
+        "relative_paths",
+        "copy_count"
+      ],
+      "title": "DuplicateGroup",
+      "type": "object"
+    },
+    "FileRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "file_id": {
+          "pattern": "^FILE_[0-9a-f]{16}$",
+          "title": "File Id",
+          "type": "string"
+        },
+        "relative_path": {
+          "title": "Relative Path",
+          "type": "string"
+        },
+        "filename": {
+          "title": "Filename",
+          "type": "string"
+        },
+        "extension": {
+          "title": "Extension",
+          "type": "string"
+        },
+        "size": {
+          "minimum": 0,
+          "title": "Size",
+          "type": "integer"
+        },
+        "modified_at": {
+          "format": "date-time",
+          "title": "Modified At",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "parse_status": {
+          "$ref": "#/$defs/ParseStatus"
+        },
+        "parser": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Parser"
+        },
+        "text": {
+          "default": "",
+          "title": "Text",
+          "type": "string"
+        },
+        "text_char_count": {
+          "minimum": 0,
+          "title": "Text Char Count",
+          "type": "integer"
+        },
+        "text_is_masked": {
+          "default": true,
+          "title": "Text Is Masked",
+          "type": "boolean"
+        },
+        "pii_finding_count": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Pii Finding Count",
+          "type": "integer"
+        },
+        "parse_error": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Parse Error"
+        },
+        "parser_metadata": {
+          "additionalProperties": true,
+          "title": "Parser Metadata",
+          "type": "object"
+        }
+      },
+      "required": [
+        "file_id",
+        "relative_path",
+        "filename",
+        "extension",
+        "size",
+        "modified_at",
+        "sha256",
+        "parse_status",
+        "text_char_count"
+      ],
+      "title": "FileRecord",
+      "type": "object"
+    },
+    "LLMTaskTelemetry": {
+      "additionalProperties": false,
+      "properties": {
+        "task_id": {
+          "title": "Task Id",
+          "type": "string"
+        },
+        "category": {
+          "title": "Category",
+          "type": "string"
+        },
+        "provider": {
+          "title": "Provider",
+          "type": "string"
+        },
+        "model": {
+          "title": "Model",
+          "type": "string"
+        },
+        "llm_call_count": {
+          "minimum": 0,
+          "title": "Llm Call Count",
+          "type": "integer"
+        },
+        "input_tokens": {
+          "minimum": 0,
+          "title": "Input Tokens",
+          "type": "integer"
+        },
+        "output_tokens": {
+          "minimum": 0,
+          "title": "Output Tokens",
+          "type": "integer"
+        },
+        "latency_ms": {
+          "minimum": 0.0,
+          "title": "Latency Ms",
+          "type": "number"
+        },
+        "errors": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Errors",
+          "type": "array"
+        }
+      },
+      "required": [
+        "task_id",
+        "category",
+        "provider",
+        "model",
+        "llm_call_count",
+        "input_tokens",
+        "output_tokens",
+        "latency_ms"
+      ],
+      "title": "LLMTaskTelemetry",
+      "type": "object"
+    },
+    "LiveLLMStatus": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "enum": [
+            "LIVE_LLM_PENDING",
+            "LIVE_LLM_AVAILABLE_NOT_RUN",
+            "LIVE_LLM_COMPLETED",
+            "LIVE_LLM_FAILED"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "provider": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "tasks": {
+          "items": {
+            "$ref": "#/$defs/LLMTaskTelemetry"
+          },
+          "title": "Tasks",
+          "type": "array"
+        }
+      },
+      "required": [
+        "status",
+        "reason"
+      ],
+      "title": "LiveLLMStatus",
+      "type": "object"
+    },
+    "PIIFinding": {
+      "additionalProperties": false,
+      "properties": {
+        "file_id": {
+          "title": "File Id",
+          "type": "string"
+        },
+        "pii_type": {
+          "$ref": "#/$defs/PIIType"
+        },
+        "start": {
+          "minimum": 0,
+          "title": "Start",
+          "type": "integer"
+        },
+        "end": {
+          "exclusiveMinimum": 0,
+          "title": "End",
+          "type": "integer"
+        },
+        "match_length": {
+          "exclusiveMinimum": 0,
+          "title": "Match Length",
+          "type": "integer"
+        },
+        "masked_token": {
+          "title": "Masked Token",
+          "type": "string"
+        }
+      },
+      "required": [
+        "file_id",
+        "pii_type",
+        "start",
+        "end",
+        "match_length",
+        "masked_token"
+      ],
+      "title": "PIIFinding",
+      "type": "object"
+    },
+    "PIIType": {
+      "enum": [
+        "resident_registration_number",
+        "phone",
+        "email",
+        "account_number_candidate"
+      ],
+      "title": "PIIType",
+      "type": "string"
+    },
+    "ParseStatus": {
+      "enum": [
+        "PARSED",
+        "UNSUPPORTED",
+        "ERROR"
+      ],
+      "title": "ParseStatus",
+      "type": "string"
+    },
+    "ProbableVersionGroup": {
+      "additionalProperties": false,
+      "properties": {
+        "version_group_id": {
+          "title": "Version Group Id",
+          "type": "string"
+        },
+        "normalized_name": {
+          "title": "Normalized Name",
+          "type": "string"
+        },
+        "candidates": {
+          "items": {
+            "$ref": "#/$defs/VersionCandidate"
+          },
+          "title": "Candidates",
+          "type": "array"
+        }
+      },
+      "required": [
+        "version_group_id",
+        "normalized_name",
+        "candidates"
+      ],
+      "title": "ProbableVersionGroup",
+      "type": "object"
+    },
+    "ScanMetadata": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scanner_version": {
+          "title": "Scanner Version",
+          "type": "string"
+        },
+        "source_root_name": {
+          "title": "Source Root Name",
+          "type": "string"
+        },
+        "supported_extensions": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Supported Extensions",
+          "type": "array"
+        },
+        "ocr_min_chars_per_page": {
+          "minimum": 1,
+          "title": "Ocr Min Chars Per Page",
+          "type": "integer"
+        },
+        "file_count": {
+          "minimum": 0,
+          "title": "File Count",
+          "type": "integer"
+        },
+        "parsed_file_count": {
+          "minimum": 0,
+          "title": "Parsed File Count",
+          "type": "integer"
+        },
+        "unsupported_file_count": {
+          "minimum": 0,
+          "title": "Unsupported File Count",
+          "type": "integer"
+        },
+        "error_file_count": {
+          "minimum": 0,
+          "title": "Error File Count",
+          "type": "integer"
+        },
+        "local_only": {
+          "default": true,
+          "title": "Local Only",
+          "type": "boolean"
+        },
+        "llm_dependency_required": {
+          "default": false,
+          "title": "Llm Dependency Required",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "schema_version",
+        "scanner_version",
+        "source_root_name",
+        "supported_extensions",
+        "ocr_min_chars_per_page",
+        "file_count",
+        "parsed_file_count",
+        "unsupported_file_count",
+        "error_file_count"
+      ],
+      "title": "ScanMetadata",
+      "type": "object"
+    },
+    "TableProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "table_id": {
+          "title": "Table Id",
+          "type": "string"
+        },
+        "file_id": {
+          "title": "File Id",
+          "type": "string"
+        },
+        "sheet_name": {
+          "title": "Sheet Name",
+          "type": "string"
+        },
+        "row_count": {
+          "minimum": 0,
+          "title": "Row Count",
+          "type": "integer"
+        },
+        "column_count": {
+          "minimum": 0,
+          "title": "Column Count",
+          "type": "integer"
+        },
+        "column_names": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Column Names",
+          "type": "array"
+        },
+        "columns": {
+          "items": {
+            "$ref": "#/$defs/ColumnProfile"
+          },
+          "title": "Columns",
+          "type": "array"
+        },
+        "merged_cell_present": {
+          "default": false,
+          "title": "Merged Cell Present",
+          "type": "boolean"
+        },
+        "merged_ranges": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Merged Ranges",
+          "type": "array"
+        }
+      },
+      "required": [
+        "table_id",
+        "file_id",
+        "sheet_name",
+        "row_count",
+        "column_count",
+        "column_names",
+        "columns"
+      ],
+      "title": "TableProfile",
+      "type": "object"
+    },
+    "UnreadableSource": {
+      "additionalProperties": false,
+      "properties": {
+        "file_id": {
+          "title": "File Id",
+          "type": "string"
+        },
+        "relative_path": {
+          "title": "Relative Path",
+          "type": "string"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "extracted_char_count": {
+          "minimum": 0,
+          "title": "Extracted Char Count",
+          "type": "integer"
+        },
+        "requires_ocr": {
+          "title": "Requires Ocr",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "file_id",
+        "relative_path",
+        "reason",
+        "extracted_char_count",
+        "requires_ocr"
+      ],
+      "title": "UnreadableSource",
+      "type": "object"
+    },
+    "VersionCandidate": {
+      "additionalProperties": false,
+      "properties": {
+        "file_id": {
+          "title": "File Id",
+          "type": "string"
+        },
+        "relative_path": {
+          "title": "Relative Path",
+          "type": "string"
+        },
+        "signals": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Signals",
+          "type": "array"
+        }
+      },
+      "required": [
+        "file_id",
+        "relative_path",
+        "signals"
+      ],
+      "title": "VersionCandidate",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "scan_metadata": {
+      "$ref": "#/$defs/ScanMetadata"
+    },
+    "files": {
+      "items": {
+        "$ref": "#/$defs/FileRecord"
+      },
+      "title": "Files",
+      "type": "array"
+    },
+    "duplicates": {
+      "items": {
+        "$ref": "#/$defs/DuplicateGroup"
+      },
+      "title": "Duplicates",
+      "type": "array"
+    },
+    "probable_version_groups": {
+      "items": {
+        "$ref": "#/$defs/ProbableVersionGroup"
+      },
+      "title": "Probable Version Groups",
+      "type": "array"
+    },
+    "pii_findings": {
+      "items": {
+        "$ref": "#/$defs/PIIFinding"
+      },
+      "title": "Pii Findings",
+      "type": "array"
+    },
+    "unreadable_sources": {
+      "items": {
+        "$ref": "#/$defs/UnreadableSource"
+      },
+      "title": "Unreadable Sources",
+      "type": "array"
+    },
+    "tables": {
+      "items": {
+        "$ref": "#/$defs/TableProfile"
+      },
+      "title": "Tables",
+      "type": "array"
+    },
+    "live_llm": {
+      "$ref": "#/$defs/LiveLLMStatus"
+    }
+  },
+  "required": [
+    "scan_metadata",
+    "files",
+    "duplicates",
+    "probable_version_groups",
+    "pii_findings",
+    "unreadable_sources",
+    "tables",
+    "live_llm"
+  ],
+  "title": "ScanReport",
+  "type": "object"
+}

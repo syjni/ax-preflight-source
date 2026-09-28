@@ -1,0 +1,1 @@
+{"dataset": "portfolio-hidden-conflict-before", "request_type": "TASK_CANDIDATE", "run_id": "phase6v4-portfolio-hidden-conflict-before-task_policy_return_window-r1", "schema_version": "ax-run-context-v1", "task_id": "TASK_POLICY_RETURN_WINDOW", "task_label": "현재 반품 가능 기간은 며칠인가요?"}

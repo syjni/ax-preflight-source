@@ -1,0 +1,54 @@
+{
+  "scan_metadata": {
+    "schema_version": "ax-scan-report-v1",
+    "scanner_version": "0.1.0",
+    "source_root_name": "development",
+    "supported_extensions": [
+      ".txt",
+      ".pdf",
+      ".docx",
+      ".csv",
+      ".xlsx"
+    ],
+    "ocr_min_chars_per_page": 20,
+    "file_count": 1,
+    "parsed_file_count": 1,
+    "unsupported_file_count": 0,
+    "error_file_count": 0,
+    "local_only": true,
+    "llm_dependency_required": false
+  },
+  "files": [
+    {
+      "file_id": "FILE_467e9845fb3c0eb8",
+      "relative_path": "개발용_책임팀.txt",
+      "filename": "개발용_책임팀.txt",
+      "extension": ".txt",
+      "size": 116,
+      "modified_at": "2026-09-22T09:33:47.231283Z",
+      "sha256": "f333b034c0b396f9cca9dc3cff871975f84a24a00ffe6b5d994440b502d39d40",
+      "parse_status": "PARSED",
+      "parser": "txt",
+      "text": "한울상점 개발용 업무 메모\n\n2027년 시범 매장 재고 점검의 책임팀은 시설운영팀입니다.\n",
+      "text_char_count": 50,
+      "text_is_masked": true,
+      "pii_finding_count": 0,
+      "parse_error": null,
+      "parser_metadata": {
+        "encoding": "utf-8-sig"
+      }
+    }
+  ],
+  "duplicates": [],
+  "probable_version_groups": [],
+  "pii_findings": [],
+  "unreadable_sources": [],
+  "tables": [],
+  "live_llm": {
+    "status": "LIVE_LLM_PENDING",
+    "provider": null,
+    "model": null,
+    "reason": "No OpenAI API key, AWS credential/profile, or supported local LLM runtime was available.",
+    "tasks": []
+  }
+}
