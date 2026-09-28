@@ -69,7 +69,8 @@ test('hands-on guide is expanded by default and remains collapsible', async () =
   assert.equal(toggle.getAttribute('aria-expanded'), 'true');
   assert.match(toggle.textContent, /접기/);
   assert.ok(container.querySelector('.guide-run'));
-  assert.match(container.textContent, /TERMINAL 1 · 읽기 전용 API/);
+  assert.match(container.textContent, /TERMINAL 1 · 로컬 검토 API/);
+  assert.match(container.textContent, /create_local_review_app_from_env/);
 
   await act(async () => toggle.click());
 
@@ -81,6 +82,8 @@ test('hands-on guide is expanded by default and remains collapsible', async () =
 test('hash parsing defaults to intro while existing section anchors stay on the console tab', async () => {
   assert.equal(tabFromHash(''), 'intro');
   assert.equal(tabFromHash('#summary'), 'console');
+  assert.equal(tabFromHash('#local-audit'), 'console');
+  assert.equal(tabFromHash('#featured-case'), 'console');
   assert.equal(tabFromHash('#findings'), 'console');
   assert.equal(tabFromHash('#unknown'), 'intro');
 

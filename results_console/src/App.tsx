@@ -1,6 +1,6 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { ApiError, api, runState, type FeaturedCase, type FeaturedRunReference, type RunResult } from './api';
-import type { DatasetOption, EvidenceCheckResult, FindingsResponse, OnboardingAssessment, ReadinessResponse, RetrievalTrace, TasksResponse } from './generated/api';
+import type { DatasetOption, EvidenceCheckResult, FindingsResponse, LocalDatasetScanResult, OnboardingAssessment, ProductCapabilities, ReadinessResponse, RetrievalTrace, TasksResponse } from './generated/api';
 import { assessRunContext } from './provenance';
 import { Sidebar } from './components/Sidebar';
 import { SummarySection } from './components/SummarySection';
@@ -18,6 +18,7 @@ import { Portal } from './components/Portal';
 import { FeaturedCaseJourney } from './components/FeaturedCaseJourney';
 import { runFailureFor, type RunFailure } from './recovery';
 import { runRequestFor } from './viewModel';
+import { LocalDatasetPanel } from './components/LocalDatasetPanel';
 
 type DemoModule = typeof import('./mock/report');
 
@@ -55,6 +56,8 @@ export default function App() {
   const [datasets, setDatasets] = useState<DatasetOption[]>([]);
   const [datasetsLoading, setDatasetsLoading] = useState(true);
   const [datasetsError, setDatasetsError] = useState('');
+  const [capabilities, setCapabilities] = useState<ProductCapabilities | null>(null);
+  const [capabilitiesError, setCapabilitiesError] = useState('');
   const [featuredCases, setFeaturedCases] = useState<FeaturedCase[]>([]);
   const [featuredRunLoading, setFeaturedRunLoading] = useState<string | null>(null);
   const [featuredError, setFeaturedError] = useState('');
@@ -89,10 +92,30 @@ export default function App() {
   const selectedTask = selectedTaskId
     ? tasks?.tasks?.find((item) => item.task_id === selectedTaskId) ?? null
     : null;
+  const selectedDataset = datasets.find((option) => option.profile === dataset) ?? null;
 
   useEffect(() => {
     if (import.meta.env.DEV) void import('./mock/report').then(setDemo);
   }, []);
+
+  useEffect(() => {
+    if (fixture) {
+      setCapabilities(null);
+      setCapabilitiesError('');
+      return;
+    }
+    let active = true;
+    setCapabilitiesError('');
+    api.capabilities()
+      .then((result) => { if (active) setCapabilities(result); })
+      .catch((error: unknown) => {
+        if (active) {
+          setCapabilities(null);
+          setCapabilitiesError(messageFor(error));
+        }
+      });
+    return () => { active = false; };
+  }, [fixture]);
 
   useEffect(() => {
     if (fixture) {
@@ -286,6 +309,29 @@ export default function App() {
     }
   }
 
+  function localDatasetScanned(result: LocalDatasetScanResult) {
+    setDatasets((current) => [
+      ...current.filter((option) => option.profile !== result.dataset.profile),
+      result.dataset,
+    ]);
+    setDatasetInput(result.dataset.profile);
+    setDataset(result.dataset.profile);
+    setSelectedTaskId(null);
+    setRun(null);
+    setRunFailure(null);
+  }
+
+  function localDatasetDeleted(profile: string) {
+    setDatasets((current) => current.filter((option) => option.profile !== profile));
+    if (dataset !== profile) return;
+    const fallback = datasets.find((option) => option.profile === defaultDatasetProfile);
+    setDataset(fallback?.profile ?? '');
+    setDatasetInput(fallback?.profile ?? '');
+    setSelectedTaskId(null);
+    setRun(null);
+    setRunFailure(null);
+  }
+
   async function submitQuestion() {
     if (!dataset || !question.trim() || fixture || !onboarding?.can_run) return;
     setSubmitting(true);
@@ -409,6 +455,7 @@ export default function App() {
   return <Portal consoleContent={<div className="app-shell">
     <Sidebar activeTab={activeTab} benchmarkAvailable={benchmarkAvailable} onTabChange={setActiveTab} dataset={dataset || '선택 안 됨'} datasetName={readiness?.dataset_name} asOfDate={readiness?.readiness.as_of_date} runId={run?.run_id} />
     {activeTab === 'benchmark' && benchmark ? <BenchmarkTab report={benchmark} /> : <main className="report-main">
+      <LocalDatasetPanel capabilities={capabilities} capabilitiesError={capabilitiesError} selectedDataset={selectedDataset} onScanned={localDatasetScanned} onDeleted={localDatasetDeleted} />
       <SummarySection readiness={readiness} findings={findings} run={run} loading={loading} />
       <FeaturedCaseJourney cases={featuredCases} currentDataset={dataset} currentRunId={run?.run_id ?? null} loadingRunId={featuredRunLoading} error={featuredError} onOpen={openFeaturedRun} />
       <ExecutiveReport dataset={dataset} readiness={readiness} findings={findings} comparison={comparisonFindings} />
@@ -425,10 +472,10 @@ export default function App() {
       <ReadinessTable data={readiness} loading={loading} error={readinessError} />
       <TaskTable data={tasks} error={readinessError} activeTaskId={finalRun?.task_id ?? null} onTaskSelect={selectTask} />
       <EvidenceCheckPanel data={evidence} loading={evidenceLoading} missing={evidenceMissing} error={evidenceError} trace={retrievalTrace} traceLoading={retrievalTraceLoading} traceMissing={retrievalTraceMissing} traceError={retrievalTraceError} />
-      <RunControls datasetInput={datasetInput} datasets={datasets} datasetsLoading={datasetsLoading} datasetsError={datasetsError} question={question} runInput={runInput} fixture={fixture} submitting={submitting} selectedTaskId={selectedTaskId} selectedTaskStatus={selectedTask?.status ?? null} failure={runFailure} onboarding={onboarding} onboardingLoading={onboardingLoading} onboardingError={onboardingError} onDatasetInput={setDatasetInput} onQuestion={(value) => { setQuestion(value); setSelectedTaskId(null); }} onRunInput={setRunInput} onDatasetSubmit={selectDataset} onRunSubmit={submit} onLookup={lookup} onFixture={chooseFixture} onRecover={recoverRun} />
-      <BatchPanel dataset={dataset} tasks={tasks} canRun={Boolean(onboarding?.can_run)} fixture={Boolean(fixture)} fixtureBatch={fixture ? demo?.demoBatch ?? null : null} onOpenRun={(runId) => void lookupRun(runId)} />
+      <RunControls datasetInput={datasetInput} datasets={datasets} datasetsLoading={datasetsLoading} datasetsError={datasetsError} question={question} runInput={runInput} fixture={fixture} submitting={submitting} aiTaskExecution={Boolean(capabilities?.ai_task_execution)} selectedTaskId={selectedTaskId} selectedTaskStatus={selectedTask?.status ?? null} failure={runFailure} onboarding={onboarding} onboardingLoading={onboardingLoading} onboardingError={onboardingError} onDatasetInput={setDatasetInput} onQuestion={(value) => { setQuestion(value); setSelectedTaskId(null); }} onRunInput={setRunInput} onDatasetSubmit={selectDataset} onRunSubmit={submit} onLookup={lookup} onFixture={chooseFixture} onRecover={recoverRun} />
+      <BatchPanel dataset={dataset} tasks={tasks} canRun={Boolean(onboarding?.can_run && capabilities?.ai_task_execution)} fixture={Boolean(fixture)} fixtureBatch={fixture ? demo?.demoBatch ?? null : null} onOpenRun={(runId) => void lookupRun(runId)} />
       {import.meta.env.DEV && fixture && <div className="dev-banner" role="status"><strong>DEV FIXTURE</strong><span>합성 화면 검증 모드이며 실제 고객 결과가 아닙니다.</span><button onClick={() => chooseFixture('')}>라이브 API로 돌아가기</button></div>}
-      <footer className="report-footer">AX Preflight <span>·</span> Results Console <span>·</span> 읽기 전용 진단 화면</footer>
+      <footer className="report-footer">AX Preflight <span>·</span> Results Console <span>·</span> 로컬 자료 점검과 검증된 예시</footer>
     </main>}
   </div>} />;
 }

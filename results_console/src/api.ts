@@ -1,4 +1,4 @@
-import type { BatchCreateRequest, BatchStatus, DatasetsResponse, DeliveryEnvelope, EvidenceCheckResult, FeaturedCase, FeaturedCasesResponse, FeaturedRunReference, FindingsResponse, OnboardingAssessment, ReadinessResponse, RetrievalTrace, RunRequest, RunningRun, TasksResponse } from './generated/api';
+import type { BatchCreateRequest, BatchStatus, DatasetsResponse, DeliveryEnvelope, EvidenceCheckResult, FeaturedCase, FeaturedCasesResponse, FeaturedRunReference, FindingsResponse, LocalDatasetDeleteResult, LocalDatasetRequest, LocalDatasetScanResult, OnboardingAssessment, ProductCapabilities, ReadinessResponse, RetrievalTrace, RunRequest, RunningRun, TasksResponse } from './generated/api';
 
 export type RunResult = RunningRun | DeliveryEnvelope;
 export type { FeaturedCase, FeaturedRunReference };
@@ -79,6 +79,16 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 export const api = {
+  capabilities: (): Promise<ProductCapabilities> => staticMode
+    ? Promise.resolve({
+        mode: 'STATIC_DEMO',
+        local_dataset_scan: false,
+        ai_task_execution: false,
+        bundled_demo: true,
+        source_files_stay_local: true,
+        supported_extensions: ['.txt', '.pdf', '.docx', '.csv', '.xlsx'],
+      })
+    : request<ProductCapabilities>('/api/capabilities'),
   datasets: () => staticMode ? loadStaticSnapshot().then((snapshot) => snapshot.datasets) : request<DatasetsResponse>('/api/datasets'),
   featuredCases: () => staticMode
     ? loadStaticSnapshot().then((snapshot) => snapshot.featured_cases)
@@ -111,6 +121,15 @@ export const api = {
   retryBatch: (id: string) => staticMode
     ? Promise.reject(new ApiError(503, 'RUNNER_UNAVAILABLE'))
     : request<BatchStatus>(`/api/batches/${encodeURIComponent(id)}/retry`, { method: 'POST' }),
+  createLocalDataset: (body: LocalDatasetRequest) => staticMode
+    ? Promise.reject(new ApiError(403, 'LOCAL_SCAN_UNAVAILABLE'))
+    : request<LocalDatasetScanResult>('/api/local-datasets', { method: 'POST', body: JSON.stringify(body) }),
+  localDataset: (profile: string) => staticMode
+    ? Promise.reject(new ApiError(403, 'LOCAL_SCAN_UNAVAILABLE'))
+    : request<LocalDatasetScanResult>(`/api/local-datasets/${encodeURIComponent(profile)}`),
+  deleteLocalDataset: (profile: string) => staticMode
+    ? Promise.reject(new ApiError(403, 'LOCAL_SCAN_UNAVAILABLE'))
+    : request<LocalDatasetDeleteResult>(`/api/local-datasets/${encodeURIComponent(profile)}`, { method: 'DELETE' }),
 };
 
 export function runState(run: RunResult): 'RUNNING' | 'DELIVERED' | 'REJECTED' {

@@ -21,11 +21,12 @@ test('public UI consistently uses the AX Preflight display name and subtitles', 
   assert.match(styles, /\.executive-report__header small \{[^}]*text-transform: none;/);
 });
 
-test('intro call to action uses a right arrow instead of the diagonal arrow', () => {
+test('intro calls to action use right arrows and separate local review from the example', () => {
   const portal = read('../src/components/Portal.tsx');
 
-  assert.match(portal, /결과 콘솔 열기 <span>→<\/span>/);
-  assert.doesNotMatch(portal, /결과 콘솔 열기 <span>↗<\/span>/);
+  assert.match(portal, /내 자료 점검하기 <span>→<\/span>/);
+  assert.match(portal, /검증된 예시 보기 <span>→<\/span>/);
+  assert.doesNotMatch(portal, /<span>↗<\/span>/);
 });
 
 test('guide states the actual local-storage and model-processing boundary', () => {

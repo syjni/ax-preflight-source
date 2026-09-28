@@ -10,6 +10,8 @@ const primaryTabs: Array<{ id: PrimaryTab; label: string; number: string }> = [
 
 export const consoleSectionHashes = new Set([
   'summary',
+  'local-audit',
+  'featured-case',
   'executive-report',
   'findings',
   'readiness',
@@ -33,13 +35,13 @@ const findings = [
   { name: '의미값 불일치', mean: '3회 모두 답했지만 값이 서로 다름', rec: '문서부터 고치지 말고 같은 설정으로 다시 실행해 차이를 비교' },
 ];
 
-const scopeNow = ['업무 반복 실행', 'Finding 집계와 권고', '정리 전후 재검증', '근거 검사', '관리자용 1페이지 리포트'];
+const scopeNow = ['내 폴더의 로컬 준비도 점검', '업무 반복 실행', 'Finding 집계와 권고', '정리 전후 재검증', '근거 검사', '관리자용 1페이지 리포트'];
 const scopeNot = ['문서 자동 수정', '정확도 benchmark', '고객 검증 업무 catalog', '인증·권한·tenant 격리 등 프로덕션 보안'];
 
 const guideSteps = [
-  { number: '01', where: '요약', text: '정적 점수와 반품 업무 0/3 → 3/3을 비교합니다.' },
-  { number: '02', where: '진단 신호 01 · 문서 충돌', text: '진단 신호 01번(문서 충돌)을 펼쳐 정리 전·후 원문을 확인합니다.' },
-  { number: '03', where: '검증된 대표 흐름', text: '정리 후의 “30일 근거 확인”을 눌러 답과 근거 직접 일치를 함께 확인합니다.' },
+  { number: '01', where: '내 자료 점검', text: '로컬 실행에서는 문서 폴더의 전체 경로를 입력해 준비도와 파일별 보완 항목을 확인합니다.' },
+  { number: '02', where: '검증된 대표 흐름', text: '예시의 정적 점수와 반품 업무 0/3 → 3/3을 비교합니다.' },
+  { number: '03', where: '진단 신호 01 · 문서 충돌', text: '문서 충돌을 펼쳐 정리 전·후 원문과 “30일” 근거 직접 일치를 확인합니다.' },
 ];
 
 const distribution = [
@@ -73,7 +75,7 @@ function IntroPage() {
     <section className="portal-hero" data-screen-label="소개 01 첫 화면">
       <div className="portal-eyebrow"><span>AX Preflight</span><span>AI Data Readiness Audit</span><span className="portal-eyebrow__prototype">PROTOTYPE</span></div>
       <h1>파일 점검은 100점이었지만, AI는 반품 기간을 답하지 못했습니다.</h1>
-      <p className="portal-hero__lede">AX Preflight는 실제 업무 질문을 AI 에이전트에게 반복 실행시켜, 어떤 문서와 실행 경로가 업무를 막거나 흔드는지 근거와 함께 보여줍니다.</p>
+      <p className="portal-hero__lede">AX Preflight는 내 폴더를 로컬에서 먼저 점검하고, 실제 업무 질문을 AI 에이전트에게 반복 실행해 어떤 문서와 실행 경로가 업무를 막거나 흔드는지 근거와 함께 보여줍니다.</p>
       <div className="portal-hero__metrics">
         <div className="portal-hero__metric">
           <span className="portal-rail" aria-hidden="true" />
@@ -85,8 +87,8 @@ function IntroPage() {
         </div>
       </div>
       <div className="portal-actions">
-        <a className="portal-button portal-button--primary" href="#guide">사용 방법 보기 <span>→</span></a>
-        <a className="portal-button" href="#console">결과 콘솔 열기 <span>→</span></a>
+        <a className="portal-button portal-button--primary" href="#local-audit">내 자료 점검하기 <span>→</span></a>
+        <a className="portal-button" href="#featured-case">검증된 예시 보기 <span>→</span></a>
       </div>
     </section>
 
@@ -179,7 +181,7 @@ function GuidePage() {
     <section className="portal-section guide-section" data-screen-label="사용 방법 01 순서">
       <div className="portal-section__index">01 / 3분 안에 보는 순서</div>
       <ol className="guide-steps">{guideSteps.map((step) => <li key={step.number}><span>{step.number}</span><div><strong>{step.where}</strong><p>{step.text}</p></div></li>)}</ol>
-      <p className="guide-note">대표 사례는 콘솔 상단의 검증된 대표 흐름에서 바로 열 수 있습니다. 다른 데이터셋 전환과 기존 실행 조회는 07 / 조회와 실행에서 합니다.</p>
+      <p className="guide-note">로컬 실행에서는 결과 콘솔 맨 위의 내 자료 점검부터 시작합니다. 공개 화면에서는 검증된 대표 흐름을 둘러볼 수 있고, 다른 데이터셋 전환과 기존 실행 조회는 07 / 조회와 실행에서 합니다.</p>
     </section>
     <section className="portal-section guide-section" data-screen-label="사용 방법 02 숫자 읽는 법">
       <div className="portal-section__index">02 / 숫자 읽는 법</div>
@@ -214,15 +216,16 @@ function GuidePage() {
       <button className="guide-run-toggle" type="button" aria-expanded={runOpen} onClick={() => setRunOpen((open) => !open)}><span>05 / 직접 실행하기</span><span>{runOpen ? '접기 ▴' : '펼치기 ▾'}</span></button>
       {runOpen && <div className="guide-run">
         <div className="guide-environment"><span>검증 환경</span><span>Windows 11 · PowerShell · Python 3.12+ · Node.js 20+</span></div>
+        <p className="guide-note">Windows에서는 저장소 루트의 <code>start-local.cmd</code>를 실행하면 아래 두 프로세스가 자동으로 시작됩니다.</p>
         <div className="guide-terminals">
-          <div><span>TERMINAL 1 · 읽기 전용 API</span><pre>{`python -m pip install -r requirements.txt
+          <div><span>TERMINAL 1 · 로컬 검토 API</span><pre>{`python -m pip install -r requirements.txt
 $env:AX_PRODUCT_FROZEN_RESULTS_ROOT = "artifacts/phase6_product_demo_v4/runs"
-python -m uvicorn ax_product.api:create_read_only_app_from_env --factory --host 127.0.0.1 --port 8000`}</pre></div>
+python -m uvicorn ax_product.api:create_local_review_app_from_env --factory --host 127.0.0.1 --port 8000`}</pre></div>
           <div><span>TERMINAL 2 · 결과 콘솔</span><pre>{`cd results_console
 npm ci
 npm run dev -- --port 5173`}</pre><a href="http://127.0.0.1:5173/">→ http://127.0.0.1:5173/</a></div>
         </div>
-        <p className="guide-callout guide-callout--warning">읽기 전용 데모에서는 새 실행 요청이 의도적으로 거부됩니다. 라이브 실행은 Kiro CLI와 모델 자격 증명이 있는 환경에서만 켤 수 있습니다.</p>
+        <p className="guide-callout guide-callout--warning">로컬 검토 모드에서는 내 폴더의 정적 점검과 검증된 예시 조회가 활성화됩니다. AI 업무 실행은 Kiro CLI와 모델 자격 증명이 있는 라이브 모드에서만 켤 수 있습니다.</p>
       </div>}
     </section>
   </div>;
