@@ -1,0 +1,32 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "deleted": {
+      "const": true,
+      "default": true,
+      "title": "Deleted",
+      "type": "boolean"
+    },
+    "profile": {
+      "title": "Profile",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "ax-local-dataset-delete-result-v1",
+      "default": "ax-local-dataset-delete-result-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_files_deleted": {
+      "const": false,
+      "default": false,
+      "title": "Source Files Deleted",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "profile"
+  ],
+  "title": "LocalDatasetDeleteResult",
+  "type": "object"
+}

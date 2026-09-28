@@ -1,0 +1,55 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "ai_task_execution": {
+      "title": "Ai Task Execution",
+      "type": "boolean"
+    },
+    "bundled_demo": {
+      "title": "Bundled Demo",
+      "type": "boolean"
+    },
+    "local_dataset_scan": {
+      "title": "Local Dataset Scan",
+      "type": "boolean"
+    },
+    "mode": {
+      "enum": [
+        "STATIC_DEMO",
+        "API",
+        "LOCAL_REVIEW",
+        "LIVE"
+      ],
+      "title": "Mode",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "ax-product-capabilities-v1",
+      "default": "ax-product-capabilities-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_files_stay_local": {
+      "const": true,
+      "default": true,
+      "title": "Source Files Stay Local",
+      "type": "boolean"
+    },
+    "supported_extensions": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Supported Extensions",
+      "type": "array"
+    }
+  },
+  "required": [
+    "mode",
+    "local_dataset_scan",
+    "ai_task_execution",
+    "bundled_demo",
+    "supported_extensions"
+  ],
+  "title": "ProductCapabilities",
+  "type": "object"
+}

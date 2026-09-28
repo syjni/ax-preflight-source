@@ -8,6 +8,7 @@ results_console/node_modules/
 results_console/.python-deps/
 results_console/dist/
 artifacts/product_runs/
+artifacts/local_datasets/
 artifacts/final_submission_audit/failed_*/
 artifacts/final_submission_audit/superseded_*/
 artifacts/final_submission_audit/*/extracted/

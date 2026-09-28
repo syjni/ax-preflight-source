@@ -79,7 +79,9 @@ def _as_mapping(report: Any) -> Mapping[str, Any]:
     return report
 
 
-def calculate_readiness_score(report: Any) -> dict[str, Any]:
+def calculate_readiness_score(
+    report: Any, *, as_of_date: date = AS_OF_DATE
+) -> dict[str, Any]:
     """Calculate AX Readiness Score v1 without reading files or calling an LLM."""
     payload = _as_mapping(report)
     files = list(payload.get("files", []))
@@ -172,7 +174,7 @@ def calculate_readiness_score(report: Any) -> dict[str, Any]:
             invalid_timestamp_count += 1
             continue
         valid_timestamp_count += 1
-        age_days = (AS_OF_DATE - modified_date).days
+        age_days = (as_of_date - modified_date).days
         if age_days < 0:
             future_timestamp_count += 1
         elif age_days <= STALE_THRESHOLD_DAYS:
@@ -242,7 +244,7 @@ def calculate_readiness_score(report: Any) -> dict[str, Any]:
                 "files_without_detected_pii": total_files - len(pii_affected_ids),
             },
         },
-        "as_of_date": AS_OF_DATE.isoformat(),
+        "as_of_date": as_of_date.isoformat(),
         "stale_threshold_days": STALE_THRESHOLD_DAYS,
         "flags": {
             "empty_file_set": total_files == 0,
@@ -265,9 +267,11 @@ def canonical_json(result: Mapping[str, Any]) -> str:
     return json.dumps(result, ensure_ascii=False, sort_keys=True, indent=2) + "\n"
 
 
-def score_scan_report_file(path: Path) -> dict[str, Any]:
+def score_scan_report_file(
+    path: Path, *, as_of_date: date = AS_OF_DATE
+) -> dict[str, Any]:
     payload = json.loads(path.read_text(encoding="utf-8"))
-    return calculate_readiness_score(payload)
+    return calculate_readiness_score(payload, as_of_date=as_of_date)
 
 
 def _parser() -> argparse.ArgumentParser:

@@ -94,12 +94,12 @@ class ReadinessResponse(StrictProductModel):
 
 
 class DatasetOption(StrictProductModel):
-    profile: Literal[
-        "mini", "demo-return-before", "demo-return-after",
-        "portfolio-hidden-conflict-before", "portfolio-ceiling-after",
-    ]
+    profile: str = Field(min_length=1, pattern=r"^[a-z0-9][a-z0-9-]*$")
     dataset_name: str = Field(min_length=1)
     display_label: str = Field(min_length=1)
+    origin: Literal["BUNDLED", "LOCAL"] = "BUNDLED"
+    scanned_at: str | None = None
+    source_root_name: str | None = None
 
 
 class DatasetsResponse(StrictProductModel):

@@ -14,6 +14,7 @@ from pydantic import Field, model_validator
 
 from ax_mcp.runtime_dataset import RuntimeDatasetError, resolve_runtime_dataset
 from ax_scanner.models import ScanReport
+from ax_scanner.parsers import SUPPORTED_EXTENSIONS
 from readiness_score import score_scan_report_file
 
 from .batches import (
@@ -44,6 +45,16 @@ from .task_approvals import (
     BusinessTaskApprovalRegistry, validate_approval_registry,
 )
 from .tool_attempts import ToolAttemptStore
+from .local_datasets import (
+    DEFAULT_LOCAL_DATASETS_ROOT,
+    LOCAL_DATASETS_ROOT_ENV,
+    LocalDatasetDeleteResult,
+    LocalDatasetError,
+    LocalDatasetRequest,
+    LocalDatasetScanResult,
+    LocalDatasetStore,
+    ProductCapabilities,
+)
 
 
 RUNNER_ENV = "AX_PRODUCT_RUNNER"
@@ -124,8 +135,11 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
                finding_comparison_config: Path | None = None,
                task_catalog_path: Path = DEFAULT_TASK_CATALOG,
                task_approval_path: Path = DEFAULT_TASK_APPROVALS,
-               batch_root: Path | None = None) -> FastAPI:
+               batch_root: Path | None = None,
+               local_dataset_store: LocalDatasetStore | None = None) -> FastAPI:
     app = FastAPI(title="AX Preflight API")
+    if local_dataset_store is not None:
+        dataset_config = local_dataset_store.config_path
     store = CompositeResultStore(results_root, frozen_results_root)
     evidence_lookup = EvidenceCheckLookup(store)
     task_catalog = BusinessTaskCatalog.model_validate_json(
@@ -322,8 +336,72 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
                 "profile": profile,
                 "dataset_name": selected.dataset_name,
                 "display_label": display_label,
+                "origin": "BUNDLED",
             })
+        if local_dataset_store is not None:
+            options.extend(
+                option.model_dump(mode="json")
+                for option in local_dataset_store.options()
+            )
         return {"schema_version": "ax-datasets-response-v1", "datasets": options}
+
+    @app.get("/api/capabilities", response_model=ProductCapabilities)
+    def capabilities() -> ProductCapabilities:
+        return ProductCapabilities(
+            mode=(
+                "LIVE" if runner is not None
+                else "LOCAL_REVIEW" if local_dataset_store is not None
+                else "API"
+            ),
+            local_dataset_scan=local_dataset_store is not None,
+            ai_task_execution=runner is not None,
+            bundled_demo=frozen_results_root is not None,
+            supported_extensions=list(SUPPORTED_EXTENSIONS),
+        )
+
+    def local_scan_result(profile: str) -> LocalDatasetScanResult:
+        assert local_dataset_store is not None
+        return LocalDatasetScanResult(
+            dataset=local_dataset_store.option(profile),
+            audit=local_dataset_store.audit(profile),
+            readiness=local_dataset_store.readiness(profile),
+        )
+
+    @app.post(
+        "/api/local-datasets", response_model=LocalDatasetScanResult,
+        status_code=201,
+    )
+    def create_local_dataset(request: LocalDatasetRequest) -> LocalDatasetScanResult:
+        if local_dataset_store is None:
+            raise HTTPException(status_code=403, detail="LOCAL_SCAN_UNAVAILABLE")
+        try:
+            return local_scan_result(local_dataset_store.scan(request))
+        except LocalDatasetError as exc:
+            raise HTTPException(
+                status_code=422, detail=f"{exc.code} · {exc}"
+            ) from exc
+
+    @app.get(
+        "/api/local-datasets/{profile}", response_model=LocalDatasetScanResult
+    )
+    def get_local_dataset(profile: str) -> LocalDatasetScanResult:
+        if local_dataset_store is None:
+            raise HTTPException(status_code=403, detail="LOCAL_SCAN_UNAVAILABLE")
+        try:
+            return local_scan_result(profile)
+        except LocalDatasetError as exc:
+            raise HTTPException(status_code=404, detail=f"{exc.code} · {exc}") from exc
+
+    @app.delete(
+        "/api/local-datasets/{profile}", response_model=LocalDatasetDeleteResult
+    )
+    def delete_local_dataset(profile: str) -> LocalDatasetDeleteResult:
+        if local_dataset_store is None:
+            raise HTTPException(status_code=403, detail="LOCAL_SCAN_UNAVAILABLE")
+        try:
+            return local_dataset_store.delete(profile)
+        except LocalDatasetError as exc:
+            raise HTTPException(status_code=404, detail=f"{exc.code} · {exc}") from exc
 
     @app.get("/api/featured-cases", response_model=FeaturedCasesResponse)
     def featured_cases() -> FeaturedCasesResponse:
@@ -331,6 +409,8 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
 
     @app.get("/api/readiness/{dataset}", response_model=ReadinessResponse)
     def readiness(dataset: str) -> dict:
+        if local_dataset_store is not None and local_dataset_store.contains(dataset):
+            return local_dataset_store.readiness(dataset).model_dump(mode="json")
         selected = _dataset(dataset, dataset_config)
         report = ScanReport.model_validate_json(selected.scan_report.read_text(encoding="utf-8"))
         observations = [UnscoredObservation(
@@ -513,6 +593,23 @@ def _verified_frozen_results_root_from_env(*, required: bool = False) -> Path | 
     return candidate
 
 
+def _dataset_config_from_env() -> Path:
+    return Path(
+        os.environ.get("AX_RUNTIME_DATASET_CONFIG", str(DEFAULT_DATASET_CONFIG))
+    ).resolve()
+
+
+def _local_dataset_root_from_env() -> Path:
+    configured = Path(
+        os.environ.get(LOCAL_DATASETS_ROOT_ENV, str(DEFAULT_LOCAL_DATASETS_ROOT))
+    )
+    return (
+        configured.resolve()
+        if configured.is_absolute()
+        else (ROOT / configured).resolve()
+    )
+
+
 def create_app_from_env() -> FastAPI:
     """Create the explicitly configured deployment app.
 
@@ -530,27 +627,28 @@ def create_app_from_env() -> FastAPI:
         raise RuntimeError(f"{RUN_TIMEOUT_ENV} must be a positive finite number") from exc
     if not math.isfinite(timeout_seconds) or timeout_seconds <= 0:
         raise RuntimeError(f"{RUN_TIMEOUT_ENV} must be a positive finite number")
-    dataset_config = Path(
-        os.environ.get("AX_RUNTIME_DATASET_CONFIG", str(DEFAULT_DATASET_CONFIG))
-    ).resolve()
+    base_dataset_config = _dataset_config_from_env()
+    local_dataset_store = LocalDatasetStore(
+        base_config=base_dataset_config,
+        root=_local_dataset_root_from_env(),
+    )
     runner = KiroProductRunner(
-        dataset_config=dataset_config,
+        dataset_config=local_dataset_store.config_path,
         executable=os.environ.get(KIRO_CLI_ENV),
         timeout_seconds=timeout_seconds,
     )
     return create_app(
-        dataset_config=dataset_config,
+        dataset_config=local_dataset_store.config_path,
         frozen_results_root=frozen_results_root,
         runner=runner,
+        local_dataset_store=local_dataset_store,
     )
 
 
 def create_read_only_app_from_env() -> FastAPI:
     """Serve verified Phase 6 reads while keeping POST explicitly unavailable."""
     frozen_results_root = _verified_frozen_results_root_from_env(required=True)
-    dataset_config = Path(
-        os.environ.get("AX_RUNTIME_DATASET_CONFIG", str(DEFAULT_DATASET_CONFIG))
-    ).resolve()
+    dataset_config = _dataset_config_from_env()
     writable_results = TemporaryDirectory(prefix="ax-preflight-read-only-")
     try:
         read_only_app = create_app(
@@ -569,6 +667,37 @@ def create_read_only_app_from_env() -> FastAPI:
     # handlers may use the composite store, but can never see developer runs.
     read_only_app.state.isolated_writable_results = writable_results
     return read_only_app
+
+
+def create_local_review_app_from_env() -> FastAPI:
+    """Serve the verified example and let a reviewer scan their own local folder.
+
+    Model-backed run creation stays disabled.  Only generated scan reports and
+    the local registry are written; source files remain untouched.
+    """
+    frozen_results_root = _verified_frozen_results_root_from_env(required=True)
+    local_dataset_store = LocalDatasetStore(
+        base_config=_dataset_config_from_env(),
+        root=_local_dataset_root_from_env(),
+    )
+    writable_results = TemporaryDirectory(prefix="ax-preflight-local-review-")
+    try:
+        local_review_app = create_app(
+            results_root=Path(writable_results.name),
+            dataset_config=local_dataset_store.config_path,
+            frozen_results_root=frozen_results_root,
+            include_inconsistency_findings=(
+                frozen_results_root.resolve()
+                == PHASE6_FROZEN_V4_RESULTS_ROOT.resolve()
+            ),
+            local_dataset_store=local_dataset_store,
+        )
+    except Exception:
+        writable_results.cleanup()
+        raise
+    local_review_app.state.isolated_writable_results = writable_results
+    local_review_app.state.local_dataset_store = local_dataset_store
+    return local_review_app
 
 
 app = create_app()

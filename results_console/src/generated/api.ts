@@ -111,7 +111,10 @@ export type DataFinding = {
 export type DatasetOption = {
   "dataset_name": string;
   "display_label": string;
-  "profile": "mini" | "demo-return-before" | "demo-return-after" | "portfolio-hidden-conflict-before" | "portfolio-ceiling-after";
+  "origin"?: "BUNDLED" | "LOCAL";
+  "profile": string;
+  "scanned_at"?: string | null;
+  "source_root_name"?: string | null;
 };
 
 export type DatasetsResponse = {
@@ -227,6 +230,70 @@ export type FindingsResponse = {
 
 export type FindingType = "CONFLICTING_SOURCES" | "INCONSISTENT_ANSWERS" | "MIXED_OUTCOMES" | "INSUFFICIENT_EVIDENCE" | "MISSING_INFORMATION";
 
+export type LocalDatasetAudit = {
+  "as_of_date": string;
+  "dataset_name": string;
+  "display_label": string;
+  "duplicate_group_count": number;
+  "error_file_count": number;
+  "file_count": number;
+  "files": Array<LocalDatasetFile>;
+  "issues": Array<LocalDatasetIssue>;
+  "local_only"?: true;
+  "ocr_required_count": number;
+  "parsed_file_count": number;
+  "pii_finding_count": number;
+  "probable_version_group_count": number;
+  "profile": string;
+  "scanned_at": string;
+  "schema_version"?: "ax-local-dataset-audit-v1";
+  "source_root_name": string;
+  "supported_extensions": Array<string>;
+  "table_count": number;
+  "unsupported_file_count": number;
+};
+
+export type LocalDatasetDeleteResult = {
+  "deleted"?: true;
+  "profile": string;
+  "schema_version"?: "ax-local-dataset-delete-result-v1";
+  "source_files_deleted"?: false;
+};
+
+export type LocalDatasetFile = {
+  "extension": string;
+  "issue"?: string | null;
+  "modified_at": string;
+  "parse_status": "PARSED" | "UNSUPPORTED" | "ERROR";
+  "parser"?: string | null;
+  "pii_finding_count": number;
+  "relative_path": string;
+  "requires_ocr": boolean;
+  "size_bytes": number;
+  "text_char_count": number;
+};
+
+export type LocalDatasetIssue = {
+  "action": string;
+  "code": "PARSE_ERROR" | "UNSUPPORTED_FORMAT" | "OCR_REQUIRED" | "EXACT_DUPLICATE" | "PROBABLE_VERSION_GROUP" | "PII_PATTERN" | "STALE_FILE";
+  "count": number;
+  "relative_paths"?: Array<string>;
+  "severity": "info" | "warning" | "error";
+  "title": string;
+};
+
+export type LocalDatasetRequest = {
+  "display_name"?: string | null;
+  "source_path": string;
+};
+
+export type LocalDatasetScanResult = {
+  "audit": LocalDatasetAudit;
+  "dataset": DatasetOption;
+  "readiness": ReadinessResponse;
+  "schema_version"?: "ax-local-dataset-scan-result-v1";
+};
+
 export type OnboardingAssessment = {
   "blocker_count": number;
   "can_run": boolean;
@@ -243,6 +310,16 @@ export type OnboardingCheck = {
   "observed"?: number | null;
   "status": "PASS" | "WARN" | "BLOCK";
   "total"?: number | null;
+};
+
+export type ProductCapabilities = {
+  "ai_task_execution": boolean;
+  "bundled_demo": boolean;
+  "local_dataset_scan": boolean;
+  "mode": "STATIC_DEMO" | "API" | "LOCAL_REVIEW" | "LIVE";
+  "schema_version"?: "ax-product-capabilities-v1";
+  "source_files_stay_local"?: true;
+  "supported_extensions": Array<string>;
 };
 
 export type ReadinessCounts = {

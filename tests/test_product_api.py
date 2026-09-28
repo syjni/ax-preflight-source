@@ -151,9 +151,17 @@ class ProductApiTests(unittest.TestCase):
     def test_dataset_list_is_curated_and_uses_runtime_registry_names(self) -> None:
         response = self.client().get("/api/datasets")
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json(), {
-            "schema_version": "ax-datasets-response-v1",
-            "datasets": [
+        payload = response.json()
+        self.assertEqual(payload["schema_version"], "ax-datasets-response-v1")
+        self.assertEqual(
+            [
+                {
+                    key: option[key]
+                    for key in ("profile", "dataset_name", "display_label")
+                }
+                for option in payload["datasets"]
+            ],
+            [
                 {
                     "profile": "mini",
                     "dataset_name": "mini-company-smoke",
@@ -180,7 +188,16 @@ class ProductApiTests(unittest.TestCase):
                     "display_label": "반품 정책 · After",
                 },
             ],
-        })
+        )
+        self.assertTrue(
+            all(option["origin"] == "BUNDLED" for option in payload["datasets"])
+        )
+        self.assertTrue(
+            all(option["scanned_at"] is None for option in payload["datasets"])
+        )
+        self.assertTrue(
+            all(option["source_root_name"] is None for option in payload["datasets"])
+        )
         self.assertNotIn("before-accessibility-", response.text)
         self.assertNotIn('"ceiling"', response.text)
 

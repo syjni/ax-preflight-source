@@ -36,17 +36,17 @@ test('task catalog distinguishes approved work from unverified candidates', () =
   assert.deepEqual(tasks.$defs.BusinessTaskApprovalSummary.properties.approval_scope.enum, ['CUSTOMER', 'CONTROLLED_DEMO']);
 });
 
-test('dataset list exposes only curated selectable profiles', () => {
+test('dataset list accepts validated local profiles and identifies their origin', () => {
   const response = schema('DatasetsResponse');
   const option = response.$defs.DatasetOption;
   assert.equal(response.properties.schema_version.const, 'ax-datasets-response-v1');
-  assert.deepEqual(option.properties.profile.enum,
-    [
-      'mini', 'demo-return-before', 'demo-return-after',
-      'portfolio-hidden-conflict-before', 'portfolio-ceiling-after',
-    ]);
+  assert.equal(option.properties.profile.type, 'string');
+  assert.equal(option.properties.profile.pattern, '^[a-z0-9][a-z0-9-]*$');
+  assert.deepEqual(option.properties.origin.enum, ['BUNDLED', 'LOCAL']);
   assert.ok(option.properties.dataset_name);
   assert.ok(option.properties.display_label);
+  assert.ok(option.properties.scanned_at);
+  assert.ok(option.properties.source_root_name);
   assert.equal(option.additionalProperties, false);
 });
 

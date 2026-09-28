@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import unittest
+from datetime import date
 from pathlib import Path
 from unittest.mock import patch
 
@@ -101,6 +102,15 @@ class ReadinessScoreTests(unittest.TestCase):
         self.assertEqual(result["dimensions"]["timeliness"], 0.5)
         self.assertEqual(result["flags"]["future_modified_at_count"], 1)
         self.assertEqual(result["counts"]["timeliness"]["files_with_valid_modified_at"], 2)
+
+    def test_local_review_can_supply_its_own_reproducible_as_of_date(self) -> None:
+        report = _perfect_report()
+        report["files"][0]["modified_at"] = "2026-09-28T00:00:00Z"
+        frozen = calculate_readiness_score(report)
+        local = calculate_readiness_score(report, as_of_date=date(2026, 9, 29))
+        self.assertEqual(frozen["flags"]["future_modified_at_count"], 1)
+        self.assertEqual(local["flags"]["future_modified_at_count"], 0)
+        self.assertEqual(local["as_of_date"], "2026-09-29")
 
     def test_missing_timestamp_is_excluded_and_flagged(self) -> None:
         report = _perfect_report(2)

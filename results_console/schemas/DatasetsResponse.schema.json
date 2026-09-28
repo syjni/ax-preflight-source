@@ -13,16 +13,44 @@
           "title": "Display Label",
           "type": "string"
         },
-        "profile": {
+        "origin": {
+          "default": "BUNDLED",
           "enum": [
-            "mini",
-            "demo-return-before",
-            "demo-return-after",
-            "portfolio-hidden-conflict-before",
-            "portfolio-ceiling-after"
+            "BUNDLED",
+            "LOCAL"
           ],
+          "title": "Origin",
+          "type": "string"
+        },
+        "profile": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9][a-z0-9-]*$",
           "title": "Profile",
           "type": "string"
+        },
+        "scanned_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Scanned At"
+        },
+        "source_root_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Root Name"
         }
       },
       "required": [

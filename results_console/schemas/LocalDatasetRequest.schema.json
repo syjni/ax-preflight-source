@@ -1,0 +1,29 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "display_name": {
+      "anyOf": [
+        {
+          "maxLength": 80,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Display Name"
+    },
+    "source_path": {
+      "maxLength": 2048,
+      "minLength": 1,
+      "title": "Source Path",
+      "type": "string"
+    }
+  },
+  "required": [
+    "source_path"
+  ],
+  "title": "LocalDatasetRequest",
+  "type": "object"
+}

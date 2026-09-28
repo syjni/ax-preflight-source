@@ -16,6 +16,12 @@ from .onboarding import OnboardingAssessment
 from .evidence import EvidenceCheckResult
 from .findings import FindingsResponse
 from .retrieval_trace import RetrievalTrace
+from .local_datasets import (
+    LocalDatasetDeleteResult,
+    LocalDatasetRequest,
+    LocalDatasetScanResult,
+    ProductCapabilities,
+)
 
 
 MODELS = (
@@ -26,6 +32,8 @@ MODELS = (
     RetrievalTrace,
     FindingsResponse,
     BatchCreateRequest, BatchStatus,
+    ProductCapabilities, LocalDatasetRequest, LocalDatasetScanResult,
+    LocalDatasetDeleteResult,
 )
 
 
