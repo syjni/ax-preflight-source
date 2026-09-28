@@ -3,10 +3,11 @@
 AX Preflight의 심사에서 먼저 볼 제품 코드는 `ax_product/`, `ax_scanner/`, `ax_mcp/`, `results_console/`입니다. 루트의 `experiment/`, `artifacts/heldout_*`, `EXPERIMENT_*` 파일은 제품과 분리해 보존한 연구 실험 기록입니다.
 
 공개 소스의 기준 브랜치는
-[`main`](https://github.com/syjni/ax-preflight-source)입니다. 실제로 업로드할 파일,
-제출 직전 Release와 SHA-256은 [현재 제출 파일 안내](artifacts/submission/CURRENT_SUBMISSION.md)를
-새 commit 기준으로 다시 생성해 확인합니다. ZIP과 함께 생성하는 `SOURCE_MANIFEST.json`은
-패키징한 정확한 Git commit과 전체 파일 inventory를 기록합니다.
+[`main`](https://github.com/syjni/ax-preflight-source)이며, 심사용 고정본은
+[`v0.2.0-submission`](https://github.com/syjni/ax-preflight-source/releases/tag/v0.2.0-submission)입니다.
+Release의 `Source code (zip)` 또는 저장소의 **Code → Download ZIP**으로 같은 소스를
+받을 수 있습니다. 별도 제출 ZIP을 만들 때 생성되는 `SOURCE_MANIFEST.json`은 패키징한
+정확한 Git commit과 전체 파일 inventory를 기록합니다.
 
 > **검증 환경:** Windows 11, PowerShell, Python 3.12, Node.js에서 최종 로컬 감사를
 > 수행했습니다. 공개 저장소의 `Source verification`은 Ubuntu, Python 3.12,

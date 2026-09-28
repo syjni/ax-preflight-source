@@ -8,6 +8,7 @@ AX Preflight는 실제 AI 업무를 반복 실행해 **어떤 데이터와 검�
 막거나 흔드는지** 찾고, 수정 전후의 변화를 근거와 함께 보여주는 서비스입니다.
 
 [공개 데모](https://syjni.github.io/ax-preflight-source/) ·
+[심사용 Release](https://github.com/syjni/ax-preflight-source/releases/tag/v0.2.0-submission) ·
 [심사자 빠른 시작](docs/REVIEWER_QUICKSTART.md) ·
 [심사·제출 가이드](SUBMISSION.md) ·
 [소스 저장소](https://github.com/syjni/ax-preflight-source)
