@@ -16,6 +16,10 @@ test('first screen leads with the readiness-versus-return outcome and exhaustive
   assert.match(summary, /impact-story/);
   assert.match(summary, /정적 Data Readiness/);
   assert.match(summary, /반품 기간 업무/);
+  assert.match(summary, /staticDemo/);
+  assert.match(summary, /0 \/ 3/);
+  assert.match(summary, /3 \/ 3/);
+  assert.match(summary, /비교 결과 조회 전/);
   assert.match(summary, /processable_task_count/);
   assert.match(summary, /blocked_task_count/);
   assert.match(summary, /inconclusive_task_count/);

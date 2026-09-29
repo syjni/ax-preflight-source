@@ -19,7 +19,7 @@ function abstentionReason(reason: string | null | undefined): string {
   return '사유 미기록';
 }
 
-export function SummarySection({ readiness, findings, run, loading }: { readiness: ReadinessResponse | null; findings: FindingsResponse | null; run: RunResult | null; loading: boolean }) {
+export function SummarySection({ readiness, findings, run, loading, staticDemo = false }: { readiness: ReadinessResponse | null; findings: FindingsResponse | null; run: RunResult | null; loading: boolean; staticDemo?: boolean }) {
   const score = readiness?.readiness.readiness_score;
   const diagnostics = findings?.diagnostics;
   const activeFindingCount = findings?.findings.filter((item) => item.comparison_status !== 'NOT_REPRODUCED_AFTER').length;
@@ -37,7 +37,7 @@ export function SummarySection({ readiness, findings, run, loading }: { readines
     </header>
     <div className="impact-story" aria-label="핵심 진단 사례">
       <div className="impact-story__readiness"><span>정적 Data Readiness</span><strong>{score === undefined ? '—' : Math.round(score)}<small>/ 100</small></strong><p>파일 구조 점검은 통과했지만 실제 업무 성공을 보증하지 않습니다.</p></div>
-      <div className="impact-story__case"><span>반품 기간 업무</span>{returnComparison ? <div><strong>{returnComparison.before_observed_run_count - returnComparison.before_abstained_run_count} / {returnComparison.before_observed_run_count}</strong><i>→</i><strong>{returnComparison.after_answered_run_count} / {returnComparison.after_observed_run_count}</strong></div> : <strong>비교 결과 조회 전</strong>}<p>14일·30일 충돌을 지목하고 정리한 뒤, 세 번 모두 30일로 답했습니다.</p></div>
+      <div className="impact-story__case"><span>반품 기간 업무</span>{returnComparison ? <div><strong>{returnComparison.before_observed_run_count - returnComparison.before_abstained_run_count} / {returnComparison.before_observed_run_count}</strong><i>→</i><strong>{returnComparison.after_answered_run_count} / {returnComparison.after_observed_run_count}</strong></div> : staticDemo ? <div><strong>0 / 3</strong><i>→</i><strong>3 / 3</strong></div> : <strong>비교 결과 조회 전</strong>}<p>14일·30일 충돌을 지목하고 정리한 뒤, 세 번 모두 30일로 답했습니다.</p></div>
     </div>
     <div className="diagnostic-grid" aria-label="업무 진단 요약">
       <div className="diagnostic-metric"><span>반복 안정 처리</span><strong>{loading ? '…' : `${diagnostics?.processable_task_count ?? 0} / ${diagnostics?.task_count || '—'}`}</strong><small>3회 모두 같은 의미값으로 답변</small></div>

@@ -17,7 +17,7 @@ export function TaskTable({ data, error, activeTaskId, onTaskSelect }: { data: T
     {error && <div className="notice notice--danger" role="alert">{error}</div>}
     {verifiedCount > 0
       ? <div className="notice"><strong>승인 기록이 있는 업무만 검증 업무로 실행됩니다.</strong><span>승인 범위·담당 역할·성공 기준은 선택한 데이터셋에 고정됩니다. 통제 데모 승인은 실제 고객 승인과 구분해 표시합니다.</span></div>
-      : data && <div className="notice"><strong>아직 승인 기록이 없는 업무 테스트 후보입니다.</strong><span>업무 담당자가 데이터셋 범위와 성공 기준을 승인하기 전에는 검증 업무로 실행되지 않습니다.</span></div>}
+      : data && <div className="notice"><strong>현재 선택한 데이터셋에는 아직 승인 기록이 없습니다.</strong><span>상단 대표 반품 사례의 3/3은 동결 실험 phase6-v4에서 승인된 업무 결과입니다. 아래 목록은 현재 데이터셋 기준 승인 상태이며, 업무 담당자가 범위와 성공 기준을 승인하기 전에는 검증 업무로 실행되지 않습니다.</span></div>}
     {rows.length > 0 && <div className="task-table">
       {rows.map((task, index) => {
         const active = Boolean(task.id && task.id === activeTaskId);

@@ -237,18 +237,19 @@ export function LocalDatasetPanel({ capabilities, capabilitiesError, selectedDat
   }, [result]);
   const visibleFiles = files.slice(0, 100);
   const available = Boolean(capabilities?.local_dataset_scan);
+  const publicDemo = capabilities?.mode === 'STATIC_DEMO';
 
   return <section className="report-section local-audit" id="local-audit" aria-labelledby="local-audit-title">
     <header className="section-heading local-audit__heading">
-      <div><div className="section-index">START HERE / 내 자료 점검</div><h2 id="local-audit-title">내 자료의 AI 업무 적합도 확인</h2></div>
+      <div><div className="section-index">{publicDemo ? 'PUBLIC DEMO / 검증 결과' : 'LOCAL CHECK / AI 업무 적합도'}</div><h2 id="local-audit-title">{publicDemo ? '검증된 예시로 둘러보기' : '내 자료의 AI 업무 적합도 확인'}</h2></div>
       {capabilities && <Status tone={available ? 'positive' : 'neutral'}>{available ? '로컬 점검 가능' : '공개 예시 모드'}</Status>}
     </header>
-    <p className="section-lede">파일이나 폴더를 선택하면 PDF·DOCX·XLSX·CSV·TXT의 준비도, PDF 표와 OCR 결과, 보완할 파일을 이 화면에서 확인합니다.</p>
+    <p className="section-lede">{publicDemo ? '설치 없이 동결된 60회 결과와 Before → After, 검색·근거 경로를 확인할 수 있습니다.' : '파일이나 폴더를 선택하면 PDF·DOCX·XLSX·CSV·TXT의 준비도, PDF 표와 OCR 결과, 보완할 파일을 이 화면에서 확인합니다.'}</p>
 
     {capabilitiesError && <div className="notice notice--danger" role="alert"><strong>실행 기능을 확인하지 못했습니다</strong><span>{capabilitiesError}</span></div>}
     {!capabilities && !capabilitiesError && <div className="state-message">로컬 점검 기능을 확인하는 중…</div>}
     {capabilities && !available && <div className="local-audit__unavailable">
-      <div><span className="mono">PUBLIC DEMO</span><h3>여기서는 검증된 예시를 안전하게 둘러볼 수 있습니다.</h3><p>내 파일 점검은 소스를 내려받아 로컬 검토 모드로 실행하면 활성화됩니다. 브라우저가 외부 서버로 파일을 전송하지 않습니다.</p></div>
+      <div><span className="mono">PUBLIC DEMO</span><h3>검증 결과를 바로 보고, 내 자료는 로컬에서 점검합니다.</h3><p>방문자의 자료와 모델 자격 증명을 공개 호스팅으로 받지 않기 위해 파일 업로드와 새 AI 실행은 열지 않았습니다. 내 파일은 내려받은 로컬 검토 모드의 localhost에서 점검하고, 새 AI 답변은 Kiro CLI와 모델 자격 증명을 명시적으로 연결한 live mode에서만 생성합니다.</p></div>
       <a className="portal-button portal-button--primary" href="https://github.com/syjni/ax-preflight-source#내-자료로-점검하기">로컬 실행 방법 <span>→</span></a>
     </div>}
 

@@ -52,6 +52,23 @@ test('task table distinguishes scoped approval from candidate copy', () => {
   assert.match(html, /후보 질문 선택/);
 });
 
+test('candidate-only task table distinguishes the frozen approved case from the current dataset', () => {
+  const html = renderToStaticMarkup(React.createElement(TaskTable, {
+    data: {
+      dataset: 'mini',
+      catalog_status: 'CANDIDATES_AVAILABLE',
+      tasks: [candidate],
+    },
+    error: '',
+    activeTaskId: null,
+    onTaskSelect: () => {},
+  }));
+
+  assert.match(html, /현재 선택한 데이터셋에는 아직 승인 기록이 없습니다/);
+  assert.match(html, /동결 실험 phase6-v4에서 승인된 업무 결과/);
+  assert.match(html, /현재 데이터셋 기준 승인 상태/);
+});
+
 test('verified execution sends only approved identity while candidate keeps question', () => {
   assert.deepEqual(
     runRequestFor('mini', '사용자가 바꾼 문장', verified),

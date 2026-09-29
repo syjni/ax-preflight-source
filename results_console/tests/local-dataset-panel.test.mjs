@@ -178,8 +178,10 @@ test('public demo preserves the example while clearly routing local review to so
     capabilitiesError: '', selectedDataset: null, onScanned: () => {}, onDeleted: () => {},
   })));
   assert.equal(container.querySelector('form'), null);
-  assert.match(container.textContent, /검증된 예시/);
-  assert.match(container.textContent, /외부 서버로 파일을 전송하지 않습니다/);
+  assert.match(container.textContent, /검증된 예시로 둘러보기/);
+  assert.match(container.textContent, /동결된 60회 결과/);
+  assert.match(container.textContent, /자료와 모델 자격 증명을 공개 호스팅으로 받지 않기 위해/);
+  assert.match(container.textContent, /Kiro CLI와 모델 자격 증명을 명시적으로 연결한 live mode/);
   assert.equal(
     container.querySelector('a').getAttribute('href'),
     'https://github.com/syjni/ax-preflight-source#내-자료로-점검하기',
