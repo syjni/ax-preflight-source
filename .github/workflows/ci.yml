@@ -82,12 +82,32 @@ jobs:
           CAPABILITIES="$capabilities" python -c "import json, os; value=json.loads(os.environ['CAPABILITIES']); assert value['mode']=='LOCAL_REVIEW'; assert value['local_file_upload']; assert value['pdf_table_extraction']; assert value['ocr_available']; assert {'kor','eng'} <= set(value['ocr_languages'])"
           curl --fail --silent http://127.0.0.1:18000/ | grep --quiet "AX Preflight"
 
+          cookie_jar="$(mktemp)"
+          bootstrap_payload="$(python -c 'import json; print(json.dumps(dict([("username", "ci.owner"), ("display_name", "CI reviewer"), ("password", "Thorough-Sea-Glass!47"), ("project_name", "Docker reviewer smoke test")])))')"
+          bootstrap="$(curl --fail --silent --show-error \
+            --cookie-jar "$cookie_jar" \
+            --header 'Content-Type: application/json' \
+            --data "$bootstrap_payload" \
+            http://127.0.0.1:18000/api/auth/bootstrap)"
+          csrf="$(BOOTSTRAP="$bootstrap" python -c "import json, os; value=json.loads(os.environ['BOOTSTRAP']); assert value['authenticated']; print(value['csrf_token'])")"
+          projects="$(curl --fail --silent --show-error \
+            --cookie "$cookie_jar" \
+            http://127.0.0.1:18000/api/projects)"
+          project_id="$(PROJECTS="$projects" python -c "import json, os; value=json.loads(os.environ['PROJECTS']); assert len(value)==1; print(value[0]['project_id'])")"
+
           audit="$(curl --fail --silent --show-error \
+            --cookie "$cookie_jar" \
+            --header "X-CSRF-Token: $csrf" \
             --form 'files=@sample_data/mini_company/scans/invoice_scan.pdf;type=application/pdf' \
             --form 'relative_paths=["review-files/invoice_scan.pdf"]' \
             --form 'display_name=Docker OCR smoke test' \
             --form 'source_root_name=review-files' \
+            --form "project_id=$project_id" \
             http://127.0.0.1:18000/api/local-datasets/upload)"
           profile="$(AUDIT="$audit" python -c "import json, os; value=json.loads(os.environ['AUDIT']); assert value['audit']['source_mode']=='UPLOAD'; assert value['audit']['files'][0]['ocr_status']=='COMPLETED'; print(value['dataset']['profile'])")"
-          deleted="$(curl --fail --silent --show-error --request DELETE "http://127.0.0.1:18000/api/local-datasets/$profile")"
+          deleted="$(curl --fail --silent --show-error \
+            --cookie "$cookie_jar" \
+            --header "X-CSRF-Token: $csrf" \
+            --request DELETE \
+            "http://127.0.0.1:18000/api/local-datasets/$profile")"
           DELETED="$deleted" python -c "import json, os; value=json.loads(os.environ['DELETED']); assert value['deleted']; assert value['managed_copy_deleted']; assert not value['source_files_deleted']"

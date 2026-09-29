@@ -25,6 +25,15 @@ from scripts.build_submission_package import (
 
 
 class SubmissionPackageInventoryTests(unittest.TestCase):
+    def test_docker_reviewer_smoke_uses_project_auth_boundary(self) -> None:
+        workflow = (
+            Path(__file__).resolve().parents[1] / ".github" / "workflows" / "ci.yml"
+        ).read_text(encoding="utf-8")
+        self.assertIn("/api/auth/bootstrap", workflow)
+        self.assertIn('--cookie "$cookie_jar"', workflow)
+        self.assertIn('X-CSRF-Token: $csrf', workflow)
+        self.assertIn('--form "project_id=$project_id"', workflow)
+
     def test_personal_home_pattern_does_not_flag_user_api_routes(self) -> None:
         pattern = CONTENT_PATTERNS["posix_personal_home_path"]
         self.assertIsNone(pattern.search(b"/api/users/user-123/revoke-sessions"))
