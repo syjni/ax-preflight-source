@@ -6,7 +6,7 @@ Kiro 실행은 발표의 필수 경로가 아니다.
 
 시연 기준은
 [`v0.5.0-submission`](https://github.com/syjni/ax-preflight-source/releases/tag/v0.5.0-submission)이다.
-공개 데모와 reviewer mode는 읽기·정적 점검 경로이고, live mode만 Kiro CLI를 사용한다.
+공개 데모와 로컬 검토 모드는 읽기·정적 점검 경로이고, live mode만 Kiro CLI를 사용한다.
 Amazon Bedrock 직접 연동은 이 저장소에 없다.
 
 ## 시작 전
@@ -33,7 +33,7 @@ AX_PRODUCT_FROZEN_RESULTS_ROOT=artifacts/phase6_product_demo_v4/runs \
 폴더를 외부 서비스에 보내지 않고 localhost의 관리 사본으로 점검할 수 있습니다.”
 
 첫 관리자 설정·프로젝트 화면을 거쳐 **내 자료 점검**의 브라우저 파일·폴더 선택과 준비도·보완 항목,
-실제 업무 등록·승인을 짧게 보여 준다. 실제 심사
+실제 업무 등록·승인을 짧게 보여 준다. 별도로 확인할
 폴더가 없다면 이 단계는 설명만 하고 검증된 대표 흐름으로 이동한다.
 
 ## 0:20–0:35 — 검증된 동결 PoC

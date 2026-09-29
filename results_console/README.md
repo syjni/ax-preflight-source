@@ -73,12 +73,12 @@ without requiring a run ID. The evidence section also shows a run-bound trace
 of stored search candidates, failed attempts, opened sources, and final citation
 linkage without copying raw source content, query text, or filter values.
 `POST`-style execution requests still return
-`RUNNER_UNAVAILABLE` in the browser and the recovery UI directs reviewers to
+`RUNNER_UNAVAILABLE` in the browser and the recovery UI directs users to
 the verified flow. The exporter fails if the featured run,
 dataset, 0/3→3/3 comparison, or `DIRECT_MATCH` evidence drifts. The GitHub Pages
 workflow in `.github/workflows/deploy-pages.yml` runs this build from `main`.
 
-### Local reviewer mode
+### Local review mode
 
 On Windows, `start-local.cmd` at the repository root installs dependencies and
 starts both processes. The console then accepts an absolute folder path and
@@ -88,11 +88,11 @@ modified.
 
 The default panel also accepts browser file selection, folder selection, and
 drag-and-drop. Those bytes go only to the local `/api/local-datasets/upload`
-endpoint and are kept in a managed local copy until the reviewer removes the
+endpoint and are kept in a managed local copy until the user removes the
 record. The result shows PDF table counts, OCR state, processed pages, and OCR
 confidence when available. The path tab remains available for an in-place scan.
 
-For the smallest reviewer setup, `start-docker.cmd` at the repository root
+For the smallest local setup, `start-docker.cmd` at the repository root
 builds and opens a single <http://127.0.0.1:8000/> app with Korean/English OCR
 included.
 

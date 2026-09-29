@@ -4,7 +4,7 @@ AX Preflight는 업무 실행, Failure→Finding 집계, 문서 준비도 조회
 
 현재 제출 고정본은
 [`v0.5.0-submission`](https://github.com/syjni/ax-preflight-source/releases/tag/v0.5.0-submission)입니다.
-reviewer factory와 frozen demo에는 live runner가 없고, opt-in live factory만 아래의 프로젝트
+로컬 검토 factory와 frozen demo에는 live runner가 없고, opt-in live factory만 아래의 프로젝트
 정책·예약·복구 경계를 사용합니다.
 
 ## 전체 구조
@@ -127,7 +127,7 @@ Failure→Finding 집계, Readiness 계산과 Evidence Checker 판정은 별도�
 
 두 root는 겹치거나 중첩될 수 없으며 동일 run ID가 양쪽에 존재하면 구성이 거부됩니다. read-only factory는 시작할 때 `FROZEN_MANIFEST.json` 기반 Phase 6 검증을 수행하고 runner 없이 app을 만들기 때문에 POST가 503이며 동결 결과를 수정하지 않습니다.
 
-Docker reviewer image는 빌드된 Results Console과 local reviewer API를 한 프로세스 주소로
+Docker 검토 image는 빌드된 Results Console과 로컬 검토 API를 한 프로세스 주소로
 제공하고 Tesseract `kor`·`eng` 언어팩을 포함합니다. `127.0.0.1:8000`에만 publish하며
 로컬 점검 데이터는 named volume에 보존합니다. 공개 정적 배포에는 로컬 파일 endpoint가
 없고 검증된 예시만 포함됩니다.

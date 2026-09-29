@@ -7,7 +7,7 @@ AX Preflight는 두 경로를 한 화면에서 제공합니다.
 
 현재 제출 고정본은
 [`v0.5.0-submission`](https://github.com/syjni/ax-preflight-source/releases/tag/v0.5.0-submission)입니다.
-기본 reviewer mode는 모델을 호출하지 않습니다. Kiro CLI를 연결한 live mode만 승인된
+기본 검토 모드는 모델을 호출하지 않습니다. Kiro CLI를 연결한 live mode만 승인된
 프로젝트 자료·업무·모델·자료 revision과 최근 24시간 추정 비용·동시 실행 한도를 모두
 통과한 뒤 runner를 호출합니다.
 
@@ -125,12 +125,12 @@ Docker 방식은 `stop-docker.cmd`로 종료합니다. 직접 실행 방식은 �
 
 - 포트 8000 또는 5173이 사용 중이면 이전 AX Preflight 창을 닫고 다시 실행합니다.
 - Docker Desktop이 실행되지 않았다는 메시지가 나오면 Docker Desktop을 먼저 시작합니다.
-- 허용된 서버 폴더가 보이지 않으면 정상입니다. 기본 Docker 심사는 **폴더 선택**을 사용합니다.
+- 허용된 서버 폴더가 보이지 않으면 정상입니다. 기본 Docker 실행은 **폴더 선택**을 사용합니다.
 - 선택 업로드 오류는 5,000개·전체 1 GiB·파일당 100 MiB 한도와 파일 권한을 확인합니다.
 - OCR 설치 필요가 표시되면 Docker 방식을 사용하거나 Tesseract `kor`, `eng` 언어팩을 설치합니다.
 - 읽기 오류가 있으면 해당 파일 권한과 손상 여부를 확인합니다.
 - 공개 데모는 정적 페이지이므로 내 파일 입력이 비활성화됩니다. 반드시 내려받은 소스의 로컬 검토 모드를 사용하십시오.
 
 기술 명령과 전체 테스트는 [README](../README.md), 제출 구조는
-[심사·제출 가이드](../SUBMISSION.md), 데이터 경계는
+[제출 가이드](../SUBMISSION.md), 데이터 경계는
 [데이터 처리와 개인정보 경계](DATA_AND_PRIVACY.md)를 참고하십시오.

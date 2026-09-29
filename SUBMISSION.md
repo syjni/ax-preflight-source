@@ -1,6 +1,6 @@
-# AX Preflight 심사·제출 안내
+# AX Preflight 제출 안내
 
-AX Preflight의 심사에서 먼저 볼 제품 코드는 `ax_product/`, `ax_scanner/`, `ax_mcp/`, `results_console/`입니다. 루트의 `experiment/`, `artifacts/heldout_*`, `EXPERIMENT_*` 파일은 제품과 분리해 보존한 연구 실험 기록입니다.
+AX Preflight 제출본의 핵심 제품 코드는 `ax_product/`, `ax_scanner/`, `ax_mcp/`, `results_console/`입니다. 루트의 `experiment/`, `artifacts/heldout_*`, `EXPERIMENT_*` 파일은 제품과 분리해 보존한 연구 실험 기록입니다.
 
 공개 소스의 기준 브랜치는
 [`main`](https://github.com/syjni/ax-preflight-source)이며, 제출 고정본은
@@ -12,7 +12,7 @@ Release의 `Source code (zip)` 또는 저장소의 **Code → Download ZIP**으�
 v0.5는 브라우저 자료 입력과 검증된 PoC 체험에 더해 재시작 고아 실행 정리, 모든 live
 runner 호출의 프로젝트 정책 강제, checkpoint·선택적 HMAC·복구 segment가 있는 로컬
 감사 원장, 프로젝트 귀속 24시간 사용량, 자료 revision 결합 승인과 재개 가능한 단계형
-삭제를 포함합니다. reviewer mode에는 runner가 없고, live mode는 Kiro CLI가 이미
+삭제를 포함합니다. 로컬 검토 모드에는 runner가 없고, live mode는 Kiro CLI가 이미
 설정된 환경에서만 열립니다. 이 저장소는 Amazon Bedrock을 직접 연동하지 않습니다.
 
 > **검증 환경:** Windows 11, PowerShell, Python 3.12, Node.js에서 최종 로컬 감사를
@@ -22,7 +22,7 @@ runner 호출의 프로젝트 정책 강제, checkpoint·선택적 HMAC·복구 
 >
 > **Windows ZIP 경로:** 동결 run의 감사 파일명은 의도적으로 길기 때문에 ZIP은 `C:\ax-preflight`처럼 짧은 경로에 푸십시오. 패키지 검사기는 긴 경로도 안전하게 추출·해시 검증하지만, 일반 Python 도구나 탐색기는 깊은 상위 폴더에서 Win32 기존 경로 제한에 걸릴 수 있습니다.
 
-## 5분 심사 흐름
+## 5분 확인 흐름
 
 Docker Desktop을 실행한 뒤 다음 순서로 시작합니다. Docker 방식에는 Results Console,
 API, PDF 표 추출과 한국어·영어 OCR이 함께 들어 있습니다.

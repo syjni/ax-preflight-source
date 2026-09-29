@@ -240,7 +240,7 @@ export function LocalDatasetPanel({ capabilities, capabilitiesError, selectedDat
 
   return <section className="report-section local-audit" id="local-audit" aria-labelledby="local-audit-title">
     <header className="section-heading local-audit__heading">
-      <div><div className="section-index">START HERE / 내 자료 점검</div><h2 id="local-audit-title">심사자의 파일로 직접 확인</h2></div>
+      <div><div className="section-index">START HERE / 내 자료 점검</div><h2 id="local-audit-title">내 자료의 AI 업무 적합도 확인</h2></div>
       {capabilities && <Status tone={available ? 'positive' : 'neutral'}>{available ? '로컬 점검 가능' : '공개 예시 모드'}</Status>}
     </header>
     <p className="section-lede">파일이나 폴더를 선택하면 PDF·DOCX·XLSX·CSV·TXT의 준비도, PDF 표와 OCR 결과, 보완할 파일을 이 화면에서 확인합니다.</p>
@@ -269,7 +269,7 @@ export function LocalDatasetPanel({ capabilities, capabilitiesError, selectedDat
         {capabilities.local_path_scan ? <div className="local-audit__method" role="tablist" aria-label="자료 선택 방식">
           <button type="button" role="tab" aria-selected={method === 'upload'} className={method === 'upload' ? 'is-active' : ''} onClick={() => setMethod('upload')}>파일·폴더 선택</button>
           <button type="button" role="tab" aria-selected={method === 'path'} className={method === 'path' ? 'is-active' : ''} onClick={() => setMethod('path')}>허용된 서버 폴더</button>
-        </div> : <div className="local-audit__method local-audit__method--single"><strong>파일·폴더 선택</strong><span>기본 Docker 심사 동선</span></div>}
+        </div> : <div className="local-audit__method local-audit__method--single"><strong>파일·폴더 선택</strong><span>기본 Docker 실행 동선</span></div>}
 
         {method === 'upload' ? <div className="local-audit__upload-panel" role="tabpanel">
           <input ref={folderInput} className="local-audit__hidden-input" type="file" multiple {...({ webkitdirectory: '', directory: '' } as InputHTMLAttributes<HTMLInputElement>)} onChange={(event) => selectUploads(normalizeUploads(Array.from(event.currentTarget.files ?? [])))} />

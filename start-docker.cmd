@@ -5,7 +5,7 @@ cd /d "%~dp0"
 
 echo.
 echo ============================================================
-echo  AX Preflight - Docker reviewer mode
+echo  AX Preflight - Docker review mode
 echo  Secure projects, local files, PDF tables, Korean/English OCR
 echo ============================================================
 echo.

@@ -15,8 +15,8 @@
 
 [공개 데모](https://syjni.github.io/ax-preflight-source/) ·
 [제출 Release](https://github.com/syjni/ax-preflight-source/releases/tag/v0.5.0-submission) ·
-[빠른 시작](docs/REVIEWER_QUICKSTART.md) ·
-[심사·제출 가이드](SUBMISSION.md) ·
+[빠른 시작](docs/QUICKSTART.md) ·
+[제출 가이드](SUBMISSION.md) ·
 [소스 저장소](https://github.com/syjni/ax-preflight-source)
 
 ## 핵심 결과
@@ -63,7 +63,7 @@
 | 실행 경로 | 준비물 | 할 수 있는 일 | 의도적으로 제한된 기능 |
 |---|---|---|---|
 | [공개 데모](https://syjni.github.io/ax-preflight-source/) | 웹 브라우저 | 동결된 60회 결과, 대표 Before → After, 검색·근거 경로, PoC 평가와 관리자 보고서 확인 | 파일 업로드와 새로운 AI 실행 |
-| 로컬 reviewer | Docker Desktop, [검증된 릴리스 ZIP](https://github.com/syjni/ax-preflight-source/releases/tag/v0.5.0-submission) | 자신의 PDF·DOCX·XLSX·CSV·TXT를 넣어 정적 준비도와 파일별 보완 항목 확인, 공개 예시 탐색 | 기본 실행에서는 외부 모델 호출과 새로운 AI 답변 생성 |
+| 로컬 검토 모드 | Docker Desktop, [검증된 릴리스 ZIP](https://github.com/syjni/ax-preflight-source/releases/tag/v0.5.0-submission) | 자신의 PDF·DOCX·XLSX·CSV·TXT를 넣어 정적 준비도와 파일별 보완 항목 확인, 공개 예시 탐색 | 기본 실행에서는 외부 모델 호출과 새로운 AI 답변 생성 |
 | Kiro live mode | Python 3.12+, Node.js 20+, Kiro CLI와 모델 자격 증명 | 자신의 자료로 질문을 등록·승인하고 단일 또는 반복 실행, 답변·보류·근거 경로와 개선 결과 확인 | 승인되지 않은 자료·업무·모델 조합의 실행 |
 
 ## 무엇을 할 수 있나
@@ -135,7 +135,7 @@ git clone https://github.com/syjni/ax-preflight-source.git
 cd ax-preflight-source
 ```
 
-### 2. Docker reviewer 시작하기
+### 2. Docker 검토 모드 시작하기
 
 Docker Desktop을 먼저 실행합니다. Windows에서는 압축을 푼 폴더의
 `start-docker.cmd`를 더블클릭하거나 명령 프롬프트에서 실행합니다.
@@ -181,7 +181,7 @@ docker compose up --build --detach
 6. **모델 연결·데이터 경계·비용**에서 라이브 실행에 필요한 승인과 현재 차단 이유를
    확인합니다.
 
-기본 reviewer는 여기까지 모델 없이 동작합니다. 자신의 파일에 대한 새로운 AI 답변과
+기본 검토 모드는 여기까지 모델 없이 동작합니다. 자신의 파일에 대한 새로운 AI 답변과
 반복 실행 결과가 필요하면 아래의 Kiro live mode로 API를 다시 시작해야 합니다. 화면에서
 버튼 하나로 외부 모델이 켜지지는 않습니다.
 
@@ -200,22 +200,22 @@ Windows에서는 `stop-docker.cmd`, macOS·Linux에서는 `docker compose down`�
 - 화면이 열리지 않으면 <http://127.0.0.1:8000/>을 직접 열고
   `docker compose logs ax-preflight`로 로그를 확인합니다.
 - 포트 8000이 이미 사용 중이면 이전 AX Preflight 또는 다른 로컬 서버를 종료합니다.
-- 공개 데모에서는 파일 선택이 비활성화됩니다. 파일 점검에는 내려받은 로컬 reviewer가
+- 공개 데모에서는 파일 선택이 비활성화됩니다. 파일 점검에는 내려받은 로컬 검토 모드가
   필요합니다.
 - Docker를 사용할 수 없는 Windows에서는 Python 3.12+와 Node.js 20+를 설치하고
   `start-local.cmd`를 실행할 수 있습니다. 이 경로의 OCR에는 별도 Tesseract 언어팩이
   필요할 수 있습니다.
 
 서버 경로 점검, 읽기 전용 bind mount, 직접 Python·Node 실행, OCR 설치와 종료 방법은
-[빠른 시작](docs/REVIEWER_QUICKSTART.md)에 정리되어 있습니다. 파일 저장 위치,
+[빠른 시작](docs/QUICKSTART.md)에 정리되어 있습니다. 파일 저장 위치,
 모델 전달 경계, 보존·법적 보존, 감사 원장과 단계형 삭제의 구현 세부사항은
 [데이터 처리와 개인정보 경계](docs/DATA_AND_PRIVACY.md)에서 확인할 수 있습니다.
 
 ## Kiro로 실제 업무 실행하기
 
-Kiro live mode는 **새 질문을 실제 AI 에이전트로 실행하려는 심사 환경**을 위한 선택
-경로입니다. Kiro CLI가 `PATH`에 있고 사용할 모델 자격 증명이 설정되어 있어야 합니다.
-Docker reviewer가 실행 중이면 먼저 종료해 포트 8000을 비웁니다. 프로젝트 루트에서
+Kiro live mode는 **새 질문을 실제 AI 에이전트로 실행할 때** 사용하는 선택 경로입니다.
+Kiro CLI가 `PATH`에 있고 사용할 모델 자격 증명이 설정되어 있어야 합니다.
+Docker 검토 모드가 실행 중이면 먼저 종료해 포트 8000을 비웁니다. 프로젝트 루트에서
 Python 환경과 제품 의존성을 준비한 뒤 라이브 API를 시작합니다.
 
 Windows PowerShell:
@@ -246,7 +246,7 @@ npm ci
 npm run dev -- --port 5173
 ```
 
-브라우저에서 <http://127.0.0.1:5173/>을 열고 로컬 reviewer와 같은 계정·프로젝트·자료
+브라우저에서 <http://127.0.0.1:5173/>을 열고 로컬 검토 모드와 같은 계정·프로젝트·자료
 등록 과정을 진행합니다. 라이브 실행 전 프로젝트 책임자는 다음을 확정합니다.
 
 1. 사용할 모델과 Kiro CLI 실행 상태
@@ -285,7 +285,7 @@ GitHub Actions의
 
 ## 현재 범위와 제한사항
 
-- 현재 릴리스는 대회 심사와 단일 회사 사내 PoC를 위한 프로토타입입니다. 로그인 시도
+- 현재 릴리스는 대회 제출과 단일 회사 사내 PoC를 위한 프로토타입입니다. 로그인 시도
   제한, 세션 종료, 프로젝트 역할·자료·승인 업무 접근 통제, 감사 기록과 명시적 삭제를
   구현했습니다. 프로덕션에는 SSO·MFA, 계정 복구, 조직 단위 데이터 격리, 암호화·키 관리,
   중앙 감사 저장소와 백업 연계 삭제·복구가 더 필요합니다.
@@ -318,8 +318,8 @@ GitHub Actions의
 
 ## 상세 문서
 
-- [심사·제출 가이드](SUBMISSION.md)
-- [빠른 시작](docs/REVIEWER_QUICKSTART.md)
+- [제출 가이드](SUBMISSION.md)
+- [빠른 시작](docs/QUICKSTART.md)
 - [시스템 구조와 데이터 흐름](docs/ARCHITECTURE.md)
 - [데이터 처리와 개인정보 경계](docs/DATA_AND_PRIVACY.md)
 - [3분 시연 대본](docs/DEMO_SCRIPT.md)

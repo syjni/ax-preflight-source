@@ -314,7 +314,7 @@ The factory verifies the frozen manifest at startup. It has no runner, returns
 HTTP 503 for `POST /api/run`, and does not modify official results. Use the exact
 dataset and run-ID pairs in the [representative README](../README.md).
 
-## Local reviewer mode
+## Local review mode
 
 `create_local_review_app_from_env` combines the verified frozen example with a
 local-only dataset store. It has no model runner and leaves run and batch
@@ -372,7 +372,7 @@ the recommendation or assessment fingerprint.
 note, scope/risk acknowledgements, expiry, and the assessment fingerprint. A
 decision becomes stale when the evaluated metrics or gate statuses change.
 
-The frozen featured case also exposes a read-only reviewer walkthrough backed by
+The frozen featured case also exposes a read-only review walkthrough backed by
 the verified phase6-v4 artifacts. It connects the approved return-policy task,
 three successful runs, three direct-evidence checks, cited source IDs, failure
 recovery, model/data boundary, cost, audit/retention, and gate summary. It is

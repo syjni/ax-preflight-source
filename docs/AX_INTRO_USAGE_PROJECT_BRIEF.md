@@ -20,7 +20,7 @@ AX는 실제 AI 업무 테스트를 통해 **어떤 데이터·실행 신호가 
 |---|---|---|---|
 | 데이터셋을 연결하고 업무 질문을 선택·실행하는 사용자 | AI 업무 도입 전, 또는 문서·검색 경로를 정리한 뒤 같은 업무를 다시 확인할 때. (출처: `docs/DEMO_SCRIPT.md`, `results_console/src/components/RunControls.tsx`) | 같은 업무를 반복해도 되는지, 먼저 데이터와 실행 중 어디를 검토할지 판단한다. (출처: `docs/DEMO_SCRIPT.md`) | 구체적인 직무명·조직 규모·산업군은 **미확인**이다. 현재 문서는 역할을 일반적인 “사용자”로만 표현한다. (출처: `docs/ARCHITECTURE.md`, `README.md`) |
 | 진단 결과를 공유받는 관리자 | 결과를 1페이지로 검토하거나 PDF·인쇄물로 공유받을 때. (출처: `results_console/src/components/ExecutiveReport.tsx`) | 반복 안정·보류·불안정 현황, 수정 대상, 권고 조치, Before/After 사례를 보고 우선 검토 순서를 정한다. (출처: `results_console/src/components/ExecutiveReport.tsx`, `docs/DEMO_SCRIPT.md`) | UI에는 “관리자 공유용 1페이지”가 명시되어 있으나, 최종 승인권자나 구매자 역할은 **미확인**이다. (출처: `results_console/src/components/ExecutiveReport.tsx`) |
-| 심사·데모 검토자 | 검증된 frozen 결과를 읽기 전용으로 재현할 때. (출처: `SUBMISSION.md`, `docs/DEMO_SCRIPT.md`) | 제품 흐름, 주장 경계, 반품 충돌의 좁은 수정 효과를 확인한다. (출처: `SUBMISSION.md`, `docs/DEMO_SCRIPT.md`) | 실제 고객 운영 사용자는 아니며, frozen 데모는 고객 검증 benchmark가 아니다. (출처: `SUBMISSION.md`) |
+| 공개 데모 이용자 | 검증된 frozen 결과를 읽기 전용으로 재현할 때. (출처: `SUBMISSION.md`, `docs/DEMO_SCRIPT.md`) | 제품 흐름, 주장 경계, 반품 충돌의 좁은 수정 효과를 확인한다. (출처: `SUBMISSION.md`, `docs/DEMO_SCRIPT.md`) | 실제 고객 운영 사용자는 아니며, frozen 데모는 고객 검증 benchmark가 아니다. (출처: `SUBMISSION.md`) |
 
 핵심 사용 맥락은 고객 환경 전체의 AI 성능을 채점하는 것이 아니라, 선택한 업무 질문을 반복 실행해 성공·보류·변동과 그 근거를 업무 단위로 검토하는 것이다. (출처: `README.md`, `docs/PHASE6_V4.md`)
 
@@ -122,7 +122,7 @@ v4는 동일한 10개 후보 업무를 Before/After에서 각각 3회 실행한 
 | **05 / 업무 후보** | 제품 기본값인 업무 테스트 후보 10개 중 질문을 선택해 입력란에 채운다. (출처: `docs/ARCHITECTURE.md`, `results_console/src/components/TaskTable.tsx`) | 후보는 회사별 검증 과제나 customer-verified task가 아니다. 현재 dataset에 적용 가능한지는 사용자가 판단하며 `VERIFIED_BUSINESS_TASK`는 `NOT_ONBOARDED`다. (출처: `docs/ARCHITECTURE.md`, `docs/DATA_AND_PRIVACY.md`, `results_console/src/components/TaskTable.tsx`) |
 | **06 / 근거 검사** | 판정 라벨, 인용·일치·미확인 source ID, 계산 상세, 검사 응답, Delivery SHA-256, 검사 한계를 본다. (출처: `results_console/src/components/EvidenceCheckPanel.tsx`) | `DeliveryEnvelope.source_link_status`와 별개인 검사다. 404는 “근거 검사 결과 없음”이지 실행 실패·오답 판정이 아니며, Evidence Checker가 delivery를 수정하지도 않는다. (출처: `results_console/src/components/EvidenceCheckPanel.tsx`, `results_console/README.md`) |
 
-데이터셋 전환, 기존 run ID 조회, 새 질문 실행은 **07 / 조회와 실행**에서 한다. 로컬 reviewer mode에서는 **내 자료 직접 점검**에서 브라우저로 파일·폴더를 선택해 정적 진단 결과를 즉시 추가할 수 있다. 브라우저 선택 자료는 localhost의 관리 폴더에 복사되고 기록 제거 시 함께 삭제된다. 서버 경로 방식은 관리자가 `AX_ALLOWED_SCAN_ROOTS`와 읽기 전용 mount를 명시한 경우에만 표시되고 원본을 제자리에서 읽는다. 앱에는 민감정보 원문 대신 마스킹된 예시와 파일명·행 번호를 표시한다. Kiro를 통한 새 질문 실행은 별도로 opt-in하지 않는 한 의도적으로 거부된다. (출처: `results_console/src/components/Sidebar.tsx`, `results_console/src/components/LocalDatasetPanel.tsx`, `ax_product/local_datasets.py`, `SUBMISSION.md`)
+데이터셋 전환, 기존 run ID 조회, 새 질문 실행은 **07 / 조회와 실행**에서 한다. 로컬 검토 모드에서는 **내 자료 직접 점검**에서 브라우저로 파일·폴더를 선택해 정적 진단 결과를 즉시 추가할 수 있다. 브라우저 선택 자료는 localhost의 관리 폴더에 복사되고 기록 제거 시 함께 삭제된다. 서버 경로 방식은 관리자가 `AX_ALLOWED_SCAN_ROOTS`와 읽기 전용 mount를 명시한 경우에만 표시되고 원본을 제자리에서 읽는다. 앱에는 민감정보 원문 대신 마스킹된 예시와 파일명·행 번호를 표시한다. Kiro를 통한 새 질문 실행은 별도로 opt-in하지 않는 한 의도적으로 거부된다. (출처: `results_console/src/components/Sidebar.tsx`, `results_console/src/components/LocalDatasetPanel.tsx`, `ax_product/local_datasets.py`, `SUBMISSION.md`)
 
 ## 8. 로컬 실행 방법
 
@@ -132,7 +132,7 @@ v4는 동일한 10개 후보 업무를 Before/After에서 각각 3회 실행한 
 
 ### 로컬 자료 점검 + frozen v4 예시
 
-Windows에서는 Docker Desktop을 실행하고 저장소 루트의 `start-docker.cmd`를 더블클릭하는 방법이 가장 빠르다. 콘솔·API와 한국어/영어 OCR을 함께 시작한 뒤 브라우저를 연다. Docker를 사용할 수 없으면 `start-local.cmd`로 Python·Node 직접 실행을 선택한다. 앱의 **사용 방법 → 직접 해보기** 또는 사이드바의 **내 자료 직접 점검**에서 파일·폴더를 선택하면 된다. (출처: `README.md`, `docs/REVIEWER_QUICKSTART.md`)
+Windows에서는 Docker Desktop을 실행하고 저장소 루트의 `start-docker.cmd`를 더블클릭하는 방법이 가장 빠르다. 콘솔·API와 한국어/영어 OCR을 함께 시작한 뒤 브라우저를 연다. Docker를 사용할 수 없으면 `start-local.cmd`로 Python·Node 직접 실행을 선택한다. 앱의 **사용 방법 → 직접 해보기** 또는 사이드바의 **내 자료 직접 점검**에서 파일·폴더를 선택하면 된다. (출처: `README.md`, `docs/QUICKSTART.md`)
 
 수동으로 실행하려면 첫 번째 PowerShell에서 다음을 실행한다. (출처: `SUBMISSION.md`)
 
@@ -150,7 +150,7 @@ npm ci
 npm run dev -- --port 5173
 ```
 
-브라우저에서 `http://127.0.0.1:5173/`을 연다. local reviewer factory는 frozen manifest를 검증하고 폴더 점검 API만 활성화한다. 원본 파일을 수정하지 않으며 생성한 프로필과 마스킹된 진단 결과는 `artifacts/local_datasets/`에 저장된다. runner 없이 시작하므로 `POST /api/run`은 HTTP 503을 반환하며 동결 결과도 수정하지 않는다. (출처: `SUBMISSION.md`, `docs/ARCHITECTURE.md`, `docs/DATA_AND_PRIVACY.md`)
+브라우저에서 `http://127.0.0.1:5173/`을 연다. 로컬 검토 factory는 frozen manifest를 검증하고 폴더 점검 API만 활성화한다. 원본 파일을 수정하지 않으며 생성한 프로필과 마스킹된 진단 결과는 `artifacts/local_datasets/`에 저장된다. runner 없이 시작하므로 `POST /api/run`은 HTTP 503을 반환하며 동결 결과도 수정하지 않는다. (출처: `SUBMISSION.md`, `docs/ARCHITECTURE.md`, `docs/DATA_AND_PRIVACY.md`)
 
 ### 라이브 Kiro 실행
 
@@ -178,7 +178,7 @@ python -m uvicorn ax_product.api:create_app_from_env --factory --host 127.0.0.1 
 | “제품 기본 업무 10개는 고객이 검증한 업무 catalog다.” | 10개는 제품이 제공하는 일반 업무 후보이고 `VERIFIED_BUSINESS_TASK`는 `NOT_ONBOARDED`다. (출처: `docs/ARCHITECTURE.md`, `docs/DATA_AND_PRIVACY.md`) |
 | “개인정보 패턴 탐지가 완전한 마스킹·유출 방지·접근 통제를 제공한다.” | 개인정보 패턴 탐지는 readiness 신호일 뿐 완전한 탐지나 보안 통제가 아니다. (출처: `docs/DATA_AND_PRIVACY.md`) |
 | “현재 구현은 프로덕션 보안과 규제 준수를 보장한다.” | API 인증, 사용자별 접근 제어, tenant 격리, 역할 기반 권한, retention·삭제·복구, TLS, secret manager, 중앙 감사 로그 등이 아직 제품화되지 않았다. (출처: `docs/DATA_AND_PRIVACY.md`) |
-| “로컬 검토 모드에서 새 Kiro 실행이 가능하다.” | local reviewer factory는 내 폴더의 정적 점검과 frozen 결과 조회만 제공하며, runner가 없어 `POST /api/run`을 의도적으로 503으로 거부한다. (출처: `SUBMISSION.md`, `docs/ARCHITECTURE.md`) |
+| “로컬 검토 모드에서 새 Kiro 실행이 가능하다.” | 로컬 검토 factory는 내 폴더의 정적 점검과 frozen 결과 조회만 제공하며, runner가 없어 `POST /api/run`을 의도적으로 503으로 거부한다. (출처: `SUBMISSION.md`, `docs/ARCHITECTURE.md`) |
 | “macOS/Linux/WSL에서도 최종 검증이 끝났다.” | 이식용 명령은 제공되지만 최종 감사에서 검증된 OS는 Windows 11이다. (출처: `SUBMISSION.md`, `README.md`) |
 
 ## 10. 현재 `results_console`의 디자인 토큰

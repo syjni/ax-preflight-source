@@ -5,7 +5,7 @@ cd /d "%~dp0"
 
 echo.
 echo ============================================================
-echo  AX Preflight - local reviewer mode
+echo  AX Preflight - local review mode
 echo  Secure project workspace. Your source files stay on this computer.
 echo ============================================================
 echo.

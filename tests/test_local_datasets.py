@@ -58,14 +58,14 @@ class LocalDatasetTests(unittest.TestCase):
     def test_scan_is_selectable_persistent_and_uses_scan_date(self) -> None:
         response = self.client.post("/api/local-datasets", json={
             "source_path": str(self.source),
-            "display_name": "심사자 회사 자료",
+            "display_name": "사용자 회사 자료",
         })
         self.assertEqual(response.status_code, 201, response.text)
         body = response.json()
         profile = body["dataset"]["profile"]
         self.assertTrue(profile.startswith("local-reviewer-files-"))
         self.assertEqual(body["dataset"]["origin"], "LOCAL")
-        self.assertEqual(body["dataset"]["display_label"], "내 자료 · 심사자 회사 자료")
+        self.assertEqual(body["dataset"]["display_label"], "내 자료 · 사용자 회사 자료")
         self.assertEqual(body["audit"]["file_count"], 4)
         self.assertEqual(body["audit"]["parsed_file_count"], 3)
         self.assertEqual(body["audit"]["unsupported_file_count"], 1)

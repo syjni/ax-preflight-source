@@ -4,7 +4,7 @@
 
 현재 제출 고정본은
 [`v0.5.0-submission`](https://github.com/syjni/ax-preflight-source/releases/tag/v0.5.0-submission)입니다.
-공개 정적 데모와 기본 reviewer mode는 외부 모델을 호출하지 않으며, Kiro CLI live mode는
+공개 정적 데모와 기본 검토 모드는 외부 모델을 호출하지 않으며, Kiro CLI live mode는
 프로젝트 OWNER가 승인한 자료 revision과 모델 경계 안에서만 도구 응답을 전달합니다.
 
 ## 처리되는 데이터

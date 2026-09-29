@@ -117,7 +117,7 @@ REQUIRED_CLOSURE_FILES = {
     "ax_scanner/ocr.py",
     "ax_scanner/parsers/pdf.py",
     "requirements.txt",
-    "docs/REVIEWER_QUICKSTART.md",
+    "docs/QUICKSTART.md",
     "business_task_catalog.json",
     "business_task_approvals.json",
     "finding_comparisons.json",
