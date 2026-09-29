@@ -1,11 +1,11 @@
-# AX Preflight 심사자 빠른 시작
+# AX Preflight 빠른 시작
 
 AX Preflight는 두 경로를 한 화면에서 제공합니다.
 
 - **내 자료 점검:** 파일·폴더를 브라우저에서 선택해 준비도와 파일별 보완 항목을 표시합니다.
 - **검증된 예시:** 30개 회사 파일에서 발견한 반품 정책 충돌과 수정 후 0/3 → 3/3 변화를 재현합니다.
 
-현재 심사용 고정본은
+현재 제출 고정본은
 [`v0.5.0-submission`](https://github.com/syjni/ax-preflight-source/releases/tag/v0.5.0-submission)입니다.
 기본 reviewer mode는 모델을 호출하지 않습니다. Kiro CLI를 연결한 live mode만 승인된
 프로젝트 자료·업무·모델·자료 revision과 최근 24시간 추정 비용·동시 실행 한도를 모두

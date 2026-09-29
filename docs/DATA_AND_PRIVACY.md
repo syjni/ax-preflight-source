@@ -2,7 +2,7 @@
 
 이 문서는 문서 접근과 결과 저장을 로컬 경로에서 통제하는 AX Preflight 프로토타입의 실제 데이터 흐름과 구현되지 않은 통제를 구분합니다. 도구 응답은 설정된 모델 실행 경계로 전달되며, 이 문서는 프로덕션 보안 또는 규제 준수를 보장하지 않습니다.
 
-현재 심사용 고정본은
+현재 제출 고정본은
 [`v0.5.0-submission`](https://github.com/syjni/ax-preflight-source/releases/tag/v0.5.0-submission)입니다.
 공개 정적 데모와 기본 reviewer mode는 외부 모델을 호출하지 않으며, Kiro CLI live mode는
 프로젝트 OWNER가 승인한 자료 revision과 모델 경계 안에서만 도구 응답을 전달합니다.

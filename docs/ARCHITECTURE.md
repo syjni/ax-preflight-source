@@ -2,7 +2,7 @@
 
 AX Preflight는 업무 실행, Failure→Finding 집계, 문서 준비도 조회, 답 제출, 근거 검사를 서로 다른 계약으로 유지합니다. Results Console은 FastAPI만 호출하고, FastAPI는 조회 요청을 처리하거나 명시적으로 활성화된 경우에만 Kiro runner를 실행합니다.
 
-현재 심사용 고정본은
+현재 제출 고정본은
 [`v0.5.0-submission`](https://github.com/syjni/ax-preflight-source/releases/tag/v0.5.0-submission)입니다.
 reviewer factory와 frozen demo에는 live runner가 없고, opt-in live factory만 아래의 프로젝트
 정책·예약·복구 경계를 사용합니다.

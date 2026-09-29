@@ -14,8 +14,8 @@
 하나의 흐름에서 판단할 수 있습니다.
 
 [공개 데모](https://syjni.github.io/ax-preflight-source/) ·
-[심사용 Release](https://github.com/syjni/ax-preflight-source/releases/tag/v0.5.0-submission) ·
-[심사자 빠른 시작](docs/REVIEWER_QUICKSTART.md) ·
+[제출 Release](https://github.com/syjni/ax-preflight-source/releases/tag/v0.5.0-submission) ·
+[빠른 시작](docs/REVIEWER_QUICKSTART.md) ·
 [심사·제출 가이드](SUBMISSION.md) ·
 [소스 저장소](https://github.com/syjni/ax-preflight-source)
 
@@ -58,7 +58,7 @@
 공개 데모는 검증 결과를 읽는 정적 페이지입니다. 사용자 파일 점검과 새로운 Kiro
 실행은 내려받은 로컬 패키지에서 명시적으로 활성화합니다.
 
-## 심사위원 실행 경로
+## 실행 경로
 
 | 실행 경로 | 준비물 | 할 수 있는 일 | 의도적으로 제한된 기능 |
 |---|---|---|---|
@@ -122,7 +122,7 @@ AX Preflight는 AWS Kiro CLI로 실행마다 새 AI 에이전트를 시작합니
 
 ### 1. 검증된 패키지 받기
 
-Windows 심사 환경에서는 Docker Desktop 방식이 가장 짧습니다. 심사용 고정본인
+Windows 검토 환경에서는 Docker Desktop 방식이 가장 짧습니다. 제출 고정본인
 [`ax-preflight-v0.5.0-submission.zip`](https://github.com/syjni/ax-preflight-source/releases/download/v0.5.0-submission/ax-preflight-v0.5.0-submission.zip)을
 내려받아 `C:\ax-preflight`처럼 짧은 경로에 압축을 풉니다. 이 파일은
 [`v0.5.0-submission` 릴리스](https://github.com/syjni/ax-preflight-source/releases/tag/v0.5.0-submission)에
@@ -168,7 +168,7 @@ docker compose up --build --detach
 [공개 데모 3분 동선](#공개-데모에서-3분-안에-보기)과 같은 결과를 로컬에서도 확인할
 수 있습니다.
 
-### 5. 심사위원 자료로 정적 점검하기
+### 5. 내 자료로 정적 점검하기
 
 로그인한 뒤 **결과 콘솔 → 내 자료 점검**에서 다음 순서로 진행합니다.
 
@@ -207,7 +207,7 @@ Windows에서는 `stop-docker.cmd`, macOS·Linux에서는 `docker compose down`�
   필요할 수 있습니다.
 
 서버 경로 점검, 읽기 전용 bind mount, 직접 Python·Node 실행, OCR 설치와 종료 방법은
-[심사자 빠른 시작](docs/REVIEWER_QUICKSTART.md)에 정리되어 있습니다. 파일 저장 위치,
+[빠른 시작](docs/REVIEWER_QUICKSTART.md)에 정리되어 있습니다. 파일 저장 위치,
 모델 전달 경계, 보존·법적 보존, 감사 원장과 단계형 삭제의 구현 세부사항은
 [데이터 처리와 개인정보 경계](docs/DATA_AND_PRIVACY.md)에서 확인할 수 있습니다.
 
@@ -319,7 +319,7 @@ GitHub Actions의
 ## 상세 문서
 
 - [심사·제출 가이드](SUBMISSION.md)
-- [심사자 빠른 시작](docs/REVIEWER_QUICKSTART.md)
+- [빠른 시작](docs/REVIEWER_QUICKSTART.md)
 - [시스템 구조와 데이터 흐름](docs/ARCHITECTURE.md)
 - [데이터 처리와 개인정보 경계](docs/DATA_AND_PRIVACY.md)
 - [3분 시연 대본](docs/DEMO_SCRIPT.md)

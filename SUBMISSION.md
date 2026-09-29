@@ -3,7 +3,7 @@
 AX Preflight의 심사에서 먼저 볼 제품 코드는 `ax_product/`, `ax_scanner/`, `ax_mcp/`, `results_console/`입니다. 루트의 `experiment/`, `artifacts/heldout_*`, `EXPERIMENT_*` 파일은 제품과 분리해 보존한 연구 실험 기록입니다.
 
 공개 소스의 기준 브랜치는
-[`main`](https://github.com/syjni/ax-preflight-source)이며, 심사용 고정본은
+[`main`](https://github.com/syjni/ax-preflight-source)이며, 제출 고정본은
 [`v0.5.0-submission`](https://github.com/syjni/ax-preflight-source/releases/tag/v0.5.0-submission)입니다.
 Release의 `Source code (zip)` 또는 저장소의 **Code → Download ZIP**으로 같은 소스를
 받을 수 있습니다. 별도 제출 ZIP을 만들 때 생성되는 `SOURCE_MANIFEST.json`은 패키징한
@@ -63,7 +63,7 @@ AX_PRODUCT_FROZEN_RESULTS_ROOT=artifacts/phase6_product_demo_v4/runs \
 `http://127.0.0.1:8000/`을 열고 다음 순서로 봅니다.
 
 1. 첫 실행 화면에서 관리자 계정과 기본 프로젝트를 만듭니다. 이후 실행에서는 같은 계정으로 로그인합니다.
-2. **내 자료 점검**에서 심사자의 문서 파일·폴더를 선택하거나 끌어 놓습니다. 선택 자료는 외부가 아닌 같은 컴퓨터의 localhost Docker API에만 전달됩니다. 폴더 선택은 호스트 경로를 컨테이너가 직접 읽는 기능이 아닙니다. 서버 경로 입력은 관리자가 읽기 전용 bind mount와 `AX_ALLOWED_SCAN_ROOTS`를 함께 설정한 경우에만 나타납니다.
+2. **내 자료 점검**에서 사용자의 문서 파일·폴더를 선택하거나 끌어 놓습니다. 선택 자료는 외부가 아닌 같은 컴퓨터의 localhost Docker API에만 전달됩니다. 폴더 선택은 호스트 경로를 컨테이너가 직접 읽는 기능이 아닙니다. 서버 경로 입력은 관리자가 읽기 전용 bind mount와 `AX_ALLOWED_SCAN_ROOTS`를 함께 설정한 경우에만 나타납니다.
 3. 생성된 로컬 데이터셋에서 파싱 범위, 일반·PDF 표 결측, 중복, 최신성, 개인정보 가능 패턴, OCR 처리 상태와 온보딩 프리플라이트를 확인합니다.
 4. **업무 등록·승인**에 질문·책임 역할·성공 기준을 등록하고 프로젝트 OWNER로 승인해 `CANDIDATE → VERIFIED` 전환을 확인합니다.
 5. **구성원과 권한**에서 역할 부여·권한 회수와 관리자 세션 종료를 확인하고,
@@ -84,7 +84,7 @@ PoC 평가 v2는 현재 승인된 업무의 성공 최종 실행만 사용합니
 상태는 별도의 운영 정보이며 이미 수집한 평가 추천과 지문에는 포함하지 않습니다.
 
 공개 배포 주소는 <https://syjni.github.io/ax-preflight-source/>이며, 검증된 예시만 담은
-정적 모드입니다. 심사자 자신의 파일은 위 로컬 검토 모드에서만 읽습니다.
+정적 모드입니다. 사용자 자신의 파일은 위 로컬 검토 모드에서만 읽습니다.
 
 ## 재현 검증
 

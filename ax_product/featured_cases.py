@@ -125,7 +125,7 @@ def verified_featured_cases(
     walkthrough = FrozenPocWalkthrough(
         recommendation="CONDITIONAL_GO",
         recommendation_note=(
-            "승인 업무의 성공 실행과 직접 근거는 확인했지만, 동결 산출물에는 심사자 조직의 "
+            "승인 업무의 성공 실행과 직접 근거는 확인했지만, 동결 산출물에는 사용 조직의 "
             "모델 전달 승인·비용 한도·감사 보존 판단이 없으므로 조건부입니다."
         ),
         approved_task_id=RETURN_TASK_ID,
@@ -174,7 +174,7 @@ def verified_featured_cases(
             ),
         ],
         final_report_note=(
-            "검증된 실행 사례는 조건부 진행 근거이며, 심사자 조직의 책임자 승인이나 "
+            "검증된 실행 사례는 조건부 진행 근거이며, 사용 조직의 책임자 승인이나 "
             "법률·보안 인증을 대신하지 않습니다."
         ),
     )
