@@ -1,0 +1,199 @@
+{
+  "$defs": {
+    "ProjectAuditEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "actor_user_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Actor User Id"
+        },
+        "at": {
+          "format": "date-time",
+          "title": "At",
+          "type": "string"
+        },
+        "event": {
+          "title": "Event",
+          "type": "string"
+        },
+        "event_id": {
+          "title": "Event Id",
+          "type": "string"
+        },
+        "integrity_verified": {
+          "title": "Integrity Verified",
+          "type": "boolean"
+        },
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "target": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target"
+        }
+      },
+      "required": [
+        "event_id",
+        "sequence",
+        "at",
+        "event",
+        "integrity_verified"
+      ],
+      "title": "ProjectAuditEvent",
+      "type": "object"
+    },
+    "ProjectRetentionPolicyView": {
+      "additionalProperties": false,
+      "properties": {
+        "audit_event_days": {
+          "default": 365,
+          "maximum": 3650,
+          "minimum": 30,
+          "title": "Audit Event Days",
+          "type": "integer"
+        },
+        "automatic_deletion_enabled": {
+          "const": false,
+          "default": false,
+          "title": "Automatic Deletion Enabled",
+          "type": "boolean"
+        },
+        "legal_hold": {
+          "default": false,
+          "title": "Legal Hold",
+          "type": "boolean"
+        },
+        "managed_data_days": {
+          "default": 90,
+          "maximum": 3650,
+          "minimum": 1,
+          "title": "Managed Data Days",
+          "type": "integer"
+        },
+        "mode": {
+          "const": "OWNER_REVIEW",
+          "default": "OWNER_REVIEW",
+          "title": "Mode",
+          "type": "string"
+        },
+        "next_review_at": {
+          "format": "date-time",
+          "title": "Next Review At",
+          "type": "string"
+        },
+        "project_id": {
+          "title": "Project Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "ax-project-retention-policy-v1",
+          "default": "ax-project-retention-policy-v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "updated_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Updated At"
+        },
+        "updated_by": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Updated By"
+        }
+      },
+      "required": [
+        "project_id",
+        "next_review_at"
+      ],
+      "title": "ProjectRetentionPolicyView",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "event_count": {
+      "minimum": 0,
+      "title": "Event Count",
+      "type": "integer"
+    },
+    "events": {
+      "items": {
+        "$ref": "#/$defs/ProjectAuditEvent"
+      },
+      "title": "Events",
+      "type": "array"
+    },
+    "ledger_status": {
+      "enum": [
+        "VERIFIED",
+        "LEGACY_SEALED",
+        "LEGACY_UNSEALED",
+        "INVALID"
+      ],
+      "title": "Ledger Status",
+      "type": "string"
+    },
+    "project_id": {
+      "title": "Project Id",
+      "type": "string"
+    },
+    "retention_policy": {
+      "$ref": "#/$defs/ProjectRetentionPolicyView"
+    },
+    "returned_event_count": {
+      "minimum": 0,
+      "title": "Returned Event Count",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "ax-project-audit-log-v1",
+      "default": "ax-project-audit-log-v1",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "project_id",
+    "ledger_status",
+    "event_count",
+    "returned_event_count",
+    "retention_policy",
+    "events"
+  ],
+  "title": "ProjectAuditLog",
+  "type": "object"
+}

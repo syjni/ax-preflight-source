@@ -1,6 +1,6 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { ApiError, api, runState, type FeaturedCase, type FeaturedRunReference, type RunResult } from './api';
-import type { DatasetOption, EvidenceCheckResult, FindingsResponse, LocalDatasetScanResult, OnboardingAssessment, ProductCapabilities, ReadinessResponse, RetrievalTrace, TasksResponse } from './generated/api';
+import type { AuthSessionResponse, DatasetOption, EvidenceCheckResult, FindingsResponse, LocalDatasetScanResult, OnboardingAssessment, ProductCapabilities, ProjectExecutionControl, ProjectPurgeResult, ProjectView, ReadinessResponse, RetrievalTrace, TasksResponse } from './generated/api';
 import { assessRunContext } from './provenance';
 import { Sidebar } from './components/Sidebar';
 import { SummarySection } from './components/SummarySection';
@@ -19,6 +19,9 @@ import { FeaturedCaseJourney } from './components/FeaturedCaseJourney';
 import { runFailureFor, type RunFailure } from './recovery';
 import { runRequestFor } from './viewModel';
 import { LocalDatasetPanel } from './components/LocalDatasetPanel';
+import { AccessGate } from './components/AccessGate';
+import { WorkspacePanel } from './components/WorkspacePanel';
+import { PocEvaluationPanel } from './components/PocEvaluationPanel';
 
 type DemoModule = typeof import('./mock/report');
 
@@ -49,6 +52,12 @@ function comparisonProfile(dataset: string): string | null {
 export default function App() {
   const requestedFixture = import.meta.env.DEV ? new URLSearchParams(location.search).get('fixture') : null;
   const [fixture, setFixture] = useState<FixtureKey | null>(fixtureKeys.includes(requestedFixture as FixtureKey) ? requestedFixture as FixtureKey : null);
+  const [session, setSession] = useState<AuthSessionResponse | null>(null);
+  const [authLoading, setAuthLoading] = useState(true);
+  const [authError, setAuthError] = useState('');
+  const [projects, setProjects] = useState<ProjectView[]>([]);
+  const [projectId, setProjectId] = useState('');
+  const [tasksRevision, setTasksRevision] = useState(0);
   const [demo, setDemo] = useState<DemoModule | null>(null);
   const [activeTab, setActiveTab] = useState<'report' | 'benchmark'>(fixture === 'benchmark' ? 'benchmark' : 'report');
   const [datasetInput, setDatasetInput] = useState('');
@@ -65,6 +74,9 @@ export default function App() {
   const [onboarding, setOnboarding] = useState<OnboardingAssessment | null>(null);
   const [onboardingLoading, setOnboardingLoading] = useState(false);
   const [onboardingError, setOnboardingError] = useState('');
+  const [executionControl, setExecutionControl] = useState<ProjectExecutionControl | null>(null);
+  const [executionControlLoading, setExecutionControlLoading] = useState(false);
+  const [executionControlError, setExecutionControlError] = useState('');
   const [tasks, setTasks] = useState<TasksResponse | null>(null);
   const [findings, setFindings] = useState<FindingsResponse | null>(null);
   const [comparisonFindings, setComparisonFindings] = useState<FindingsResponse | null>(null);
@@ -85,6 +97,7 @@ export default function App() {
   const [retrievalTraceLoading, setRetrievalTraceLoading] = useState(false);
   const [retrievalTraceMissing, setRetrievalTraceMissing] = useState(false);
   const [retrievalTraceError, setRetrievalTraceError] = useState('');
+  const [purgeReceipt, setPurgeReceipt] = useState<ProjectPurgeResult | null>(null);
 
   const context = run && dataset ? assessRunContext(dataset, run.dataset) : null;
   const finalRun = run && 'delivery_status' in run ? run : null;
@@ -93,12 +106,58 @@ export default function App() {
     ? tasks?.tasks?.find((item) => item.task_id === selectedTaskId) ?? null
     : null;
   const selectedDataset = datasets.find((option) => option.profile === dataset) ?? null;
+  const selectedProject = projects.find((project) => project.project_id === projectId) ?? null;
+  const selectedDatasetProject = selectedDataset?.origin === 'LOCAL'
+    ? projects.find((project) => project.project_id === selectedDataset.project_id) ?? null
+    : null;
+  const accessGranted = Boolean(fixture || session?.authentication_required === false || session?.authenticated);
+  const customerExecutionReady = selectedDataset?.origin !== 'LOCAL' || Boolean(executionControl?.can_execute);
+  const canExecute = Boolean(onboarding?.can_run && capabilities?.ai_task_execution && customerExecutionReady);
+  const executionModel = selectedDataset?.origin === 'LOCAL' ? executionControl?.policy?.model : undefined;
 
   useEffect(() => {
     if (import.meta.env.DEV) void import('./mock/report').then(setDemo);
   }, []);
 
   useEffect(() => {
+    if (fixture) {
+      setSession({ authentication_required: false, authenticated: true, bootstrap_required: false, user: null, csrf_token: null, expires_at: null });
+      setAuthLoading(false);
+      return;
+    }
+    let active = true;
+    setAuthLoading(true);
+    setAuthError('');
+    api.authSession()
+      .then((next) => { if (active) setSession(next); })
+      .catch((error: unknown) => { if (active) setAuthError(messageFor(error)); })
+      .finally(() => { if (active) setAuthLoading(false); });
+    return () => { active = false; };
+  }, [fixture]);
+
+  useEffect(() => {
+    if (!session?.authentication_required || !session.authenticated) {
+      setProjects([]);
+      setProjectId('');
+      return;
+    }
+    let active = true;
+    api.projects()
+      .then((next) => {
+        if (!active) return;
+        setProjects(next);
+        setProjectId((current) => next.some((project) => project.project_id === current) ? current : next[0]?.project_id ?? '');
+      })
+      .catch((error: unknown) => { if (active) setAuthError(messageFor(error)); });
+    return () => { active = false; };
+  }, [session?.authentication_required, session?.authenticated]);
+
+  useEffect(() => {
+    if (!accessGranted) {
+      setCapabilities(null);
+      setCapabilitiesError('');
+      return;
+    }
     if (fixture) {
       setCapabilities(null);
       setCapabilitiesError('');
@@ -115,9 +174,16 @@ export default function App() {
         }
       });
     return () => { active = false; };
-  }, [fixture]);
+  }, [fixture, accessGranted]);
 
   useEffect(() => {
+    if (!accessGranted) {
+      setDatasets([]);
+      setFeaturedCases([]);
+      setDatasetsLoading(false);
+      setDatasetsError('');
+      return;
+    }
     if (fixture) {
       setDatasets([]);
       setFeaturedCases([]);
@@ -154,7 +220,7 @@ export default function App() {
       })
       .finally(() => { if (active) setDatasetsLoading(false); });
     return () => { active = false; };
-  }, [fixture]);
+  }, [fixture, accessGranted]);
 
   useEffect(() => {
     if (fixture) {
@@ -201,7 +267,7 @@ export default function App() {
       .catch((error: unknown) => { if (active) { setReadinessError(messageFor(error)); setFindingsError(messageFor(error)); } })
       .finally(() => { if (active) setLoading(false); });
     return () => { active = false; };
-  }, [dataset, fixture, demo]);
+  }, [dataset, fixture, demo, tasksRevision]);
 
   useEffect(() => {
     setOnboarding(null);
@@ -225,6 +291,34 @@ export default function App() {
       .finally(() => { if (active) setOnboardingLoading(false); });
     return () => { active = false; };
   }, [dataset, fixture, demo]);
+
+  useEffect(() => {
+    if (
+      fixture
+      || !session?.authenticated
+      || !selectedProject
+      || selectedDataset?.origin !== 'LOCAL'
+      || selectedDataset.project_id !== selectedProject.project_id
+    ) {
+      setExecutionControl(null);
+      setExecutionControlLoading(false);
+      setExecutionControlError('');
+      return;
+    }
+    let active = true;
+    setExecutionControlLoading(true);
+    setExecutionControlError('');
+    api.projectExecutionControl(selectedProject.project_id, selectedDataset.profile)
+      .then((result) => { if (active) setExecutionControl(result); })
+      .catch((error: unknown) => {
+        if (active) {
+          setExecutionControl(null);
+          setExecutionControlError(messageFor(error));
+        }
+      })
+      .finally(() => { if (active) setExecutionControlLoading(false); });
+    return () => { active = false; };
+  }, [fixture, session?.authenticated, selectedProject?.project_id, selectedDataset?.profile, selectedDataset?.project_id, selectedDataset?.origin]);
 
   useEffect(() => {
     if (fixture || !run || runState(run) !== 'RUNNING') return;
@@ -302,8 +396,10 @@ export default function App() {
   function selectDataset(event: FormEvent) {
     event.preventDefault();
     const next = datasetInput.trim();
-    if (datasets.some((option) => option.profile === next)) {
+    const option = datasets.find((candidate) => candidate.profile === next);
+    if (option) {
       setDataset(next);
+      if (option.origin === 'LOCAL' && option.project_id) setProjectId(option.project_id);
       setSelectedTaskId(null);
       setRunFailure(null);
     }
@@ -319,10 +415,12 @@ export default function App() {
     setSelectedTaskId(null);
     setRun(null);
     setRunFailure(null);
+    setTasksRevision((value) => value + 1);
   }
 
   function localDatasetDeleted(profile: string) {
     setDatasets((current) => current.filter((option) => option.profile !== profile));
+    setTasksRevision((value) => value + 1);
     if (dataset !== profile) return;
     const fallback = datasets.find((option) => option.profile === defaultDatasetProfile);
     setDataset(fallback?.profile ?? '');
@@ -332,15 +430,74 @@ export default function App() {
     setRunFailure(null);
   }
 
+  function selectProject(nextProjectId: string) {
+    setProjectId(nextProjectId);
+    if (selectedDataset?.origin === 'LOCAL' && selectedDataset.project_id !== nextProjectId) {
+      const fallback = datasets.find((option) => option.profile === defaultDatasetProfile);
+      setDataset(fallback?.profile ?? '');
+      setDatasetInput(fallback?.profile ?? '');
+    }
+  }
+
+  function projectCreated(project: ProjectView) {
+    setProjects((current) => [...current, project]);
+    setProjectId(project.project_id);
+  }
+
+  function projectPurged(result: ProjectPurgeResult) {
+    setPurgeReceipt(result);
+    const remainingProjects = projects.filter((project) => project.project_id !== result.project_id);
+    const remainingDatasets = datasets.filter((option) => option.project_id !== result.project_id);
+    const fallback = remainingDatasets.find((option) => option.profile === defaultDatasetProfile) ?? remainingDatasets[0];
+    setProjects(remainingProjects);
+    setProjectId(remainingProjects[0]?.project_id ?? '');
+    setDatasets(remainingDatasets);
+    setDataset(fallback?.profile ?? '');
+    setDatasetInput(fallback?.profile ?? '');
+    setSelectedTaskId(null);
+    setRun(null);
+    setRunFailure(null);
+    setTasksRevision((value) => value + 1);
+  }
+
+  async function logout() {
+    try { await api.logout(); } finally {
+      setSession({ authentication_required: true, authenticated: false, bootstrap_required: false, user: null, csrf_token: null, expires_at: null });
+      setProjects([]);
+      setProjectId('');
+      setDatasets([]);
+      setDataset('');
+    }
+  }
+
+  async function refreshExecutionControl() {
+    if (
+      !selectedProject
+      || selectedDataset?.origin !== 'LOCAL'
+      || selectedDataset.project_id !== selectedProject.project_id
+    ) return;
+    setExecutionControlLoading(true);
+    setExecutionControlError('');
+    try {
+      setExecutionControl(await api.projectExecutionControl(selectedProject.project_id, selectedDataset.profile));
+    } catch (error) {
+      setExecutionControlError(messageFor(error));
+      throw error;
+    } finally {
+      setExecutionControlLoading(false);
+    }
+  }
+
   async function submitQuestion() {
-    if (!dataset || !question.trim() || fixture || !onboarding?.can_run) return;
+    if (!dataset || !question.trim() || fixture || !canExecute) return;
     setSubmitting(true);
     setRunFailure(null);
     setRun(null);
     try {
-      const result = await api.submit(runRequestFor(dataset, question, selectedTask));
+      const result = await api.submit(runRequestFor(dataset, question, selectedTask, executionModel));
       setRun(result);
       setRunInput(result.run_id);
+      if (selectedDataset?.origin === 'LOCAL') void refreshExecutionControl().catch(() => undefined);
     } catch (error) {
       setRunFailure(runFailureFor(error, 'submit'));
     } finally {
@@ -435,6 +592,11 @@ export default function App() {
       document.getElementById('onboarding-preflight')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       return;
     }
+    if (runFailure.kind === 'execution-control') {
+      setRunFailure(null);
+      document.getElementById('execution-control')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
     if (runFailure.source === 'submit') void submitQuestion();
     else void lookupRun(run?.run_id ?? runInput.trim());
   }
@@ -452,13 +614,19 @@ export default function App() {
   }
 
   const benchmark = benchmarkAvailable ? demo?.benchmarkReport as BenchmarkDemoReport : null;
+  if (authLoading || (session?.authentication_required && !session.authenticated)) {
+    return <AccessGate session={session} loading={authLoading} error={authError} onAuthenticated={(next) => { setSession(next); setAuthError(''); }} />;
+  }
   return <Portal consoleContent={<div className="app-shell">
     <Sidebar activeTab={activeTab} benchmarkAvailable={benchmarkAvailable} onTabChange={setActiveTab} dataset={dataset || '선택 안 됨'} datasetName={readiness?.dataset_name} asOfDate={readiness?.readiness.as_of_date} runId={run?.run_id} />
     {activeTab === 'benchmark' && benchmark ? <BenchmarkTab report={benchmark} /> : <main className="report-main">
-      <LocalDatasetPanel capabilities={capabilities} capabilitiesError={capabilitiesError} selectedDataset={selectedDataset} onScanned={localDatasetScanned} onDeleted={localDatasetDeleted} />
+      {session?.authentication_required && session.user && <WorkspacePanel user={session.user} projects={projects} selectedProject={selectedProject} selectedDataset={selectedDataset} onProjectSelect={selectProject} onProjectCreated={projectCreated} onTasksChanged={() => setTasksRevision((value) => value + 1)} executionControl={executionControl} executionControlLoading={executionControlLoading} executionControlError={executionControlError} onExecutionControlRefresh={refreshExecutionControl} governanceRevision={tasksRevision} onProjectPurged={projectPurged} onLogout={() => void logout()} />}
+      {purgeReceipt && <div className="purge-receipt" role="status"><div><span className="mono">PURGE VERIFIED</span><strong>{purgeReceipt.project_name} 관리 데이터 삭제 완료</strong><p>데이터셋 {purgeReceipt.local_datasets_deleted} · 업무 {purgeReceipt.business_tasks_deleted} · 실행 {purgeReceipt.writable_runs_deleted} · 반복 {purgeReceipt.batches_deleted} · 감사 이벤트 {purgeReceipt.audit_events_deleted}건을 삭제했습니다. 원본 파일은 유지했습니다.</p><code>{purgeReceipt.purge_receipt_id}</code></div><button type="button" onClick={() => setPurgeReceipt(null)} aria-label="삭제 증명서 닫기">×</button></div>}
+      <LocalDatasetPanel capabilities={capabilities} capabilitiesError={capabilitiesError} selectedDataset={selectedDataset} projectId={selectedProject?.project_id ?? null} projectRequired={Boolean(session?.authentication_required)} canDelete={!session?.authentication_required || selectedDatasetProject?.member_role === 'OWNER'} onScanned={localDatasetScanned} onDeleted={localDatasetDeleted} />
       <SummarySection readiness={readiness} findings={findings} run={run} loading={loading} />
       <FeaturedCaseJourney cases={featuredCases} currentDataset={dataset} currentRunId={run?.run_id ?? null} loadingRunId={featuredRunLoading} error={featuredError} onOpen={openFeaturedRun} />
       <ExecutiveReport dataset={dataset} readiness={readiness} findings={findings} comparison={comparisonFindings} />
+      {session?.authentication_required && <PocEvaluationPanel project={selectedProject} dataset={selectedDataset} revision={`${tasksRevision}:${run?.run_id ?? ''}:${executionControl?.policy?.updated_at ?? ''}`} />}
       {context?.warning && <div className="notice notice--warning page-context" role="alert"><strong>{context.kind === 'UNKNOWN' ? 'RUN DATASET · UNKNOWN' : `RUN DATASET · ${context.origin}`}</strong><span>{context.warning}</span></div>}
       <section className="report-section" id="findings" aria-labelledby="findings-title">
         <header className="section-heading"><div><div className="section-index">03 / 진단 신호</div><h2 id="findings-title">발견된 진단 신호</h2></div><Status tone={findings?.findings.some((item) => item.comparison_status !== 'NOT_REPRODUCED_AFTER') ? 'warning' : 'positive'}>{findings ? `${findings.findings.filter((item) => item.comparison_status !== 'NOT_REPRODUCED_AFTER').length} 열림 · ${findings.findings.filter((item) => item.comparison_status === 'NOT_REPRODUCED_AFTER').length} 수정 후 미재현` : '조회 전'}</Status></header>
@@ -472,8 +640,8 @@ export default function App() {
       <ReadinessTable data={readiness} loading={loading} error={readinessError} />
       <TaskTable data={tasks} error={readinessError} activeTaskId={finalRun?.task_id ?? null} onTaskSelect={selectTask} />
       <EvidenceCheckPanel data={evidence} loading={evidenceLoading} missing={evidenceMissing} error={evidenceError} trace={retrievalTrace} traceLoading={retrievalTraceLoading} traceMissing={retrievalTraceMissing} traceError={retrievalTraceError} />
-      <RunControls datasetInput={datasetInput} datasets={datasets} datasetsLoading={datasetsLoading} datasetsError={datasetsError} question={question} runInput={runInput} fixture={fixture} submitting={submitting} aiTaskExecution={Boolean(capabilities?.ai_task_execution)} selectedTaskId={selectedTaskId} selectedTaskStatus={selectedTask?.status ?? null} failure={runFailure} onboarding={onboarding} onboardingLoading={onboardingLoading} onboardingError={onboardingError} onDatasetInput={setDatasetInput} onQuestion={(value) => { setQuestion(value); setSelectedTaskId(null); }} onRunInput={setRunInput} onDatasetSubmit={selectDataset} onRunSubmit={submit} onLookup={lookup} onFixture={chooseFixture} onRecover={recoverRun} />
-      <BatchPanel dataset={dataset} tasks={tasks} canRun={Boolean(onboarding?.can_run && capabilities?.ai_task_execution)} fixture={Boolean(fixture)} fixtureBatch={fixture ? demo?.demoBatch ?? null : null} onOpenRun={(runId) => void lookupRun(runId)} />
+      <RunControls datasetInput={datasetInput} datasets={datasets} datasetsLoading={datasetsLoading} datasetsError={datasetsError} question={question} runInput={runInput} fixture={fixture} submitting={submitting} aiTaskExecution={Boolean(capabilities?.ai_task_execution)} executionControl={selectedDataset?.origin === 'LOCAL' ? executionControl : null} executionControlLoading={executionControlLoading} selectedTaskId={selectedTaskId} selectedTaskStatus={selectedTask?.status ?? null} failure={runFailure} onboarding={onboarding} onboardingLoading={onboardingLoading} onboardingError={onboardingError} onDatasetInput={setDatasetInput} onQuestion={(value) => { setQuestion(value); setSelectedTaskId(null); }} onRunInput={setRunInput} onDatasetSubmit={selectDataset} onRunSubmit={submit} onLookup={lookup} onFixture={chooseFixture} onRecover={recoverRun} />
+      <BatchPanel dataset={dataset} tasks={tasks} canRun={canExecute} fixture={Boolean(fixture)} fixtureBatch={fixture ? demo?.demoBatch ?? null : null} model={executionModel} executionControl={selectedDataset?.origin === 'LOCAL' ? executionControl : null} onUsageChanged={() => { if (selectedDataset?.origin === 'LOCAL') void refreshExecutionControl().catch(() => undefined); }} onOpenRun={(runId) => void lookupRun(runId)} />
       {import.meta.env.DEV && fixture && <div className="dev-banner" role="status"><strong>DEV FIXTURE</strong><span>합성 화면 검증 모드이며 실제 고객 결과가 아닙니다.</span><button onClick={() => chooseFixture('')}>라이브 API로 돌아가기</button></div>}
       <footer className="report-footer">AX Preflight <span>·</span> Results Console <span>·</span> 로컬 자료 점검과 검증된 예시</footer>
     </main>}

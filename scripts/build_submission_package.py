@@ -295,7 +295,13 @@ def build_zip(source_manifest: Path, output: Path) -> dict[str, Any]:
 _ORIGINAL_USERNAME = b"".join((b"ye", b"on5"))
 CONTENT_PATTERNS = {
     "windows_user_absolute_path": re.compile(rb"[A-Za-z]:\\Users\\[^\\\s\"']+", re.I),
-    "posix_personal_home_path": re.compile(rb"/(?:Users|home)/[^/\s\"']+", re.I),
+    # POSIX home roots are case-sensitive.  Keeping this pattern case-sensitive
+    # avoids treating application routes such as /api/users/{id} as macOS
+    # user-home paths while still detecting real macOS and Linux homes.  The
+    # roots are assembled so this scanner does not match its own source text.
+    "posix_personal_home_path": re.compile(
+        rb"/(?:" + b"|".join((b"Users", b"home")) + rb")/[^/\s\"']+"
+    ),
     "original_username": re.compile(_ORIGINAL_USERNAME, re.I),
     "private_key": re.compile(rb"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
     "aws_access_key": re.compile(rb"AKIA[0-9A-Z]{16}"),

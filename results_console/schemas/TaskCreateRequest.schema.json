@@ -1,0 +1,54 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "category": {
+      "maxLength": 80,
+      "minLength": 1,
+      "title": "Category",
+      "type": "string"
+    },
+    "dataset_profile": {
+      "maxLength": 160,
+      "minLength": 1,
+      "title": "Dataset Profile",
+      "type": "string"
+    },
+    "description": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "title": "Description",
+      "type": "string"
+    },
+    "owner_role": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Owner Role",
+      "type": "string"
+    },
+    "question": {
+      "maxLength": 2000,
+      "minLength": 3,
+      "title": "Question",
+      "type": "string"
+    },
+    "success_criteria": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 12,
+      "minItems": 1,
+      "title": "Success Criteria",
+      "type": "array"
+    }
+  },
+  "required": [
+    "dataset_profile",
+    "category",
+    "question",
+    "description",
+    "owner_role",
+    "success_criteria"
+  ],
+  "title": "TaskCreateRequest",
+  "type": "object"
+}

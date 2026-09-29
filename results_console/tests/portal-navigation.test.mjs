@@ -84,6 +84,10 @@ test('hash parsing defaults to intro while existing section anchors stay on the 
   assert.equal(tabFromHash('#summary'), 'console');
   assert.equal(tabFromHash('#local-audit'), 'console');
   assert.equal(tabFromHash('#featured-case'), 'console');
+  assert.equal(tabFromHash('#execution-control'), 'console');
+  assert.equal(tabFromHash('#batch'), 'console');
+  assert.equal(tabFromHash('#poc-evaluation'), 'console');
+  assert.equal(tabFromHash('#project-governance'), 'console');
   assert.equal(tabFromHash('#findings'), 'console');
   assert.equal(tabFromHash('#unknown'), 'intro');
 

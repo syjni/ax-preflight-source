@@ -1,0 +1,80 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "abstained_runs": {
+      "minimum": 0,
+      "title": "Abstained Runs",
+      "type": "integer"
+    },
+    "answered_runs": {
+      "minimum": 0,
+      "title": "Answered Runs",
+      "type": "integer"
+    },
+    "approved_tasks": {
+      "minimum": 0,
+      "title": "Approved Tasks",
+      "type": "integer"
+    },
+    "direct_evidence_runs": {
+      "minimum": 0,
+      "title": "Direct Evidence Runs",
+      "type": "integer"
+    },
+    "observed_runs": {
+      "minimum": 0,
+      "title": "Observed Runs",
+      "type": "integer"
+    },
+    "onboarding_status": {
+      "enum": [
+        "READY",
+        "REVIEW_REQUIRED",
+        "BLOCKED"
+      ],
+      "title": "Onboarding Status",
+      "type": "string"
+    },
+    "open_findings": {
+      "minimum": 0,
+      "title": "Open Findings",
+      "type": "integer"
+    },
+    "readiness_score": {
+      "maximum": 100,
+      "minimum": 0,
+      "title": "Readiness Score",
+      "type": "number"
+    },
+    "registered_tasks": {
+      "minimum": 0,
+      "title": "Registered Tasks",
+      "type": "integer"
+    },
+    "rejected_runs": {
+      "minimum": 0,
+      "title": "Rejected Runs",
+      "type": "integer"
+    },
+    "stable_tasks": {
+      "minimum": 0,
+      "title": "Stable Tasks",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "readiness_score",
+    "onboarding_status",
+    "registered_tasks",
+    "approved_tasks",
+    "observed_runs",
+    "answered_runs",
+    "abstained_runs",
+    "rejected_runs",
+    "direct_evidence_runs",
+    "stable_tasks",
+    "open_findings"
+  ],
+  "title": "PocEvaluationMetrics",
+  "type": "object"
+}

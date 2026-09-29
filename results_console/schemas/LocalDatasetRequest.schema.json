@@ -14,6 +14,19 @@
       "default": null,
       "title": "Display Name"
     },
+    "project_id": {
+      "anyOf": [
+        {
+          "pattern": "^prj_[a-f0-9]{32}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Project Id"
+    },
     "source_path": {
       "maxLength": 2048,
       "minLength": 1,

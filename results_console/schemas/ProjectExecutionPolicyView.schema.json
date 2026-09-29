@@ -1,0 +1,79 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "daily_budget_cents": {
+      "default": 200,
+      "maximum": 10000000,
+      "minimum": 1,
+      "title": "Daily Budget Cents",
+      "type": "integer"
+    },
+    "daily_run_limit": {
+      "default": 20,
+      "maximum": 500,
+      "minimum": 1,
+      "title": "Daily Run Limit",
+      "type": "integer"
+    },
+    "estimated_cost_per_run_cents": {
+      "default": 10,
+      "maximum": 100000,
+      "minimum": 1,
+      "title": "Estimated Cost Per Run Cents",
+      "type": "integer"
+    },
+    "max_batch_runs": {
+      "default": 10,
+      "maximum": 50,
+      "minimum": 1,
+      "title": "Max Batch Runs",
+      "type": "integer"
+    },
+    "max_concurrent_runs": {
+      "default": 1,
+      "maximum": 5,
+      "minimum": 1,
+      "title": "Max Concurrent Runs",
+      "type": "integer"
+    },
+    "model": {
+      "default": "claude-sonnet-5",
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Model",
+      "type": "string"
+    },
+    "project_id": {
+      "title": "Project Id",
+      "type": "string"
+    },
+    "provider": {
+      "const": "KIRO_CLI",
+      "default": "KIRO_CLI",
+      "title": "Provider",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "ax-project-execution-policy-v1",
+      "default": "ax-project-execution-policy-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "updated_at": {
+      "format": "date-time",
+      "title": "Updated At",
+      "type": "string"
+    },
+    "updated_by": {
+      "title": "Updated By",
+      "type": "string"
+    }
+  },
+  "required": [
+    "project_id",
+    "updated_by",
+    "updated_at"
+  ],
+  "title": "ProjectExecutionPolicyView",
+  "type": "object"
+}

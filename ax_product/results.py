@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import shutil
 from pathlib import Path
 from typing import Literal
 from uuid import uuid4
@@ -110,6 +111,17 @@ class ResultStore:
         (path.parent / "state.json").unlink(missing_ok=True)
         return path
 
+    def discard_reservation(self, run_id: str) -> None:
+        """Remove an API reservation before a runner starts; never remove final output."""
+        directory = self.path(run_id).parent.resolve()
+        if not directory.is_relative_to(self.root) or directory == self.root:
+            raise RuntimeError("refusing to discard a run outside the writable result store")
+        if (directory / "delivery.json").exists():
+            raise FinalResultExistsError(run_id)
+        if not (directory / "state.json").is_file():
+            raise FileNotFoundError(run_id)
+        shutil.rmtree(directory)
+
     @staticmethod
     def _reserved_dataset(state_path: Path) -> str:
         try:
@@ -147,6 +159,61 @@ class ResultStore:
             if state_path.is_file():
                 raise RunInProgressError(run_id, self._reserved_dataset(state_path)) from None
             raise
+
+    def inventory_for_datasets(self, datasets: set[str]) -> tuple[int, int]:
+        """Count writable completed and in-progress runs for selected datasets."""
+        records = self._directories_for_datasets(datasets)
+        return len(records), sum(running for _directory, _dataset, running in records)
+
+    def deliveries_for_datasets(self, datasets: set[str]) -> list[DeliveryEnvelope]:
+        """Read completed writable deliveries for project evaluation summaries."""
+        return [
+            DeliveryEnvelope.model_validate_json(
+                (directory / "delivery.json").read_text(encoding="utf-8")
+            )
+            for directory, _dataset, running in self._directories_for_datasets(datasets)
+            if not running
+        ]
+
+    def delete_for_datasets(self, datasets: set[str]) -> int:
+        """Delete completed writable runs only; frozen results are never reachable here."""
+        records = self._directories_for_datasets(datasets)
+        running = next((item for item in records if item[2]), None)
+        if running is not None:
+            raise RunInProgressError(running[0].name, running[1])
+        deleted = 0
+        for directory, _dataset, _running in records:
+            resolved = directory.resolve()
+            if not resolved.is_relative_to(self.root) or resolved == self.root:
+                raise RuntimeError("refusing to delete a run outside the writable result store")
+            shutil.rmtree(resolved)
+            deleted += 1
+        return deleted
+
+    def _directories_for_datasets(
+        self, datasets: set[str]
+    ) -> list[tuple[Path, str, bool]]:
+        if not datasets or not self.root.is_dir():
+            return []
+        records: list[tuple[Path, str, bool]] = []
+        for directory in sorted(self.root.iterdir()):
+            if not directory.is_dir() or directory.name.startswith("."):
+                continue
+            state_path = directory / "state.json"
+            delivery_path = directory / "delivery.json"
+            if state_path.is_file():
+                dataset = self._reserved_dataset(state_path)
+                running = True
+            elif delivery_path.is_file():
+                dataset = DeliveryEnvelope.model_validate_json(
+                    delivery_path.read_text(encoding="utf-8")
+                ).dataset
+                running = False
+            else:
+                continue
+            if dataset in datasets:
+                records.append((directory, dataset, running))
+        return records
 
 
 class ReadOnlyResultStore:

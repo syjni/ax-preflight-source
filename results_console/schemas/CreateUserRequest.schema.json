@@ -1,0 +1,41 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "display_name": {
+      "maxLength": 80,
+      "minLength": 1,
+      "title": "Display Name",
+      "type": "string"
+    },
+    "global_role": {
+      "default": "MEMBER",
+      "enum": [
+        "ADMIN",
+        "MEMBER"
+      ],
+      "title": "Global Role",
+      "type": "string"
+    },
+    "password": {
+      "format": "password",
+      "maxLength": 256,
+      "minLength": 12,
+      "title": "Password",
+      "type": "string",
+      "writeOnly": true
+    },
+    "username": {
+      "maxLength": 32,
+      "minLength": 3,
+      "title": "Username",
+      "type": "string"
+    }
+  },
+  "required": [
+    "username",
+    "display_name",
+    "password"
+  ],
+  "title": "CreateUserRequest",
+  "type": "object"
+}

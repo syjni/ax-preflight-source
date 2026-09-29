@@ -1,0 +1,82 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "audit_event_days": {
+      "default": 365,
+      "maximum": 3650,
+      "minimum": 30,
+      "title": "Audit Event Days",
+      "type": "integer"
+    },
+    "automatic_deletion_enabled": {
+      "const": false,
+      "default": false,
+      "title": "Automatic Deletion Enabled",
+      "type": "boolean"
+    },
+    "legal_hold": {
+      "default": false,
+      "title": "Legal Hold",
+      "type": "boolean"
+    },
+    "managed_data_days": {
+      "default": 90,
+      "maximum": 3650,
+      "minimum": 1,
+      "title": "Managed Data Days",
+      "type": "integer"
+    },
+    "mode": {
+      "const": "OWNER_REVIEW",
+      "default": "OWNER_REVIEW",
+      "title": "Mode",
+      "type": "string"
+    },
+    "next_review_at": {
+      "format": "date-time",
+      "title": "Next Review At",
+      "type": "string"
+    },
+    "project_id": {
+      "title": "Project Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "ax-project-retention-policy-v1",
+      "default": "ax-project-retention-policy-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "updated_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Updated At"
+    },
+    "updated_by": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Updated By"
+    }
+  },
+  "required": [
+    "project_id",
+    "next_review_at"
+  ],
+  "title": "ProjectRetentionPolicyView",
+  "type": "object"
+}

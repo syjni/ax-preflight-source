@@ -1,0 +1,63 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "credential_status": {
+      "const": "ENVIRONMENT_MANAGED_NOT_PROBED",
+      "default": "ENVIRONMENT_MANAGED_NOT_PROBED",
+      "title": "Credential Status",
+      "type": "string"
+    },
+    "default_model": {
+      "default": "claude-sonnet-5",
+      "title": "Default Model",
+      "type": "string"
+    },
+    "executable_status": {
+      "enum": [
+        "AVAILABLE",
+        "UNAVAILABLE",
+        "NOT_CHECKED"
+      ],
+      "title": "Executable Status",
+      "type": "string"
+    },
+    "provider": {
+      "enum": [
+        "KIRO_CLI",
+        "CONFIGURED_RUNNER"
+      ],
+      "title": "Provider",
+      "type": "string"
+    },
+    "runner_enabled": {
+      "title": "Runner Enabled",
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": "ax-model-connection-status-v1",
+      "default": "ax-model-connection-status-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "timeout_seconds": {
+      "anyOf": [
+        {
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Timeout Seconds"
+    }
+  },
+  "required": [
+    "runner_enabled",
+    "provider",
+    "executable_status"
+  ],
+  "title": "ModelConnectionStatus",
+  "type": "object"
+}

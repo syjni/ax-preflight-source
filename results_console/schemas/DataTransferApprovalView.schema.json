@@ -1,0 +1,98 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "approval_id": {
+      "title": "Approval Id",
+      "type": "string"
+    },
+    "approved_at": {
+      "format": "date-time",
+      "title": "Approved At",
+      "type": "string"
+    },
+    "approved_by": {
+      "title": "Approved By",
+      "type": "string"
+    },
+    "boundary_revision": {
+      "const": "AX_DATA_BOUNDARY_V1",
+      "default": "AX_DATA_BOUNDARY_V1",
+      "title": "Boundary Revision",
+      "type": "string"
+    },
+    "data_classification": {
+      "enum": [
+        "PUBLIC",
+        "INTERNAL",
+        "CONFIDENTIAL"
+      ],
+      "title": "Data Classification",
+      "type": "string"
+    },
+    "dataset_profile": {
+      "title": "Dataset Profile",
+      "type": "string"
+    },
+    "expires_at": {
+      "format": "date-time",
+      "title": "Expires At",
+      "type": "string"
+    },
+    "model": {
+      "title": "Model",
+      "type": "string"
+    },
+    "pii_affected_file_count": {
+      "minimum": 0,
+      "title": "Pii Affected File Count",
+      "type": "integer"
+    },
+    "project_id": {
+      "title": "Project Id",
+      "type": "string"
+    },
+    "provider": {
+      "const": "KIRO_CLI",
+      "default": "KIRO_CLI",
+      "title": "Provider",
+      "type": "string"
+    },
+    "provider_policy_reviewed": {
+      "const": true,
+      "default": true,
+      "title": "Provider Policy Reviewed",
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": "ax-data-transfer-approval-v1",
+      "default": "ax-data-transfer-approval-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "sensitive_data_reviewed": {
+      "const": true,
+      "default": true,
+      "title": "Sensitive Data Reviewed",
+      "type": "boolean"
+    },
+    "tool_output_to_model_acknowledged": {
+      "const": true,
+      "default": true,
+      "title": "Tool Output To Model Acknowledged",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "approval_id",
+    "project_id",
+    "dataset_profile",
+    "model",
+    "data_classification",
+    "pii_affected_file_count",
+    "approved_by",
+    "approved_at",
+    "expires_at"
+  ],
+  "title": "DataTransferApprovalView",
+  "type": "object"
+}

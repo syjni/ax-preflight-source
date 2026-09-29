@@ -1,4 +1,4 @@
-import type { BatchCreateRequest, BatchStatus, DatasetsResponse, DeliveryEnvelope, EvidenceCheckResult, FeaturedCase, FeaturedCasesResponse, FeaturedRunReference, FindingsResponse, LocalDatasetDeleteResult, LocalDatasetRequest, LocalDatasetScanResult, OnboardingAssessment, ProductCapabilities, ReadinessResponse, RetrievalTrace, RunRequest, RunningRun, TasksResponse } from './generated/api';
+import type { AuthSessionResponse, BatchCreateRequest, BatchStatus, BootstrapRequest, CreateUserRequest, DataTransferApprovalRequest, DataTransferApprovalView, DatasetsResponse, DeliveryEnvelope, EvidenceCheckResult, ExecutionPolicyUpdate, FeaturedCase, FeaturedCasesResponse, FeaturedRunReference, FindingsResponse, LocalDatasetDeleteResult, LocalDatasetRequest, LocalDatasetScanResult, LoginRequest, OnboardingAssessment, PocDecisionUpdate, PocEvaluationReport, ProductCapabilities, ProjectAuditLog, ProjectCreateRequest, ProjectDataInventory, ProjectExecutionControl, ProjectExecutionPolicyView, ProjectMemberRequest, ProjectMemberView, ProjectPurgeResult, ProjectRetentionPolicyUpdate, ProjectRetentionPolicyView, ProjectTaskView, ProjectView, ReadinessResponse, RetrievalTrace, RunRequest, RunningRun, SessionRevocationResult, TaskCreateRequest, TasksResponse, UserView } from './generated/api';
 
 export type RunResult = RunningRun | DeliveryEnvelope;
 export type { FeaturedCase, FeaturedRunReference };
@@ -30,6 +30,7 @@ type StaticDemoSnapshot = {
 };
 
 let staticSnapshotPromise: Promise<StaticDemoSnapshot> | null = null;
+let csrfToken: string | null = null;
 
 async function loadStaticSnapshot(): Promise<StaticDemoSnapshot> {
   if (!staticSnapshotPromise) {
@@ -58,13 +59,21 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   let response: Response;
   try {
     const isForm = typeof FormData !== 'undefined' && init?.body instanceof FormData;
+    const method = (init?.method ?? 'GET').toUpperCase();
+    const unsafe = !['GET', 'HEAD', 'OPTIONS'].includes(method);
     response = await fetch(`${base}${path}`, {
       ...init,
-      headers: isForm ? init?.headers : { 'Content-Type': 'application/json', ...init?.headers },
+      credentials: 'same-origin',
+      headers: {
+        ...(isForm ? {} : { 'Content-Type': 'application/json' }),
+        ...(unsafe && csrfToken ? { 'X-CSRF-Token': csrfToken } : {}),
+        ...init?.headers,
+      },
     });
   } catch {
     throw new ApiError(0, 'API_CONNECTION_FAILED');
   }
+  if (response.status === 204) return undefined as T;
   let body: unknown;
   try {
     body = await response.json();
@@ -80,6 +89,54 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 export const api = {
+  authSession: async (): Promise<AuthSessionResponse> => {
+    const session = staticMode
+      ? { authentication_required: false, authenticated: true, bootstrap_required: false, user: null, csrf_token: null, expires_at: null }
+      : await request<AuthSessionResponse>('/api/auth/session');
+    csrfToken = session.csrf_token ?? null;
+    return session;
+  },
+  bootstrap: async (body: BootstrapRequest): Promise<AuthSessionResponse> => {
+    const session = await request<AuthSessionResponse>('/api/auth/bootstrap', { method: 'POST', body: JSON.stringify(body) });
+    csrfToken = session.csrf_token ?? null;
+    return session;
+  },
+  login: async (body: LoginRequest): Promise<AuthSessionResponse> => {
+    const session = await request<AuthSessionResponse>('/api/auth/login', { method: 'POST', body: JSON.stringify(body) });
+    csrfToken = session.csrf_token ?? null;
+    return session;
+  },
+  logout: async (): Promise<void> => {
+    await request<void>('/api/auth/logout', { method: 'POST' });
+    csrfToken = null;
+  },
+  projects: (): Promise<ProjectView[]> => staticMode ? Promise.resolve([]) : request<ProjectView[]>('/api/projects'),
+  createProject: (body: ProjectCreateRequest): Promise<ProjectView> => request<ProjectView>('/api/projects', { method: 'POST', body: JSON.stringify(body) }),
+  users: (): Promise<UserView[]> => request<UserView[]>('/api/users'),
+  createUser: (body: CreateUserRequest): Promise<UserView> => request<UserView>('/api/users', { method: 'POST', body: JSON.stringify(body) }),
+  revokeUserSessions: (userId: string): Promise<SessionRevocationResult> => request<SessionRevocationResult>(`/api/users/${encodeURIComponent(userId)}/revoke-sessions`, { method: 'POST' }),
+  projectMembers: (projectId: string): Promise<ProjectMemberView[]> => request<ProjectMemberView[]>(`/api/projects/${encodeURIComponent(projectId)}/members`),
+  addProjectMember: (projectId: string, body: ProjectMemberRequest): Promise<ProjectMemberView> => request<ProjectMemberView>(`/api/projects/${encodeURIComponent(projectId)}/members`, { method: 'POST', body: JSON.stringify(body) }),
+  removeProjectMember: (projectId: string, userId: string): Promise<void> => request<void>(`/api/projects/${encodeURIComponent(projectId)}/members/${encodeURIComponent(userId)}`, { method: 'DELETE' }),
+  projectDataInventory: (projectId: string): Promise<ProjectDataInventory> => request<ProjectDataInventory>(`/api/projects/${encodeURIComponent(projectId)}/data-inventory`),
+  projectAuditLog: (projectId: string): Promise<ProjectAuditLog> => request<ProjectAuditLog>(`/api/projects/${encodeURIComponent(projectId)}/audit-log`),
+  updateRetentionPolicy: (projectId: string, body: ProjectRetentionPolicyUpdate): Promise<ProjectRetentionPolicyView> => request<ProjectRetentionPolicyView>(`/api/projects/${encodeURIComponent(projectId)}/retention-policy`, { method: 'PUT', body: JSON.stringify(body) }),
+  purgeProject: (projectId: string, confirmation: string): Promise<ProjectPurgeResult> => request<ProjectPurgeResult>(`/api/projects/${encodeURIComponent(projectId)}/purge`, { method: 'POST', body: JSON.stringify({ confirmation }) }),
+  pocEvaluation: (projectId: string, datasetProfile: string): Promise<PocEvaluationReport> => request<PocEvaluationReport>(`/api/projects/${encodeURIComponent(projectId)}/poc-evaluation?dataset_profile=${encodeURIComponent(datasetProfile)}`),
+  recordPocDecision: (projectId: string, datasetProfile: string, body: PocDecisionUpdate): Promise<PocEvaluationReport> => request<PocEvaluationReport>(`/api/projects/${encodeURIComponent(projectId)}/poc-evaluation/decision?dataset_profile=${encodeURIComponent(datasetProfile)}`, { method: 'PUT', body: JSON.stringify(body) }),
+  projectExecutionControl: (projectId: string, datasetProfile?: string): Promise<ProjectExecutionControl> => {
+    const query = datasetProfile ? `?dataset_profile=${encodeURIComponent(datasetProfile)}` : '';
+    return request<ProjectExecutionControl>(`/api/projects/${encodeURIComponent(projectId)}/execution-control${query}`);
+  },
+  updateExecutionPolicy: (projectId: string, body: ExecutionPolicyUpdate): Promise<ProjectExecutionPolicyView> => request<ProjectExecutionPolicyView>(`/api/projects/${encodeURIComponent(projectId)}/execution-policy`, { method: 'PUT', body: JSON.stringify(body) }),
+  approveDataTransfer: (projectId: string, body: DataTransferApprovalRequest): Promise<DataTransferApprovalView> => request<DataTransferApprovalView>(`/api/projects/${encodeURIComponent(projectId)}/data-transfer-approval`, { method: 'POST', body: JSON.stringify(body) }),
+  revokeDataTransfer: (projectId: string, datasetProfile: string): Promise<void> => request<void>(`/api/projects/${encodeURIComponent(projectId)}/data-transfer-approval/${encodeURIComponent(datasetProfile)}`, { method: 'DELETE' }),
+  projectTasks: (projectId: string, datasetProfile?: string): Promise<ProjectTaskView[]> => {
+    const query = datasetProfile ? `?dataset_profile=${encodeURIComponent(datasetProfile)}` : '';
+    return request<ProjectTaskView[]>(`/api/projects/${encodeURIComponent(projectId)}/tasks${query}`);
+  },
+  createProjectTask: (projectId: string, body: TaskCreateRequest): Promise<ProjectTaskView> => request<ProjectTaskView>(`/api/projects/${encodeURIComponent(projectId)}/tasks`, { method: 'POST', body: JSON.stringify(body) }),
+  approveProjectTask: (projectId: string, taskId: string): Promise<ProjectTaskView> => request<ProjectTaskView>(`/api/projects/${encodeURIComponent(projectId)}/tasks/${encodeURIComponent(taskId)}/approve`, { method: 'POST' }),
   capabilities: (): Promise<ProductCapabilities> => staticMode
     ? Promise.resolve({
         mode: 'STATIC_DEMO',
@@ -136,6 +193,7 @@ export const api = {
     files: Array<{ file: File; relativePath: string }>,
     displayName: string | null,
     sourceRootName: string,
+    projectId: string | null = null,
   ) => {
     if (staticMode) return Promise.reject(new ApiError(403, 'LOCAL_SCAN_UNAVAILABLE'));
     const body = new FormData();
@@ -143,6 +201,7 @@ export const api = {
     body.append('relative_paths', JSON.stringify(files.map(({ relativePath }) => relativePath)));
     body.append('source_root_name', sourceRootName);
     if (displayName) body.append('display_name', displayName);
+    if (projectId) body.append('project_id', projectId);
     return request<LocalDatasetScanResult>('/api/local-datasets/upload', { method: 'POST', body });
   },
   localDataset: (profile: string) => staticMode

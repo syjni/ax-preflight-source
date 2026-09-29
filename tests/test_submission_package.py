@@ -12,6 +12,7 @@ from pathlib import Path
 from scripts.build_submission_package import (
     ARTIFACT_FILES,
     ARTIFACT_PREFIXES,
+    CONTENT_PATTERNS,
     CORE_PREFIXES,
     NONPORTABLE_TRACKED_PREFIXES,
     REQUIRED_CLOSURE_FILES,
@@ -24,6 +25,12 @@ from scripts.build_submission_package import (
 
 
 class SubmissionPackageInventoryTests(unittest.TestCase):
+    def test_personal_home_pattern_does_not_flag_user_api_routes(self) -> None:
+        pattern = CONTENT_PATTERNS["posix_personal_home_path"]
+        self.assertIsNone(pattern.search(b"/api/users/user-123/revoke-sessions"))
+        self.assertIsNotNone(pattern.search(b"/" + b"Users/reviewer/project"))
+        self.assertIsNotNone(pattern.search(b"/" + b"home/reviewer/project"))
+
     @unittest.skipUnless((Path(__file__).resolve().parents[1] / ".git").exists(), "source inventory requires Git metadata")
     def test_inventory_contains_complete_current_core_and_required_closure(self) -> None:
         paths = set(candidate_paths())

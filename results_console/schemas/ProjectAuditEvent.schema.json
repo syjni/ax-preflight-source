@@ -1,0 +1,60 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "actor_user_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Actor User Id"
+    },
+    "at": {
+      "format": "date-time",
+      "title": "At",
+      "type": "string"
+    },
+    "event": {
+      "title": "Event",
+      "type": "string"
+    },
+    "event_id": {
+      "title": "Event Id",
+      "type": "string"
+    },
+    "integrity_verified": {
+      "title": "Integrity Verified",
+      "type": "boolean"
+    },
+    "sequence": {
+      "minimum": 1,
+      "title": "Sequence",
+      "type": "integer"
+    },
+    "target": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Target"
+    }
+  },
+  "required": [
+    "event_id",
+    "sequence",
+    "at",
+    "event",
+    "integrity_verified"
+  ],
+  "title": "ProjectAuditEvent",
+  "type": "object"
+}

@@ -6,7 +6,7 @@ cd /d "%~dp0"
 echo.
 echo ============================================================
 echo  AX Preflight - local reviewer mode
-echo  Your source files stay on this computer.
+echo  Secure project workspace. Your source files stay on this computer.
 echo ============================================================
 echo.
 
@@ -99,6 +99,7 @@ if errorlevel 1 (
 pushd results_console
 echo.
 echo The browser will open at http://127.0.0.1:5173/
+echo On first open, create the local administrator and default project.
 echo Keep both terminal windows open while reviewing files.
 echo Press Ctrl+C in both windows when finished.
 echo.

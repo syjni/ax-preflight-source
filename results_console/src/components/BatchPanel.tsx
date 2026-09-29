@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import { ApiError, api, isStaticDemo } from '../api';
-import type { BatchStatus, BusinessTaskView, TasksResponse } from '../generated/api';
+import type { BatchStatus, BusinessTaskView, ProjectExecutionControl, TasksResponse } from '../generated/api';
 import { Status } from './Status';
 
 type BatchPanelProps = {
@@ -9,6 +9,9 @@ type BatchPanelProps = {
   canRun: boolean;
   fixture: boolean;
   fixtureBatch?: BatchStatus | null;
+  model?: string;
+  executionControl?: ProjectExecutionControl | null;
+  onUsageChanged?: () => void;
   onOpenRun: (runId: string) => void;
 };
 
@@ -41,6 +44,15 @@ function messageFor(error: unknown): string {
   if (error instanceof ApiError) {
     const labels: Record<string, string> = {
       RUNNER_UNAVAILABLE: '실행 runner가 꺼져 있습니다.',
+      RUNNER_EXECUTABLE_UNAVAILABLE: 'Kiro CLI 실행 파일을 찾을 수 없습니다.',
+      EXECUTION_POLICY_REQUIRED: 'OWNER가 모델과 실행 한도를 먼저 저장해야 합니다.',
+      DATA_TRANSFER_APPROVAL_REQUIRED: '이 자료의 모델 전달 경계 승인이 필요합니다.',
+      DATA_TRANSFER_APPROVAL_EXPIRED: '자료 전달 승인이 만료되었습니다.',
+      MODEL_NOT_APPROVED: '실행 모델과 자료 전달 승인 모델이 다릅니다.',
+      BATCH_RUN_LIMIT_EXCEEDED: '예정 실행 수가 프로젝트의 배치 한도를 넘습니다.',
+      DAILY_RUN_LIMIT_REACHED: '최근 24시간 실행 한도를 모두 사용했습니다.',
+      DAILY_BUDGET_REACHED: '최근 24시간 예상 비용 한도를 모두 사용했습니다.',
+      CONCURRENCY_LIMIT_REACHED: '동시 실행 한도를 모두 사용했습니다.',
       BATCH_NOT_PAUSABLE: '현재 상태에서는 일시정지할 수 없습니다.',
       BATCH_NOT_RESUMABLE: '현재 상태에서는 재개할 수 없습니다.',
       BATCH_ALREADY_TERMINAL: '이미 종료된 배치입니다.',
@@ -59,7 +71,7 @@ function taskRequest(task: BusinessTaskView) {
     : { task_id: task.task_id, request_type: 'TASK_CANDIDATE' as const, question: task.question };
 }
 
-export function BatchPanel({ dataset, tasks, canRun, fixture, fixtureBatch, onOpenRun }: BatchPanelProps) {
+export function BatchPanel({ dataset, tasks, canRun, fixture, fixtureBatch, model, executionControl, onUsageChanged, onOpenRun }: BatchPanelProps) {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [repetitions, setRepetitions] = useState(3);
   const [maxAttempts, setMaxAttempts] = useState(2);
@@ -81,7 +93,13 @@ export function BatchPanel({ dataset, tasks, canRun, fixture, fixtureBatch, onOp
     let active = true;
     const refresh = () => {
       api.batch(batch.batch_id)
-        .then((next) => { if (active) { setBatch(next); setError(''); } })
+        .then((next) => {
+          if (active) {
+            if (next.completed_items !== batch.completed_items || next.state !== batch.state) onUsageChanged?.();
+            setBatch(next);
+            setError('');
+          }
+        })
         .catch((nextError: unknown) => { if (active) setError(messageFor(nextError)); });
     };
     const timer = window.setInterval(refresh, 1000);
@@ -93,6 +111,14 @@ export function BatchPanel({ dataset, tasks, canRun, fixture, fixtureBatch, onOp
     [tasks, selectedIds],
   );
   const plannedRuns = selectedTasks.length * repetitions;
+  const policy = executionControl?.policy;
+  const usage = executionControl?.usage;
+  const plannedCost = plannedRuns * (policy?.estimated_cost_per_run_cents ?? 0);
+  const policyBlocked = Boolean(policy && (
+    plannedRuns > (policy.max_batch_runs ?? 0)
+    || plannedRuns > (usage?.remaining_run_capacity ?? 0)
+    || plannedCost > (usage?.remaining_budget_cents ?? 0)
+  ));
   const retryable = Boolean(batch?.items.some(
     (item) => item.status === 'FAILED' && item.attempt < (batch?.max_attempts ?? 0),
   ));
@@ -114,8 +140,10 @@ export function BatchPanel({ dataset, tasks, canRun, fixture, fixtureBatch, onOp
         tasks: selectedTasks.map(taskRequest),
         repetitions,
         max_attempts: maxAttempts,
+        ...(model ? { model } : {}),
       });
       setBatch(created);
+      onUsageChanged?.();
     } catch (nextError) {
       setError(messageFor(nextError));
     } finally {
@@ -135,6 +163,7 @@ export function BatchPanel({ dataset, tasks, canRun, fixture, fixtureBatch, onOp
         retry: api.retryBatch,
       }[action];
       setBatch(await operation(batch.batch_id));
+      if (action === 'resume' || action === 'retry') onUsageChanged?.();
     } catch (nextError) {
       setError(messageFor(nextError));
     } finally {
@@ -163,8 +192,9 @@ export function BatchPanel({ dataset, tasks, canRun, fixture, fixtureBatch, onOp
       <div className="batch-options">
         <label>업무별 반복 횟수<select value={repetitions} onChange={(event) => setRepetitions(Number(event.target.value))} disabled={busy || readOnly}>{[1, 2, 3, 4, 5].map((value) => <option key={value} value={value}>{value}회</option>)}</select></label>
         <label>최대 시도 횟수<select value={maxAttempts} onChange={(event) => setMaxAttempts(Number(event.target.value))} disabled={busy || readOnly}>{[1, 2, 3].map((value) => <option key={value} value={value}>{value}회</option>)}</select></label>
-        <div><span>예정 실행</span><strong>{plannedRuns} / 50</strong></div>
-        <button className="primary-action" disabled={busy || readOnly || !canRun || selectedTasks.length === 0 || plannedRuns > 50}>{busy ? '처리 중…' : readOnly ? '읽기 전용' : !canRun ? '온보딩 확인 필요' : '반복 실행 시작 →'}</button>
+        <div><span>예정 실행</span><strong>{plannedRuns} / {policy?.max_batch_runs ?? 50}</strong></div>
+        {policy && usage && <div className="batch-budget"><span>예상 비용 / 남은 한도</span><strong>${(plannedCost / 100).toFixed(2)} / ${(usage.remaining_budget_cents / 100).toFixed(2)}</strong></div>}
+        <button className="primary-action" disabled={busy || readOnly || !canRun || policyBlocked || selectedTasks.length === 0 || plannedRuns > 50}>{busy ? '처리 중…' : readOnly ? '읽기 전용' : policyBlocked ? '실행·비용 한도 조정 필요' : !canRun ? executionControl ? '실행 통제 승인 필요' : '온보딩 확인 필요' : '반복 실행 시작 →'}</button>
       </div>
     </form>
 

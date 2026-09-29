@@ -1,6 +1,12 @@
 {
   "additionalProperties": false,
   "properties": {
+    "batch_records_deleted": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Batch Records Deleted",
+      "type": "integer"
+    },
     "deleted": {
       "const": true,
       "default": true,
@@ -16,6 +22,12 @@
       "title": "Profile",
       "type": "string"
     },
+    "run_records_deleted": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Run Records Deleted",
+      "type": "integer"
+    },
     "schema_version": {
       "const": "ax-local-dataset-delete-result-v1",
       "default": "ax-local-dataset-delete-result-v1",
@@ -27,6 +39,12 @@
       "default": false,
       "title": "Source Files Deleted",
       "type": "boolean"
+    },
+    "task_records_deleted": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Task Records Deleted",
+      "type": "integer"
     }
   },
   "required": [

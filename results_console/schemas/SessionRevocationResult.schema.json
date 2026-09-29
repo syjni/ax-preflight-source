@@ -1,0 +1,20 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "revoked_sessions": {
+      "minimum": 0,
+      "title": "Revoked Sessions",
+      "type": "integer"
+    },
+    "user_id": {
+      "title": "User Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "user_id",
+    "revoked_sessions"
+  ],
+  "title": "SessionRevocationResult",
+  "type": "object"
+}

@@ -1,0 +1,16 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "confirmation": {
+      "maxLength": 80,
+      "minLength": 1,
+      "title": "Confirmation",
+      "type": "string"
+    }
+  },
+  "required": [
+    "confirmation"
+  ],
+  "title": "ProjectPurgeRequest",
+  "type": "object"
+}

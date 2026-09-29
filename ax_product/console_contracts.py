@@ -100,6 +100,7 @@ class DatasetOption(StrictProductModel):
     origin: Literal["BUNDLED", "LOCAL"] = "BUNDLED"
     scanned_at: str | None = None
     source_root_name: str | None = None
+    project_id: str | None = None
 
 
 class DatasetsResponse(StrictProductModel):

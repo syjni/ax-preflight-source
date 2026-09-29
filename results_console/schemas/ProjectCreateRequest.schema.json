@@ -1,0 +1,22 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "description": {
+      "default": "",
+      "maxLength": 500,
+      "title": "Description",
+      "type": "string"
+    },
+    "name": {
+      "maxLength": 80,
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "title": "ProjectCreateRequest",
+  "type": "object"
+}

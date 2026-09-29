@@ -1,0 +1,58 @@
+{
+  "$defs": {
+    "UserView": {
+      "additionalProperties": false,
+      "properties": {
+        "display_name": {
+          "title": "Display Name",
+          "type": "string"
+        },
+        "global_role": {
+          "enum": [
+            "ADMIN",
+            "MEMBER"
+          ],
+          "title": "Global Role",
+          "type": "string"
+        },
+        "user_id": {
+          "title": "User Id",
+          "type": "string"
+        },
+        "username": {
+          "title": "Username",
+          "type": "string"
+        }
+      },
+      "required": [
+        "user_id",
+        "username",
+        "display_name",
+        "global_role"
+      ],
+      "title": "UserView",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "role": {
+      "enum": [
+        "OWNER",
+        "EDITOR",
+        "VIEWER"
+      ],
+      "title": "Role",
+      "type": "string"
+    },
+    "user": {
+      "$ref": "#/$defs/UserView"
+    }
+  },
+  "required": [
+    "user",
+    "role"
+  ],
+  "title": "ProjectMemberView",
+  "type": "object"
+}

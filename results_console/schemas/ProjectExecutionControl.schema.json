@@ -1,0 +1,393 @@
+{
+  "$defs": {
+    "DataTransferApprovalView": {
+      "additionalProperties": false,
+      "properties": {
+        "approval_id": {
+          "title": "Approval Id",
+          "type": "string"
+        },
+        "approved_at": {
+          "format": "date-time",
+          "title": "Approved At",
+          "type": "string"
+        },
+        "approved_by": {
+          "title": "Approved By",
+          "type": "string"
+        },
+        "boundary_revision": {
+          "const": "AX_DATA_BOUNDARY_V1",
+          "default": "AX_DATA_BOUNDARY_V1",
+          "title": "Boundary Revision",
+          "type": "string"
+        },
+        "data_classification": {
+          "enum": [
+            "PUBLIC",
+            "INTERNAL",
+            "CONFIDENTIAL"
+          ],
+          "title": "Data Classification",
+          "type": "string"
+        },
+        "dataset_profile": {
+          "title": "Dataset Profile",
+          "type": "string"
+        },
+        "expires_at": {
+          "format": "date-time",
+          "title": "Expires At",
+          "type": "string"
+        },
+        "model": {
+          "title": "Model",
+          "type": "string"
+        },
+        "pii_affected_file_count": {
+          "minimum": 0,
+          "title": "Pii Affected File Count",
+          "type": "integer"
+        },
+        "project_id": {
+          "title": "Project Id",
+          "type": "string"
+        },
+        "provider": {
+          "const": "KIRO_CLI",
+          "default": "KIRO_CLI",
+          "title": "Provider",
+          "type": "string"
+        },
+        "provider_policy_reviewed": {
+          "const": true,
+          "default": true,
+          "title": "Provider Policy Reviewed",
+          "type": "boolean"
+        },
+        "schema_version": {
+          "const": "ax-data-transfer-approval-v1",
+          "default": "ax-data-transfer-approval-v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "sensitive_data_reviewed": {
+          "const": true,
+          "default": true,
+          "title": "Sensitive Data Reviewed",
+          "type": "boolean"
+        },
+        "tool_output_to_model_acknowledged": {
+          "const": true,
+          "default": true,
+          "title": "Tool Output To Model Acknowledged",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "approval_id",
+        "project_id",
+        "dataset_profile",
+        "model",
+        "data_classification",
+        "pii_affected_file_count",
+        "approved_by",
+        "approved_at",
+        "expires_at"
+      ],
+      "title": "DataTransferApprovalView",
+      "type": "object"
+    },
+    "ModelConnectionStatus": {
+      "additionalProperties": false,
+      "properties": {
+        "credential_status": {
+          "const": "ENVIRONMENT_MANAGED_NOT_PROBED",
+          "default": "ENVIRONMENT_MANAGED_NOT_PROBED",
+          "title": "Credential Status",
+          "type": "string"
+        },
+        "default_model": {
+          "default": "claude-sonnet-5",
+          "title": "Default Model",
+          "type": "string"
+        },
+        "executable_status": {
+          "enum": [
+            "AVAILABLE",
+            "UNAVAILABLE",
+            "NOT_CHECKED"
+          ],
+          "title": "Executable Status",
+          "type": "string"
+        },
+        "provider": {
+          "enum": [
+            "KIRO_CLI",
+            "CONFIGURED_RUNNER"
+          ],
+          "title": "Provider",
+          "type": "string"
+        },
+        "runner_enabled": {
+          "title": "Runner Enabled",
+          "type": "boolean"
+        },
+        "schema_version": {
+          "const": "ax-model-connection-status-v1",
+          "default": "ax-model-connection-status-v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "timeout_seconds": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Timeout Seconds"
+        }
+      },
+      "required": [
+        "runner_enabled",
+        "provider",
+        "executable_status"
+      ],
+      "title": "ModelConnectionStatus",
+      "type": "object"
+    },
+    "ProjectExecutionPolicyView": {
+      "additionalProperties": false,
+      "properties": {
+        "daily_budget_cents": {
+          "default": 200,
+          "maximum": 10000000,
+          "minimum": 1,
+          "title": "Daily Budget Cents",
+          "type": "integer"
+        },
+        "daily_run_limit": {
+          "default": 20,
+          "maximum": 500,
+          "minimum": 1,
+          "title": "Daily Run Limit",
+          "type": "integer"
+        },
+        "estimated_cost_per_run_cents": {
+          "default": 10,
+          "maximum": 100000,
+          "minimum": 1,
+          "title": "Estimated Cost Per Run Cents",
+          "type": "integer"
+        },
+        "max_batch_runs": {
+          "default": 10,
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Max Batch Runs",
+          "type": "integer"
+        },
+        "max_concurrent_runs": {
+          "default": 1,
+          "maximum": 5,
+          "minimum": 1,
+          "title": "Max Concurrent Runs",
+          "type": "integer"
+        },
+        "model": {
+          "default": "claude-sonnet-5",
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Model",
+          "type": "string"
+        },
+        "project_id": {
+          "title": "Project Id",
+          "type": "string"
+        },
+        "provider": {
+          "const": "KIRO_CLI",
+          "default": "KIRO_CLI",
+          "title": "Provider",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "ax-project-execution-policy-v1",
+          "default": "ax-project-execution-policy-v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "updated_at": {
+          "format": "date-time",
+          "title": "Updated At",
+          "type": "string"
+        },
+        "updated_by": {
+          "title": "Updated By",
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_id",
+        "updated_by",
+        "updated_at"
+      ],
+      "title": "ProjectExecutionPolicyView",
+      "type": "object"
+    },
+    "ProjectExecutionUsage": {
+      "additionalProperties": false,
+      "properties": {
+        "estimated_spend_cents": {
+          "minimum": 0,
+          "title": "Estimated Spend Cents",
+          "type": "integer"
+        },
+        "remaining_budget_cents": {
+          "minimum": 0,
+          "title": "Remaining Budget Cents",
+          "type": "integer"
+        },
+        "remaining_run_capacity": {
+          "minimum": 0,
+          "title": "Remaining Run Capacity",
+          "type": "integer"
+        },
+        "reserved_runs": {
+          "minimum": 0,
+          "title": "Reserved Runs",
+          "type": "integer"
+        },
+        "running_runs": {
+          "minimum": 0,
+          "title": "Running Runs",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "ax-project-execution-usage-v1",
+          "default": "ax-project-execution-usage-v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "window": {
+          "const": "ROLLING_24_HOURS",
+          "default": "ROLLING_24_HOURS",
+          "title": "Window",
+          "type": "string"
+        },
+        "window_started_at": {
+          "format": "date-time",
+          "title": "Window Started At",
+          "type": "string"
+        }
+      },
+      "required": [
+        "window_started_at",
+        "reserved_runs",
+        "running_runs",
+        "estimated_spend_cents",
+        "remaining_run_capacity",
+        "remaining_budget_cents"
+      ],
+      "title": "ProjectExecutionUsage",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "blockers": {
+      "items": {
+        "enum": [
+          "RUNNER_UNAVAILABLE",
+          "RUNNER_EXECUTABLE_UNAVAILABLE",
+          "EXECUTION_POLICY_REQUIRED",
+          "DATASET_REQUIRED",
+          "DATA_TRANSFER_APPROVAL_REQUIRED",
+          "DATA_TRANSFER_APPROVAL_EXPIRED",
+          "MODEL_NOT_APPROVED",
+          "BATCH_RUN_LIMIT_EXCEEDED",
+          "DAILY_RUN_LIMIT_REACHED",
+          "DAILY_BUDGET_REACHED",
+          "CONCURRENCY_LIMIT_REACHED"
+        ],
+        "type": "string"
+      },
+      "title": "Blockers",
+      "type": "array"
+    },
+    "can_execute": {
+      "title": "Can Execute",
+      "type": "boolean"
+    },
+    "connection": {
+      "$ref": "#/$defs/ModelConnectionStatus"
+    },
+    "dataset_profile": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Dataset Profile"
+    },
+    "policy": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ProjectExecutionPolicyView"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "project_id": {
+      "title": "Project Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "ax-project-execution-control-v1",
+      "default": "ax-project-execution-control-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "transfer_approval": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DataTransferApprovalView"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "usage": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ProjectExecutionUsage"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "project_id",
+    "connection",
+    "can_execute"
+  ],
+  "title": "ProjectExecutionControl",
+  "type": "object"
+}

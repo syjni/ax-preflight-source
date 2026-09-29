@@ -1,0 +1,46 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string"
+    },
+    "member_count": {
+      "minimum": 1,
+      "title": "Member Count",
+      "type": "integer"
+    },
+    "member_role": {
+      "enum": [
+        "OWNER",
+        "EDITOR",
+        "VIEWER"
+      ],
+      "title": "Member Role",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "project_id": {
+      "title": "Project Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "project_id",
+    "name",
+    "description",
+    "member_role",
+    "member_count",
+    "created_at"
+  ],
+  "title": "ProjectView",
+  "type": "object"
+}

@@ -1,0 +1,57 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "estimated_spend_cents": {
+      "minimum": 0,
+      "title": "Estimated Spend Cents",
+      "type": "integer"
+    },
+    "remaining_budget_cents": {
+      "minimum": 0,
+      "title": "Remaining Budget Cents",
+      "type": "integer"
+    },
+    "remaining_run_capacity": {
+      "minimum": 0,
+      "title": "Remaining Run Capacity",
+      "type": "integer"
+    },
+    "reserved_runs": {
+      "minimum": 0,
+      "title": "Reserved Runs",
+      "type": "integer"
+    },
+    "running_runs": {
+      "minimum": 0,
+      "title": "Running Runs",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "ax-project-execution-usage-v1",
+      "default": "ax-project-execution-usage-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "window": {
+      "const": "ROLLING_24_HOURS",
+      "default": "ROLLING_24_HOURS",
+      "title": "Window",
+      "type": "string"
+    },
+    "window_started_at": {
+      "format": "date-time",
+      "title": "Window Started At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "window_started_at",
+    "reserved_runs",
+    "running_runs",
+    "estimated_spend_cents",
+    "remaining_run_capacity",
+    "remaining_budget_cents"
+  ],
+  "title": "ProjectExecutionUsage",
+  "type": "object"
+}

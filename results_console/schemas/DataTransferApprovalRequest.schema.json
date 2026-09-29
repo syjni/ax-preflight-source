@@ -1,0 +1,58 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "data_classification": {
+      "enum": [
+        "PUBLIC",
+        "INTERNAL",
+        "CONFIDENTIAL"
+      ],
+      "title": "Data Classification",
+      "type": "string"
+    },
+    "dataset_profile": {
+      "maxLength": 160,
+      "minLength": 1,
+      "title": "Dataset Profile",
+      "type": "string"
+    },
+    "model": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Model",
+      "type": "string"
+    },
+    "provider_policy_reviewed": {
+      "const": true,
+      "title": "Provider Policy Reviewed",
+      "type": "boolean"
+    },
+    "sensitive_data_reviewed": {
+      "const": true,
+      "title": "Sensitive Data Reviewed",
+      "type": "boolean"
+    },
+    "tool_output_to_model_acknowledged": {
+      "const": true,
+      "title": "Tool Output To Model Acknowledged",
+      "type": "boolean"
+    },
+    "valid_days": {
+      "default": 30,
+      "maximum": 365,
+      "minimum": 1,
+      "title": "Valid Days",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "dataset_profile",
+    "model",
+    "data_classification",
+    "tool_output_to_model_acknowledged",
+    "provider_policy_reviewed",
+    "sensitive_data_reviewed"
+  ],
+  "title": "DataTransferApprovalRequest",
+  "type": "object"
+}

@@ -7,6 +7,7 @@ export type RunFailureKind =
   | 'verified-task-not-onboarded'
   | 'candidate-mismatch'
   | 'onboarding-blocked'
+  | 'execution-control'
   | 'request-failed';
 
 export type RunFailure = {
@@ -28,6 +29,23 @@ function isApiFailure(error: unknown): error is ApiFailure {
 
 export function runFailureFor(error: unknown, source: RunFailureSource): RunFailure {
   if (isApiFailure(error)) {
+    if (new Set([
+      'RUNNER_EXECUTABLE_UNAVAILABLE',
+      'EXECUTION_POLICY_REQUIRED',
+      'DATASET_REQUIRED',
+      'DATA_TRANSFER_APPROVAL_REQUIRED',
+      'DATA_TRANSFER_APPROVAL_EXPIRED',
+      'MODEL_NOT_APPROVED',
+      'BATCH_RUN_LIMIT_EXCEEDED',
+      'DAILY_RUN_LIMIT_REACHED',
+      'DAILY_BUDGET_REACHED',
+      'CONCURRENCY_LIMIT_REACHED',
+    ]).has(error.detail)) return {
+      kind: 'execution-control', source, code: error.detail,
+      title: '프로젝트 실행 통제를 확인해 주세요',
+      message: '승인된 모델·자료 전달 경계·최근 24시간 실행 및 예상 비용 한도를 서버가 실행 직전에 다시 확인했습니다.',
+      actionLabel: '실행 통제 설정 보기',
+    };
     if (error.detail === 'RUNNER_UNAVAILABLE') return {
       kind: 'runner-unavailable', source, code: error.detail,
       title: '새 실행을 사용할 수 없습니다',

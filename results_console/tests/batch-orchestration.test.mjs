@@ -150,3 +150,29 @@ test('batch panel exposes the safe-point rule and disables mutation in fixture m
   assert.equal(actions.length, 4);
   assert.ok(actions.every((button) => button.disabled));
 });
+
+test('batch panel previews project capacity and blocks an oversized estimated budget', async () => {
+  const executionControl = {
+    project_id: 'prj_1', dataset_profile: 'local-1', can_execute: true, blockers: [],
+    connection: { runner_enabled: true, provider: 'KIRO_CLI', executable_status: 'AVAILABLE' },
+    policy: {
+      project_id: 'prj_1', model: 'claude-sonnet-5', daily_run_limit: 5,
+      max_batch_runs: 2, max_concurrent_runs: 1, estimated_cost_per_run_cents: 25,
+      daily_budget_cents: 100, updated_by: 'owner', updated_at: '2026-09-29T00:00:00Z',
+    },
+    usage: {
+      window_started_at: '2026-09-28T00:00:00Z', reserved_runs: 3, running_runs: 0,
+      estimated_spend_cents: 50, remaining_run_capacity: 2, remaining_budget_cents: 50,
+    },
+  };
+  await act(async () => root.render(React.createElement(BatchPanel, {
+    dataset: 'local-1', tasks, canRun: true, fixture: false,
+    model: 'claude-sonnet-5', executionControl, onOpenRun: () => {},
+  })));
+
+  assert.match(container.textContent, /3 \/ 2/);
+  assert.match(container.textContent, /\$0\.75 \/ \$0\.50/);
+  const start = container.querySelector('button.primary-action');
+  assert.equal(start.disabled, true);
+  assert.match(start.textContent, /실행·비용 한도 조정 필요/);
+});

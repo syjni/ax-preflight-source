@@ -1,0 +1,204 @@
+{
+  "$defs": {
+    "ProjectRetentionPolicyView": {
+      "additionalProperties": false,
+      "properties": {
+        "audit_event_days": {
+          "default": 365,
+          "maximum": 3650,
+          "minimum": 30,
+          "title": "Audit Event Days",
+          "type": "integer"
+        },
+        "automatic_deletion_enabled": {
+          "const": false,
+          "default": false,
+          "title": "Automatic Deletion Enabled",
+          "type": "boolean"
+        },
+        "legal_hold": {
+          "default": false,
+          "title": "Legal Hold",
+          "type": "boolean"
+        },
+        "managed_data_days": {
+          "default": 90,
+          "maximum": 3650,
+          "minimum": 1,
+          "title": "Managed Data Days",
+          "type": "integer"
+        },
+        "mode": {
+          "const": "OWNER_REVIEW",
+          "default": "OWNER_REVIEW",
+          "title": "Mode",
+          "type": "string"
+        },
+        "next_review_at": {
+          "format": "date-time",
+          "title": "Next Review At",
+          "type": "string"
+        },
+        "project_id": {
+          "title": "Project Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "ax-project-retention-policy-v1",
+          "default": "ax-project-retention-policy-v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "updated_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Updated At"
+        },
+        "updated_by": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Updated By"
+        }
+      },
+      "required": [
+        "project_id",
+        "next_review_at"
+      ],
+      "title": "ProjectRetentionPolicyView",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "active_batch_count": {
+      "minimum": 0,
+      "title": "Active Batch Count",
+      "type": "integer"
+    },
+    "audit_event_count": {
+      "minimum": 0,
+      "title": "Audit Event Count",
+      "type": "integer"
+    },
+    "automatic_expiry_enabled": {
+      "const": false,
+      "default": false,
+      "title": "Automatic Expiry Enabled",
+      "type": "boolean"
+    },
+    "batch_count": {
+      "minimum": 0,
+      "title": "Batch Count",
+      "type": "integer"
+    },
+    "business_task_count": {
+      "minimum": 0,
+      "title": "Business Task Count",
+      "type": "integer"
+    },
+    "execution_policy_count": {
+      "minimum": 0,
+      "title": "Execution Policy Count",
+      "type": "integer"
+    },
+    "execution_usage_count": {
+      "minimum": 0,
+      "title": "Execution Usage Count",
+      "type": "integer"
+    },
+    "local_dataset_count": {
+      "minimum": 0,
+      "title": "Local Dataset Count",
+      "type": "integer"
+    },
+    "managed_copy_count": {
+      "minimum": 0,
+      "title": "Managed Copy Count",
+      "type": "integer"
+    },
+    "poc_decision_count": {
+      "minimum": 0,
+      "title": "Poc Decision Count",
+      "type": "integer"
+    },
+    "project_id": {
+      "title": "Project Id",
+      "type": "string"
+    },
+    "project_membership_count": {
+      "minimum": 1,
+      "title": "Project Membership Count",
+      "type": "integer"
+    },
+    "retention_mode": {
+      "const": "MANUAL_DELETE",
+      "default": "MANUAL_DELETE",
+      "title": "Retention Mode",
+      "type": "string"
+    },
+    "retention_policy": {
+      "$ref": "#/$defs/ProjectRetentionPolicyView"
+    },
+    "running_run_count": {
+      "minimum": 0,
+      "title": "Running Run Count",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "ax-project-data-inventory-v1",
+      "default": "ax-project-data-inventory-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_files_will_be_deleted": {
+      "const": false,
+      "default": false,
+      "title": "Source Files Will Be Deleted",
+      "type": "boolean"
+    },
+    "transfer_approval_count": {
+      "minimum": 0,
+      "title": "Transfer Approval Count",
+      "type": "integer"
+    },
+    "writable_run_count": {
+      "minimum": 0,
+      "title": "Writable Run Count",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "project_id",
+    "local_dataset_count",
+    "managed_copy_count",
+    "business_task_count",
+    "writable_run_count",
+    "running_run_count",
+    "batch_count",
+    "active_batch_count",
+    "project_membership_count",
+    "execution_policy_count",
+    "transfer_approval_count",
+    "execution_usage_count",
+    "poc_decision_count",
+    "audit_event_count",
+    "retention_policy"
+  ],
+  "title": "ProjectDataInventory",
+  "type": "object"
+}

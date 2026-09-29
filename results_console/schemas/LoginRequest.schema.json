@@ -1,0 +1,25 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "password": {
+      "format": "password",
+      "maxLength": 256,
+      "minLength": 1,
+      "title": "Password",
+      "type": "string",
+      "writeOnly": true
+    },
+    "username": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Username",
+      "type": "string"
+    }
+  },
+  "required": [
+    "username",
+    "password"
+  ],
+  "title": "LoginRequest",
+  "type": "object"
+}

@@ -71,3 +71,15 @@ test('verified execution sends only approved identity while candidate keeps ques
     },
   );
 });
+
+test('customer execution carries the exact project-approved model', () => {
+  assert.deepEqual(
+    runRequestFor('local-customer', '무시되는 변경 문장', verified, 'approved-model-v2'),
+    {
+      dataset: 'local-customer',
+      request_type: 'VERIFIED_BUSINESS_TASK',
+      task_id: 'TASK_POLICY_RETURN_WINDOW',
+      model: 'approved-model-v2',
+    },
+  );
+});

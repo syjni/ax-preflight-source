@@ -6,7 +6,7 @@ cd /d "%~dp0"
 echo.
 echo ============================================================
 echo  AX Preflight - Docker reviewer mode
-echo  Local file picker, PDF tables, Korean/English OCR included
+echo  Secure projects, local files, PDF tables, Korean/English OCR
 echo ============================================================
 echo.
 
@@ -41,6 +41,7 @@ if errorlevel 1 (
 
 echo.
 echo AX Preflight is ready at http://127.0.0.1:8000/
+echo On first open, create the local administrator and default project.
 echo Use stop-docker.cmd when finished.
 start "" "http://127.0.0.1:8000/"
 exit /b 0

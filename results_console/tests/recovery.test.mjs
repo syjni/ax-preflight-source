@@ -37,3 +37,12 @@ test('onboarding blockers direct the user to the preflight checks', () => {
   assert.equal(failure.actionLabel, '온보딩 검사 보기');
   assert.match(failure.message, /원본 무결성/);
 });
+
+test('model boundary and budget blockers route users to project execution control', () => {
+  for (const code of ['DATA_TRANSFER_APPROVAL_REQUIRED', 'MODEL_NOT_APPROVED', 'DAILY_BUDGET_REACHED']) {
+    const failure = runFailureFor(apiError(409, code), 'submit');
+    assert.equal(failure.kind, 'execution-control');
+    assert.equal(failure.actionLabel, '실행 통제 설정 보기');
+    assert.equal(failure.code, code);
+  }
+});

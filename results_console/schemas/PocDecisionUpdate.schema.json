@@ -1,0 +1,45 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "decision": {
+      "enum": [
+        "APPROVED",
+        "CONDITIONAL",
+        "REJECTED"
+      ],
+      "title": "Decision",
+      "type": "string"
+    },
+    "note": {
+      "maxLength": 2000,
+      "minLength": 5,
+      "title": "Note",
+      "type": "string"
+    },
+    "risk_acknowledged": {
+      "const": true,
+      "title": "Risk Acknowledged",
+      "type": "boolean"
+    },
+    "scope_acknowledged": {
+      "const": true,
+      "title": "Scope Acknowledged",
+      "type": "boolean"
+    },
+    "valid_days": {
+      "default": 30,
+      "maximum": 365,
+      "minimum": 1,
+      "title": "Valid Days",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "decision",
+    "note",
+    "scope_acknowledged",
+    "risk_acknowledged"
+  ],
+  "title": "PocDecisionUpdate",
+  "type": "object"
+}

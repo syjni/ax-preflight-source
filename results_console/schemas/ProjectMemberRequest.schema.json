@@ -1,0 +1,25 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "role": {
+      "enum": [
+        "EDITOR",
+        "VIEWER"
+      ],
+      "title": "Role",
+      "type": "string"
+    },
+    "username": {
+      "maxLength": 32,
+      "minLength": 3,
+      "title": "Username",
+      "type": "string"
+    }
+  },
+  "required": [
+    "username",
+    "role"
+  ],
+  "title": "ProjectMemberRequest",
+  "type": "object"
+}

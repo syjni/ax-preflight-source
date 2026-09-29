@@ -134,6 +134,19 @@ class KiroProductRunner:
         self.timeout_seconds = float(timeout_seconds)
         self.python_executable = str(Path(python_executable).resolve())
 
+    def configuration_available(self) -> bool:
+        """Check local executable and agent template without contacting a model."""
+        try:
+            executable = _resolve_executable(self.executable)
+            if self.executable is not None:
+                explicit_path = Path(executable)
+                if not explicit_path.is_file() and shutil.which(executable) is None:
+                    return False
+            _read_template(self.template_path)
+        except (FileNotFoundError, OSError, ValueError, json.JSONDecodeError):
+            return False
+        return True
+
     def _agent_config(
         self, request: Any, *, run_id: str, results_root: Path, agent_name: str
     ) -> dict[str, Any]:

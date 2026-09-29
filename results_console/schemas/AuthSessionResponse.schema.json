@@ -1,0 +1,95 @@
+{
+  "$defs": {
+    "UserView": {
+      "additionalProperties": false,
+      "properties": {
+        "display_name": {
+          "title": "Display Name",
+          "type": "string"
+        },
+        "global_role": {
+          "enum": [
+            "ADMIN",
+            "MEMBER"
+          ],
+          "title": "Global Role",
+          "type": "string"
+        },
+        "user_id": {
+          "title": "User Id",
+          "type": "string"
+        },
+        "username": {
+          "title": "Username",
+          "type": "string"
+        }
+      },
+      "required": [
+        "user_id",
+        "username",
+        "display_name",
+        "global_role"
+      ],
+      "title": "UserView",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "authenticated": {
+      "title": "Authenticated",
+      "type": "boolean"
+    },
+    "authentication_required": {
+      "default": true,
+      "title": "Authentication Required",
+      "type": "boolean"
+    },
+    "bootstrap_required": {
+      "title": "Bootstrap Required",
+      "type": "boolean"
+    },
+    "csrf_token": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Csrf Token"
+    },
+    "expires_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Expires At"
+    },
+    "user": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/UserView"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "authenticated",
+    "bootstrap_required"
+  ],
+  "title": "AuthSessionResponse",
+  "type": "object"
+}

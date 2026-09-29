@@ -112,6 +112,24 @@ class KiroRunnerTests(unittest.TestCase):
     def _arg(args: list[str], name: str) -> str:
         return args[args.index(name) + 1]
 
+    def test_configuration_check_does_not_contact_model_or_trust_missing_override(self) -> None:
+        with patch("ax_product.runner.shutil.which", return_value=None):
+            self.assertFalse(self.runner().configuration_available())
+        with patch("ax_product.runner.shutil.which", return_value="C:/tools/kiro-cli-test.exe"):
+            self.assertTrue(self.runner().configuration_available())
+
+        malformed = self.temp_root / "malformed-agent.json"
+        malformed.write_text("{}", encoding="utf-8")
+        runner = KiroProductRunner(
+            project_root=ROOT,
+            template_path=malformed,
+            agents_dir=self.agents_dir,
+            dataset_config=DATASET_CONFIG,
+            executable="kiro-cli-test.exe",
+        )
+        with patch("ax_product.runner.shutil.which", return_value="C:/tools/kiro-cli-test.exe"):
+            self.assertFalse(runner.configuration_available())
+
     def publish(self, argv: list[str], mode: str) -> None:
         config = self.config_from_argv(argv)
         server = config["mcpServers"]["ax-product-tools"]

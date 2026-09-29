@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import shutil
 import threading
 from collections.abc import Callable
 from datetime import datetime, timezone
@@ -98,6 +99,8 @@ class BatchStatus(StrictProductModel):
     batch_id: str = Field(min_length=1)
     dataset: str = Field(min_length=1)
     model: str = Field(min_length=1)
+    project_id: str | None = None
+    requested_by_user_id: str | None = None
     state: BatchState
     requested_control: BatchControl
     repetitions: int = Field(ge=1, le=5)
@@ -116,6 +119,8 @@ class BatchStatus(StrictProductModel):
 
     @model_validator(mode="after")
     def validate_summary(self) -> "BatchStatus":
+        if (self.project_id is None) != (self.requested_by_user_id is None):
+            raise ValueError("project_id and requested_by_user_id must be set together")
         counts = {
             "succeeded_items": sum(item.status == "SUCCEEDED" for item in self.items),
             "failed_items": sum(item.status == "FAILED" for item in self.items),
@@ -228,6 +233,30 @@ class BatchStore:
                 records.append(self.read(directory.name))
         return records
 
+    def inventory_for_datasets(self, datasets: set[str]) -> tuple[int, int]:
+        selected = [record for record in self.records() if record.dataset in datasets]
+        active = sum(record.state not in TERMINAL_BATCH_STATES for record in selected)
+        return len(selected), active
+
+    def delete_for_datasets(self, datasets: set[str]) -> int:
+        selected = [record for record in self.records() if record.dataset in datasets]
+        active = next(
+            (record for record in selected if record.state not in TERMINAL_BATCH_STATES),
+            None,
+        )
+        if active is not None:
+            raise BatchStateError(
+                f"batch {active.batch_id} must reach a terminal state before deletion"
+            )
+        deleted = 0
+        for record in selected:
+            directory = self.path(record.batch_id).parent.resolve()
+            if not directory.is_relative_to(self.root) or directory == self.root:
+                raise RuntimeError("refusing to delete a batch outside the batch store")
+            shutil.rmtree(directory)
+            deleted += 1
+        return deleted
+
     @staticmethod
     def _write_json(path: Path, batch: BatchStatus, *, replace: bool) -> None:
         temporary = path.parent / f".{uuid4().hex}.tmp"
@@ -265,7 +294,12 @@ class BatchManager:
             self._recover_interrupted()
 
     def create(
-        self, request: BatchCreateRequest, resolved_questions: dict[str, str]
+        self,
+        request: BatchCreateRequest,
+        resolved_questions: dict[str, str],
+        *,
+        project_id: str | None = None,
+        requested_by_user_id: str | None = None,
     ) -> BatchStatus:
         batch_id = request.batch_id or f"batch-{uuid4().hex[:16]}"
         items = []
@@ -285,6 +319,8 @@ class BatchManager:
             batch_id=batch_id,
             dataset=request.dataset,
             model=request.model,
+            project_id=project_id,
+            requested_by_user_id=requested_by_user_id,
             state="QUEUED",
             requested_control="RUN",
             repetitions=request.repetitions,

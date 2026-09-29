@@ -161,6 +161,18 @@
       "title": "Progress Percent",
       "type": "integer"
     },
+    "project_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Project Id"
+    },
     "queued_items": {
       "minimum": 0,
       "title": "Queued Items",
@@ -171,6 +183,18 @@
       "minimum": 1,
       "title": "Repetitions",
       "type": "integer"
+    },
+    "requested_by_user_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Requested By User Id"
     },
     "requested_control": {
       "enum": [

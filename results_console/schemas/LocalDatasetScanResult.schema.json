@@ -81,6 +81,18 @@
           "title": "Profile",
           "type": "string"
         },
+        "project_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Project Id"
+        },
         "scanned_at": {
           "anyOf": [
             {

@@ -13,11 +13,15 @@ export const consoleSectionHashes = new Set([
   'local-audit',
   'featured-case',
   'executive-report',
+  'poc-evaluation',
+  'project-governance',
   'findings',
   'readiness',
   'tasks',
   'evidence',
+  'execution-control',
   'control',
+  'batch',
 ]);
 
 export function tabFromHash(hash: string): PrimaryTab {
@@ -35,8 +39,8 @@ const findings = [
   { name: '의미값 불일치', mean: '3회 모두 답했지만 값이 서로 다름', rec: '문서부터 고치지 말고 같은 설정으로 다시 실행해 차이를 비교' },
 ];
 
-const scopeNow = ['내 폴더의 로컬 준비도 점검', '업무 반복 실행', 'Finding 집계와 권고', '정리 전후 재검증', '근거 검사', '관리자용 1페이지 리포트'];
-const scopeNot = ['문서 자동 수정', '정확도 benchmark', '고객 검증 업무 catalog', '인증·권한·tenant 격리 등 프로덕션 보안'];
+const scopeNow = ['내 폴더의 로컬 준비도 점검', '업무 반복 실행', 'Finding 집계와 권고', '정리 전후 재검증', '근거 검사', '감사·보존·완전 삭제', 'PoC 평가·승인 보고서'];
+const scopeNot = ['문서 자동 수정', '정확도 benchmark', '조직 공통 업무 catalog 자동 동기화', 'SSO·MFA·조직 tenant 격리 등 프로덕션 보안'];
 
 const guideSteps = [
   { number: '01', where: '내 자료 점검', text: '로컬 실행에서는 문서 폴더의 전체 경로를 입력해 준비도와 파일별 보완 항목을 확인합니다.' },

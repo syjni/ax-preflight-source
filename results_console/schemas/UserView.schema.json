@@ -1,0 +1,33 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "display_name": {
+      "title": "Display Name",
+      "type": "string"
+    },
+    "global_role": {
+      "enum": [
+        "ADMIN",
+        "MEMBER"
+      ],
+      "title": "Global Role",
+      "type": "string"
+    },
+    "user_id": {
+      "title": "User Id",
+      "type": "string"
+    },
+    "username": {
+      "title": "Username",
+      "type": "string"
+    }
+  },
+  "required": [
+    "user_id",
+    "username",
+    "display_name",
+    "global_role"
+  ],
+  "title": "UserView",
+  "type": "object"
+}

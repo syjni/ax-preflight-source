@@ -1,0 +1,35 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "pattern": "^[A-Z][A-Z0-9_]*$",
+      "title": "Code",
+      "type": "string"
+    },
+    "detail": {
+      "title": "Detail",
+      "type": "string"
+    },
+    "label": {
+      "title": "Label",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "PASS",
+        "WARN",
+        "BLOCK"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "code",
+    "label",
+    "status",
+    "detail"
+  ],
+  "title": "PocEvaluationGate",
+  "type": "object"
+}

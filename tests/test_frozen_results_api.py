@@ -290,15 +290,25 @@ class FrozenResultsApiTests(unittest.TestCase):
 
     def test_kiro_environment_factory_can_opt_in_to_frozen_reads(self) -> None:
         before = _fingerprint(PHASE6_FROZEN_RESULTS_ROOT)
-        with patch.dict(os.environ, {
-            "AX_PRODUCT_RUNNER": "kiro",
-            "AX_KIRO_CLI": "kiro-from-env.exe",
-            "AX_RUNTIME_DATASET_CONFIG": str(ROOT / "runtime_datasets.json"),
-            FROZEN_RESULTS_ROOT_ENV: str(PHASE6_FROZEN_RESULTS_ROOT),
-        }, clear=True):
-            client = TestClient(create_app_from_env())
+        with tempfile.TemporaryDirectory() as local_root:
+            with patch.dict(os.environ, {
+                "AX_PRODUCT_RUNNER": "kiro",
+                "AX_KIRO_CLI": "kiro-from-env.exe",
+                "AX_RUNTIME_DATASET_CONFIG": str(ROOT / "runtime_datasets.json"),
+                "AX_PRODUCT_LOCAL_DATASETS_ROOT": local_root,
+                FROZEN_RESULTS_ROOT_ENV: str(PHASE6_FROZEN_RESULTS_ROOT),
+            }, clear=True):
+                client = TestClient(create_app_from_env())
 
-        self.assertEqual(client.get(f"/api/runs/{AFTER_RUN}").status_code, 200)
+            self.assertEqual(client.get(f"/api/runs/{AFTER_RUN}").status_code, 401)
+            bootstrap = client.post("/api/auth/bootstrap", json={
+                "username": "test.owner",
+                "display_name": "Test Owner",
+                "password": "Frozen-Factory-Test!48",
+                "project_name": "Factory Test",
+            })
+            self.assertEqual(bootstrap.status_code, 201, bootstrap.text)
+            self.assertEqual(client.get(f"/api/runs/{AFTER_RUN}").status_code, 200)
         self.assertEqual(_fingerprint(PHASE6_FROZEN_RESULTS_ROOT), before)
 
 

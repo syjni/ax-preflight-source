@@ -1,0 +1,39 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "display_name": {
+      "maxLength": 80,
+      "minLength": 1,
+      "title": "Display Name",
+      "type": "string"
+    },
+    "password": {
+      "format": "password",
+      "maxLength": 256,
+      "minLength": 12,
+      "title": "Password",
+      "type": "string",
+      "writeOnly": true
+    },
+    "project_name": {
+      "default": "사내 PoC",
+      "maxLength": 80,
+      "minLength": 1,
+      "title": "Project Name",
+      "type": "string"
+    },
+    "username": {
+      "maxLength": 32,
+      "minLength": 3,
+      "title": "Username",
+      "type": "string"
+    }
+  },
+  "required": [
+    "username",
+    "display_name",
+    "password"
+  ],
+  "title": "BootstrapRequest",
+  "type": "object"
+}

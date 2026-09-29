@@ -11,12 +11,13 @@ type SidebarProps = {
 const contents = [
   ['01', '요약', 'summary'],
   ['02', '관리자 1페이지', 'executive-report'],
-  ['03', '진단 신호', 'findings'],
-  ['04', '정적 준비도', 'readiness'],
-  ['05', '업무 검증', 'tasks'],
-  ['06', '근거 검사', 'evidence'],
-  ['07', '조회와 실행', 'control'],
-  ['08', '반복 실행', 'batch'],
+  ['03', 'PoC 평가·승인', 'poc-evaluation'],
+  ['04', '진단 신호', 'findings'],
+  ['05', '정적 준비도', 'readiness'],
+  ['06', '업무 검증', 'tasks'],
+  ['07', '근거 검사', 'evidence'],
+  ['08', '조회와 실행', 'control'],
+  ['09', '반복 실행', 'batch'],
 ] as const;
 
 export function Sidebar({ activeTab, benchmarkAvailable, onTabChange, dataset, datasetName, asOfDate, runId }: SidebarProps) {

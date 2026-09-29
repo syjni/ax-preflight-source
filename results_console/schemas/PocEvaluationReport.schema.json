@@ -1,0 +1,280 @@
+{
+  "$defs": {
+    "PocDecisionView": {
+      "additionalProperties": false,
+      "properties": {
+        "assessment_fingerprint": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Assessment Fingerprint",
+          "type": "string"
+        },
+        "dataset_profile": {
+          "title": "Dataset Profile",
+          "type": "string"
+        },
+        "decided_at": {
+          "format": "date-time",
+          "title": "Decided At",
+          "type": "string"
+        },
+        "decided_by": {
+          "title": "Decided By",
+          "type": "string"
+        },
+        "decision": {
+          "enum": [
+            "APPROVED",
+            "CONDITIONAL",
+            "REJECTED"
+          ],
+          "title": "Decision",
+          "type": "string"
+        },
+        "decision_id": {
+          "title": "Decision Id",
+          "type": "string"
+        },
+        "expires_at": {
+          "format": "date-time",
+          "title": "Expires At",
+          "type": "string"
+        },
+        "note": {
+          "title": "Note",
+          "type": "string"
+        },
+        "project_id": {
+          "title": "Project Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "ax-poc-decision-v1",
+          "default": "ax-poc-decision-v1",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "decision_id",
+        "project_id",
+        "dataset_profile",
+        "decision",
+        "note",
+        "assessment_fingerprint",
+        "decided_by",
+        "decided_at",
+        "expires_at"
+      ],
+      "title": "PocDecisionView",
+      "type": "object"
+    },
+    "PocEvaluationGate": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "pattern": "^[A-Z][A-Z0-9_]*$",
+          "title": "Code",
+          "type": "string"
+        },
+        "detail": {
+          "title": "Detail",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "PASS",
+            "WARN",
+            "BLOCK"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "label",
+        "status",
+        "detail"
+      ],
+      "title": "PocEvaluationGate",
+      "type": "object"
+    },
+    "PocEvaluationMetrics": {
+      "additionalProperties": false,
+      "properties": {
+        "abstained_runs": {
+          "minimum": 0,
+          "title": "Abstained Runs",
+          "type": "integer"
+        },
+        "answered_runs": {
+          "minimum": 0,
+          "title": "Answered Runs",
+          "type": "integer"
+        },
+        "approved_tasks": {
+          "minimum": 0,
+          "title": "Approved Tasks",
+          "type": "integer"
+        },
+        "direct_evidence_runs": {
+          "minimum": 0,
+          "title": "Direct Evidence Runs",
+          "type": "integer"
+        },
+        "observed_runs": {
+          "minimum": 0,
+          "title": "Observed Runs",
+          "type": "integer"
+        },
+        "onboarding_status": {
+          "enum": [
+            "READY",
+            "REVIEW_REQUIRED",
+            "BLOCKED"
+          ],
+          "title": "Onboarding Status",
+          "type": "string"
+        },
+        "open_findings": {
+          "minimum": 0,
+          "title": "Open Findings",
+          "type": "integer"
+        },
+        "readiness_score": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Readiness Score",
+          "type": "number"
+        },
+        "registered_tasks": {
+          "minimum": 0,
+          "title": "Registered Tasks",
+          "type": "integer"
+        },
+        "rejected_runs": {
+          "minimum": 0,
+          "title": "Rejected Runs",
+          "type": "integer"
+        },
+        "stable_tasks": {
+          "minimum": 0,
+          "title": "Stable Tasks",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "readiness_score",
+        "onboarding_status",
+        "registered_tasks",
+        "approved_tasks",
+        "observed_runs",
+        "answered_runs",
+        "abstained_runs",
+        "rejected_runs",
+        "direct_evidence_runs",
+        "stable_tasks",
+        "open_findings"
+      ],
+      "title": "PocEvaluationMetrics",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "assessment_fingerprint": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Assessment Fingerprint",
+      "type": "string"
+    },
+    "dataset_name": {
+      "title": "Dataset Name",
+      "type": "string"
+    },
+    "dataset_profile": {
+      "title": "Dataset Profile",
+      "type": "string"
+    },
+    "decision": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PocDecisionView"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "decision_current": {
+      "default": false,
+      "title": "Decision Current",
+      "type": "boolean"
+    },
+    "decision_expired": {
+      "default": false,
+      "title": "Decision Expired",
+      "type": "boolean"
+    },
+    "gates": {
+      "items": {
+        "$ref": "#/$defs/PocEvaluationGate"
+      },
+      "title": "Gates",
+      "type": "array"
+    },
+    "generated_at": {
+      "format": "date-time",
+      "title": "Generated At",
+      "type": "string"
+    },
+    "metrics": {
+      "$ref": "#/$defs/PocEvaluationMetrics"
+    },
+    "project_id": {
+      "title": "Project Id",
+      "type": "string"
+    },
+    "project_name": {
+      "title": "Project Name",
+      "type": "string"
+    },
+    "recommendation": {
+      "enum": [
+        "GO",
+        "CONDITIONAL_GO",
+        "NO_GO"
+      ],
+      "title": "Recommendation",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "ax-poc-evaluation-v1",
+      "default": "ax-poc-evaluation-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scope_note": {
+      "default": "이 평가는 현재 저장된 정적 점검·승인 업무·관측 실행·근거 검사와 운영 통제를 요약하며 법률·보안 인증이나 업무 정답률을 대신하지 않습니다.",
+      "title": "Scope Note",
+      "type": "string"
+    }
+  },
+  "required": [
+    "project_id",
+    "project_name",
+    "dataset_profile",
+    "dataset_name",
+    "generated_at",
+    "assessment_fingerprint",
+    "metrics",
+    "gates",
+    "recommendation"
+  ],
+  "title": "PocEvaluationReport",
+  "type": "object"
+}

@@ -54,6 +54,7 @@ class LocalDatasetError(ValueError):
 class LocalDatasetRequest(StrictProductModel):
     source_path: str = Field(min_length=1, max_length=2_048)
     display_name: str | None = Field(default=None, max_length=80)
+    project_id: str | None = Field(default=None, pattern=r"^prj_[a-f0-9]{32}$")
 
     @field_validator("source_path")
     @classmethod
@@ -159,6 +160,9 @@ class LocalDatasetDeleteResult(StrictProductModel):
     deleted: Literal[True] = True
     source_files_deleted: Literal[False] = False
     managed_copy_deleted: bool = False
+    task_records_deleted: int = Field(default=0, ge=0)
+    run_records_deleted: int = Field(default=0, ge=0)
+    batch_records_deleted: int = Field(default=0, ge=0)
 
 
 class ProductCapabilities(StrictProductModel):
@@ -337,8 +341,8 @@ class LocalDatasetStore:
         return count, total_bytes
 
     @staticmethod
-    def _profile(source: Path) -> str:
-        identity = os.path.normcase(str(source)).encode("utf-8")
+    def _profile(source: Path, project_id: str | None) -> str:
+        identity = f"{project_id or 'unassigned'}\0{os.path.normcase(str(source))}".encode("utf-8")
         digest = hashlib.sha256(identity).hexdigest()[:10]
         slug = re.sub(r"[^a-z0-9]+", "-", source.name.casefold()).strip("-")
         return f"local-{(slug or 'dataset')[:28]}-{digest}"
@@ -350,9 +354,10 @@ class LocalDatasetStore:
         display_name: str,
         source_root_name: str,
         source_mode: Literal["PATH", "UPLOAD"],
+        project_id: str | None,
     ) -> str:
         self._preflight_files(source)
-        profile = self._profile(source)
+        profile = self._profile(source, project_id)
         scanned_at = datetime.now().astimezone()
         report = scan_folder(source, live_llm=detect_live_llm_status())
         target_dir = self.root / profile
@@ -370,6 +375,7 @@ class LocalDatasetStore:
             "scan_report": str(report_path),
             "scanned_at": scanned_at.isoformat(),
             "as_of_date": scanned_at.date().isoformat(),
+            "project_id": project_id,
         }
         with self._lock:
             registry = self._registry()
@@ -385,6 +391,7 @@ class LocalDatasetStore:
             display_name=request.display_name or source.name,
             source_root_name=source.name,
             source_mode="PATH",
+            project_id=request.project_id,
         )
 
     @staticmethod
@@ -446,6 +453,7 @@ class LocalDatasetStore:
         *,
         display_name: str | None,
         source_root_name: str | None,
+        project_id: str | None = None,
     ) -> str:
         source = Path(upload_root).resolve()
         if not source.is_relative_to(self.upload_root.resolve()):
@@ -456,6 +464,7 @@ class LocalDatasetStore:
             display_name=(display_name or root_label).strip()[:80] or root_label,
             source_root_name=root_label,
             source_mode="UPLOAD",
+            project_id=project_id,
         )
 
     def contains(self, profile: str) -> bool:
@@ -469,9 +478,24 @@ class LocalDatasetStore:
             raise LocalDatasetError("LOCAL_DATASET_NOT_FOUND", "로컬 점검 결과를 찾을 수 없습니다.")
         return entry
 
-    def options(self) -> list[DatasetOption]:
+    def project_id(self, profile: str) -> str | None:
+        return self._entry(profile).get("project_id")
+
+    def project_records(self, project_id: str) -> list[tuple[str, bool]]:
+        """Return profile and managed-copy ownership without exposing source paths."""
         with self._lock:
             entries = list(self._registry()["datasets"].items())
+        return [
+            (profile, entry.get("source_mode") == "UPLOAD")
+            for profile, entry in entries
+            if entry.get("project_id") == project_id
+        ]
+
+    def options(self, project_ids: set[str] | None = None) -> list[DatasetOption]:
+        with self._lock:
+            entries = list(self._registry()["datasets"].items())
+        if project_ids is not None:
+            entries = [item for item in entries if item[1].get("project_id") in project_ids]
         entries.sort(key=lambda item: item[1]["scanned_at"], reverse=True)
         return [DatasetOption(
             profile=profile,
@@ -480,6 +504,7 @@ class LocalDatasetStore:
             origin="LOCAL",
             scanned_at=entry["scanned_at"],
             source_root_name=entry["source_root_name"],
+            project_id=entry.get("project_id"),
         ) for profile, entry in entries]
 
     def option(self, profile: str) -> DatasetOption:
@@ -491,6 +516,7 @@ class LocalDatasetStore:
             origin="LOCAL",
             scanned_at=entry["scanned_at"],
             source_root_name=entry["source_root_name"],
+            project_id=entry.get("project_id"),
         )
 
     def as_of_date(self, profile: str) -> date | None:

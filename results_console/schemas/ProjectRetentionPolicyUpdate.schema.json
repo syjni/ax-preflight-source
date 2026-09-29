@@ -1,0 +1,26 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "audit_event_days": {
+      "default": 365,
+      "maximum": 3650,
+      "minimum": 30,
+      "title": "Audit Event Days",
+      "type": "integer"
+    },
+    "legal_hold": {
+      "default": false,
+      "title": "Legal Hold",
+      "type": "boolean"
+    },
+    "managed_data_days": {
+      "default": 90,
+      "maximum": 3650,
+      "minimum": 1,
+      "title": "Managed Data Days",
+      "type": "integer"
+    }
+  },
+  "title": "ProjectRetentionPolicyUpdate",
+  "type": "object"
+}

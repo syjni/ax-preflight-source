@@ -12,6 +12,15 @@ export type AffectedTask = {
   "task_id": string;
 };
 
+export type AuthSessionResponse = {
+  "authenticated": boolean;
+  "authentication_required"?: boolean;
+  "bootstrap_required": boolean;
+  "csrf_token"?: string | null;
+  "expires_at"?: string | null;
+  "user"?: UserView | null;
+};
+
 export type BatchCreateRequest = {
   "batch_id"?: string | null;
   "dataset": string;
@@ -45,8 +54,10 @@ export type BatchStatus = {
   "max_attempts": number;
   "model": string;
   "progress_percent": number;
+  "project_id"?: string | null;
   "queued_items": number;
   "repetitions": number;
+  "requested_by_user_id"?: string | null;
   "requested_control": "RUN" | "PAUSE" | "CANCEL";
   "running_items": number;
   "schema_version"?: "ax-batch-status-v1";
@@ -60,6 +71,13 @@ export type BatchTaskInput = {
   "question"?: string | null;
   "request_type": "VERIFIED_BUSINESS_TASK" | "TASK_CANDIDATE";
   "task_id": string;
+};
+
+export type BootstrapRequest = {
+  "display_name": string;
+  "password": string;
+  "project_name"?: string;
+  "username": string;
 };
 
 export type BusinessTaskApprovalSummary = {
@@ -84,6 +102,13 @@ export type CompletenessCounts = {
   "eligible_tables": number;
   "estimated_missing_cells": number;
   "total_cells": number;
+};
+
+export type CreateUserRequest = {
+  "display_name": string;
+  "global_role"?: "ADMIN" | "MEMBER";
+  "password": string;
+  "username": string;
 };
 
 export type DataFinding = {
@@ -113,6 +138,7 @@ export type DatasetOption = {
   "display_label": string;
   "origin"?: "BUNDLED" | "LOCAL";
   "profile": string;
+  "project_id"?: string | null;
   "scanned_at"?: string | null;
   "source_root_name"?: string | null;
 };
@@ -120,6 +146,34 @@ export type DatasetOption = {
 export type DatasetsResponse = {
   "datasets": Array<DatasetOption>;
   "schema_version"?: "ax-datasets-response-v1";
+};
+
+export type DataTransferApprovalRequest = {
+  "data_classification": "PUBLIC" | "INTERNAL" | "CONFIDENTIAL";
+  "dataset_profile": string;
+  "model": string;
+  "provider_policy_reviewed": true;
+  "sensitive_data_reviewed": true;
+  "tool_output_to_model_acknowledged": true;
+  "valid_days"?: number;
+};
+
+export type DataTransferApprovalView = {
+  "approval_id": string;
+  "approved_at": string;
+  "approved_by": string;
+  "boundary_revision"?: "AX_DATA_BOUNDARY_V1";
+  "data_classification": "PUBLIC" | "INTERNAL" | "CONFIDENTIAL";
+  "dataset_profile": string;
+  "expires_at": string;
+  "model": string;
+  "pii_affected_file_count": number;
+  "project_id": string;
+  "provider"?: "KIRO_CLI";
+  "provider_policy_reviewed"?: true;
+  "schema_version"?: "ax-data-transfer-approval-v1";
+  "sensitive_data_reviewed"?: true;
+  "tool_output_to_model_acknowledged"?: true;
 };
 
 export type DeliveryEnvelope = {
@@ -159,6 +213,15 @@ export type EvidenceReference = {
   "sequence": number;
   "source_ids": Array<string>;
   "tool_name": string;
+};
+
+export type ExecutionPolicyUpdate = {
+  "daily_budget_cents"?: number;
+  "daily_run_limit"?: number;
+  "estimated_cost_per_run_cents"?: number;
+  "max_batch_runs"?: number;
+  "max_concurrent_runs"?: number;
+  "model"?: string;
 };
 
 export type FeaturedCase = {
@@ -259,11 +322,14 @@ export type LocalDatasetAudit = {
 };
 
 export type LocalDatasetDeleteResult = {
+  "batch_records_deleted"?: number;
   "deleted"?: true;
   "managed_copy_deleted"?: boolean;
   "profile": string;
+  "run_records_deleted"?: number;
   "schema_version"?: "ax-local-dataset-delete-result-v1";
   "source_files_deleted"?: false;
+  "task_records_deleted"?: number;
 };
 
 export type LocalDatasetFile = {
@@ -295,6 +361,7 @@ export type LocalDatasetIssue = {
 
 export type LocalDatasetRequest = {
   "display_name"?: string | null;
+  "project_id"?: string | null;
   "source_path": string;
 };
 
@@ -303,6 +370,21 @@ export type LocalDatasetScanResult = {
   "dataset": DatasetOption;
   "readiness": ReadinessResponse;
   "schema_version"?: "ax-local-dataset-scan-result-v1";
+};
+
+export type LoginRequest = {
+  "password": string;
+  "username": string;
+};
+
+export type ModelConnectionStatus = {
+  "credential_status"?: "ENVIRONMENT_MANAGED_NOT_PROBED";
+  "default_model"?: string;
+  "executable_status": "AVAILABLE" | "UNAVAILABLE" | "NOT_CHECKED";
+  "provider": "KIRO_CLI" | "CONFIGURED_RUNNER";
+  "runner_enabled": boolean;
+  "schema_version"?: "ax-model-connection-status-v1";
+  "timeout_seconds"?: number | null;
 };
 
 export type OnboardingAssessment = {
@@ -323,6 +405,65 @@ export type OnboardingCheck = {
   "total"?: number | null;
 };
 
+export type PocDecisionUpdate = {
+  "decision": "APPROVED" | "CONDITIONAL" | "REJECTED";
+  "note": string;
+  "risk_acknowledged": true;
+  "scope_acknowledged": true;
+  "valid_days"?: number;
+};
+
+export type PocDecisionView = {
+  "assessment_fingerprint": string;
+  "dataset_profile": string;
+  "decided_at": string;
+  "decided_by": string;
+  "decision": "APPROVED" | "CONDITIONAL" | "REJECTED";
+  "decision_id": string;
+  "expires_at": string;
+  "note": string;
+  "project_id": string;
+  "schema_version"?: "ax-poc-decision-v1";
+};
+
+export type PocEvaluationGate = {
+  "code": string;
+  "detail": string;
+  "label": string;
+  "status": "PASS" | "WARN" | "BLOCK";
+};
+
+export type PocEvaluationMetrics = {
+  "abstained_runs": number;
+  "answered_runs": number;
+  "approved_tasks": number;
+  "direct_evidence_runs": number;
+  "observed_runs": number;
+  "onboarding_status": "READY" | "REVIEW_REQUIRED" | "BLOCKED";
+  "open_findings": number;
+  "readiness_score": number;
+  "registered_tasks": number;
+  "rejected_runs": number;
+  "stable_tasks": number;
+};
+
+export type PocEvaluationReport = {
+  "assessment_fingerprint": string;
+  "dataset_name": string;
+  "dataset_profile": string;
+  "decision"?: PocDecisionView | null;
+  "decision_current"?: boolean;
+  "decision_expired"?: boolean;
+  "gates": Array<PocEvaluationGate>;
+  "generated_at": string;
+  "metrics": PocEvaluationMetrics;
+  "project_id": string;
+  "project_name": string;
+  "recommendation": "GO" | "CONDITIONAL_GO" | "NO_GO";
+  "schema_version"?: "ax-poc-evaluation-v1";
+  "scope_note"?: string;
+};
+
 export type ProductCapabilities = {
   "ai_task_execution": boolean;
   "bundled_demo": boolean;
@@ -339,6 +480,173 @@ export type ProductCapabilities = {
   "schema_version"?: "ax-product-capabilities-v2";
   "source_files_stay_local"?: true;
   "supported_extensions": Array<string>;
+};
+
+export type ProjectAuditEvent = {
+  "actor_user_id"?: string | null;
+  "at": string;
+  "event": string;
+  "event_id": string;
+  "integrity_verified": boolean;
+  "sequence": number;
+  "target"?: string | null;
+};
+
+export type ProjectAuditLog = {
+  "event_count": number;
+  "events": Array<ProjectAuditEvent>;
+  "ledger_status": "VERIFIED" | "LEGACY_SEALED" | "LEGACY_UNSEALED" | "INVALID";
+  "project_id": string;
+  "retention_policy": ProjectRetentionPolicyView;
+  "returned_event_count": number;
+  "schema_version"?: "ax-project-audit-log-v1";
+};
+
+export type ProjectCreateRequest = {
+  "description"?: string;
+  "name": string;
+};
+
+export type ProjectDataInventory = {
+  "active_batch_count": number;
+  "audit_event_count": number;
+  "automatic_expiry_enabled"?: false;
+  "batch_count": number;
+  "business_task_count": number;
+  "execution_policy_count": number;
+  "execution_usage_count": number;
+  "local_dataset_count": number;
+  "managed_copy_count": number;
+  "poc_decision_count": number;
+  "project_id": string;
+  "project_membership_count": number;
+  "retention_mode"?: "MANUAL_DELETE";
+  "retention_policy": ProjectRetentionPolicyView;
+  "running_run_count": number;
+  "schema_version"?: "ax-project-data-inventory-v1";
+  "source_files_will_be_deleted"?: false;
+  "transfer_approval_count": number;
+  "writable_run_count": number;
+};
+
+export type ProjectExecutionControl = {
+  "blockers"?: Array<"RUNNER_UNAVAILABLE" | "RUNNER_EXECUTABLE_UNAVAILABLE" | "EXECUTION_POLICY_REQUIRED" | "DATASET_REQUIRED" | "DATA_TRANSFER_APPROVAL_REQUIRED" | "DATA_TRANSFER_APPROVAL_EXPIRED" | "MODEL_NOT_APPROVED" | "BATCH_RUN_LIMIT_EXCEEDED" | "DAILY_RUN_LIMIT_REACHED" | "DAILY_BUDGET_REACHED" | "CONCURRENCY_LIMIT_REACHED">;
+  "can_execute": boolean;
+  "connection": ModelConnectionStatus;
+  "dataset_profile"?: string | null;
+  "policy"?: ProjectExecutionPolicyView | null;
+  "project_id": string;
+  "schema_version"?: "ax-project-execution-control-v1";
+  "transfer_approval"?: DataTransferApprovalView | null;
+  "usage"?: ProjectExecutionUsage | null;
+};
+
+export type ProjectExecutionPolicyView = {
+  "daily_budget_cents"?: number;
+  "daily_run_limit"?: number;
+  "estimated_cost_per_run_cents"?: number;
+  "max_batch_runs"?: number;
+  "max_concurrent_runs"?: number;
+  "model"?: string;
+  "project_id": string;
+  "provider"?: "KIRO_CLI";
+  "schema_version"?: "ax-project-execution-policy-v1";
+  "updated_at": string;
+  "updated_by": string;
+};
+
+export type ProjectExecutionUsage = {
+  "estimated_spend_cents": number;
+  "remaining_budget_cents": number;
+  "remaining_run_capacity": number;
+  "reserved_runs": number;
+  "running_runs": number;
+  "schema_version"?: "ax-project-execution-usage-v1";
+  "window"?: "ROLLING_24_HOURS";
+  "window_started_at": string;
+};
+
+export type ProjectMemberRequest = {
+  "role": "EDITOR" | "VIEWER";
+  "username": string;
+};
+
+export type ProjectMemberView = {
+  "role": "OWNER" | "EDITOR" | "VIEWER";
+  "user": UserView;
+};
+
+export type ProjectPurgeRequest = {
+  "confirmation": string;
+};
+
+export type ProjectPurgeResult = {
+  "audit_events_deleted": number;
+  "batches_deleted": number;
+  "business_tasks_deleted": number;
+  "completed_at": string;
+  "execution_policies_deleted": number;
+  "execution_usage_records_deleted": number;
+  "local_datasets_deleted": number;
+  "managed_copies_deleted": number;
+  "poc_decisions_deleted": number;
+  "project_deleted"?: true;
+  "project_id": string;
+  "project_memberships_deleted": number;
+  "project_name": string;
+  "purge_receipt_id": string;
+  "raw_project_identifier_retained"?: false;
+  "schema_version"?: "ax-project-purge-result-v1";
+  "source_files_deleted"?: false;
+  "transfer_approvals_deleted": number;
+  "verification_status"?: "VERIFIED";
+  "writable_runs_deleted": number;
+};
+
+export type ProjectRetentionPolicyUpdate = {
+  "audit_event_days"?: number;
+  "legal_hold"?: boolean;
+  "managed_data_days"?: number;
+};
+
+export type ProjectRetentionPolicyView = {
+  "audit_event_days"?: number;
+  "automatic_deletion_enabled"?: false;
+  "legal_hold"?: boolean;
+  "managed_data_days"?: number;
+  "mode"?: "OWNER_REVIEW";
+  "next_review_at": string;
+  "project_id": string;
+  "schema_version"?: "ax-project-retention-policy-v1";
+  "updated_at"?: string | null;
+  "updated_by"?: string | null;
+};
+
+export type ProjectTaskView = {
+  "approval_id"?: string | null;
+  "approved_at"?: string | null;
+  "approved_by"?: string | null;
+  "approved_by_role"?: string | null;
+  "category": string;
+  "created_at": string;
+  "created_by": string;
+  "dataset_profile": string;
+  "description": string;
+  "owner_role": string;
+  "project_id": string;
+  "question": string;
+  "status": "DRAFT" | "APPROVED";
+  "success_criteria": Array<string>;
+  "task_id": string;
+};
+
+export type ProjectView = {
+  "created_at": string;
+  "description": string;
+  "member_count": number;
+  "member_role": "OWNER" | "EDITOR" | "VIEWER";
+  "name": string;
+  "project_id": string;
 };
 
 export type ReadinessCounts = {
@@ -441,6 +749,11 @@ export type SafetyCounts = {
   "total_files": number;
 };
 
+export type SessionRevocationResult = {
+  "revoked_sessions": number;
+  "user_id": string;
+};
+
 export type SubmitAnswerInput = {
   "abstention_reason"?: "NOT_FOUND" | "INSUFFICIENT_EVIDENCE" | "CONFLICTING_EVIDENCE" | null;
   "answer"?: string | number | boolean | Array<string> | null;
@@ -449,6 +762,15 @@ export type SubmitAnswerInput = {
   "source_ids"?: Array<string>;
   "status": "ANSWERED" | "ABSTAINED";
   "unit"?: string | null;
+};
+
+export type TaskCreateRequest = {
+  "category": string;
+  "dataset_profile": string;
+  "description": string;
+  "owner_role": string;
+  "question": string;
+  "success_criteria": Array<string>;
 };
 
 export type TaskDiagnostics = {
@@ -490,5 +812,12 @@ export type UnscoredObservation = {
   "file_ids"?: Array<string>;
   "message": string;
   "severity": "info" | "warning" | "error";
+};
+
+export type UserView = {
+  "display_name": string;
+  "global_role": "ADMIN" | "MEMBER";
+  "user_id": string;
+  "username": string;
 };
 

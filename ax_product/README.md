@@ -73,6 +73,22 @@ Browser selection uses multipart `POST /api/local-datasets/upload`; it writes a
 managed local copy and returns the same scan result contract. `GET
 /api/capabilities` reports upload limits, PDF-table support, and the detected OCR
 engine and languages.
+
+Authenticated projects also expose `GET /api/projects/{project_id}/execution-control`,
+OWNER-only `PUT /api/projects/{project_id}/execution-policy`, and OWNER-only
+`POST`/`DELETE /api/projects/{project_id}/data-transfer-approval`. The combined
+control response reports runner configuration, the approved model and bounded
+limits, dataset-specific transfer approval, rolling 24-hour estimated usage,
+and exact execution blockers without returning credentials.
+
+The local-review and live factories attach `AccessControlStore`. They require a
+first-run administrator bootstrap, opaque server-side sessions, a separate CSRF
+token on unsafe methods, and project membership for local datasets. Project
+`OWNER` and `EDITOR` roles can register business tasks; only `OWNER` can approve
+them. Approved local tasks are returned as `VERIFIED` with `CUSTOMER` scope and
+are resolved by the same run request validator. The module-level test/default
+app and the verified public read-only factory retain their existing unauthenticated
+behavior because they do not accept customer datasets.
 `dataset` is a profile in
 `runtime_datasets.json`. The product-owned catalog returns ten generic
 `TASK_CANDIDATE` questions and never reads the research benchmark catalog.
@@ -122,9 +138,11 @@ from the current console selection or research records.
 Phase 3 당시에는 Kiro 또는 Claude runner 구현이 없었습니다. 현재는
 [Phase 6A](#phase-6a-opt-in-kiro-runner)의 명시적 opt-in factory가 실제 Kiro
 runner를 제공하며, 기본 `ax_product.api:app`은 계속 runner 없이
-`POST /api/run`에 HTTP 503 `RUNNER_UNAVAILABLE`을 반환합니다. 프로덕션
-배포에는 인증, customer-verified task catalog, retention 정책과 운영 통제가 여전히
-필요합니다.
+`POST /api/run`에 HTTP 503 `RUNNER_UNAVAILABLE`을 반환합니다. local-review와 live
+factory는 로그인·CSRF·프로젝트 역할, 고객 업무 등록·승인, 로그인 시도 제한,
+세션·구성원 접근 회수와 명시적 프로젝트 데이터 삭제를 제공합니다. 프로덕션 배포에는
+SSO·MFA, 조직 tenant 저장 경계, 암호화·키 관리, 자동 만료·법적 보존·백업 복구와
+분산 운영 통제가 여전히 필요합니다.
 
 ## Failure→Finding aggregation
 
@@ -226,6 +244,28 @@ On timeout, the runner terminates the complete Windows process tree with
 agent file. Missing final output is published through the existing
 `RUNTIME_ERROR` path.
 
+## Project model boundary and execution budget
+
+Local customer datasets require a project policy and dataset transfer approval
+before `POST /api/run` or `POST /api/batches` can reserve work. An OWNER selects
+the exact model plus rolling 24-hour run and estimated-cost limits, per-batch
+size, and concurrent-run limit. A transfer approval binds project, dataset,
+model, boundary revision, classification, approver, and expiry. It records that
+tool-output transfer, provider policy, and sensitive-data review were
+acknowledged. A scan with PII candidates cannot be approved as `PUBLIC`.
+
+The runner executable is checked without a model call. Credential status is
+reported only as `ENVIRONMENT_MANAGED_NOT_PROBED`: AX Preflight does not read,
+persist, or return the credential value. Changing the project model makes an
+older dataset approval unusable until the OWNER reapproves that exact model.
+
+The API checks policy, approval, expiry, model, rolling capacity, estimated
+budget, and current concurrency inside the lifecycle lock before reserving each
+run. It then records the configured estimated cost; a failed usage write rolls
+back the not-yet-started run reservation. These are conservative reservation
+estimates, not token telemetry or provider billing. The local state retains
+usage reservations for 30 days and calculates limits over the latest 24 hours.
+
 ## Bounded batch orchestration
 
 `POST /api/batches` accepts one to ten distinct approved or candidate tasks, one
@@ -247,8 +287,17 @@ assumed successful; it becomes `FAILED / INTERRUPTED_BY_RESTART` and the batch i
 restored as `PAUSED`. The operator can inspect it, retry failed items, or resume
 remaining queued work.
 
-This scheduler is deliberately single-process. It does not provide distributed
-worker leases, automatic retry backoff, concurrency or cost quotas, schedules,
+For local customer datasets, batch creation preflights the entire planned run
+count against the project batch, rolling-run, and estimated-budget limits.
+Resume and failed-item retry repeat that check, and each worker item uses the
+persisted requesting user identity so current project membership and all
+single-run gates are enforced again. A removed user's later items fail rather
+than inheriting process authority.
+
+This scheduler is deliberately single-process. Its lifecycle lock makes the
+implemented concurrency and estimated-cost reservation atomic only within one
+API process. It does not provide distributed worker leases, distributed quota,
+actual provider-cost reconciliation, automatic retry backoff, schedules,
 webhooks, or tenant-isolated queues. Those controls are required before scaling
 the API horizontally or using the batch endpoint for customer production data.
 
@@ -289,6 +338,27 @@ positive safety limits; the defaults are 5,000 files and 1 GiB. Drive roots,
 symlinks, missing directories, and paths overlapping the generated store are
 rejected before scanning. Deleting a local profile removes only generated
 records and reports, never source files.
+
+`GET /api/projects/{project_id}/data-inventory` reports project-scoped local
+datasets, managed copies, memberships, business tasks, execution approvals,
+writable runs, batches, PoC decisions, audit events, and the retention policy.
+`GET /api/projects/{project_id}/audit-log` verifies the local SHA-256 linked
+event ledger, while `PUT /api/projects/{project_id}/retention-policy` records
+OWNER review periods and legal hold. A project
+`OWNER` may call `POST /api/projects/{project_id}/purge` only with the exact
+project name. The purge refuses running work, legal hold, and invalid audit
+integrity; deletes AX Preflight-managed records; removes the raw project ID
+from the audit ledger; verifies absence; and returns a purge receipt. Source
+files and frozen results remain. Review periods and legal hold are implemented,
+but automatic expiry execution, WORM audit storage, backup deletion, and
+recovery are not.
+
+`GET /api/projects/{project_id}/poc-evaluation?dataset_profile=...` combines
+readiness, onboarding, approved tasks, completed writable runs, direct evidence,
+findings, execution control, and audit integrity into explicit decision gates.
+`PUT /api/projects/{project_id}/poc-evaluation/decision` stores an OWNER decision,
+note, scope/risk acknowledgements, expiry, and the assessment fingerprint. A
+decision becomes stale when the evaluated metrics or gate statuses change.
 
 `AX_PRODUCT_OCR_MODE=auto` enables OCR only for low-text PDF pages when
 Tesseract is available. `AX_PRODUCT_OCR_MAX_PAGES` defaults to 50. PDF tables

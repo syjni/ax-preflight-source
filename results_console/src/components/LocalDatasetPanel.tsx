@@ -101,11 +101,14 @@ type LocalDatasetPanelProps = {
   capabilities: ProductCapabilities | null;
   capabilitiesError: string;
   selectedDataset: DatasetOption | null;
+  projectId?: string | null;
+  projectRequired?: boolean;
+  canDelete?: boolean;
   onScanned: (result: LocalDatasetScanResult) => void;
   onDeleted: (profile: string) => void;
 };
 
-export function LocalDatasetPanel({ capabilities, capabilitiesError, selectedDataset, onScanned, onDeleted }: LocalDatasetPanelProps) {
+export function LocalDatasetPanel({ capabilities, capabilitiesError, selectedDataset, projectId = null, projectRequired = false, canDelete = true, onScanned, onDeleted }: LocalDatasetPanelProps) {
   const folderInput = useRef<HTMLInputElement>(null);
   const fileInput = useRef<HTMLInputElement>(null);
   const [method, setMethod] = useState<'upload' | 'path'>('upload');
@@ -140,9 +143,10 @@ export function LocalDatasetPanel({ capabilities, capabilitiesError, selectedDat
   const uploadBytes = uploads.reduce((sum, item) => sum + item.file.size, 0);
   const uploadTooLarge = Boolean(capabilities && uploadBytes > capabilities.max_upload_bytes);
   const uploadTooMany = Boolean(capabilities && uploads.length > capabilities.max_upload_files);
-  const canSubmit = method === 'upload'
+  const hasProject = !projectRequired || Boolean(projectId);
+  const canSubmit = hasProject && (method === 'upload'
     ? uploads.length > 0 && !uploadTooLarge && !uploadTooMany
-    : Boolean(sourcePath.trim());
+    : Boolean(sourcePath.trim()));
 
   function selectUploads(next: SelectedUpload[]) {
     const unique = new Map<string, SelectedUpload>();
@@ -158,8 +162,11 @@ export function LocalDatasetPanel({ capabilities, capabilitiesError, selectedDat
     setError('');
     try {
       const next = method === 'upload'
-        ? await api.uploadLocalDataset(uploads, displayName.trim() || null, sourceRootName(uploads))
-        : await api.createLocalDataset({ source_path: sourcePath.trim(), display_name: displayName.trim() || null });
+        ? await api.uploadLocalDataset(uploads, displayName.trim() || null, sourceRootName(uploads), projectId)
+        : await api.createLocalDataset({
+            source_path: sourcePath.trim(), display_name: displayName.trim() || null,
+            ...(projectId ? { project_id: projectId } : {}),
+          });
       setResult(next);
       onScanned(next);
     } catch (nextError) {
@@ -170,7 +177,7 @@ export function LocalDatasetPanel({ capabilities, capabilitiesError, selectedDat
   }
 
   async function removeAudit() {
-    if (!result || deleting) return;
+    if (!result || deleting || !canDelete) return;
     const confirmed = window.confirm(result.audit.source_mode === 'UPLOAD'
       ? '점검 기록과 AX Preflight 관리 폴더의 로컬 복사본을 제거합니다. 원래 파일은 삭제하지 않습니다. 계속할까요?'
       : '생성된 AX Preflight 점검 기록만 제거합니다. 원본 파일은 삭제하지 않습니다. 계속할까요?');
@@ -215,6 +222,7 @@ export function LocalDatasetPanel({ capabilities, capabilitiesError, selectedDat
     </div>}
 
     {capabilities && available && <>
+      {projectRequired && !projectId && <div className="notice notice--warning" role="alert"><strong>프로젝트를 먼저 선택하세요</strong><span>점검 결과는 선택한 프로젝트의 구성원에게만 표시됩니다.</span></div>}
       <div className="local-audit__boundary" role="note">
         <div><span>01</span><p><strong>내 컴퓨터 안에서 처리</strong>선택한 파일은 <code>127.0.0.1</code>의 로컬 API에만 전달되며 외부 서비스로 업로드하지 않습니다.</p></div>
         <div><span>02</span><p><strong>두 가지 선택 방식</strong>브라우저 선택은 관리 폴더에 로컬 복사하고, 경로 입력은 원본 위치에서 읽기만 합니다.</p></div>
@@ -270,7 +278,7 @@ export function LocalDatasetPanel({ capabilities, capabilitiesError, selectedDat
         <div><span>PDF 표</span><strong>{result.audit.pdf_table_count}</strong><small>개</small></div>
         <div><span>OCR 완료</span><strong>{result.audit.ocr_completed_file_count}</strong><small>개</small></div>
       </div>
-      <div className="local-audit__actions"><button type="button" onClick={() => document.getElementById('readiness')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}>전체 준비도 보기 ↓</button><button type="button" className="is-danger" onClick={() => void removeAudit()} disabled={deleting}>{deleting ? '기록 제거 중…' : '이 점검 기록 제거'}</button></div>
+      <div className="local-audit__actions"><button type="button" onClick={() => document.getElementById('readiness')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}>전체 준비도 보기 ↓</button>{canDelete ? <button type="button" className="is-danger" onClick={() => void removeAudit()} disabled={deleting}>{deleting ? '기록 제거 중…' : '이 점검 기록 제거'}</button> : <span className="local-audit__owner-note">기록 제거는 프로젝트 OWNER가 수행합니다.</span>}</div>
 
       <div className="local-audit__issues">
         <div className="local-audit__subheading"><div><span className="mono">ACTION LIST</span><h3>먼저 보완할 항목</h3></div><span>{result.audit.issues.length}개 유형</span></div>

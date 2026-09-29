@@ -1,0 +1,126 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "audit_events_deleted": {
+      "minimum": 0,
+      "title": "Audit Events Deleted",
+      "type": "integer"
+    },
+    "batches_deleted": {
+      "minimum": 0,
+      "title": "Batches Deleted",
+      "type": "integer"
+    },
+    "business_tasks_deleted": {
+      "minimum": 0,
+      "title": "Business Tasks Deleted",
+      "type": "integer"
+    },
+    "completed_at": {
+      "format": "date-time",
+      "title": "Completed At",
+      "type": "string"
+    },
+    "execution_policies_deleted": {
+      "minimum": 0,
+      "title": "Execution Policies Deleted",
+      "type": "integer"
+    },
+    "execution_usage_records_deleted": {
+      "minimum": 0,
+      "title": "Execution Usage Records Deleted",
+      "type": "integer"
+    },
+    "local_datasets_deleted": {
+      "minimum": 0,
+      "title": "Local Datasets Deleted",
+      "type": "integer"
+    },
+    "managed_copies_deleted": {
+      "minimum": 0,
+      "title": "Managed Copies Deleted",
+      "type": "integer"
+    },
+    "poc_decisions_deleted": {
+      "minimum": 0,
+      "title": "Poc Decisions Deleted",
+      "type": "integer"
+    },
+    "project_deleted": {
+      "const": true,
+      "default": true,
+      "title": "Project Deleted",
+      "type": "boolean"
+    },
+    "project_id": {
+      "title": "Project Id",
+      "type": "string"
+    },
+    "project_memberships_deleted": {
+      "minimum": 1,
+      "title": "Project Memberships Deleted",
+      "type": "integer"
+    },
+    "project_name": {
+      "title": "Project Name",
+      "type": "string"
+    },
+    "purge_receipt_id": {
+      "title": "Purge Receipt Id",
+      "type": "string"
+    },
+    "raw_project_identifier_retained": {
+      "const": false,
+      "default": false,
+      "title": "Raw Project Identifier Retained",
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": "ax-project-purge-result-v1",
+      "default": "ax-project-purge-result-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_files_deleted": {
+      "const": false,
+      "default": false,
+      "title": "Source Files Deleted",
+      "type": "boolean"
+    },
+    "transfer_approvals_deleted": {
+      "minimum": 0,
+      "title": "Transfer Approvals Deleted",
+      "type": "integer"
+    },
+    "verification_status": {
+      "const": "VERIFIED",
+      "default": "VERIFIED",
+      "title": "Verification Status",
+      "type": "string"
+    },
+    "writable_runs_deleted": {
+      "minimum": 0,
+      "title": "Writable Runs Deleted",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "project_id",
+    "project_name",
+    "purge_receipt_id",
+    "completed_at",
+    "local_datasets_deleted",
+    "managed_copies_deleted",
+    "business_tasks_deleted",
+    "writable_runs_deleted",
+    "batches_deleted",
+    "project_memberships_deleted",
+    "execution_policies_deleted",
+    "transfer_approvals_deleted",
+    "execution_usage_records_deleted",
+    "poc_decisions_deleted",
+    "audit_events_deleted"
+  ],
+  "title": "ProjectPurgeResult",
+  "type": "object"
+}

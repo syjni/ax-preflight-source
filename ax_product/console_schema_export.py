@@ -22,6 +22,26 @@ from .local_datasets import (
     LocalDatasetScanResult,
     ProductCapabilities,
 )
+from .access_control import (
+    AuthSessionResponse, BootstrapRequest, CreateUserRequest, LoginRequest,
+    ProjectCreateRequest, ProjectMemberRequest, ProjectMemberView,
+    ProjectTaskView, ProjectView, SessionRevocationResult, TaskCreateRequest,
+    UserView,
+)
+from .governance import (
+    ProjectAuditEvent, ProjectAuditLog, ProjectDataInventory,
+    ProjectPurgeRequest, ProjectPurgeResult, ProjectRetentionPolicyUpdate,
+    ProjectRetentionPolicyView,
+)
+from .execution_control import (
+    DataTransferApprovalRequest, DataTransferApprovalView,
+    ExecutionPolicyUpdate, ModelConnectionStatus, ProjectExecutionControl,
+    ProjectExecutionPolicyView, ProjectExecutionUsage,
+)
+from .poc_evaluation import (
+    PocDecisionUpdate, PocDecisionView, PocEvaluationGate,
+    PocEvaluationMetrics, PocEvaluationReport,
+)
 
 
 MODELS = (
@@ -34,6 +54,18 @@ MODELS = (
     BatchCreateRequest, BatchStatus,
     ProductCapabilities, LocalDatasetRequest, LocalDatasetScanResult,
     LocalDatasetDeleteResult,
+    AuthSessionResponse, BootstrapRequest, CreateUserRequest, LoginRequest,
+    ProjectCreateRequest, ProjectMemberRequest, ProjectMemberView,
+    ProjectTaskView, ProjectView, SessionRevocationResult, TaskCreateRequest,
+    UserView,
+    ProjectAuditEvent, ProjectAuditLog, ProjectDataInventory,
+    ProjectPurgeRequest, ProjectPurgeResult, ProjectRetentionPolicyUpdate,
+    ProjectRetentionPolicyView,
+    DataTransferApprovalRequest, DataTransferApprovalView,
+    ExecutionPolicyUpdate, ModelConnectionStatus, ProjectExecutionControl,
+    ProjectExecutionPolicyView, ProjectExecutionUsage,
+    PocDecisionUpdate, PocDecisionView, PocEvaluationGate,
+    PocEvaluationMetrics, PocEvaluationReport,
 )
 
 

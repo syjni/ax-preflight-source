@@ -129,15 +129,18 @@ export function runRequestFor(
   dataset: string,
   question: string,
   selectedTask: BusinessTaskView | null,
+  model?: string,
 ): RunRequest {
+  const approvedModel = model ? { model } : {};
   if (!selectedTask) {
-    return { dataset, request_type: 'AD_HOC_QUESTION', question: question.trim() };
+    return { dataset, request_type: 'AD_HOC_QUESTION', question: question.trim(), ...approvedModel };
   }
   if (selectedTask.status === 'VERIFIED') {
     return {
       dataset,
       request_type: 'VERIFIED_BUSINESS_TASK',
       task_id: selectedTask.task_id,
+      ...approvedModel,
     };
   }
   return {
@@ -145,6 +148,7 @@ export function runRequestFor(
     request_type: 'TASK_CANDIDATE',
     task_id: selectedTask.task_id,
     question: question.trim(),
+    ...approvedModel,
   };
 }
 
