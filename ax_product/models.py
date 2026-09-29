@@ -15,7 +15,7 @@ AbstentionReason = Literal[
 ]
 RejectReason = Literal[
     "NO_SUBMISSION", "INVALID_SUBMISSION", "INVALID_RUN", "MODEL_FALLBACK",
-    "FORBIDDEN_TOOL", "RUNTIME_ERROR",
+    "FORBIDDEN_TOOL", "RUNTIME_ERROR", "INTERRUPTED_BY_RESTART",
 ]
 SourceLinkStatus = Literal["NOT_CHECKED", "LINKED", "PARTIAL", "UNLINKED"]
 

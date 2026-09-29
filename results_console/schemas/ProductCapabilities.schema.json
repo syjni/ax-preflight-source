@@ -17,9 +17,18 @@
       "title": "Local File Upload",
       "type": "boolean"
     },
+    "local_path_scan": {
+      "title": "Local Path Scan",
+      "type": "boolean"
+    },
     "max_upload_bytes": {
       "minimum": 1,
       "title": "Max Upload Bytes",
+      "type": "integer"
+    },
+    "max_upload_file_bytes": {
+      "minimum": 1,
+      "title": "Max Upload File Bytes",
       "type": "integer"
     },
     "max_upload_files": {
@@ -101,11 +110,13 @@
     "mode",
     "local_dataset_scan",
     "local_file_upload",
+    "local_path_scan",
     "ai_task_execution",
     "bundled_demo",
     "supported_extensions",
     "max_upload_files",
     "max_upload_bytes",
+    "max_upload_file_bytes",
     "ocr_available"
   ],
   "title": "ProductCapabilities",

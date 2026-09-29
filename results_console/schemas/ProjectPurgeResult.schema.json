@@ -1,10 +1,21 @@
 {
   "additionalProperties": false,
   "properties": {
+    "attempt_count": {
+      "minimum": 1,
+      "title": "Attempt Count",
+      "type": "integer"
+    },
     "audit_events_deleted": {
       "minimum": 0,
       "title": "Audit Events Deleted",
       "type": "integer"
+    },
+    "audit_tombstone_retained": {
+      "const": true,
+      "default": true,
+      "title": "Audit Tombstone Retained",
+      "type": "boolean"
     },
     "batches_deleted": {
       "minimum": 0,
@@ -17,8 +28,31 @@
       "type": "integer"
     },
     "completed_at": {
-      "format": "date-time",
-      "title": "Completed At",
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Completed At"
+    },
+    "completed_stages": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Completed Stages",
+      "type": "array"
+    },
+    "deletion_status": {
+      "enum": [
+        "PARTIAL_FAILURE",
+        "COMPLETED"
+      ],
+      "title": "Deletion Status",
       "type": "string"
     },
     "execution_policies_deleted": {
@@ -31,6 +65,30 @@
       "title": "Execution Usage Records Deleted",
       "type": "integer"
     },
+    "failure_code": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Failure Code"
+    },
+    "failure_detail": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Failure Detail"
+    },
     "local_datasets_deleted": {
       "minimum": 0,
       "title": "Local Datasets Deleted",
@@ -41,14 +99,17 @@
       "title": "Managed Copies Deleted",
       "type": "integer"
     },
+    "operation_id": {
+      "pattern": "^del_[a-f0-9]{32}$",
+      "title": "Operation Id",
+      "type": "string"
+    },
     "poc_decisions_deleted": {
       "minimum": 0,
       "title": "Poc Decisions Deleted",
       "type": "integer"
     },
     "project_deleted": {
-      "const": true,
-      "default": true,
       "title": "Project Deleted",
       "type": "boolean"
     },
@@ -70,10 +131,24 @@
       "type": "string"
     },
     "raw_project_identifier_retained": {
-      "const": false,
-      "default": false,
+      "const": true,
+      "default": true,
       "title": "Raw Project Identifier Retained",
       "type": "boolean"
+    },
+    "remaining_records": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Remaining Records",
+      "type": "array"
+    },
+    "remaining_stages": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Remaining Stages",
+      "type": "array"
     },
     "schema_version": {
       "const": "ax-project-purge-result-v1",
@@ -93,8 +168,10 @@
       "type": "integer"
     },
     "verification_status": {
-      "const": "VERIFIED",
-      "default": "VERIFIED",
+      "enum": [
+        "PARTIAL",
+        "VERIFIED"
+      ],
       "title": "Verification Status",
       "type": "string"
     },
@@ -108,7 +185,14 @@
     "project_id",
     "project_name",
     "purge_receipt_id",
-    "completed_at",
+    "operation_id",
+    "deletion_status",
+    "completed_stages",
+    "remaining_stages",
+    "remaining_records",
+    "attempt_count",
+    "verification_status",
+    "project_deleted",
     "local_datasets_deleted",
     "managed_copies_deleted",
     "business_tasks_deleted",

@@ -218,6 +218,11 @@
           "title": "Profile",
           "type": "string"
         },
+        "revision_fingerprint": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Revision Fingerprint",
+          "type": "string"
+        },
         "scanned_at": {
           "format": "date-time",
           "title": "Scanned At",
@@ -267,6 +272,7 @@
       },
       "required": [
         "profile",
+        "revision_fingerprint",
         "dataset_name",
         "display_label",
         "source_root_name",

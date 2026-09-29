@@ -35,6 +35,19 @@
           "title": "Dataset Profile",
           "type": "string"
         },
+        "dataset_revision_fingerprint": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dataset Revision Fingerprint"
+        },
         "expires_at": {
           "format": "date-time",
           "title": "Expires At",
@@ -243,9 +256,21 @@
     "ProjectExecutionUsage": {
       "additionalProperties": false,
       "properties": {
+        "estimated_reserved_cents": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Estimated Reserved Cents",
+          "type": "integer"
+        },
         "estimated_spend_cents": {
           "minimum": 0,
           "title": "Estimated Spend Cents",
+          "type": "integer"
+        },
+        "finalized_runs": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Finalized Runs",
           "type": "integer"
         },
         "remaining_budget_cents": {
@@ -307,8 +332,11 @@
           "RUNNER_EXECUTABLE_UNAVAILABLE",
           "EXECUTION_POLICY_REQUIRED",
           "DATASET_REQUIRED",
+          "BUNDLED_DATASET_READ_ONLY",
+          "APPROVED_TASK_REQUIRED",
           "DATA_TRANSFER_APPROVAL_REQUIRED",
           "DATA_TRANSFER_APPROVAL_EXPIRED",
+          "DATA_TRANSFER_APPROVAL_REVISION_MISMATCH",
           "MODEL_NOT_APPROVED",
           "BATCH_RUN_LIMIT_EXCEEDED",
           "DAILY_RUN_LIMIT_REACHED",

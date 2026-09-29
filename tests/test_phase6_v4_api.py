@@ -86,5 +86,19 @@ def test_v4_read_only_api_exposes_only_the_verified_featured_journey() -> None:
         "phase6v4-portfolio-ceiling-after-task_policy_return_window-r1"
     )
     assert case["after"]["result"] == "3 / 3 답변"
+    walkthrough = case["walkthrough"]
+    assert walkthrough["label"] == "검증된 동결 예시"
+    assert walkthrough["read_only"] is True
+    assert walkthrough["snapshot_id"] == "phase6-v4"
+    assert walkthrough["recommendation"] == "CONDITIONAL_GO"
+    assert walkthrough["approved_task_id"] == "TASK_POLICY_RETURN_WINDOW"
+    assert walkthrough["successful_runs"] == 3
+    assert walkthrough["direct_evidence_runs"] == 3
+    assert walkthrough["direct_evidence_ratio"] == 1.0
+    assert walkthrough["cited_source_ids"]
+    assert {item["code"] for item in walkthrough["gates"]} >= {
+        "EXECUTION_SAMPLE", "DIRECT_EVIDENCE", "MODEL_BOUNDARY",
+        "COST_CONTROL", "AUDIT_RETENTION",
+    }
     assert client.get(f"/api/runs/{case['before']['run_id']}").status_code == 200
     assert client.get(f"/api/runs/{case['after']['run_id']}").status_code == 200

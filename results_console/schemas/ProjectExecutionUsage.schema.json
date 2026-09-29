@@ -1,9 +1,21 @@
 {
   "additionalProperties": false,
   "properties": {
+    "estimated_reserved_cents": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Estimated Reserved Cents",
+      "type": "integer"
+    },
     "estimated_spend_cents": {
       "minimum": 0,
       "title": "Estimated Spend Cents",
+      "type": "integer"
+    },
+    "finalized_runs": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Finalized Runs",
       "type": "integer"
     },
     "remaining_budget_cents": {

@@ -98,6 +98,8 @@ export default function App() {
   const [retrievalTraceMissing, setRetrievalTraceMissing] = useState(false);
   const [retrievalTraceError, setRetrievalTraceError] = useState('');
   const [purgeReceipt, setPurgeReceipt] = useState<ProjectPurgeResult | null>(null);
+  const [purgeRetrying, setPurgeRetrying] = useState(false);
+  const [purgeRetryError, setPurgeRetryError] = useState('');
 
   const context = run && dataset ? assessRunContext(dataset, run.dataset) : null;
   const finalRun = run && 'delivery_status' in run ? run : null;
@@ -111,7 +113,7 @@ export default function App() {
     ? projects.find((project) => project.project_id === selectedDataset.project_id) ?? null
     : null;
   const accessGranted = Boolean(fixture || session?.authentication_required === false || session?.authenticated);
-  const customerExecutionReady = selectedDataset?.origin !== 'LOCAL' || Boolean(executionControl?.can_execute);
+  const customerExecutionReady = selectedDataset?.origin === 'LOCAL' && Boolean(executionControl?.can_execute);
   const canExecute = Boolean(onboarding?.can_run && capabilities?.ai_task_execution && customerExecutionReady);
   const executionModel = selectedDataset?.origin === 'LOCAL' ? executionControl?.policy?.model : undefined;
 
@@ -446,6 +448,8 @@ export default function App() {
 
   function projectPurged(result: ProjectPurgeResult) {
     setPurgeReceipt(result);
+    setPurgeRetryError('');
+    if (!result.project_deleted) return;
     const remainingProjects = projects.filter((project) => project.project_id !== result.project_id);
     const remainingDatasets = datasets.filter((option) => option.project_id !== result.project_id);
     const fallback = remainingDatasets.find((option) => option.profile === defaultDatasetProfile) ?? remainingDatasets[0];
@@ -458,6 +462,23 @@ export default function App() {
     setRun(null);
     setRunFailure(null);
     setTasksRevision((value) => value + 1);
+  }
+
+  async function retryProjectPurge() {
+    if (!purgeReceipt || purgeReceipt.deletion_status === 'COMPLETED' || purgeRetrying) return;
+    setPurgeRetrying(true);
+    setPurgeRetryError('');
+    try {
+      projectPurged(await api.purgeProject(
+        purgeReceipt.project_id,
+        purgeReceipt.project_name,
+        purgeReceipt.operation_id,
+      ));
+    } catch (error) {
+      setPurgeRetryError(messageFor(error));
+    } finally {
+      setPurgeRetrying(false);
+    }
   }
 
   async function logout() {
@@ -621,7 +642,7 @@ export default function App() {
     <Sidebar activeTab={activeTab} benchmarkAvailable={benchmarkAvailable} onTabChange={setActiveTab} dataset={dataset || '선택 안 됨'} datasetName={readiness?.dataset_name} asOfDate={readiness?.readiness.as_of_date} runId={run?.run_id} />
     {activeTab === 'benchmark' && benchmark ? <BenchmarkTab report={benchmark} /> : <main className="report-main">
       {session?.authentication_required && session.user && <WorkspacePanel user={session.user} projects={projects} selectedProject={selectedProject} selectedDataset={selectedDataset} onProjectSelect={selectProject} onProjectCreated={projectCreated} onTasksChanged={() => setTasksRevision((value) => value + 1)} executionControl={executionControl} executionControlLoading={executionControlLoading} executionControlError={executionControlError} onExecutionControlRefresh={refreshExecutionControl} governanceRevision={tasksRevision} onProjectPurged={projectPurged} onLogout={() => void logout()} />}
-      {purgeReceipt && <div className="purge-receipt" role="status"><div><span className="mono">PURGE VERIFIED</span><strong>{purgeReceipt.project_name} 관리 데이터 삭제 완료</strong><p>데이터셋 {purgeReceipt.local_datasets_deleted} · 업무 {purgeReceipt.business_tasks_deleted} · 실행 {purgeReceipt.writable_runs_deleted} · 반복 {purgeReceipt.batches_deleted} · 감사 이벤트 {purgeReceipt.audit_events_deleted}건을 삭제했습니다. 원본 파일은 유지했습니다.</p><code>{purgeReceipt.purge_receipt_id}</code></div><button type="button" onClick={() => setPurgeReceipt(null)} aria-label="삭제 증명서 닫기">×</button></div>}
+      {purgeReceipt && <div className={`purge-receipt ${purgeReceipt.deletion_status === 'PARTIAL_FAILURE' ? 'purge-receipt--partial' : ''}`} role="status"><div><span className="mono">{purgeReceipt.deletion_status === 'COMPLETED' ? 'PURGE VERIFIED' : 'PURGE PARTIAL'}</span><strong>{purgeReceipt.project_name} {purgeReceipt.deletion_status === 'COMPLETED' ? '관리 데이터 삭제·검증 완료' : '부분 삭제 영수증'}</strong><p>{purgeReceipt.deletion_status === 'COMPLETED' ? `데이터셋 ${purgeReceipt.local_datasets_deleted} · 업무 ${purgeReceipt.business_tasks_deleted} · 실행 ${purgeReceipt.writable_runs_deleted} · 반복 ${purgeReceipt.batches_deleted}건의 삭제를 확인했습니다. 원본 파일과 최소 감사 tombstone은 유지했습니다.` : `${purgeReceipt.failure_detail ?? '삭제 작업을 마치지 못했습니다.'} 남은 항목: ${purgeReceipt.remaining_records.join(', ')}`}</p>{purgeRetryError && <p className="notice notice--danger">{purgeRetryError}</p>}<code>{purgeReceipt.operation_id}</code>{purgeReceipt.deletion_status === 'PARTIAL_FAILURE' && <button type="button" onClick={() => void retryProjectPurge()} disabled={purgeRetrying}>{purgeRetrying ? '재개 중…' : '같은 작업 재개'}</button>}</div><button type="button" onClick={() => setPurgeReceipt(null)} aria-label="삭제 영수증 닫기">×</button></div>}
       <LocalDatasetPanel capabilities={capabilities} capabilitiesError={capabilitiesError} selectedDataset={selectedDataset} projectId={selectedProject?.project_id ?? null} projectRequired={Boolean(session?.authentication_required)} canDelete={!session?.authentication_required || selectedDatasetProject?.member_role === 'OWNER'} onScanned={localDatasetScanned} onDeleted={localDatasetDeleted} />
       <SummarySection readiness={readiness} findings={findings} run={run} loading={loading} />
       <FeaturedCaseJourney cases={featuredCases} currentDataset={dataset} currentRunId={run?.run_id ?? null} loadingRunId={featuredRunLoading} error={featuredError} onOpen={openFeaturedRun} />
@@ -635,7 +656,7 @@ export default function App() {
         {run && runState(run) === 'RUNNING' && <div className="running-state"><span aria-hidden="true" /><div><strong>실행 중</strong><p>최종 DeliveryEnvelope가 저장될 때까지 같은 run을 조회합니다.</p><code>{run.run_id}</code></div></div>}
         {findings && findings.findings.length === 0 && <div className="state-message">현재 관측된 실행에서 구조화된 진단 신호를 찾지 못했습니다.</div>}
         {findings?.findings.map((finding, index) => <FindingCard key={finding.finding_id} finding={finding} index={index} />)}
-        {finalRun?.delivery_status === 'REJECTED' && context && <BlockedCard delivery={finalRun} context={context} fixture={Boolean(fixture)} />}
+        {finalRun?.delivery_status === 'REJECTED' && context && <BlockedCard delivery={finalRun} context={context} fixture={Boolean(fixture)} onRetry={() => { setRun(null); setRunInput(''); document.getElementById('control')?.scrollIntoView({ behavior: 'smooth' }); }} />}
       </section>
       <ReadinessTable data={readiness} loading={loading} error={readinessError} />
       <TaskTable data={tasks} error={readinessError} activeTaskId={finalRun?.task_id ?? null} onTaskSelect={selectTask} />

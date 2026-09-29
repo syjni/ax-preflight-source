@@ -76,13 +76,84 @@
           "title": "Code",
           "type": "string"
         },
+        "decision_relevant": {
+          "default": true,
+          "title": "Decision Relevant",
+          "type": "boolean"
+        },
+        "denominator": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Denominator"
+        },
         "detail": {
           "title": "Detail",
           "type": "string"
         },
+        "excluded": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Excluded"
+        },
         "label": {
           "title": "Label",
           "type": "string"
+        },
+        "minimum_ratio": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Minimum Ratio"
+        },
+        "minimum_sample": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Minimum Sample"
+        },
+        "numerator": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Numerator"
         },
         "status": {
           "enum": [
@@ -120,6 +191,12 @@
           "minimum": 0,
           "title": "Approved Tasks",
           "type": "integer"
+        },
+        "direct_evidence_ratio": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Direct Evidence Ratio",
+          "type": "number"
         },
         "direct_evidence_runs": {
           "minimum": 0,
@@ -161,6 +238,11 @@
           "title": "Rejected Runs",
           "type": "integer"
         },
+        "repeated_tasks": {
+          "minimum": 0,
+          "title": "Repeated Tasks",
+          "type": "integer"
+        },
         "stable_tasks": {
           "minimum": 0,
           "title": "Stable Tasks",
@@ -177,10 +259,113 @@
         "abstained_runs",
         "rejected_runs",
         "direct_evidence_runs",
+        "direct_evidence_ratio",
+        "repeated_tasks",
         "stable_tasks",
         "open_findings"
       ],
       "title": "PocEvaluationMetrics",
+      "type": "object"
+    },
+    "PocEvaluationRunPopulation": {
+      "additionalProperties": false,
+      "properties": {
+        "excluded_missing_context_runs": {
+          "minimum": 0,
+          "title": "Excluded Missing Context Runs",
+          "type": "integer"
+        },
+        "excluded_non_verified_request_runs": {
+          "minimum": 0,
+          "title": "Excluded Non Verified Request Runs",
+          "type": "integer"
+        },
+        "excluded_rejected_runs": {
+          "minimum": 0,
+          "title": "Excluded Rejected Runs",
+          "type": "integer"
+        },
+        "excluded_runtime_failure_runs": {
+          "minimum": 0,
+          "title": "Excluded Runtime Failure Runs",
+          "type": "integer"
+        },
+        "excluded_unapproved_task_runs": {
+          "minimum": 0,
+          "title": "Excluded Unapproved Task Runs",
+          "type": "integer"
+        },
+        "included_abstained_runs": {
+          "minimum": 0,
+          "title": "Included Abstained Runs",
+          "type": "integer"
+        },
+        "included_answered_runs": {
+          "minimum": 0,
+          "title": "Included Answered Runs",
+          "type": "integer"
+        },
+        "included_runs": {
+          "minimum": 0,
+          "title": "Included Runs",
+          "type": "integer"
+        },
+        "total_final_runs": {
+          "minimum": 0,
+          "title": "Total Final Runs",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "total_final_runs",
+        "included_runs",
+        "included_answered_runs",
+        "included_abstained_runs",
+        "excluded_rejected_runs",
+        "excluded_runtime_failure_runs",
+        "excluded_non_verified_request_runs",
+        "excluded_unapproved_task_runs",
+        "excluded_missing_context_runs"
+      ],
+      "title": "PocEvaluationRunPopulation",
+      "type": "object"
+    },
+    "PocEvaluationTaskSample": {
+      "additionalProperties": false,
+      "properties": {
+        "included_runs": {
+          "minimum": 0,
+          "title": "Included Runs",
+          "type": "integer"
+        },
+        "minimum_runs": {
+          "minimum": 1,
+          "title": "Minimum Runs",
+          "type": "integer"
+        },
+        "sample_complete": {
+          "title": "Sample Complete",
+          "type": "boolean"
+        },
+        "task_id": {
+          "minLength": 1,
+          "title": "Task Id",
+          "type": "string"
+        },
+        "task_label": {
+          "minLength": 1,
+          "title": "Task Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "task_id",
+        "task_label",
+        "included_runs",
+        "minimum_runs",
+        "sample_complete"
+      ],
+      "title": "PocEvaluationTaskSample",
       "type": "object"
     }
   },
@@ -189,6 +374,12 @@
     "assessment_fingerprint": {
       "pattern": "^[0-9a-f]{64}$",
       "title": "Assessment Fingerprint",
+      "type": "string"
+    },
+    "criteria_version": {
+      "const": "AX_POC_GATES_V2",
+      "default": "AX_POC_GATES_V2",
+      "title": "Criteria Version",
       "type": "string"
     },
     "dataset_name": {
@@ -219,6 +410,12 @@
       "default": false,
       "title": "Decision Expired",
       "type": "boolean"
+    },
+    "diagnostics_version": {
+      "const": "v2",
+      "default": "v2",
+      "title": "Diagnostics Version",
+      "type": "string"
     },
     "gates": {
       "items": {
@@ -252,6 +449,9 @@
       "title": "Recommendation",
       "type": "string"
     },
+    "run_population": {
+      "$ref": "#/$defs/PocEvaluationRunPopulation"
+    },
     "schema_version": {
       "const": "ax-poc-evaluation-v1",
       "default": "ax-poc-evaluation-v1",
@@ -262,6 +462,13 @@
       "default": "이 평가는 현재 저장된 정적 점검·승인 업무·관측 실행·근거 검사와 운영 통제를 요약하며 법률·보안 인증이나 업무 정답률을 대신하지 않습니다.",
       "title": "Scope Note",
       "type": "string"
+    },
+    "task_samples": {
+      "items": {
+        "$ref": "#/$defs/PocEvaluationTaskSample"
+      },
+      "title": "Task Samples",
+      "type": "array"
     }
   },
   "required": [
@@ -272,6 +479,8 @@
     "generated_at",
     "assessment_fingerprint",
     "metrics",
+    "run_population",
+    "task_samples",
     "gates",
     "recommendation"
   ],

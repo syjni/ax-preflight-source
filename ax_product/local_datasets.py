@@ -15,6 +15,7 @@ import os
 import re
 import shutil
 import unicodedata
+from collections.abc import Iterable
 from datetime import date, datetime
 from pathlib import Path, PurePosixPath
 from threading import RLock
@@ -38,9 +39,63 @@ DEFAULT_LOCAL_DATASETS_ROOT = ROOT / "artifacts" / "local_datasets"
 LOCAL_DATASETS_ROOT_ENV = "AX_PRODUCT_LOCAL_DATASETS_ROOT"
 LOCAL_SCAN_MAX_FILES_ENV = "AX_PRODUCT_LOCAL_SCAN_MAX_FILES"
 LOCAL_SCAN_MAX_BYTES_ENV = "AX_PRODUCT_LOCAL_SCAN_MAX_BYTES"
+LOCAL_SCAN_MAX_FILE_BYTES_ENV = "AX_PRODUCT_LOCAL_SCAN_MAX_FILE_BYTES"
+ALLOWED_SCAN_ROOTS_ENV = "AX_ALLOWED_SCAN_ROOTS"
 DEFAULT_MAX_FILES = 5_000
 DEFAULT_MAX_BYTES = 1_073_741_824  # 1 GiB
+DEFAULT_MAX_FILE_BYTES = 104_857_600  # 100 MiB
 REGISTRY_SCHEMA = "ax-local-dataset-registry-v1"
+
+
+def _dataset_revision_fingerprint(report: ScanReport) -> str:
+    """Hash the effective model-visible dataset boundary, not presentation metadata."""
+    pii_by_file: dict[str, list[dict[str, object]]] = {}
+    for finding in report.pii_findings:
+        pii_by_file.setdefault(finding.file_id, []).append({
+            "type": finding.pii_type.value,
+            "start": finding.start,
+            "end": finding.end,
+            "masked_token": finding.masked_token,
+        })
+    unreadable_by_file = {
+        item.file_id: {
+            "reason": item.reason,
+            "extracted_char_count": item.extracted_char_count,
+            "requires_ocr": item.requires_ocr,
+        }
+        for item in report.unreadable_sources
+    }
+    boundary = {
+        "revision_schema": "ax-dataset-revision-v1",
+        "scanner_version": report.scan_metadata.scanner_version,
+        "files": [
+            {
+                "relative_path": item.relative_path,
+                "extension": item.extension,
+                "size": item.size,
+                "source_sha256": item.sha256,
+                "parse_status": item.parse_status.value,
+                "parser": item.parser,
+                "parse_error": item.parse_error,
+                "masked_text_sha256": hashlib.sha256(
+                    item.text.encode("utf-8")
+                ).hexdigest(),
+                "text_is_masked": item.text_is_masked,
+                "pii_findings": sorted(
+                    pii_by_file.get(item.file_id, []),
+                    key=lambda value: (
+                        str(value["type"]), int(value["start"]), int(value["end"])
+                    ),
+                ),
+                "unreadable": unreadable_by_file.get(item.file_id),
+            }
+            for item in sorted(report.files, key=lambda value: value.relative_path)
+        ],
+    }
+    encoded = json.dumps(
+        boundary, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
 
 
 class LocalDatasetError(ValueError):
@@ -118,6 +173,7 @@ class LocalDatasetAudit(StrictProductModel):
         "ax-local-dataset-audit-v1"
     )
     profile: str
+    revision_fingerprint: str = Field(pattern=r"^[0-9a-f]{64}$")
     dataset_name: str
     display_label: str
     source_root_name: str
@@ -157,7 +213,16 @@ class LocalDatasetDeleteResult(StrictProductModel):
         "ax-local-dataset-delete-result-v1"
     )
     profile: str
-    deleted: Literal[True] = True
+    operation_id: str = Field(pattern=r"^del_[a-f0-9]{32}$")
+    deletion_status: Literal["PARTIAL_FAILURE", "COMPLETED"]
+    completed_stages: list[str]
+    remaining_stages: list[str]
+    remaining_records: list[str]
+    attempt_count: int = Field(ge=1)
+    failure_code: str | None = None
+    failure_detail: str | None = None
+    completed_at: datetime | None = None
+    deleted: bool
     source_files_deleted: Literal[False] = False
     managed_copy_deleted: bool = False
     task_records_deleted: int = Field(default=0, ge=0)
@@ -172,12 +237,14 @@ class ProductCapabilities(StrictProductModel):
     mode: Literal["STATIC_DEMO", "API", "LOCAL_REVIEW", "LIVE"]
     local_dataset_scan: bool
     local_file_upload: bool
+    local_path_scan: bool
     ai_task_execution: bool
     bundled_demo: bool
     source_files_stay_local: Literal[True] = True
     supported_extensions: list[str]
     max_upload_files: int = Field(ge=1)
     max_upload_bytes: int = Field(ge=1)
+    max_upload_file_bytes: int = Field(ge=1)
     pdf_table_extraction: bool = True
     ocr_available: bool
     ocr_engine: str | None = None
@@ -196,6 +263,37 @@ def _positive_limit(name: str, default: int) -> int:
     if value <= 0:
         raise RuntimeError(f"{name} must be a positive integer")
     return value
+
+
+def _allowed_scan_roots() -> tuple[Path, ...]:
+    raw = os.environ.get(ALLOWED_SCAN_ROOTS_ENV, "").strip()
+    if not raw:
+        return ()
+    if raw.startswith("["):
+        try:
+            values = json.loads(raw)
+        except json.JSONDecodeError as exc:
+            raise RuntimeError(
+                f"{ALLOWED_SCAN_ROOTS_ENV} must be a JSON array or an OS-separated path list"
+            ) from exc
+        if not isinstance(values, list) or not all(isinstance(value, str) for value in values):
+            raise RuntimeError(f"{ALLOWED_SCAN_ROOTS_ENV} JSON value must be a string array")
+    else:
+        values = raw.split(os.pathsep)
+    roots: list[Path] = []
+    for value in values:
+        if not value.strip():
+            continue
+        try:
+            root = Path(os.path.expandvars(os.path.expanduser(value.strip()))).resolve(strict=True)
+        except (FileNotFoundError, OSError) as exc:
+            raise RuntimeError(
+                f"{ALLOWED_SCAN_ROOTS_ENV} contains an unavailable path: {value}"
+            ) from exc
+        if not root.is_dir():
+            raise RuntimeError(f"{ALLOWED_SCAN_ROOTS_ENV} entries must be directories: {value}")
+        roots.append(root)
+    return tuple(dict.fromkeys(roots))
 
 
 def _atomic_json(path: Path, payload: dict) -> None:
@@ -227,7 +325,13 @@ def _absolute_runtime_entry(entry: dict, base: Path) -> dict:
 class LocalDatasetStore:
     """Own generated local reports and a merged runtime routing registry."""
 
-    def __init__(self, *, base_config: Path, root: Path):
+    def __init__(
+        self,
+        *,
+        base_config: Path,
+        root: Path,
+        allowed_scan_roots: Iterable[Path] | None = None,
+    ):
         self.base_config = Path(base_config).resolve()
         self.root = Path(root).resolve()
         self.registry_path = self.root / "registry.json"
@@ -236,9 +340,32 @@ class LocalDatasetStore:
         self._lock = RLock()
         self.max_files = _positive_limit(LOCAL_SCAN_MAX_FILES_ENV, DEFAULT_MAX_FILES)
         self.max_bytes = _positive_limit(LOCAL_SCAN_MAX_BYTES_ENV, DEFAULT_MAX_BYTES)
+        self.max_file_bytes = _positive_limit(
+            LOCAL_SCAN_MAX_FILE_BYTES_ENV, DEFAULT_MAX_FILE_BYTES
+        )
+        if self.max_file_bytes > self.max_bytes:
+            self.max_file_bytes = self.max_bytes
+        configured_roots = (
+            _allowed_scan_roots()
+            if allowed_scan_roots is None
+            else tuple(Path(path).resolve(strict=True) for path in allowed_scan_roots)
+        )
+        self.allowed_scan_roots = tuple(dict.fromkeys(configured_roots))
+        if any(not path.is_dir() for path in self.allowed_scan_roots):
+            raise RuntimeError("allowed scan roots must be directories")
+        self._protected_roots: set[Path] = {self.root}
         self.root.mkdir(parents=True, exist_ok=True)
         with self._lock:
             self._sync_runtime_config(self._registry())
+
+    @property
+    def path_scan_enabled(self) -> bool:
+        return bool(self.allowed_scan_roots)
+
+    def protect_paths(self, paths: Iterable[Path | None]) -> None:
+        for path in paths:
+            if path is not None:
+                self._protected_roots.add(Path(path).resolve())
 
     def _base_profiles(self) -> dict[str, dict]:
         try:
@@ -283,6 +410,11 @@ class LocalDatasetStore:
         })
 
     def _normalize_source(self, source_text: str) -> Path:
+        if not self.path_scan_enabled:
+            raise LocalDatasetError(
+                "PATH_SCAN_UNAVAILABLE",
+                f"서버 경로 점검은 {ALLOWED_SCAN_ROOTS_ENV} 허용 루트를 설정한 경우에만 사용할 수 있습니다.",
+            )
         unquoted = source_text.strip().strip('"').strip("'")
         expanded = os.path.expandvars(os.path.expanduser(unquoted))
         try:
@@ -297,10 +429,18 @@ class LocalDatasetStore:
             raise LocalDatasetError(
                 "SOURCE_TOO_BROAD", "드라이브 전체 대신 점검할 문서 폴더를 선택하세요."
             )
-        if source.is_relative_to(self.root) or self.root.is_relative_to(source):
+        if not any(source.is_relative_to(root) for root in self.allowed_scan_roots):
+            raise LocalDatasetError(
+                "SOURCE_OUTSIDE_ALLOWED_ROOTS",
+                "입력 경로가 서버에서 명시적으로 허용한 읽기 전용 루트 밖에 있습니다.",
+            )
+        if any(
+            source.is_relative_to(root) or root.is_relative_to(source)
+            for root in self._protected_roots
+        ):
             raise LocalDatasetError(
                 "SOURCE_OVERLAPS_OUTPUT",
-                "점검 폴더와 AX Preflight 결과 저장 폴더가 겹칩니다. 별도 문서 폴더를 선택하세요.",
+                "점검 폴더가 AX Preflight 상태·실행·접근 제어 경로와 겹칩니다. 별도 문서 폴더를 선택하세요.",
             )
         return source
 
@@ -309,7 +449,9 @@ class LocalDatasetStore:
         total_bytes = 0
         try:
             for path in source.rglob("*"):
-                if path.is_symlink():
+                if path.is_symlink() or (
+                    hasattr(path, "is_junction") and path.is_junction()
+                ):
                     raise LocalDatasetError(
                         "SYMLINK_NOT_ALLOWED",
                         f"심볼릭 링크는 점검 범위에서 허용하지 않습니다: {path.name}",
@@ -322,7 +464,13 @@ class LocalDatasetStore:
                         "SOURCE_PATH_ESCAPE", "점검 폴더 밖을 가리키는 파일이 있습니다."
                     )
                 count += 1
-                total_bytes += path.stat().st_size
+                file_bytes = path.stat().st_size
+                if file_bytes > self.max_file_bytes:
+                    raise LocalDatasetError(
+                        "FILE_SIZE_LIMIT_EXCEEDED",
+                        f"개별 파일 {path.name}이 {self.max_file_bytes / 1_048_576:.1f} MiB를 초과합니다.",
+                    )
+                total_bytes += file_bytes
                 if count > self.max_files:
                     raise LocalDatasetError(
                         "FILE_LIMIT_EXCEEDED",
@@ -369,6 +517,7 @@ class LocalDatasetStore:
         entry = {
             "dataset_name": f"{source.name}-local-{profile[-10:]}",
             "display_label": f"내 자료 · {display_name}",
+            "revision_fingerprint": _dataset_revision_fingerprint(report),
             "source_root": str(source),
             "source_root_name": source_root_name,
             "source_mode": source_mode,
@@ -386,6 +535,22 @@ class LocalDatasetStore:
 
     def scan(self, request: LocalDatasetRequest) -> str:
         source = self._normalize_source(request.source_path)
+        with self._lock:
+            for entry in self._registry()["datasets"].values():
+                if entry.get("source_mode") != "PATH":
+                    continue
+                try:
+                    registered_source = Path(entry["source_root"]).resolve(strict=True)
+                except (KeyError, FileNotFoundError, OSError):
+                    continue
+                if (
+                    registered_source == source
+                    and entry.get("project_id") != request.project_id
+                ):
+                    raise LocalDatasetError(
+                        "SOURCE_ASSIGNED_TO_OTHER_PROJECT",
+                        "이 원본 경로는 다른 프로젝트가 사용 중이므로 현재 프로젝트에서 점검할 수 없습니다.",
+                    )
         return self._scan_source(
             source,
             display_name=request.display_name or source.name,
@@ -480,6 +645,29 @@ class LocalDatasetStore:
 
     def project_id(self, profile: str) -> str | None:
         return self._entry(profile).get("project_id")
+
+    def managed_copy(self, profile: str) -> bool:
+        return self._entry(profile).get("source_mode") == "UPLOAD"
+
+    def revision_fingerprint(self, profile: str) -> str:
+        entry = self._entry(profile)
+        fingerprint = entry.get("revision_fingerprint")
+        if isinstance(fingerprint, str) and re.fullmatch(r"[0-9a-f]{64}", fingerprint):
+            return fingerprint
+        # Registries created before revision binding are upgraded deterministically
+        # from their persisted scan report. Presentation labels and scan timestamps
+        # are deliberately excluded from this boundary identity.
+        fingerprint = _dataset_revision_fingerprint(self.report(profile))
+        with self._lock:
+            registry = self._registry()
+            current = registry["datasets"].get(profile)
+            if current is None:
+                raise LocalDatasetError(
+                    "LOCAL_DATASET_NOT_FOUND", "로컬 점검 결과를 찾을 수 없습니다."
+                )
+            current["revision_fingerprint"] = fingerprint
+            _atomic_json(self.registry_path, registry)
+        return fingerprint
 
     def project_records(self, project_id: str) -> list[tuple[str, bool]]:
         """Return profile and managed-copy ownership without exposing source paths."""
@@ -686,6 +874,7 @@ class LocalDatasetStore:
         pdf_table_count = sum(file.pdf_table_count for file in files)
         return LocalDatasetAudit(
             profile=profile,
+            revision_fingerprint=self.revision_fingerprint(profile),
             dataset_name=entry["dataset_name"],
             display_label=entry["display_label"],
             source_root_name=entry["source_root_name"],
@@ -710,11 +899,13 @@ class LocalDatasetStore:
             files=files,
         )
 
-    def delete(self, profile: str) -> LocalDatasetDeleteResult:
+    def delete(self, profile: str, *, missing_ok: bool = False) -> bool:
         with self._lock:
             registry = self._registry()
             entry = registry["datasets"].get(profile)
             if entry is None:
+                if missing_ok:
+                    return False
                 raise LocalDatasetError(
                     "LOCAL_DATASET_NOT_FOUND", "로컬 점검 결과를 찾을 수 없습니다."
                 )
@@ -733,7 +924,4 @@ class LocalDatasetStore:
             del registry["datasets"][profile]
             _atomic_json(self.registry_path, registry)
             self._sync_runtime_config(registry)
-        return LocalDatasetDeleteResult(
-            profile=profile,
-            managed_copy_deleted=entry.get("source_mode") == "UPLOAD",
-        )
+        return entry.get("source_mode") == "UPLOAD"

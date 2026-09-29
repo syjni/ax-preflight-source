@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type DragEvent, type FormEvent, type InputHTMLAttributes } from 'react';
 import { ApiError, api } from '../api';
-import type { DatasetOption, LocalDatasetFile, LocalDatasetScanResult, ProductCapabilities } from '../generated/api';
+import type { DatasetOption, LocalDatasetDeleteResult, LocalDatasetFile, LocalDatasetScanResult, ProductCapabilities } from '../generated/api';
 import { Status, type Tone } from './Status';
 
 const issueTone: Record<'info' | 'warning' | 'error', Tone> = {
@@ -120,6 +120,7 @@ export function LocalDatasetPanel({ capabilities, capabilitiesError, selectedDat
   const [loadingAudit, setLoadingAudit] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState('');
+  const [deleteReceipt, setDeleteReceipt] = useState<LocalDatasetDeleteResult | null>(null);
   const [result, setResult] = useState<LocalDatasetScanResult | null>(null);
 
   useEffect(() => {
@@ -143,10 +144,17 @@ export function LocalDatasetPanel({ capabilities, capabilitiesError, selectedDat
   const uploadBytes = uploads.reduce((sum, item) => sum + item.file.size, 0);
   const uploadTooLarge = Boolean(capabilities && uploadBytes > capabilities.max_upload_bytes);
   const uploadTooMany = Boolean(capabilities && uploads.length > capabilities.max_upload_files);
+  const oversizedUpload = capabilities
+    ? uploads.find((item) => item.file.size > capabilities.max_upload_file_bytes)
+    : undefined;
   const hasProject = !projectRequired || Boolean(projectId);
   const canSubmit = hasProject && (method === 'upload'
-    ? uploads.length > 0 && !uploadTooLarge && !uploadTooMany
-    : Boolean(sourcePath.trim()));
+    ? uploads.length > 0 && !uploadTooLarge && !uploadTooMany && !oversizedUpload
+    : Boolean(capabilities?.local_path_scan && sourcePath.trim()));
+
+  useEffect(() => {
+    if (!capabilities?.local_path_scan && method === 'path') setMethod('upload');
+  }, [capabilities?.local_path_scan, method]);
 
   function selectUploads(next: SelectedUpload[]) {
     const unique = new Map<string, SelectedUpload>();
@@ -185,10 +193,33 @@ export function LocalDatasetPanel({ capabilities, capabilitiesError, selectedDat
     setDeleting(true);
     setError('');
     try {
-      await api.deleteLocalDataset(result.dataset.profile);
+      const receipt = await api.deleteLocalDataset(result.dataset.profile);
       const removed = result.dataset.profile;
-      setResult(null);
-      onDeleted(removed);
+      setDeleteReceipt(receipt);
+      if (receipt.deleted) {
+        setResult(null);
+        onDeleted(removed);
+      }
+    } catch (nextError) {
+      setError(errorMessage(nextError));
+    } finally {
+      setDeleting(false);
+    }
+  }
+
+  async function retryDelete() {
+    if (!deleteReceipt || deleting || deleteReceipt.deletion_status === 'COMPLETED') return;
+    setDeleting(true);
+    setError('');
+    try {
+      const receipt = await api.deleteLocalDataset(
+        deleteReceipt.profile, deleteReceipt.operation_id
+      );
+      setDeleteReceipt(receipt);
+      if (receipt.deleted) {
+        setResult(null);
+        onDeleted(receipt.profile);
+      }
     } catch (nextError) {
       setError(errorMessage(nextError));
     } finally {
@@ -222,10 +253,11 @@ export function LocalDatasetPanel({ capabilities, capabilitiesError, selectedDat
     </div>}
 
     {capabilities && available && <>
+      {deleteReceipt && <div className={`notice ${deleteReceipt.deletion_status === 'PARTIAL_FAILURE' ? 'notice--warning' : ''}`} role="status"><strong>{deleteReceipt.deletion_status === 'COMPLETED' ? '삭제 영수증 · 검증 완료' : '부분 삭제 영수증 · 재개 필요'}</strong><span>{deleteReceipt.deletion_status === 'COMPLETED' ? 'AX Preflight 관리 기록 삭제를 확인했습니다. 사용자 원본 파일은 유지했습니다.' : `${deleteReceipt.failure_detail ?? '삭제 검증을 마치지 못했습니다.'} 남은 항목: ${deleteReceipt.remaining_records.join(', ')}`}</span><code>{deleteReceipt.operation_id}</code>{deleteReceipt.deletion_status !== 'COMPLETED' && <button type="button" onClick={() => void retryDelete()} disabled={deleting}>{deleting ? '재개 중…' : '같은 작업 재개'}</button>}</div>}
       {projectRequired && !projectId && <div className="notice notice--warning" role="alert"><strong>프로젝트를 먼저 선택하세요</strong><span>점검 결과는 선택한 프로젝트의 구성원에게만 표시됩니다.</span></div>}
       <div className="local-audit__boundary" role="note">
         <div><span>01</span><p><strong>내 컴퓨터 안에서 처리</strong>선택한 파일은 <code>127.0.0.1</code>의 로컬 API에만 전달되며 외부 서비스로 업로드하지 않습니다.</p></div>
-        <div><span>02</span><p><strong>두 가지 선택 방식</strong>브라우저 선택은 관리 폴더에 로컬 복사하고, 경로 입력은 원본 위치에서 읽기만 합니다.</p></div>
+        <div><span>02</span><p><strong>Docker 폴더 선택 방식</strong>호스트 폴더의 파일을 브라우저가 로컬 Docker API로 전송합니다. <code>C:\...</code> 경로를 컨테이너가 직접 읽는 방식이 아닙니다.</p></div>
         <div><span>03</span><p><strong>AI 실행 경계</strong>{capabilities.ai_task_execution ? 'Kiro 실행을 별도로 켠 경우에만 업무 질문을 모델로 보낼 수 있습니다.' : '현재 정적 점검에는 모델 호출이 없습니다.'}</p></div>
       </div>
       <div className="local-audit__capabilities">
@@ -234,10 +266,10 @@ export function LocalDatasetPanel({ capabilities, capabilitiesError, selectedDat
         <span>{capabilities.ocr_available ? `${capabilities.ocr_engine} · ${(capabilities.ocr_languages ?? []).join(', ') || '기본 언어'}` : capabilities.ocr_install_hint}</span>
       </div>
       <form className="local-audit__form" onSubmit={submit}>
-        <div className="local-audit__method" role="tablist" aria-label="자료 선택 방식">
+        {capabilities.local_path_scan ? <div className="local-audit__method" role="tablist" aria-label="자료 선택 방식">
           <button type="button" role="tab" aria-selected={method === 'upload'} className={method === 'upload' ? 'is-active' : ''} onClick={() => setMethod('upload')}>파일·폴더 선택</button>
-          <button type="button" role="tab" aria-selected={method === 'path'} className={method === 'path' ? 'is-active' : ''} onClick={() => setMethod('path')}>폴더 경로 입력</button>
-        </div>
+          <button type="button" role="tab" aria-selected={method === 'path'} className={method === 'path' ? 'is-active' : ''} onClick={() => setMethod('path')}>허용된 서버 폴더</button>
+        </div> : <div className="local-audit__method local-audit__method--single"><strong>파일·폴더 선택</strong><span>기본 Docker 심사 동선</span></div>}
 
         {method === 'upload' ? <div className="local-audit__upload-panel" role="tabpanel">
           <input ref={folderInput} className="local-audit__hidden-input" type="file" multiple {...({ webkitdirectory: '', directory: '' } as InputHTMLAttributes<HTMLInputElement>)} onChange={(event) => selectUploads(normalizeUploads(Array.from(event.currentTarget.files ?? [])))} />
@@ -249,15 +281,15 @@ export function LocalDatasetPanel({ capabilities, capabilitiesError, selectedDat
           {uploads.length > 0 && <div className="local-audit__selection" aria-live="polite">
             <div><strong>{uploads.length}개 파일 선택</strong><span>{formatBytes(uploadBytes)} · {sourceRootName(uploads)}</span></div>
             <button type="button" onClick={() => setUploads([])}>선택 비우기</button>
-            {(uploadTooMany || uploadTooLarge) && <p role="alert">{uploadTooMany ? `한 번에 ${capabilities.max_upload_files.toLocaleString()}개까지 선택할 수 있습니다.` : `전체 크기는 ${formatBytes(capabilities.max_upload_bytes)} 이하여야 합니다.`}</p>}
+            {(uploadTooMany || uploadTooLarge || oversizedUpload) && <p role="alert">{uploadTooMany ? `한 번에 ${capabilities.max_upload_files.toLocaleString()}개까지 선택할 수 있습니다.` : oversizedUpload ? `${oversizedUpload.relativePath} 파일은 개별 한도 ${formatBytes(capabilities.max_upload_file_bytes)} 이하여야 합니다.` : `전체 크기는 ${formatBytes(capabilities.max_upload_bytes)} 이하여야 합니다.`}</p>}
             <ul>{uploads.slice(0, 5).map(({ relativePath, file }) => <li key={relativePath}><code>{relativePath}</code><span>{formatBytes(file.size)}</span></li>)}</ul>
             {uploads.length > 5 && <small>외 {uploads.length - 5}개 파일</small>}
           </div>}
           <p className="local-audit__retention">검사를 다시 열 수 있도록 로컬 관리 복사본을 보관합니다. <strong>이 점검 기록 제거</strong>를 누르면 관리 복사본도 삭제되며 원래 파일은 유지됩니다.</p>
         </div> : <div className="local-audit__path-panel" role="tabpanel">
-          <label htmlFor="local-source-path"><span>점검할 폴더의 전체 경로</span><small>Windows 예: C:\review-data · macOS/Linux 예: /tmp/ax-review-data</small></label>
-          <div className="local-audit__path-row"><input id="local-source-path" value={sourcePath} onInput={(event) => setSourcePath(event.currentTarget.value)} placeholder="C:\회사자료" autoComplete="off" spellCheck={false} disabled={scanning} /></div>
-          <p className="local-audit__retention">경로 입력 방식은 해당 위치에서 직접 읽으며 원본 파일을 복사하거나 수정하지 않습니다.</p>
+          <label htmlFor="local-source-path"><span>허용된 서버 폴더 경로</span><small><code>AX_ALLOWED_SCAN_ROOTS</code>와 읽기 전용 mount 안의 경로만 사용할 수 있습니다.</small></label>
+          <div className="local-audit__path-row"><input id="local-source-path" value={sourcePath} onInput={(event) => setSourcePath(event.currentTarget.value)} placeholder="/review-input/자료" autoComplete="off" spellCheck={false} disabled={scanning} /></div>
+          <p className="local-audit__retention">Docker에서는 호스트의 <code>C:\...</code>가 아니라 컨테이너에 mount한 <code>/review-input/...</code> 경로를 입력합니다. 원본 파일을 복사하거나 수정하지 않습니다.</p>
         </div>}
         <div className="local-audit__submit-row">
           <label className="local-audit__optional" htmlFor="local-display-name"><span>화면에 표시할 이름 <em>선택</em></span><input id="local-display-name" value={displayName} onInput={(event) => setDisplayName(event.currentTarget.value)} placeholder="예: 구매팀 업무 자료" maxLength={80} disabled={scanning} /></label>
@@ -267,7 +299,7 @@ export function LocalDatasetPanel({ capabilities, capabilitiesError, selectedDat
       {scanning && <div className="local-audit__progress" role="status"><span aria-hidden="true" /><div><strong>자료를 로컬에서 점검하고 있습니다.</strong><p>PDF 표와 OCR 처리 여부에 따라 잠시 걸릴 수 있습니다. 이 창을 닫지 마세요.</p></div></div>}
     </>}
 
-    {error && <div className="notice notice--danger local-audit__error" role="alert"><strong>점검을 완료하지 못했습니다</strong><span>{error}</span><p>선택한 파일의 권한과 용량을 확인한 뒤 다시 시도하세요. 경로 방식은 API 사용자가 읽을 수 있는 폴더여야 합니다.</p></div>}
+    {error && <div className="notice notice--danger local-audit__error" role="alert"><strong>점검을 완료하지 못했습니다</strong><span>{error}</span><p>브라우저 선택은 파일 수·개별 크기·전체 크기를 확인한 뒤 다시 시도하세요. 서버 경로는 관리자가 허용한 읽기 전용 mount 안인지 확인하세요.</p></div>}
     {loadingAudit && <div className="state-message">저장된 로컬 점검 결과를 불러오는 중…</div>}
 
     {result && <div className="local-audit__result" aria-live="polite">

@@ -23,8 +23,11 @@ const blockerCopy: Record<ExecutionBlocker, string> = {
   RUNNER_EXECUTABLE_UNAVAILABLE: 'Kiro CLI 실행 파일을 현재 환경에서 찾을 수 없습니다.',
   EXECUTION_POLICY_REQUIRED: 'OWNER가 모델과 실행 한도를 먼저 확정해야 합니다.',
   DATASET_REQUIRED: '이 프로젝트에서 점검한 내 자료를 선택해야 합니다.',
+  BUNDLED_DATASET_READ_ONLY: '번들 예시는 읽기 전용입니다. 프로젝트에 자료를 등록하세요.',
+  APPROVED_TASK_REQUIRED: 'OWNER가 승인한 업무를 선택해야 라이브 실행할 수 있습니다.',
   DATA_TRANSFER_APPROVAL_REQUIRED: '선택한 자료의 모델 전달 경계 승인이 필요합니다.',
   DATA_TRANSFER_APPROVAL_EXPIRED: '자료 전달 승인이 만료되었습니다. 다시 검토해 승인하세요.',
+  DATA_TRANSFER_APPROVAL_REVISION_MISMATCH: '승인 후 자료 내용이나 분석 경계가 바뀌었습니다. 현재 리비전을 다시 검토해 승인하세요.',
   MODEL_NOT_APPROVED: '현재 실행 모델이 자료 전달 승인에 기록된 모델과 다릅니다.',
   BATCH_RUN_LIMIT_EXCEEDED: '예정 실행 수가 프로젝트의 배치 한도를 넘습니다.',
   DAILY_RUN_LIMIT_REACHED: '최근 24시간 실행 한도를 모두 사용했습니다.',
@@ -139,7 +142,7 @@ export function ExecutionControlPanel({ project, dataset, control, loading, load
       setToolOutputAcknowledged(false);
       setProviderPolicyReviewed(false);
       setSensitiveDataReviewed(false);
-      setFeedback('이 자료와 모델 조합의 전달 경계를 승인했습니다.');
+      setFeedback('이 자료의 현재 리비전과 모델 조합의 전달 경계를 승인했습니다.');
     } catch (nextError) {
       setError(apiMessage(nextError));
     } finally {
@@ -168,6 +171,9 @@ export function ExecutionControlPanel({ project, dataset, control, loading, load
   const policy = control?.policy;
   const usage = control?.usage;
   const approval = control?.transfer_approval;
+  const approvalRevisionMismatch = control?.blockers?.includes(
+    'DATA_TRANSFER_APPROVAL_REVISION_MISMATCH'
+  ) ?? false;
   const approvalReady = toolOutputAcknowledged && providerPolicyReviewed && sensitiveDataReviewed;
   const costPerRunCents = Math.round(Number(costPerRun) * 100);
   const dailyBudgetCents = Math.round(Number(dailyBudget) * 100);
@@ -207,10 +213,10 @@ export function ExecutionControlPanel({ project, dataset, control, loading, load
             <small>실행 파일 {control.connection.executable_status} · 자격 증명 미탐색 · 제한 {control.connection.timeout_seconds ? `${control.connection.timeout_seconds}초` : 'runner 기본값'}</small>
           </article>
           <article>
-            <div><span className="mono">DATA BOUNDARY</span><Status tone={approval ? 'positive' : 'warning'}>{approval ? '승인됨' : '승인 필요'}</Status></div>
+            <div><span className="mono">DATA BOUNDARY</span><Status tone={approval && !approvalRevisionMismatch ? 'positive' : 'warning'}>{approvalRevisionMismatch ? '재승인 필요' : approval ? '승인됨' : '승인 필요'}</Status></div>
             <strong>{approval ? `${approval.data_classification} · ${approval.model}` : localDataset.display_label}</strong>
-            <p>검색 도구가 읽은 자료 일부와 질문이 승인된 모델에 전달될 수 있습니다. 원본 폴더 자체는 업로드하지 않습니다.</p>
-            <small>{approval ? `${new Date(approval.expires_at).toLocaleDateString('ko-KR')}까지 · PII 가능 파일 ${approval.pii_affected_file_count}개` : '자료·모델 조합별 OWNER 승인'}</small>
+            <p>{approvalRevisionMismatch ? '내용·경로·마스킹 결과가 승인 당시와 달라졌습니다. 현재 자료 리비전을 확인한 뒤 다시 승인해야 실행할 수 있습니다.' : '검색 도구가 읽은 자료 일부와 질문이 승인된 모델에 전달될 수 있습니다. 원본 폴더 자체는 업로드하지 않습니다.'}</p>
+            <small>{approval ? `${new Date(approval.expires_at).toLocaleDateString('ko-KR')}까지 · PII 가능 파일 ${approval.pii_affected_file_count}개 · 리비전 ${approval.dataset_revision_fingerprint?.slice(0, 12) ?? '이전 승인'}` : '자료·모델·리비전 조합별 OWNER 승인'}</small>
           </article>
         </div>
 
@@ -220,8 +226,8 @@ export function ExecutionControlPanel({ project, dataset, control, loading, load
         </div>}
 
         {policy && usage && <div className="execution-control__usage" aria-label="최근 24시간 실행 사용량">
-          <div><span>예약 실행</span><strong>{usage.reserved_runs} / {policy.daily_run_limit}</strong><small>남음 {usage.remaining_run_capacity}회</small></div>
-          <div><span>예상 비용</span><strong>{money(usage.estimated_spend_cents)} / {money(policy.daily_budget_cents ?? 0)}</strong><small>남음 {money(usage.remaining_budget_cents)}</small></div>
+          <div><span>실행 사용량</span><strong>{(usage.finalized_runs ?? 0) + usage.reserved_runs} / {policy.daily_run_limit}</strong><small>진행 예약 {usage.reserved_runs} · 확정 {usage.finalized_runs ?? 0} · 남음 {usage.remaining_run_capacity}회</small></div>
+          <div><span>확정 예상 비용</span><strong>{money(usage.estimated_spend_cents)} / {money(policy.daily_budget_cents ?? 0)}</strong><small>진행 예약 {money(usage.estimated_reserved_cents ?? 0)} · 남음 {money(usage.remaining_budget_cents)}</small></div>
           <div><span>동시 실행</span><strong>{usage.running_runs} / {policy.max_concurrent_runs}</strong><small>서버 확인값</small></div>
           <div><span>배치 한도</span><strong>{policy.max_batch_runs}회</strong><small>요청 한 건 기준</small></div>
         </div>}

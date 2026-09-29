@@ -1,7 +1,7 @@
 # AX Preflight 검증 산출물 버전 이력
 
 이 문서는 README에서 분리한 내부 검증 계보를 보존합니다. 현재 심사 기준은 공개
-소스의 `main`과 `v0.4.0-submission` 릴리스이며, 화면의 대표 결과는 검증된 v4
+소스의 `main`과 `v0.5.0-submission` 릴리스이며, 화면의 대표 결과는 검증된 v4
 snapshot을 사용합니다.
 
 ## 현재 기준
@@ -9,8 +9,8 @@ snapshot을 사용합니다.
 | 구분 | 현재 기준 | 의미 |
 |---|---|---|
 | 제품 코드 | 공개 저장소 `main` | 신규 실행과 현재 Results Console의 기준 |
-| 제출 릴리스 | `v0.4.0-submission` | 로컬 자료 점검과 Docker 실행에 프로젝트 통제·감사·PoC 승인 보고서까지 포함한 제출 패키지 |
-| 로컬 자료 점검 | local reviewer mode | 파일·폴더 선택 또는 경로 입력으로 정적 scan을 실행하고 마스킹된 진단 결과를 Results Console에 표시 |
+| 제출 릴리스 | `v0.5.0-submission` | 심사자 입력·검증 PoC와 재시작 복구, 전 live 실행 통제, 복구 가능한 감사·삭제 수명주기를 포함한 제출 패키지 |
+| 로컬 자료 점검 | local reviewer mode | 브라우저 파일·폴더 선택 또는 명시적으로 허용된 서버 경로로 정적 scan을 실행하고 마스킹된 진단 결과를 Results Console에 표시 |
 | 읽기 전용 데모 | frozen v4 | 10업무 × 2상태 × 3회, 총 60회 실행 snapshot |
 | 반복 답 비교 | 의미 비교 v2 | 표현 차이와 실제 의미값 차이를 분리하는 현재 화면 기준 |
 | 신규 실행 근거 검사 | Evidence Checker v3 | 폐기된 수량을 현재 근거로 취급하지 않는 현재 제품 기준 |
@@ -23,8 +23,11 @@ snapshot을 사용합니다.
 reviewer mode와 Windows 원클릭 시작 경로를 추가했습니다. `v0.3.0-submission`은
 브라우저 파일·폴더 선택, PDF 표 추출, 선택적 OCR과 Docker reviewer image를
 추가했습니다. `v0.4.0-submission`은 로그인·프로젝트 격리, 업무 승인, 모델·자료 전달
-경계, 실행·비용 한도, 감사·보존·검증된 삭제와 PoC 평가·승인 보고서를 추가한 현재
-제출 기준입니다.
+경계, 실행·비용 한도, 감사·보존·검증된 삭제와 PoC 평가·승인 보고서를 추가했습니다.
+`v0.5.0-submission`은 브라우저 입력·평가 표본의 진실성에 더해 이전 인스턴스의 고아
+예약을 `INTERRUPTED_BY_RESTART`로 정리하고, 모든 live runner 호출에 프로젝트 정책을
+강제하며, 감사 원장의 checkpoint·선택적 HMAC·quarantine 복구 segment와 project
+quota·dataset revision 승인·재개 가능한 삭제 operation을 추가한 현재 제출 기준입니다.
 
 ## Frozen snapshot 계보
 

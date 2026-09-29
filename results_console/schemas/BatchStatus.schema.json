@@ -210,6 +210,18 @@
       "title": "Running Items",
       "type": "integer"
     },
+    "runtime_instance_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Runtime Instance Id"
+    },
     "schema_version": {
       "const": "ax-batch-status-v1",
       "default": "ax-batch-status-v1",

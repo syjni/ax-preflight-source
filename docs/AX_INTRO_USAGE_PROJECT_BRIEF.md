@@ -122,7 +122,7 @@ v4는 동일한 10개 후보 업무를 Before/After에서 각각 3회 실행한 
 | **05 / 업무 후보** | 제품 기본값인 업무 테스트 후보 10개 중 질문을 선택해 입력란에 채운다. (출처: `docs/ARCHITECTURE.md`, `results_console/src/components/TaskTable.tsx`) | 후보는 회사별 검증 과제나 customer-verified task가 아니다. 현재 dataset에 적용 가능한지는 사용자가 판단하며 `VERIFIED_BUSINESS_TASK`는 `NOT_ONBOARDED`다. (출처: `docs/ARCHITECTURE.md`, `docs/DATA_AND_PRIVACY.md`, `results_console/src/components/TaskTable.tsx`) |
 | **06 / 근거 검사** | 판정 라벨, 인용·일치·미확인 source ID, 계산 상세, 검사 응답, Delivery SHA-256, 검사 한계를 본다. (출처: `results_console/src/components/EvidenceCheckPanel.tsx`) | `DeliveryEnvelope.source_link_status`와 별개인 검사다. 404는 “근거 검사 결과 없음”이지 실행 실패·오답 판정이 아니며, Evidence Checker가 delivery를 수정하지도 않는다. (출처: `results_console/src/components/EvidenceCheckPanel.tsx`, `results_console/README.md`) |
 
-데이터셋 전환, 기존 run ID 조회, 새 질문 실행은 **07 / 조회와 실행**에서 한다. 로컬 reviewer mode에서는 **내 자료 직접 점검**에서 파일·폴더를 선택하거나 로컬 폴더 경로를 입력해 정적 진단 결과를 즉시 추가할 수 있다. 브라우저 선택 자료는 localhost의 관리 폴더에 복사되고 기록 제거 시 함께 삭제되며, 경로 방식은 원본을 제자리에서 읽는다. 앱에는 민감정보 원문 대신 마스킹된 예시와 파일명·행 번호를 표시한다. Kiro를 통한 새 질문 실행은 별도로 opt-in하지 않는 한 의도적으로 거부된다. (출처: `results_console/src/components/Sidebar.tsx`, `results_console/src/components/LocalDatasetPanel.tsx`, `ax_product/local_datasets.py`, `SUBMISSION.md`)
+데이터셋 전환, 기존 run ID 조회, 새 질문 실행은 **07 / 조회와 실행**에서 한다. 로컬 reviewer mode에서는 **내 자료 직접 점검**에서 브라우저로 파일·폴더를 선택해 정적 진단 결과를 즉시 추가할 수 있다. 브라우저 선택 자료는 localhost의 관리 폴더에 복사되고 기록 제거 시 함께 삭제된다. 서버 경로 방식은 관리자가 `AX_ALLOWED_SCAN_ROOTS`와 읽기 전용 mount를 명시한 경우에만 표시되고 원본을 제자리에서 읽는다. 앱에는 민감정보 원문 대신 마스킹된 예시와 파일명·행 번호를 표시한다. Kiro를 통한 새 질문 실행은 별도로 opt-in하지 않는 한 의도적으로 거부된다. (출처: `results_console/src/components/Sidebar.tsx`, `results_console/src/components/LocalDatasetPanel.tsx`, `ax_product/local_datasets.py`, `SUBMISSION.md`)
 
 ## 8. 로컬 실행 방법
 

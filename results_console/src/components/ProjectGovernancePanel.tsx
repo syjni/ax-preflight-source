@@ -22,6 +22,11 @@ const eventLabels: Record<string, string> = {
   EXECUTION_BUDGET_RESERVED: '실행 예산 예약',
   RETENTION_POLICY_UPDATED: '보존 정책 변경',
   POC_DECISION_RECORDED: 'PoC 판단 기록',
+  PROJECT_PURGE_REQUESTED: '프로젝트 삭제 작업 요청',
+  PROJECT_PURGE_PARTIAL_FAILURE: '프로젝트 삭제 부분 실패',
+  DATASET_DELETE_REQUESTED: '자료 삭제 작업 요청',
+  DATASET_DELETE_PARTIAL_FAILURE: '자료 삭제 부분 실패',
+  DATASET_DELETE_COMPLETED: '자료 삭제·검증 완료',
 };
 
 function message(error: unknown): string {
@@ -37,7 +42,8 @@ function message(error: unknown): string {
 
 function ledgerStatus(audit: ProjectAuditLog | null): { label: string; tone: Tone } {
   if (!audit) return { label: '확인 전', tone: 'neutral' };
-  if (audit.ledger_status === 'VERIFIED') return { label: '체인 검증됨', tone: 'positive' };
+  if (audit.ledger_status === 'VERIFIED' && audit.protection_mode === 'HMAC_CHAIN_AND_CHECKPOINT') return { label: 'HMAC 체인·기준점 검증', tone: 'positive' };
+  if (audit.ledger_status === 'VERIFIED') return { label: '로컬 체인·기준점 확인', tone: 'blue' };
   if (audit.ledger_status === 'LEGACY_SEALED') return { label: '기존 기록 봉인됨', tone: 'blue' };
   if (audit.ledger_status === 'LEGACY_UNSEALED') return { label: '기존 기록 미봉인', tone: 'warning' };
   return { label: '무결성 오류', tone: 'danger' };
@@ -108,7 +114,7 @@ export function ProjectGovernancePanel({ project, revision, onPurged }: Props) {
 
   async function purge() {
     if (!canPurge || confirmation !== project.name || purging || legalHold) return;
-    const confirmed = window.confirm(`'${project.name}' 프로젝트의 AX Preflight 관리 데이터와 접근 권한을 영구 삭제합니다. 원본 폴더의 파일은 삭제하지 않습니다. 계속할까요?`);
+    const confirmed = window.confirm(`'${project.name}' 프로젝트에서 AX Preflight가 관리하는 데이터와 접근 권한의 단계형 삭제를 시작합니다. 원본 폴더의 파일과 최소 감사 tombstone·삭제 영수증은 삭제하지 않습니다. 계속할까요?`);
     if (!confirmed) return;
     setPurging(true);
     setError('');
@@ -138,7 +144,7 @@ export function ProjectGovernancePanel({ project, revision, onPurged }: Props) {
         : { label: '삭제 가능', tone: 'positive' };
 
   return <details className="workspace-panel__governance" id="project-governance">
-    <summary><div><span className="mono">DATA GOVERNANCE</span><strong>감사·보존·완전 삭제</strong></div><span>{inventory ? `${managedRecordCount}개 관리 기록` : '확인 중'}</span></summary>
+    <summary><div><span className="mono">DATA GOVERNANCE</span><strong>감사·보존·관리 데이터 삭제</strong></div><span>{inventory ? `${managedRecordCount}개 관리 기록` : '확인 중'}</span></summary>
     <div className="governance-panel">
       <div className="governance-panel__lead">
         <div><h3>남아 있는 데이터와 변경 이력을 함께 확인합니다.</h3><p>현재 PoC는 설정된 날짜에 자동 삭제하지 않습니다. OWNER가 검토 기한·법적 보존 상태를 기록하고, 인벤토리를 확인한 뒤 명시적으로 삭제합니다.</p></div>
@@ -173,7 +179,8 @@ export function ProjectGovernancePanel({ project, revision, onPurged }: Props) {
 
       {canPurge && <section className="governance-panel__audit" aria-label="프로젝트 감사 로그">
         <div className="governance-panel__audit-head"><div><span className="mono">AUDIT LEDGER</span><h3>최근 변경 이력</h3></div><Status tone={ledger.tone}>{ledger.label}</Status></div>
-        {audit?.ledger_status === 'INVALID' && <div className="notice notice--danger" role="alert">감사 원장의 해시 체인이 일치하지 않습니다. 새 변경 작업을 중단하고 파일 무결성을 조사하세요.</div>}
+        {audit?.ledger_status === 'INVALID' && <div className="notice notice--danger" role="alert">감사 원장 무결성 오류로 변경 작업이 차단되었습니다. 손상 원본을 보존한 채 운영자 inspect·repair 절차를 실행하세요. <code>{audit.operator_guidance}</code></div>}
+        {audit?.ledger_status === 'VERIFIED' && audit.protection_mode === 'CHAIN_AND_CHECKPOINT_NO_EXTERNAL_AUTHORITY' && <div className="notice notice--warning" role="status">로컬 hash chain과 checkpoint를 확인했습니다. 외부 HMAC 키나 WORM 저장소가 없어 OS 관리자에 대한 불변성은 보장하지 않습니다.</div>}
         {audit && audit.events.length === 0 && audit.ledger_status !== 'INVALID' && <p className="workspace-panel__empty">이 프로젝트에 기록된 감사 이벤트가 없습니다.</p>}
         {audit && audit.events.length > 0 && <div className="governance-panel__audit-list">{audit.events.slice(0, 12).map((item) => <article key={item.event_id}>
           <time dateTime={item.at}>{new Date(item.at).toLocaleString('ko-KR')}</time>
@@ -184,10 +191,10 @@ export function ProjectGovernancePanel({ project, revision, onPurged }: Props) {
       </section>}
 
       {canPurge ? <div className="governance-panel__danger">
-        <div><span className="mono">DANGER ZONE</span><h3>프로젝트 영구 삭제</h3><p>되돌릴 수 없습니다. 서버는 삭제 후 모든 관리 저장소와 감사 로그에서 프로젝트 식별자가 사라졌는지 검증하고 삭제 증명서를 반환합니다.</p></div>
+        <div><span className="mono">DANGER ZONE</span><h3>프로젝트 관리 데이터 단계형 삭제</h3><p>앱 관리 사본·점검·업무·실행·권한 상태를 단계별로 삭제하며 사용자 원본은 유지합니다. 실패하면 부분 삭제 영수증의 operation ID로 재개합니다. 감사 체인과 최소 tombstone에는 opaque 프로젝트 식별자와 영수증이 남습니다.</p></div>
         {legalHold && <div className="notice notice--warning" role="status">법적 보존이 설정되어 삭제가 차단되었습니다.</div>}
         <label><span>프로젝트 이름 <strong>{project.name}</strong> 입력</span><input value={confirmation} onInput={(event) => setConfirmation(event.currentTarget.value)} autoComplete="off" /></label>
-        <button type="button" className="is-danger" onClick={() => void purge()} disabled={purging || legalHold || confirmation !== project.name || Boolean(inventory?.running_run_count) || Boolean(inventory?.active_batch_count)}>{purging ? '삭제·검증 중…' : '프로젝트와 관리 데이터 영구 삭제'}</button>
+        <button type="button" className="is-danger" onClick={() => void purge()} disabled={purging || legalHold || confirmation !== project.name || Boolean(inventory?.running_run_count) || Boolean(inventory?.active_batch_count)}>{purging ? '삭제·검증 중…' : '관리 데이터 삭제 작업 시작'}</button>
       </div> : <p className="workspace-panel__empty">감사 로그 조회, 보존 정책 변경과 프로젝트 삭제는 OWNER만 수행할 수 있습니다.</p>}
     </div>
   </details>;

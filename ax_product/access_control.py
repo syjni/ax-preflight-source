@@ -23,6 +23,7 @@ from argon2.exceptions import InvalidHashError, VerifyMismatchError
 from pydantic import Field, SecretStr, field_validator, model_validator
 
 from .models import StrictProductModel
+from .audit_ledger import AuditLedger, AuditLedgerIntegrityError
 from .execution_control import (
     DataTransferApprovalRequest, DataTransferApprovalView,
     ExecutionPolicyUpdate, ProjectExecutionPolicyView, ProjectExecutionUsage,
@@ -244,7 +245,8 @@ class AccessControlStore:
     ):
         self.root = Path(root).resolve()
         self.state_path = self.root / "state.json"
-        self.audit_path = self.root / "security-audit.jsonl"
+        self.ledger = AuditLedger(self.root)
+        self.audit_path = self.ledger.path
         self._lock = RLock()
         self.password_hasher = PasswordHasher()
         self.secure_cookie = (
@@ -273,6 +275,13 @@ class AccessControlStore:
                 self._write(self._empty_state())
             else:
                 self._read()
+            try:
+                self.ledger.reconcile_checkpoint()
+                self._flush_audit_outbox()
+            except (AuditLedgerIntegrityError, OSError):
+                # Keep the recoverable outbox in state and allow read/status
+                # endpoints to start. Risky writes will continue to fail closed.
+                pass
         # A constant dummy hash prevents a missing username from taking a
         # conspicuously faster path than an existing username.
         self._dummy_hash = self.password_hasher.hash(secrets.token_urlsafe(32))
@@ -291,6 +300,8 @@ class AccessControlStore:
             "execution_usage": {},
             "retention_policies": {},
             "poc_decisions": {},
+            "deletion_tombstones": {},
+            "audit_outbox": {},
         }
 
     @staticmethod
@@ -319,6 +330,7 @@ class AccessControlStore:
         for key in (
             "login_attempts", "execution_policies", "transfer_approvals",
             "execution_usage", "retention_policies", "poc_decisions",
+            "deletion_tombstones", "audit_outbox",
         ):
             state.setdefault(key, {})
             if not isinstance(state[key], dict):
@@ -328,86 +340,50 @@ class AccessControlStore:
     def _write(self, state: dict) -> None:
         _atomic_json(self.state_path, state)
 
-    @staticmethod
-    def _audit_hash(previous_hash: str, record: dict) -> str:
-        payload = dict(record)
-        payload.pop("record_hash", None)
-        canonical = json.dumps(
-            payload, ensure_ascii=False, sort_keys=True, separators=(",", ":")
-        ).encode("utf-8")
-        return hashlib.sha256(previous_hash.encode("ascii") + b"\n" + canonical).hexdigest()
+    def _flush_audit_outbox(self) -> None:
+        state = self._read()
+        pending = dict(state.get("audit_outbox", {}))
+        changed = False
+        for event_id, event in pending.items():
+            self.ledger.append(event_id=event_id, **event)
+            state["audit_outbox"].pop(event_id, None)
+            changed = True
+        if changed:
+            self._write(state)
+
+    def _commit(
+        self,
+        state: dict,
+        event: str,
+        *,
+        user_id: str | None,
+        target: str | None = None,
+        project_id: str | None = None,
+    ) -> None:
+        """Persist state plus a recoverable, idempotent audit outbox event."""
+        inspection = self.ledger.inspect()
+        if inspection.status == "INVALID":
+            raise AuditLedgerIntegrityError("AUDIT_LEDGER_INVALID")
+        event_id = f"audit_{uuid4().hex}"
+        state.setdefault("audit_outbox", {})[event_id] = {
+            "event": event,
+            "user_id": user_id,
+            "target": target,
+            "project_id": project_id,
+        }
+        self._write(state)
+        self.ledger.append(
+            event_id=event_id,
+            event=event,
+            user_id=user_id,
+            target=target,
+            project_id=project_id,
+        )
+        state["audit_outbox"].pop(event_id, None)
+        self._write(state)
 
     def _read_audit_records(self) -> list[dict]:
-        if not self.audit_path.is_file():
-            return []
-        records = []
-        for line_number, line in enumerate(
-            self.audit_path.read_text(encoding="utf-8").splitlines(), start=1
-        ):
-            if not line.strip():
-                continue
-            try:
-                record = json.loads(line)
-            except json.JSONDecodeError as exc:
-                raise RuntimeError(
-                    f"security audit ledger is invalid at line {line_number}"
-                ) from exc
-            if not isinstance(record, dict):
-                raise RuntimeError(
-                    f"security audit ledger is invalid at line {line_number}"
-                )
-            records.append(record)
-        return records
-
-    @classmethod
-    def _verify_audit_records(
-        cls, records: list[dict]
-    ) -> tuple[bool, str, int]:
-        previous_hash = "GENESIS"
-        legacy_count = 0
-        chained_count = 0
-        for record in records:
-            if record.get("schema_version") == "ax-security-audit-v2":
-                chained_count += 1
-                if record.get("previous_hash") != previous_hash:
-                    return False, previous_hash, legacy_count
-                expected = cls._audit_hash(previous_hash, record)
-                if not hmac.compare_digest(str(record.get("record_hash", "")), expected):
-                    return False, previous_hash, legacy_count
-                previous_hash = expected
-            else:
-                legacy_count += 1
-                previous_hash = cls._audit_hash(previous_hash, record)
-        return True, previous_hash, legacy_count if chained_count else -legacy_count
-
-    def _write_audit_records(self, records: list[dict]) -> None:
-        temporary = self.audit_path.with_name(
-            f".{self.audit_path.name}.{os.getpid()}.{uuid4().hex}.tmp"
-        )
-        previous_hash = "GENESIS"
-        with temporary.open("x", encoding="utf-8", newline="\n") as stream:
-            for sequence, original in enumerate(records, start=1):
-                record = {
-                    "schema_version": "ax-security-audit-v2",
-                    "event_id": original.get("event_id") or f"audit_{uuid4().hex}",
-                    "sequence": sequence,
-                    "at": original["at"],
-                    "event": original["event"],
-                    "user_id": original.get("user_id"),
-                    "target": original.get("target"),
-                    "project_id": original.get("project_id"),
-                    "previous_hash": previous_hash,
-                }
-                record["record_hash"] = self._audit_hash(previous_hash, record)
-                stream.write(json.dumps(record, ensure_ascii=False, sort_keys=True) + "\n")
-                previous_hash = record["record_hash"]
-            stream.flush()
-            os.fsync(stream.fileno())
-        try:
-            os.chmod(temporary, 0o600)
-        except OSError:
-            pass
-        temporary.replace(self.audit_path)
+        return self.ledger.records()
 
     def _audit(
         self,
@@ -418,30 +394,13 @@ class AccessControlStore:
         project_id: str | None = None,
     ) -> None:
         with self._lock:
-            records = self._read_audit_records()
-            valid, previous_hash, _legacy_marker = self._verify_audit_records(records)
-            if not valid:
-                raise RuntimeError("security audit ledger integrity check failed")
-            record = {
-                "schema_version": "ax-security-audit-v2",
-                "event_id": f"audit_{uuid4().hex}",
-                "sequence": len(records) + 1,
-                "at": _utcnow().isoformat(),
-                "event": event,
-                "user_id": user_id,
-                "target": target,
-                "project_id": project_id,
-                "previous_hash": previous_hash,
-            }
-            record["record_hash"] = self._audit_hash(previous_hash, record)
-            with self.audit_path.open("a", encoding="utf-8", newline="\n") as stream:
-                stream.write(json.dumps(record, ensure_ascii=False, sort_keys=True) + "\n")
-                stream.flush()
-                os.fsync(stream.fileno())
-            try:
-                os.chmod(self.audit_path, 0o600)
-            except OSError:
-                pass
+            self.ledger.append(
+                event_id=f"audit_{uuid4().hex}",
+                event=event,
+                user_id=user_id,
+                target=target,
+                project_id=project_id,
+            )
 
     @staticmethod
     def _user_view(record: dict) -> UserView:
@@ -482,8 +441,7 @@ class AccessControlStore:
                 "첫 사내 검증을 위한 기본 프로젝트",
             )
             token, csrf, expires_at = self._new_session(state, user_record["user_id"])
-            self._write(state)
-            self._audit(
+            self._commit(state,
                 "BOOTSTRAP_COMPLETED", user_id=user_record["user_id"],
                 target=project["project_id"], project_id=project["project_id"],
             )
@@ -499,8 +457,10 @@ class AccessControlStore:
         with self._lock:
             state = self._read()
             record = self._create_user_record(state, request, request.global_role)
-            self._write(state)
-            self._audit("USER_CREATED", user_id=actor.user_id, target=record["user_id"])
+            self._commit(
+                state, "USER_CREATED", user_id=actor.user_id,
+                target=record["user_id"],
+            )
             return self._user_view(record)
 
     def users(self, actor: UserView) -> list[UserView]:
@@ -574,8 +534,9 @@ class AccessControlStore:
                         now + timedelta(minutes=self.login_lock_minutes)
                     ).isoformat()
                 state["login_attempts"][attempt_key] = next_attempt
-                self._write(state)
-                self._audit("LOGIN_FAILED", user_id=None, target=attempt_key[:12])
+                self._commit(
+                    state, "LOGIN_FAILED", user_id=None, target=attempt_key[:12]
+                )
                 if "locked_until" in next_attempt:
                     raise AccessControlError(
                         "LOGIN_RATE_LIMITED",
@@ -588,8 +549,7 @@ class AccessControlStore:
                     request.password.get_secret_value()
                 )
             token, csrf, expires_at = self._new_session(state, record["user_id"])
-            self._write(state)
-            self._audit("LOGIN_SUCCEEDED", user_id=record["user_id"])
+            self._commit(state, "LOGIN_SUCCEEDED", user_id=record["user_id"])
             return self._user_view(record), token, csrf, expires_at
 
     def revoke_sessions(self, actor: UserView, user_id: str) -> SessionRevocationResult:
@@ -605,8 +565,10 @@ class AccessControlStore:
             ]
             for token_hash in matching:
                 del state["sessions"][token_hash]
-            self._write(state)
-            self._audit("USER_SESSIONS_REVOKED", user_id=actor.user_id, target=user_id)
+            self._commit(
+                state, "USER_SESSIONS_REVOKED",
+                user_id=actor.user_id, target=user_id,
+            )
         return SessionRevocationResult(user_id=user_id, revoked_sessions=len(matching))
 
     def authenticate(self, token: str | None) -> AccessIdentity | None:
@@ -667,8 +629,7 @@ class AccessControlStore:
         with self._lock:
             state = self._read()
             state["sessions"].pop(identity.session_hash, None)
-            self._write(state)
-            self._audit("LOGOUT", user_id=identity.user.user_id)
+            self._commit(state, "LOGOUT", user_id=identity.user.user_id)
 
     @staticmethod
     def _create_project_record(state: dict, owner_id: str, name: str, description: str) -> dict:
@@ -706,8 +667,7 @@ class AccessControlStore:
         with self._lock:
             state = self._read()
             record = self._create_project_record(state, user.user_id, request.name, request.description)
-            self._write(state)
-            self._audit(
+            self._commit(state,
                 "PROJECT_CREATED", user_id=user.user_id,
                 target=record["project_id"], project_id=record["project_id"],
             )
@@ -736,8 +696,7 @@ class AccessControlStore:
             if user is None:
                 raise AccessControlError("USER_NOT_FOUND", "사용자를 찾을 수 없습니다.")
             state["projects"][project_id]["members"][user["user_id"]] = request.role
-            self._write(state)
-            self._audit(
+            self._commit(state,
                 "PROJECT_MEMBER_SET", user_id=actor.user_id,
                 target=f"{project_id}:{user['user_id']}", project_id=project_id,
             )
@@ -753,8 +712,7 @@ class AccessControlStore:
             if project["members"][user_id] == "OWNER":
                 raise AccessControlError("PROJECT_OWNER_REQUIRED", "프로젝트 소유자는 제거할 수 없습니다.")
             del project["members"][user_id]
-            self._write(state)
-            self._audit(
+            self._commit(state,
                 "PROJECT_MEMBER_REMOVED", user_id=actor.user_id,
                 target=f"{project_id}:{user_id}", project_id=project_id,
             )
@@ -807,8 +765,7 @@ class AccessControlStore:
                 "approved_at": None,
             }
             state["tasks"][task_id] = record
-            self._write(state)
-            self._audit(
+            self._commit(state,
                 "TASK_CREATED", user_id=user.user_id,
                 target=task_id, project_id=project_id,
             )
@@ -829,8 +786,7 @@ class AccessControlStore:
                     "approved_by_role": role,
                     "approved_at": _utcnow().isoformat(),
                 })
-                self._write(state)
-                self._audit(
+                self._commit(state,
                     "TASK_APPROVED", user_id=user.user_id,
                     target=task_id, project_id=project_id,
                 )
@@ -883,8 +839,7 @@ class AccessControlStore:
         with self._lock:
             state = self._read()
             state["execution_policies"][project_id] = view.model_dump(mode="json")
-            self._write(state)
-            self._audit(
+            self._commit(state,
                 "EXECUTION_POLICY_UPDATED", user_id=actor.user_id,
                 target=project_id, project_id=project_id,
             )
@@ -906,6 +861,7 @@ class AccessControlStore:
         request: DataTransferApprovalRequest,
         *,
         pii_affected_file_count: int,
+        dataset_revision_fingerprint: str,
     ) -> DataTransferApprovalView:
         self.require_project(actor, project_id, owner=True)
         policy = self.execution_policy(actor, project_id)
@@ -929,6 +885,7 @@ class AccessControlStore:
             approval_id=f"data_{uuid4().hex}",
             project_id=project_id,
             dataset_profile=request.dataset_profile,
+            dataset_revision_fingerprint=dataset_revision_fingerprint,
             model=request.model,
             data_classification=request.data_classification,
             pii_affected_file_count=pii_affected_file_count,
@@ -940,8 +897,7 @@ class AccessControlStore:
         with self._lock:
             state = self._read()
             state["transfer_approvals"][key] = view.model_dump(mode="json")
-            self._write(state)
-            self._audit(
+            self._commit(state,
                 "DATA_TRANSFER_APPROVED", user_id=actor.user_id,
                 target=f"{project_id}:{request.dataset_profile}",
                 project_id=project_id,
@@ -956,8 +912,7 @@ class AccessControlStore:
         with self._lock:
             state = self._read()
             state["transfer_approvals"].pop(key, None)
-            self._write(state)
-            self._audit(
+            self._commit(state,
                 "DATA_TRANSFER_REVOKED", user_id=actor.user_id,
                 target=f"{project_id}:{dataset_profile}", project_id=project_id,
             )
@@ -981,19 +936,28 @@ class AccessControlStore:
                 reserved_at = datetime.fromisoformat(record["reserved_at"])
             except (KeyError, TypeError, ValueError):
                 continue
-            if reserved_at >= cutoff:
+            if reserved_at >= cutoff and record.get("status", "FINALIZED") != "RELEASED":
                 recent.append(record)
-        reserved_runs = len(recent)
+        active = [record for record in recent if record.get("status") == "RESERVED"]
+        finalized = [record for record in recent if record.get("status", "FINALIZED") == "FINALIZED"]
+        capacity_runs = len(active) + len(finalized)
+        reserved_cost = sum(
+            int(record.get("estimated_cost_cents", 0)) for record in active
+        )
         estimated_spend = sum(
-            int(record.get("estimated_cost_cents", 0)) for record in recent
+            int(record.get("estimated_cost_cents", 0)) for record in finalized
         )
         return ProjectExecutionUsage(
             window_started_at=cutoff,
-            reserved_runs=reserved_runs,
+            reserved_runs=len(active),
+            finalized_runs=len(finalized),
             running_runs=running_runs,
+            estimated_reserved_cents=reserved_cost,
             estimated_spend_cents=estimated_spend,
-            remaining_run_capacity=max(0, policy.daily_run_limit - reserved_runs),
-            remaining_budget_cents=max(0, policy.daily_budget_cents - estimated_spend),
+            remaining_run_capacity=max(0, policy.daily_run_limit - capacity_runs),
+            remaining_budget_cents=max(
+                0, policy.daily_budget_cents - estimated_spend - reserved_cost
+            ),
         )
 
     def record_execution(
@@ -1033,12 +997,80 @@ class AccessControlStore:
                 "reserved_at": now.isoformat(),
                 "estimated_cost_cents": policy.estimated_cost_per_run_cents,
                 "requested_by": actor.user_id,
+                "status": "RESERVED",
             }
             state["execution_usage"] = retained
-            self._write(state)
-            self._audit(
+            self._commit(state,
                 "EXECUTION_BUDGET_RESERVED", user_id=actor.user_id,
                 target=f"{project_id}:{run_id}", project_id=project_id,
+            )
+
+    def finalize_execution(self, actor: UserView, project_id: str, run_id: str) -> None:
+        """Confirm estimated usage immediately before invoking the live runner."""
+        self.require_project(actor, project_id, write=True)
+        with self._lock:
+            state = self._read()
+            record = state["execution_usage"].get(run_id)
+            if record is None or record.get("project_id") != project_id:
+                raise AccessControlError("EXECUTION_RESERVATION_NOT_FOUND", "실행 예약을 찾을 수 없습니다.")
+            if record.get("status") == "FINALIZED":
+                return
+            if record.get("status") != "RESERVED":
+                raise AccessControlError("EXECUTION_RESERVATION_RELEASED", "해제된 실행 예약입니다.")
+            record["status"] = "FINALIZED"
+            record["finalized_at"] = _utcnow().isoformat()
+            self._commit(state,
+                "EXECUTION_USAGE_FINALIZED", user_id=actor.user_id,
+                target=f"{project_id}:{run_id}", project_id=project_id,
+            )
+
+    def release_execution(
+        self, actor: UserView | None, project_id: str, run_id: str, *, reason: str
+    ) -> None:
+        """Release a pre-run or interrupted reservation without erasing history."""
+        with self._lock:
+            state = self._read()
+            record = state["execution_usage"].get(run_id)
+            if record is None or record.get("project_id") != project_id:
+                return
+            if record.get("status") != "RESERVED":
+                return
+            record["status"] = "RELEASED"
+            record["released_at"] = _utcnow().isoformat()
+            record["release_reason"] = reason
+            self._commit(state,
+                "EXECUTION_BUDGET_RELEASED",
+                user_id=actor.user_id if actor is not None else None,
+                target=f"{project_id}:{run_id}:{reason}", project_id=project_id,
+            )
+
+    def record_execution_blocked(
+        self, actor: UserView | None, *, project_id: str | None, code: str
+    ) -> None:
+        self._audit(
+            "EXECUTION_BLOCKED",
+            user_id=actor.user_id if actor is not None else None,
+            target=code,
+            project_id=project_id,
+        )
+
+    def record_deletion_event(
+        self,
+        event: str,
+        *,
+        actor: UserView,
+        operation_id: str,
+        project_id: str | None,
+    ) -> None:
+        """Audit lifecycle transitions without copying deleted record contents."""
+        event_id = f"audit_del_{_digest(f'{operation_id}:{event}')[:32]}"
+        with self._lock:
+            self.ledger.append(
+                event_id=event_id,
+                event=event,
+                user_id=actor.user_id,
+                target=operation_id,
+                project_id=project_id,
             )
 
     @staticmethod
@@ -1097,8 +1129,7 @@ class AccessControlStore:
         with self._lock:
             state = self._read()
             state["retention_policies"][project_id] = record
-            self._write(state)
-            self._audit(
+            self._commit(state,
                 "RETENTION_POLICY_UPDATED",
                 user_id=actor.user_id,
                 target=(
@@ -1121,18 +1152,14 @@ class AccessControlStore:
     def _audit_status_and_records(
         self, project_id: str
     ) -> tuple[str, list[dict]]:
+        inspection = self.ledger.inspect()
+        if inspection.status == "INVALID":
+            return "INVALID", []
         try:
-            records = self._read_audit_records()
-        except RuntimeError:
+            records = self.ledger.records()
+        except AuditLedgerIntegrityError:
             return "INVALID", []
-        valid, _last_hash, legacy_marker = self._verify_audit_records(records)
-        if not valid:
-            return "INVALID", []
-        status = (
-            "LEGACY_UNSEALED" if legacy_marker < 0
-            else "LEGACY_SEALED" if legacy_marker > 0
-            else "VERIFIED"
-        )
+        status = inspection.status
         return status, [
             record for record in records
             if self._record_matches_project(record, project_id)
@@ -1146,6 +1173,7 @@ class AccessControlStore:
         with self._lock:
             status, records = self._audit_status_and_records(project_id)
         visible = records[-max(1, min(limit, 200)):]
+        inspection = self.ledger.inspect()
         legacy_sealed = status == "LEGACY_SEALED"
         events = [ProjectAuditEvent(
             event_id=str(
@@ -1160,7 +1188,9 @@ class AccessControlStore:
             integrity_verified=(
                 status != "INVALID"
                 and (
-                    record.get("schema_version") == "ax-security-audit-v2"
+                    record.get("schema_version") in {
+                        "ax-security-audit-v2", "ax-security-audit-v3"
+                    }
                     or legacy_sealed
                 )
             ),
@@ -1170,6 +1200,9 @@ class AccessControlStore:
             ledger_status=status,
             event_count=len(records),
             returned_event_count=len(events),
+            checkpoint_sequence=inspection.checkpoint_sequence,
+            protection_mode=inspection.protection_mode,
+            repair_required=inspection.status == "INVALID",
             retention_policy=policy,
             events=list(reversed(events)),
         )
@@ -1248,8 +1281,7 @@ class AccessControlStore:
         with self._lock:
             state = self._read()
             state["poc_decisions"][key] = view.model_dump(mode="json")
-            self._write(state)
-            self._audit(
+            self._commit(state,
                 "POC_DECISION_RECORDED",
                 user_id=actor.user_id,
                 target=f"{dataset_profile}:{request.decision}",
@@ -1273,14 +1305,6 @@ class AccessControlStore:
             state["transfer_approvals"].pop(
                 self._approval_key(project_id, dataset_profile), None
             )
-            state["execution_usage"] = {
-                run_id: record
-                for run_id, record in state["execution_usage"].items()
-                if not (
-                    record.get("project_id") == project_id
-                    and record.get("dataset_profile") == dataset_profile
-                )
-            }
             state["poc_decisions"] = {
                 key: record
                 for key, record in state["poc_decisions"].items()
@@ -1289,8 +1313,7 @@ class AccessControlStore:
                     and record.get("dataset_profile") == dataset_profile
                 )
             }
-            self._write(state)
-            self._audit(
+            self._commit(state,
                 "DATASET_TASKS_DELETED", user_id=actor.user_id,
                 target=f"{project_id}:{dataset_profile}:{len(task_ids)}",
                 project_id=project_id,
@@ -1300,18 +1323,22 @@ class AccessControlStore:
     def delete_project(
         self, actor: UserView, project_id: str, *, purge_receipt_id: str
     ) -> tuple[str, dict[str, int]]:
-        self.require_project(actor, project_id, owner=True)
         with self._lock:
-            audit_records = self._read_audit_records()
-            audit_valid, _last_hash, _legacy_marker = self._verify_audit_records(
-                audit_records
-            )
-            if not audit_valid:
+            state = self._read()
+            prior = state["deletion_tombstones"].get(purge_receipt_id)
+            if prior is not None:
+                if prior.get("project_id") != project_id:
+                    raise AccessControlError(
+                        "PURGE_RECEIPT_CONFLICT", "삭제 영수증 대상이 일치하지 않습니다."
+                    )
+                return "", dict(prior["counts"])
+            self.require_project(actor, project_id, owner=True)
+            inspection = self.ledger.inspect()
+            if inspection.status == "INVALID":
                 raise AccessControlError(
                     "AUDIT_LEDGER_INVALID",
                     "감사 원장 무결성 오류를 조사한 뒤 삭제해야 합니다.",
                 )
-            state = self._read()
             project = state["projects"][project_id]
             retention = state["retention_policies"].get(project_id)
             if retention is not None and retention.get("legal_hold") is True:
@@ -1358,27 +1385,28 @@ class AccessControlStore:
             project_name = project["name"]
             membership_count = len(project["members"])
             del state["projects"][project_id]
-            self._write(state)
-            retained_audit = [
-                record for record in audit_records
-                if not self._record_matches_project(record, project_id)
-            ]
-            audit_events_deleted = len(audit_records) - len(retained_audit)
-            self._write_audit_records(retained_audit)
-            self._audit(
+            counts = {
+                "business_tasks_deleted": len(task_ids),
+                "project_memberships_deleted": membership_count,
+                "execution_policies_deleted": policy_deleted,
+                "transfer_approvals_deleted": len(approval_keys),
+                "execution_usage_records_deleted": len(usage_ids),
+                "poc_decisions_deleted": len(decision_keys),
+                "audit_events_deleted": 0,
+            }
+            state["deletion_tombstones"][purge_receipt_id] = {
+                "project_id": project_id,
+                "counts": counts,
+            }
+            # Never rewrite earlier audit history or restart it at GENESIS.
+            # The completion event is a minimal tombstone containing only the
+            # opaque receipt ID; project data is removed from mutable state.
+            self._commit(state,
                 "PROJECT_PURGE_COMPLETED",
                 user_id=actor.user_id,
                 target=purge_receipt_id,
             )
-        return project_name, {
-            "business_tasks_deleted": len(task_ids),
-            "project_memberships_deleted": membership_count,
-            "execution_policies_deleted": policy_deleted,
-            "transfer_approvals_deleted": len(approval_keys),
-            "execution_usage_records_deleted": len(usage_ids),
-            "poc_decisions_deleted": len(decision_keys),
-            "audit_events_deleted": audit_events_deleted,
-        }
+        return project_name, counts
 
     def project_exists(self, project_id: str) -> bool:
         with self._lock:
@@ -1389,3 +1417,18 @@ class AccessControlStore:
             return self.audit_path.is_file() and value in self.audit_path.read_text(
                 encoding="utf-8"
             )
+
+    def record_runtime_recovery(
+        self, *, project_id: str | None, run_id: str, quarantined: bool = False
+    ) -> None:
+        """Record a system recovery without persisting runtime IDs or input text."""
+        if project_id is not None:
+            self.release_execution(
+                None, project_id, run_id, reason="INTERRUPTED_BY_RESTART"
+            )
+        self._audit(
+            "RUN_RESERVATION_QUARANTINED" if quarantined else "RUN_INTERRUPTED_BY_RESTART",
+            user_id=None,
+            target=run_id,
+            project_id=project_id,
+        )

@@ -1040,11 +1040,17 @@ def aggregate_findings(
     comparison_config: Path | None = None,
     include_inconsistency_findings: bool = True,
     comparison_version: AnswerComparisonVersion = "v1",
+    include_run_ids: set[str] | None = None,
 ) -> FindingsResponse:
     """Aggregate stored failures for one dataset without mutating either store."""
     bindings = _load_comparisons(comparison_config)
     binding = _binding_for_dataset(bindings, dataset)
     current_runs = _observed_runs(store, dataset, binding)
+    if include_run_ids is not None:
+        current_runs = [
+            run for run in current_runs
+            if run.delivery.run_id in include_run_ids
+        ]
     current_findings = _aggregate(
         current_runs,
         include_inconsistency_findings=include_inconsistency_findings,

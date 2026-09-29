@@ -29,7 +29,7 @@ from .access_control import (
     UserView,
 )
 from .governance import (
-    ProjectAuditEvent, ProjectAuditLog, ProjectDataInventory,
+    DeletionOperationView, ProjectAuditEvent, ProjectAuditLog, ProjectDataInventory,
     ProjectPurgeRequest, ProjectPurgeResult, ProjectRetentionPolicyUpdate,
     ProjectRetentionPolicyView,
 )
@@ -58,7 +58,7 @@ MODELS = (
     ProjectCreateRequest, ProjectMemberRequest, ProjectMemberView,
     ProjectTaskView, ProjectView, SessionRevocationResult, TaskCreateRequest,
     UserView,
-    ProjectAuditEvent, ProjectAuditLog, ProjectDataInventory,
+    DeletionOperationView, ProjectAuditEvent, ProjectAuditLog, ProjectDataInventory,
     ProjectPurgeRequest, ProjectPurgeResult, ProjectRetentionPolicyUpdate,
     ProjectRetentionPolicyView,
     DataTransferApprovalRequest, DataTransferApprovalView,

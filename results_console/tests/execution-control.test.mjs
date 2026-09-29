@@ -82,6 +82,7 @@ test('execution control explains credentials, approved data boundary, and bounde
   assert.match(container.textContent, /3 \/ 20/);
   assert.match(container.textContent, /\$0\.30 \/ \$2\.00/);
   assert.match(container.textContent, /PII 가능 파일 1개/);
+  assert.match(container.textContent, /리비전/);
 });
 
 test('OWNER policy form sends the selected model and limits as server-enforced values', async () => {

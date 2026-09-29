@@ -21,15 +21,29 @@ const report = {
   dataset_profile: 'local-eval', dataset_name: '반품팀 자료',
   generated_at: '2026-09-29T02:00:00Z', assessment_fingerprint: 'a'.repeat(64),
   recommendation: 'GO', decision_current: false, decision_expired: false,
+  criteria_version: 'AX_POC_GATES_V2', diagnostics_version: 'v2',
   scope_note: '현재 저장된 관측 결과를 요약하며 인증이나 정답률을 대신하지 않습니다.',
   metrics: {
     readiness_score: 92, onboarding_status: 'READY', registered_tasks: 3,
     approved_tasks: 3, observed_runs: 9, answered_runs: 8, abstained_runs: 1,
     rejected_runs: 0, direct_evidence_runs: 8, stable_tasks: 3, open_findings: 0,
+    direct_evidence_ratio: 0.8889, repeated_tasks: 3,
   },
+  run_population: {
+    total_final_runs: 12, included_runs: 9, included_answered_runs: 8,
+    included_abstained_runs: 1, excluded_rejected_runs: 1,
+    excluded_runtime_failure_runs: 1, excluded_non_verified_request_runs: 1,
+    excluded_unapproved_task_runs: 0, excluded_missing_context_runs: 0,
+  },
+  task_samples: [
+    { task_id: 'task-a', task_label: '반품 기간', included_runs: 3, minimum_runs: 3, sample_complete: true },
+    { task_id: 'task-b', task_label: '반품 예외', included_runs: 3, minimum_runs: 3, sample_complete: true },
+    { task_id: 'task-c', task_label: '반품 책임자', included_runs: 3, minimum_runs: 3, sample_complete: true },
+  ],
   gates: [
     { code: 'DATA_READINESS', label: '정적 데이터 준비도', status: 'PASS', detail: '관측 점수 92/100' },
-    { code: 'DIRECT_EVIDENCE', label: '직접 근거 연결', status: 'PASS', detail: 'DIRECT_MATCH 8회' },
+    { code: 'DIRECT_EVIDENCE', label: '직접 근거 연결', status: 'PASS', detail: 'DIRECT_MATCH 8/9회', decision_relevant: true, numerator: 8, denominator: 9, excluded: 3, minimum_sample: 3, minimum_ratio: 0.8 },
+    { code: 'EXECUTION_CAPACITY', label: '현재 실행 용량', status: 'WARN', detail: '현재 신규 실행 차단', decision_relevant: false },
   ],
 };
 
@@ -74,6 +88,11 @@ test('PoC dashboard combines readiness, approved scope, observed runs, evidence,
   assert.match(container.textContent, /데이터 준비도92/);
   assert.match(container.textContent, /승인 업무3\/ 3/);
   assert.match(container.textContent, /직접 근거8DIRECT_MATCH/);
+  assert.match(container.textContent, /포함 9회/);
+  assert.match(container.textContent, /제외 3회/);
+  assert.match(container.textContent, /분자 8 \/ 분모 9/);
+  assert.match(container.textContent, /판단 비반영 운영 상태/);
+  assert.match(container.textContent, /AX_POC_GATES_V2/);
   assert.match(container.textContent, /승인 게이트/);
   assert.match(container.textContent, /현재 저장된 관측 결과/);
 });

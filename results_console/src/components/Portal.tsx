@@ -12,6 +12,7 @@ export const consoleSectionHashes = new Set([
   'summary',
   'local-audit',
   'featured-case',
+  'verified-poc',
   'executive-report',
   'poc-evaluation',
   'project-governance',
@@ -39,12 +40,12 @@ const findings = [
   { name: '의미값 불일치', mean: '3회 모두 답했지만 값이 서로 다름', rec: '문서부터 고치지 말고 같은 설정으로 다시 실행해 차이를 비교' },
 ];
 
-const scopeNow = ['내 폴더의 로컬 준비도 점검', '업무 반복 실행', 'Finding 집계와 권고', '정리 전후 재검증', '근거 검사', '감사·보존·완전 삭제', 'PoC 평가·승인 보고서'];
+const scopeNow = ['내 폴더의 로컬 준비도 점검', '업무 반복 실행', 'Finding 집계와 권고', '정리 전후 재검증', '근거 검사', '감사·보존·재개 가능한 관리 데이터 삭제', 'PoC 평가·승인 보고서'];
 const scopeNot = ['문서 자동 수정', '정확도 benchmark', '조직 공통 업무 catalog 자동 동기화', 'SSO·MFA·조직 tenant 격리 등 프로덕션 보안'];
 
 const guideSteps = [
-  { number: '01', where: '내 자료 점검', text: '로컬 실행에서는 문서 폴더의 전체 경로를 입력해 준비도와 파일별 보완 항목을 확인합니다.' },
-  { number: '02', where: '검증된 대표 흐름', text: '예시의 정적 점수와 반품 업무 0/3 → 3/3을 비교합니다.' },
+  { number: '01', where: '내 자료 점검', text: '로컬 실행에서는 브라우저로 파일·폴더를 선택해 준비도와 파일별 보완 항목을 확인합니다.' },
+  { number: '02', where: '검증된 동결 PoC', text: '승인 업무, 실행·근거, 운영 경계와 조건부 승인 보고서를 연결해 확인합니다.' },
   { number: '03', where: '진단 신호 01 · 문서 충돌', text: '문서 충돌을 펼쳐 정리 전·후 원문과 “30일” 근거 직접 일치를 확인합니다.' },
 ];
 
@@ -92,7 +93,7 @@ function IntroPage() {
       </div>
       <div className="portal-actions">
         <a className="portal-button portal-button--primary" href="#local-audit">내 자료 점검하기 <span>→</span></a>
-        <a className="portal-button" href="#featured-case">검증된 예시 보기 <span>→</span></a>
+        <a className="portal-button" href="#verified-poc">검증된 예시 보기 <span>→</span></a>
       </div>
     </section>
 

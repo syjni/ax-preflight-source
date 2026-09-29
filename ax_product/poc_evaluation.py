@@ -11,6 +11,10 @@ from .models import StrictProductModel
 
 
 PocRecommendation = Literal["GO", "CONDITIONAL_GO", "NO_GO"]
+POC_EVALUATION_CRITERIA_VERSION = "AX_POC_GATES_V2"
+POC_MIN_RUNS_PER_APPROVED_TASK = 3
+POC_DIRECT_EVIDENCE_MIN_SAMPLE = 3
+POC_DIRECT_EVIDENCE_MIN_RATIO = 0.8
 
 
 class PocDecisionUpdate(StrictProductModel):
@@ -49,6 +53,8 @@ class PocEvaluationMetrics(StrictProductModel):
     abstained_runs: int = Field(ge=0)
     rejected_runs: int = Field(ge=0)
     direct_evidence_runs: int = Field(ge=0)
+    direct_evidence_ratio: float = Field(ge=0, le=1)
+    repeated_tasks: int = Field(ge=0)
     stable_tasks: int = Field(ge=0)
     open_findings: int = Field(ge=0)
 
@@ -58,6 +64,32 @@ class PocEvaluationGate(StrictProductModel):
     label: str
     status: Literal["PASS", "WARN", "BLOCK"]
     detail: str
+    decision_relevant: bool = True
+    numerator: int | None = Field(default=None, ge=0)
+    denominator: int | None = Field(default=None, ge=0)
+    excluded: int | None = Field(default=None, ge=0)
+    minimum_sample: int | None = Field(default=None, ge=1)
+    minimum_ratio: float | None = Field(default=None, ge=0, le=1)
+
+
+class PocEvaluationRunPopulation(StrictProductModel):
+    total_final_runs: int = Field(ge=0)
+    included_runs: int = Field(ge=0)
+    included_answered_runs: int = Field(ge=0)
+    included_abstained_runs: int = Field(ge=0)
+    excluded_rejected_runs: int = Field(ge=0)
+    excluded_runtime_failure_runs: int = Field(ge=0)
+    excluded_non_verified_request_runs: int = Field(ge=0)
+    excluded_unapproved_task_runs: int = Field(ge=0)
+    excluded_missing_context_runs: int = Field(ge=0)
+
+
+class PocEvaluationTaskSample(StrictProductModel):
+    task_id: str = Field(min_length=1)
+    task_label: str = Field(min_length=1)
+    included_runs: int = Field(ge=0)
+    minimum_runs: int = Field(ge=1)
+    sample_complete: bool
 
 
 class PocEvaluationReport(StrictProductModel):
@@ -68,7 +100,11 @@ class PocEvaluationReport(StrictProductModel):
     dataset_name: str
     generated_at: datetime
     assessment_fingerprint: str = Field(pattern=r"^[0-9a-f]{64}$")
+    criteria_version: Literal["AX_POC_GATES_V2"] = POC_EVALUATION_CRITERIA_VERSION
+    diagnostics_version: Literal["v2"] = "v2"
     metrics: PocEvaluationMetrics
+    run_population: PocEvaluationRunPopulation
+    task_samples: list[PocEvaluationTaskSample]
     gates: list[PocEvaluationGate]
     recommendation: PocRecommendation
     decision: PocDecisionView | None = None

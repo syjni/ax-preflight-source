@@ -60,6 +60,7 @@ export type BatchStatus = {
   "requested_by_user_id"?: string | null;
   "requested_control": "RUN" | "PAUSE" | "CANCEL";
   "running_items": number;
+  "runtime_instance_id"?: string | null;
   "schema_version"?: "ax-batch-status-v1";
   "state": "QUEUED" | "RUNNING" | "PAUSE_REQUESTED" | "PAUSED" | "CANCEL_REQUESTED" | "CANCELLED" | "COMPLETED" | "COMPLETED_WITH_ERRORS";
   "succeeded_items": number;
@@ -165,6 +166,7 @@ export type DataTransferApprovalView = {
   "boundary_revision"?: "AX_DATA_BOUNDARY_V1";
   "data_classification": "PUBLIC" | "INTERNAL" | "CONFIDENTIAL";
   "dataset_profile": string;
+  "dataset_revision_fingerprint"?: string | null;
   "expires_at": string;
   "model": string;
   "pii_affected_file_count": number;
@@ -176,12 +178,31 @@ export type DataTransferApprovalView = {
   "tool_output_to_model_acknowledged"?: true;
 };
 
+export type DeletionOperationView = {
+  "attempt_count": number;
+  "completed_at"?: string | null;
+  "completed_stages": Array<string>;
+  "created_at": string;
+  "dataset_profile"?: string | null;
+  "deletion_status": "PARTIAL_FAILURE" | "COMPLETED";
+  "failure_code"?: string | null;
+  "failure_detail"?: string | null;
+  "operation_id": string;
+  "project_id"?: string | null;
+  "remaining_records": Array<string>;
+  "remaining_stages": Array<string>;
+  "schema_version"?: "ax-deletion-operation-v1";
+  "scope": "PROJECT" | "DATASET";
+  "source_files_deleted"?: false;
+  "updated_at": string;
+};
+
 export type DeliveryEnvelope = {
   "dataset"?: string;
   "delivery_status": "DELIVERED" | "REJECTED";
   "model": string;
   "payload"?: SubmitAnswerInput | null;
-  "reject_reason"?: "NO_SUBMISSION" | "INVALID_SUBMISSION" | "INVALID_RUN" | "MODEL_FALLBACK" | "FORBIDDEN_TOOL" | "RUNTIME_ERROR" | null;
+  "reject_reason"?: "NO_SUBMISSION" | "INVALID_SUBMISSION" | "INVALID_RUN" | "MODEL_FALLBACK" | "FORBIDDEN_TOOL" | "RUNTIME_ERROR" | "INTERRUPTED_BY_RESTART" | null;
   "run_id": string;
   "source_link_status"?: "NOT_CHECKED" | "LINKED" | "PARTIAL" | "UNLINKED" | null;
   "task_id"?: string | null;
@@ -231,6 +252,7 @@ export type FeaturedCase = {
   "question": string;
   "summary": string;
   "title": string;
+  "walkthrough"?: FrozenPocWalkthrough | null;
 };
 
 export type FeaturedCasesResponse = {
@@ -293,6 +315,36 @@ export type FindingsResponse = {
 
 export type FindingType = "CONFLICTING_SOURCES" | "INCONSISTENT_ANSWERS" | "MIXED_OUTCOMES" | "INSUFFICIENT_EVIDENCE" | "MISSING_INFORMATION";
 
+export type FrozenPocGate = {
+  "code": string;
+  "detail": string;
+  "label": string;
+  "status": "PASS" | "WARN" | "BLOCK";
+};
+
+export type FrozenPocWalkthrough = {
+  "approval_scope"?: "CONTROLLED_DEMO";
+  "approved_task_id": string;
+  "approved_task_question": string;
+  "audit_retention": string;
+  "cited_source_ids": Array<string>;
+  "cost_control": string;
+  "direct_evidence_ratio": number;
+  "direct_evidence_runs": number;
+  "failure_recovery": string;
+  "final_report_note": string;
+  "gates": Array<FrozenPocGate>;
+  "label"?: "검증된 동결 예시";
+  "model": string;
+  "model_boundary": string;
+  "read_only"?: true;
+  "recommendation": "GO" | "CONDITIONAL_GO" | "NO_GO";
+  "recommendation_note": string;
+  "schema_version"?: "ax-frozen-poc-walkthrough-v1";
+  "snapshot_id"?: "phase6-v4";
+  "successful_runs": number;
+};
+
 export type LocalDatasetAudit = {
   "as_of_date": string;
   "dataset_name": string;
@@ -311,6 +363,7 @@ export type LocalDatasetAudit = {
   "pii_finding_count": number;
   "probable_version_group_count": number;
   "profile": string;
+  "revision_fingerprint": string;
   "scanned_at": string;
   "schema_version"?: "ax-local-dataset-audit-v1";
   "source_files_copied"?: boolean;
@@ -322,10 +375,19 @@ export type LocalDatasetAudit = {
 };
 
 export type LocalDatasetDeleteResult = {
+  "attempt_count": number;
   "batch_records_deleted"?: number;
-  "deleted"?: true;
+  "completed_at"?: string | null;
+  "completed_stages": Array<string>;
+  "deleted": boolean;
+  "deletion_status": "PARTIAL_FAILURE" | "COMPLETED";
+  "failure_code"?: string | null;
+  "failure_detail"?: string | null;
   "managed_copy_deleted"?: boolean;
+  "operation_id": string;
   "profile": string;
+  "remaining_records": Array<string>;
+  "remaining_stages": Array<string>;
   "run_records_deleted"?: number;
   "schema_version"?: "ax-local-dataset-delete-result-v1";
   "source_files_deleted"?: false;
@@ -428,8 +490,14 @@ export type PocDecisionView = {
 
 export type PocEvaluationGate = {
   "code": string;
+  "decision_relevant"?: boolean;
+  "denominator"?: number | null;
   "detail": string;
+  "excluded"?: number | null;
   "label": string;
+  "minimum_ratio"?: number | null;
+  "minimum_sample"?: number | null;
+  "numerator"?: number | null;
   "status": "PASS" | "WARN" | "BLOCK";
 };
 
@@ -437,6 +505,7 @@ export type PocEvaluationMetrics = {
   "abstained_runs": number;
   "answered_runs": number;
   "approved_tasks": number;
+  "direct_evidence_ratio": number;
   "direct_evidence_runs": number;
   "observed_runs": number;
   "onboarding_status": "READY" | "REVIEW_REQUIRED" | "BLOCKED";
@@ -444,24 +513,49 @@ export type PocEvaluationMetrics = {
   "readiness_score": number;
   "registered_tasks": number;
   "rejected_runs": number;
+  "repeated_tasks": number;
   "stable_tasks": number;
 };
 
 export type PocEvaluationReport = {
   "assessment_fingerprint": string;
+  "criteria_version"?: "AX_POC_GATES_V2";
   "dataset_name": string;
   "dataset_profile": string;
   "decision"?: PocDecisionView | null;
   "decision_current"?: boolean;
   "decision_expired"?: boolean;
+  "diagnostics_version"?: "v2";
   "gates": Array<PocEvaluationGate>;
   "generated_at": string;
   "metrics": PocEvaluationMetrics;
   "project_id": string;
   "project_name": string;
   "recommendation": "GO" | "CONDITIONAL_GO" | "NO_GO";
+  "run_population": PocEvaluationRunPopulation;
   "schema_version"?: "ax-poc-evaluation-v1";
   "scope_note"?: string;
+  "task_samples": Array<PocEvaluationTaskSample>;
+};
+
+export type PocEvaluationRunPopulation = {
+  "excluded_missing_context_runs": number;
+  "excluded_non_verified_request_runs": number;
+  "excluded_rejected_runs": number;
+  "excluded_runtime_failure_runs": number;
+  "excluded_unapproved_task_runs": number;
+  "included_abstained_runs": number;
+  "included_answered_runs": number;
+  "included_runs": number;
+  "total_final_runs": number;
+};
+
+export type PocEvaluationTaskSample = {
+  "included_runs": number;
+  "minimum_runs": number;
+  "sample_complete": boolean;
+  "task_id": string;
+  "task_label": string;
 };
 
 export type ProductCapabilities = {
@@ -469,7 +563,9 @@ export type ProductCapabilities = {
   "bundled_demo": boolean;
   "local_dataset_scan": boolean;
   "local_file_upload": boolean;
+  "local_path_scan": boolean;
   "max_upload_bytes": number;
+  "max_upload_file_bytes": number;
   "max_upload_files": number;
   "mode": "STATIC_DEMO" | "API" | "LOCAL_REVIEW" | "LIVE";
   "ocr_available": boolean;
@@ -493,10 +589,15 @@ export type ProjectAuditEvent = {
 };
 
 export type ProjectAuditLog = {
+  "checkpoint_sequence"?: number;
   "event_count": number;
   "events": Array<ProjectAuditEvent>;
+  "immutable_storage"?: false;
   "ledger_status": "VERIFIED" | "LEGACY_SEALED" | "LEGACY_UNSEALED" | "INVALID";
+  "operator_guidance"?: string;
   "project_id": string;
+  "protection_mode"?: "CHAIN_AND_CHECKPOINT_NO_EXTERNAL_AUTHORITY" | "HMAC_CHAIN_AND_CHECKPOINT";
+  "repair_required"?: boolean;
   "retention_policy": ProjectRetentionPolicyView;
   "returned_event_count": number;
   "schema_version"?: "ax-project-audit-log-v1";
@@ -530,7 +631,7 @@ export type ProjectDataInventory = {
 };
 
 export type ProjectExecutionControl = {
-  "blockers"?: Array<"RUNNER_UNAVAILABLE" | "RUNNER_EXECUTABLE_UNAVAILABLE" | "EXECUTION_POLICY_REQUIRED" | "DATASET_REQUIRED" | "DATA_TRANSFER_APPROVAL_REQUIRED" | "DATA_TRANSFER_APPROVAL_EXPIRED" | "MODEL_NOT_APPROVED" | "BATCH_RUN_LIMIT_EXCEEDED" | "DAILY_RUN_LIMIT_REACHED" | "DAILY_BUDGET_REACHED" | "CONCURRENCY_LIMIT_REACHED">;
+  "blockers"?: Array<"RUNNER_UNAVAILABLE" | "RUNNER_EXECUTABLE_UNAVAILABLE" | "EXECUTION_POLICY_REQUIRED" | "DATASET_REQUIRED" | "BUNDLED_DATASET_READ_ONLY" | "APPROVED_TASK_REQUIRED" | "DATA_TRANSFER_APPROVAL_REQUIRED" | "DATA_TRANSFER_APPROVAL_EXPIRED" | "DATA_TRANSFER_APPROVAL_REVISION_MISMATCH" | "MODEL_NOT_APPROVED" | "BATCH_RUN_LIMIT_EXCEEDED" | "DAILY_RUN_LIMIT_REACHED" | "DAILY_BUDGET_REACHED" | "CONCURRENCY_LIMIT_REACHED">;
   "can_execute": boolean;
   "connection": ModelConnectionStatus;
   "dataset_profile"?: string | null;
@@ -556,7 +657,9 @@ export type ProjectExecutionPolicyView = {
 };
 
 export type ProjectExecutionUsage = {
+  "estimated_reserved_cents"?: number;
   "estimated_spend_cents": number;
+  "finalized_runs"?: number;
   "remaining_budget_cents": number;
   "remaining_run_capacity": number;
   "reserved_runs": number;
@@ -578,28 +681,38 @@ export type ProjectMemberView = {
 
 export type ProjectPurgeRequest = {
   "confirmation": string;
+  "operation_id"?: string | null;
 };
 
 export type ProjectPurgeResult = {
+  "attempt_count": number;
   "audit_events_deleted": number;
+  "audit_tombstone_retained"?: true;
   "batches_deleted": number;
   "business_tasks_deleted": number;
-  "completed_at": string;
+  "completed_at"?: string | null;
+  "completed_stages": Array<string>;
+  "deletion_status": "PARTIAL_FAILURE" | "COMPLETED";
   "execution_policies_deleted": number;
   "execution_usage_records_deleted": number;
+  "failure_code"?: string | null;
+  "failure_detail"?: string | null;
   "local_datasets_deleted": number;
   "managed_copies_deleted": number;
+  "operation_id": string;
   "poc_decisions_deleted": number;
-  "project_deleted"?: true;
+  "project_deleted": boolean;
   "project_id": string;
   "project_memberships_deleted": number;
   "project_name": string;
   "purge_receipt_id": string;
-  "raw_project_identifier_retained"?: false;
+  "raw_project_identifier_retained"?: true;
+  "remaining_records": Array<string>;
+  "remaining_stages": Array<string>;
   "schema_version"?: "ax-project-purge-result-v1";
   "source_files_deleted"?: false;
   "transfer_approvals_deleted": number;
-  "verification_status"?: "VERIFIED";
+  "verification_status": "PARTIAL" | "VERIFIED";
   "writable_runs_deleted": number;
 };
 

@@ -25,6 +25,9 @@ def test_checked_in_static_demo_matches_verified_api() -> None:
     assert len(observed["featured_cases"]) == 1
 
     case = observed["featured_cases"][0]
+    assert case["walkthrough"]["label"] == "검증된 동결 예시"
+    assert case["walkthrough"]["read_only"] is True
+    assert case["walkthrough"]["recommendation"] == "CONDITIONAL_GO"
     before = case["before"]
     after = case["after"]
     assert observed["runs"][before["run_id"]]["payload"]["status"] == "ABSTAINED"

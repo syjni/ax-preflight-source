@@ -145,6 +145,12 @@
   },
   "additionalProperties": false,
   "properties": {
+    "checkpoint_sequence": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Checkpoint Sequence",
+      "type": "integer"
+    },
     "event_count": {
       "minimum": 0,
       "title": "Event Count",
@@ -157,6 +163,12 @@
       "title": "Events",
       "type": "array"
     },
+    "immutable_storage": {
+      "const": false,
+      "default": false,
+      "title": "Immutable Storage",
+      "type": "boolean"
+    },
     "ledger_status": {
       "enum": [
         "VERIFIED",
@@ -167,9 +179,28 @@
       "title": "Ledger Status",
       "type": "string"
     },
+    "operator_guidance": {
+      "default": "python -m ax_product.audit_ledger inspect --root <access-root>",
+      "title": "Operator Guidance",
+      "type": "string"
+    },
     "project_id": {
       "title": "Project Id",
       "type": "string"
+    },
+    "protection_mode": {
+      "default": "CHAIN_AND_CHECKPOINT_NO_EXTERNAL_AUTHORITY",
+      "enum": [
+        "CHAIN_AND_CHECKPOINT_NO_EXTERNAL_AUTHORITY",
+        "HMAC_CHAIN_AND_CHECKPOINT"
+      ],
+      "title": "Protection Mode",
+      "type": "string"
+    },
+    "repair_required": {
+      "default": false,
+      "title": "Repair Required",
+      "type": "boolean"
     },
     "retention_policy": {
       "$ref": "#/$defs/ProjectRetentionPolicyView"

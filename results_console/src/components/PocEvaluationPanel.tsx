@@ -127,14 +127,28 @@ export function PocEvaluationPanel({ project, dataset, revision }: Props) {
         <article><span>데이터 준비도</span><strong>{Math.round(report.metrics.readiness_score)}</strong><small>/ 100</small></article>
         <article><span>승인 업무</span><strong>{report.metrics.approved_tasks}</strong><small>/ {report.metrics.registered_tasks}</small></article>
         <article><span>관측 실행</span><strong>{report.metrics.observed_runs}</strong><small>답변 {report.metrics.answered_runs} · 보류 {report.metrics.abstained_runs}</small></article>
-        <article><span>직접 근거</span><strong>{report.metrics.direct_evidence_runs}</strong><small>DIRECT_MATCH</small></article>
-        <article><span>안정 처리 업무</span><strong>{report.metrics.stable_tasks}</strong><small>반복 의미값 기준</small></article>
+        <article><span>직접 근거</span><strong>{report.metrics.direct_evidence_runs}</strong><small>DIRECT_MATCH · {(report.metrics.direct_evidence_ratio * 100).toFixed(1)}%</small></article>
+        <article><span>안정 처리 업무</span><strong>{report.metrics.stable_tasks}</strong><small>실제 반복 {report.metrics.repeated_tasks}개 기준</small></article>
         <article><span>열린 신호</span><strong>{report.metrics.open_findings}</strong><small>원인 검토 대상</small></article>
       </div>
 
+      <div className="poc-evaluation__population">
+        <div className="poc-evaluation__section-head"><div><span className="mono">RUN POPULATION</span><h3>평가 실행 포함·제외 근거</h3></div><span>포함 {report.run_population.included_runs}회 · 제외 {report.run_population.total_final_runs - report.run_population.included_runs}회</span></div>
+        <div className="poc-evaluation__sample-grid">
+          {report.task_samples.map((sample) => <article key={sample.task_id}><Status tone={sample.sample_complete ? 'positive' : 'danger'}>{sample.sample_complete ? '충족' : '미달'}</Status><div><strong>{sample.task_label}</strong><p>{sample.included_runs} / {sample.minimum_runs}회 · 승인 업무의 성공 최종 실행만 포함</p></div><code>{sample.task_id}</code></article>)}
+        </div>
+        <div className="poc-evaluation__exclusions">
+          <span>REJECTED {report.run_population.excluded_rejected_runs}</span>
+          <span>FAILED·INTERRUPTED {report.run_population.excluded_runtime_failure_runs}</span>
+          <span>AD_HOC·후보 {report.run_population.excluded_non_verified_request_runs}</span>
+          <span>미승인 업무 {report.run_population.excluded_unapproved_task_runs}</span>
+          <span>context 누락 {report.run_population.excluded_missing_context_runs}</span>
+        </div>
+      </div>
+
       <div className="poc-evaluation__gates">
-        <div className="poc-evaluation__section-head"><div><span className="mono">DECISION GATES</span><h3>승인 게이트</h3></div><span>{report.gates.filter((item) => item.status === 'PASS').length} / {report.gates.length} 통과</span></div>
-        {report.gates.map((item) => <article key={item.code} className={`is-${item.status.toLowerCase()}`}><Status tone={gateTone(item.status)}>{gateLabels[item.status]}</Status><div><strong>{item.label}</strong><p>{item.detail}</p></div><code>{item.code}</code></article>)}
+        <div className="poc-evaluation__section-head"><div><span className="mono">DECISION GATES</span><h3>승인 게이트</h3></div><span>{report.gates.filter((item) => item.decision_relevant !== false && item.status === 'PASS').length} / {report.gates.filter((item) => item.decision_relevant !== false).length} 판단 게이트 통과</span></div>
+        {report.gates.map((item) => <article key={item.code} className={`is-${item.status.toLowerCase()}${item.decision_relevant === false ? ' is-operational' : ''}`}><Status tone={gateTone(item.status)}>{item.decision_relevant === false ? '판단 비반영 운영 상태' : gateLabels[item.status]}</Status><div><strong>{item.label}</strong><p>{item.detail}</p>{item.numerator != null && item.denominator != null && <small>분자 {item.numerator} / 분모 {item.denominator}{item.excluded != null ? ` · 제외 ${item.excluded}` : ''}{item.minimum_sample != null ? ` · 최소 표본 ${item.minimum_sample}` : ''}{item.minimum_ratio != null ? ` · 최소 비율 ${(item.minimum_ratio * 100).toFixed(0)}%` : ''}</small>}</div><code>{item.code}</code></article>)}
       </div>
 
       <div className="poc-evaluation__decision">
@@ -156,7 +170,7 @@ export function PocEvaluationPanel({ project, dataset, revision }: Props) {
         </form> : <p className="workspace-panel__empty no-print">평가 결과는 볼 수 있지만 책임자 판단은 프로젝트 OWNER만 기록할 수 있습니다.</p>}
       </div>
 
-      <footer><span>평가 ID {report.assessment_fingerprint.slice(0, 12)} · {new Date(report.generated_at).toLocaleString('ko-KR')}</span><span>판단은 지표·게이트가 바뀌거나 유효 기간이 끝나면 자동으로 ‘재검토 필요’가 됩니다.</span></footer>
+      <footer><span>평가 ID {report.assessment_fingerprint.slice(0, 12)} · {new Date(report.generated_at).toLocaleString('ko-KR')}</span><span>{report.criteria_version} · 진단 집계 {report.diagnostics_version} · 관련 판단 자료나 유효 기간이 바뀌면 ‘재검토 필요’가 됩니다.</span></footer>
     </>}
   </section>;
 }

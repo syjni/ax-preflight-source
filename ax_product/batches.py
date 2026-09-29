@@ -101,6 +101,7 @@ class BatchStatus(StrictProductModel):
     model: str = Field(min_length=1)
     project_id: str | None = None
     requested_by_user_id: str | None = None
+    runtime_instance_id: str | None = None
     state: BatchState
     requested_control: BatchControl
     repetitions: int = Field(ge=1, le=5)
@@ -283,13 +284,15 @@ class BatchManager:
     """Single-process scheduler with durable state and safe control points."""
 
     def __init__(
-        self, store: BatchStore, executor: BatchExecutor, *, recover: bool = True
+        self, store: BatchStore, executor: BatchExecutor, *, recover: bool = True,
+        runtime_instance_id: str | None = None,
     ) -> None:
         self.store = store
         self.executor = executor
         self._lock = threading.RLock()
         self._condition = threading.Condition(self._lock)
         self._workers: dict[str, threading.Thread] = {}
+        self.runtime_instance_id = runtime_instance_id or uuid4().hex
         if recover:
             self._recover_interrupted()
 
@@ -321,6 +324,7 @@ class BatchManager:
             model=request.model,
             project_id=project_id,
             requested_by_user_id=requested_by_user_id,
+            runtime_instance_id=self.runtime_instance_id,
             state="QUEUED",
             requested_control="RUN",
             repetitions=request.repetitions,
@@ -364,7 +368,8 @@ class BatchManager:
             if batch.state not in {"PAUSED", "PAUSE_REQUESTED"}:
                 raise BatchStateError("BATCH_NOT_RESUMABLE")
             batch = _summarized(
-                batch, state="QUEUED", requested_control="RUN"
+                batch, state="QUEUED", requested_control="RUN",
+                runtime_instance_id=self.runtime_instance_id,
             )
             self.store.write(batch)
             self._start_worker_locked(batch_id)
@@ -524,6 +529,8 @@ class BatchManager:
             for batch in self.store.records():
                 if batch.state not in ACTIVE_BATCH_STATES:
                     continue
+                if batch.runtime_instance_id == self.runtime_instance_id:
+                    continue
                 if batch.requested_control == "CANCEL":
                     items = [
                         item.model_copy(update={"status": "CANCELLED"})
@@ -546,5 +553,6 @@ class BatchManager:
                     items=items,
                     state="PAUSED",
                     requested_control="PAUSE",
+                    runtime_instance_id=self.runtime_instance_id,
                 )
                 self.store.write(recovered)

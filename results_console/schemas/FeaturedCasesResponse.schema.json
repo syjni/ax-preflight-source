@@ -28,6 +28,17 @@
           "minLength": 1,
           "title": "Title",
           "type": "string"
+        },
+        "walkthrough": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FrozenPocWalkthrough"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       },
       "required": [
@@ -102,6 +113,181 @@
         "target"
       ],
       "title": "FeaturedRunReference",
+      "type": "object"
+    },
+    "FrozenPocGate": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "pattern": "^[A-Z][A-Z0-9_]*$",
+          "title": "Code",
+          "type": "string"
+        },
+        "detail": {
+          "minLength": 1,
+          "title": "Detail",
+          "type": "string"
+        },
+        "label": {
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "PASS",
+            "WARN",
+            "BLOCK"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "label",
+        "status",
+        "detail"
+      ],
+      "title": "FrozenPocGate",
+      "type": "object"
+    },
+    "FrozenPocWalkthrough": {
+      "additionalProperties": false,
+      "properties": {
+        "approval_scope": {
+          "const": "CONTROLLED_DEMO",
+          "default": "CONTROLLED_DEMO",
+          "title": "Approval Scope",
+          "type": "string"
+        },
+        "approved_task_id": {
+          "minLength": 1,
+          "title": "Approved Task Id",
+          "type": "string"
+        },
+        "approved_task_question": {
+          "minLength": 1,
+          "title": "Approved Task Question",
+          "type": "string"
+        },
+        "audit_retention": {
+          "minLength": 1,
+          "title": "Audit Retention",
+          "type": "string"
+        },
+        "cited_source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Cited Source Ids",
+          "type": "array"
+        },
+        "cost_control": {
+          "minLength": 1,
+          "title": "Cost Control",
+          "type": "string"
+        },
+        "direct_evidence_ratio": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Direct Evidence Ratio",
+          "type": "number"
+        },
+        "direct_evidence_runs": {
+          "minimum": 0,
+          "title": "Direct Evidence Runs",
+          "type": "integer"
+        },
+        "failure_recovery": {
+          "minLength": 1,
+          "title": "Failure Recovery",
+          "type": "string"
+        },
+        "final_report_note": {
+          "minLength": 1,
+          "title": "Final Report Note",
+          "type": "string"
+        },
+        "gates": {
+          "items": {
+            "$ref": "#/$defs/FrozenPocGate"
+          },
+          "title": "Gates",
+          "type": "array"
+        },
+        "label": {
+          "const": "검증된 동결 예시",
+          "default": "검증된 동결 예시",
+          "title": "Label",
+          "type": "string"
+        },
+        "model": {
+          "minLength": 1,
+          "title": "Model",
+          "type": "string"
+        },
+        "model_boundary": {
+          "minLength": 1,
+          "title": "Model Boundary",
+          "type": "string"
+        },
+        "read_only": {
+          "const": true,
+          "default": true,
+          "title": "Read Only",
+          "type": "boolean"
+        },
+        "recommendation": {
+          "enum": [
+            "GO",
+            "CONDITIONAL_GO",
+            "NO_GO"
+          ],
+          "title": "Recommendation",
+          "type": "string"
+        },
+        "recommendation_note": {
+          "minLength": 1,
+          "title": "Recommendation Note",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "ax-frozen-poc-walkthrough-v1",
+          "default": "ax-frozen-poc-walkthrough-v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "snapshot_id": {
+          "const": "phase6-v4",
+          "default": "phase6-v4",
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "successful_runs": {
+          "minimum": 0,
+          "title": "Successful Runs",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "recommendation",
+        "recommendation_note",
+        "approved_task_id",
+        "approved_task_question",
+        "successful_runs",
+        "direct_evidence_runs",
+        "direct_evidence_ratio",
+        "cited_source_ids",
+        "model",
+        "failure_recovery",
+        "model_boundary",
+        "cost_control",
+        "audit_retention",
+        "gates",
+        "final_report_note"
+      ],
+      "title": "FrozenPocWalkthrough",
       "type": "object"
     }
   },

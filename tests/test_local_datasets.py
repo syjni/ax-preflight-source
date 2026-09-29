@@ -6,11 +6,16 @@ import tempfile
 import unittest
 from datetime import datetime, timezone
 from pathlib import Path
+from unittest.mock import patch
 
 from fastapi.testclient import TestClient
 
 from ax_product.api import ROOT, create_app
-from ax_product.local_datasets import LocalDatasetStore
+from ax_product.local_datasets import (
+    LocalDatasetError,
+    LocalDatasetRequest,
+    LocalDatasetStore,
+)
 
 
 class LocalDatasetTests(unittest.TestCase):
@@ -34,6 +39,11 @@ class LocalDatasetTests(unittest.TestCase):
         for path in self.source.iterdir():
             os.utime(path, (recent, recent))
         self.store_root = self.root / "generated-local-audits"
+        self.allowed_roots = patch.dict(
+            os.environ, {"AX_ALLOWED_SCAN_ROOTS": str(self.root)}
+        )
+        self.allowed_roots.start()
+        self.addCleanup(self.allowed_roots.stop)
         self.store = LocalDatasetStore(
             base_config=ROOT / "runtime_datasets.json",
             root=self.store_root,
@@ -92,6 +102,15 @@ class LocalDatasetTests(unittest.TestCase):
             "source_path": str(self.source),
         }).json()
         profile = first["dataset"]["profile"]
+        first_revision = first["audit"]["revision_fingerprint"]
+        same = self.client.post("/api/local-datasets", json={
+            "source_path": str(self.source),
+            "display_name": "표시 이름 변경",
+        })
+        self.assertEqual(same.status_code, 201, same.text)
+        self.assertEqual(
+            same.json()["audit"]["revision_fingerprint"], first_revision
+        )
         (self.source / "new.txt").write_text("new policy", encoding="utf-8")
         second = self.client.post("/api/local-datasets", json={
             "source_path": f'"{self.source}"',
@@ -99,6 +118,9 @@ class LocalDatasetTests(unittest.TestCase):
         self.assertEqual(second.status_code, 201, second.text)
         self.assertEqual(second.json()["dataset"]["profile"], profile)
         self.assertEqual(second.json()["audit"]["file_count"], 5)
+        self.assertNotEqual(
+            second.json()["audit"]["revision_fingerprint"], first_revision
+        )
 
         deleted = self.client.delete(f"/api/local-datasets/{profile}")
         self.assertEqual(deleted.status_code, 200)
@@ -116,9 +138,13 @@ class LocalDatasetTests(unittest.TestCase):
         self.assertEqual(capabilities["mode"], "LOCAL_REVIEW")
         self.assertTrue(capabilities["local_dataset_scan"])
         self.assertTrue(capabilities["local_file_upload"])
+        self.assertTrue(capabilities["local_path_scan"])
         self.assertFalse(capabilities["ai_task_execution"])
         self.assertTrue(capabilities["pdf_table_extraction"])
         self.assertEqual(capabilities["max_upload_files"], self.store.max_files)
+        self.assertEqual(
+            capabilities["max_upload_file_bytes"], self.store.max_file_bytes
+        )
         self.assertEqual(
             capabilities["supported_extensions"],
             [".txt", ".pdf", ".docx", ".csv", ".xlsx"],
@@ -144,6 +170,54 @@ class LocalDatasetTests(unittest.TestCase):
             ).status_code,
             403,
         )
+
+    def test_path_scan_is_disabled_without_an_explicit_allowed_root(self) -> None:
+        with patch.dict(os.environ, {"AX_ALLOWED_SCAN_ROOTS": ""}):
+            store = LocalDatasetStore(
+                base_config=ROOT / "runtime_datasets.json",
+                root=self.root / "no-path-store",
+            )
+        client = TestClient(create_app(
+            results_root=self.root / "no-path-runs",
+            local_dataset_store=store,
+        ))
+
+        capabilities = client.get("/api/capabilities").json()
+        self.assertTrue(capabilities["local_dataset_scan"])
+        self.assertTrue(capabilities["local_file_upload"])
+        self.assertFalse(capabilities["local_path_scan"])
+        blocked = client.post(
+            "/api/local-datasets", json={"source_path": str(self.source)}
+        )
+        self.assertEqual(blocked.status_code, 403, blocked.text)
+        self.assertEqual(blocked.json()["detail"], "PATH_SCAN_UNAVAILABLE")
+
+    def test_path_scan_rejects_resolved_paths_outside_allowed_roots(self) -> None:
+        outside = Path(tempfile.mkdtemp())
+        self.addCleanup(lambda: outside.rmdir())
+        (outside / "secret.txt").write_text("secret", encoding="utf-8")
+        self.addCleanup(lambda: (outside / "secret.txt").unlink(missing_ok=True))
+
+        response = self.client.post(
+            "/api/local-datasets", json={"source_path": str(outside)}
+        )
+
+        self.assertEqual(response.status_code, 422, response.text)
+        self.assertIn("SOURCE_OUTSIDE_ALLOWED_ROOTS", response.json()["detail"])
+
+    def test_path_scan_does_not_cross_project_ownership(self) -> None:
+        first = self.store.scan(LocalDatasetRequest(
+            source_path=str(self.source), project_id="prj_" + "1" * 32
+        ))
+        self.assertTrue(self.store.contains(first))
+
+        with self.assertRaisesRegex(
+            LocalDatasetError, "다른 프로젝트"
+        ) as raised:
+            self.store.scan(LocalDatasetRequest(
+                source_path=str(self.source), project_id="prj_" + "2" * 32
+            ))
+        self.assertEqual(raised.exception.code, "SOURCE_ASSIGNED_TO_OTHER_PROJECT")
 
     def test_browser_upload_is_local_persistent_and_deleted_with_record(self) -> None:
         response = self.client.post(
@@ -187,6 +261,69 @@ class LocalDatasetTests(unittest.TestCase):
         self.assertIn("INVALID_UPLOAD_PATH", response.json()["detail"])
         upload_root = self.store_root / "uploads"
         self.assertFalse(upload_root.exists() and any(upload_root.iterdir()))
+
+    def test_browser_upload_accepts_1001_small_files(self) -> None:
+        files = [
+            ("files", (f"file-{index:04d}.unsupported", b"", "application/octet-stream"))
+            for index in range(1001)
+        ]
+        response = self.client.post(
+            "/api/local-datasets/upload",
+            files=files,
+            data={
+                "relative_paths": json.dumps(
+                    [f"review/file-{index:04d}.unsupported" for index in range(1001)]
+                ),
+                "source_root_name": "review",
+            },
+        )
+
+        self.assertEqual(response.status_code, 201, response.text)
+        self.assertEqual(response.json()["audit"]["file_count"], 1001)
+
+    def test_upload_file_count_boundary_and_individual_size_are_enforced(self) -> None:
+        with patch.dict(os.environ, {
+            "AX_PRODUCT_LOCAL_SCAN_MAX_FILES": "2",
+            "AX_PRODUCT_LOCAL_SCAN_MAX_FILE_BYTES": "4",
+        }):
+            store = LocalDatasetStore(
+                base_config=ROOT / "runtime_datasets.json",
+                root=self.root / "bounded-store",
+            )
+        client = TestClient(create_app(
+            results_root=self.root / "bounded-runs",
+            local_dataset_store=store,
+        ))
+        accepted = client.post(
+            "/api/local-datasets/upload",
+            files=[
+                ("files", ("a.unsupported", b"1234", "application/octet-stream")),
+                ("files", ("b.unsupported", b"1234", "application/octet-stream")),
+            ],
+            data={"relative_paths": json.dumps(["a.unsupported", "b.unsupported"])},
+        )
+        self.assertEqual(accepted.status_code, 201, accepted.text)
+
+        too_many = client.post(
+            "/api/local-datasets/upload",
+            files=[
+                ("files", (f"{name}.unsupported", b"1", "application/octet-stream"))
+                for name in ("c", "d", "e")
+            ],
+            data={"relative_paths": json.dumps([
+                "c.unsupported", "d.unsupported", "e.unsupported"
+            ])},
+        )
+        self.assertEqual(too_many.status_code, 422, too_many.text)
+        self.assertIn("FILE_LIMIT_EXCEEDED", too_many.json()["detail"])
+
+        too_large = client.post(
+            "/api/local-datasets/upload",
+            files=[("files", ("large.txt", b"12345", "text/plain"))],
+            data={"relative_paths": json.dumps(["large.txt"])},
+        )
+        self.assertEqual(too_large.status_code, 422, too_large.text)
+        self.assertIn("FILE_SIZE_LIMIT_EXCEEDED", too_large.json()["detail"])
 
 
 if __name__ == "__main__":

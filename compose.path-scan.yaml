@@ -1,0 +1,9 @@
+services:
+  ax-preflight:
+    environment:
+      AX_ALLOWED_SCAN_ROOTS: /review-input
+    volumes:
+      - type: bind
+        source: ${AX_REVIEW_INPUT}
+        target: /review-input
+        read_only: true

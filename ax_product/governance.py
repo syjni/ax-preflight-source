@@ -12,6 +12,9 @@ from .models import StrictProductModel
 
 class ProjectPurgeRequest(StrictProductModel):
     confirmation: str = Field(min_length=1, max_length=80)
+    operation_id: str | None = Field(
+        default=None, pattern=r"^del_[a-f0-9]{32}$"
+    )
 
     @field_validator("confirmation")
     @classmethod
@@ -55,6 +58,16 @@ class ProjectAuditLog(StrictProductModel):
     ]
     event_count: int = Field(ge=0)
     returned_event_count: int = Field(ge=0)
+    checkpoint_sequence: int = Field(default=0, ge=0)
+    protection_mode: Literal[
+        "CHAIN_AND_CHECKPOINT_NO_EXTERNAL_AUTHORITY",
+        "HMAC_CHAIN_AND_CHECKPOINT",
+    ] = "CHAIN_AND_CHECKPOINT_NO_EXTERNAL_AUTHORITY"
+    immutable_storage: Literal[False] = False
+    repair_required: bool = False
+    operator_guidance: str = (
+        "python -m ax_product.audit_ledger inspect --root <access-root>"
+    )
     retention_policy: ProjectRetentionPolicyView
     events: list[ProjectAuditEvent]
 
@@ -90,9 +103,17 @@ class ProjectPurgeResult(StrictProductModel):
     project_id: str
     project_name: str
     purge_receipt_id: str
-    completed_at: datetime
-    verification_status: Literal["VERIFIED"] = "VERIFIED"
-    project_deleted: Literal[True] = True
+    operation_id: str = Field(pattern=r"^del_[a-f0-9]{32}$")
+    deletion_status: Literal["PARTIAL_FAILURE", "COMPLETED"]
+    completed_stages: list[str]
+    remaining_stages: list[str]
+    remaining_records: list[str]
+    attempt_count: int = Field(ge=1)
+    failure_code: str | None = None
+    failure_detail: str | None = None
+    completed_at: datetime | None = None
+    verification_status: Literal["PARTIAL", "VERIFIED"]
+    project_deleted: bool
     local_datasets_deleted: int = Field(ge=0)
     managed_copies_deleted: int = Field(ge=0)
     business_tasks_deleted: int = Field(ge=0)
@@ -104,5 +125,27 @@ class ProjectPurgeResult(StrictProductModel):
     execution_usage_records_deleted: int = Field(ge=0)
     poc_decisions_deleted: int = Field(ge=0)
     audit_events_deleted: int = Field(ge=0)
-    raw_project_identifier_retained: Literal[False] = False
+    raw_project_identifier_retained: Literal[True] = True
+    audit_tombstone_retained: Literal[True] = True
+    source_files_deleted: Literal[False] = False
+
+
+class DeletionOperationView(StrictProductModel):
+    schema_version: Literal["ax-deletion-operation-v1"] = (
+        "ax-deletion-operation-v1"
+    )
+    operation_id: str = Field(pattern=r"^del_[a-f0-9]{32}$")
+    scope: Literal["PROJECT", "DATASET"]
+    project_id: str | None = None
+    dataset_profile: str | None = None
+    deletion_status: Literal["PARTIAL_FAILURE", "COMPLETED"]
+    completed_stages: list[str]
+    remaining_stages: list[str]
+    remaining_records: list[str]
+    attempt_count: int = Field(ge=1)
+    failure_code: str | None = None
+    failure_detail: str | None = None
+    created_at: datetime
+    updated_at: datetime
+    completed_at: datetime | None = None
     source_files_deleted: Literal[False] = False

@@ -32,6 +32,32 @@ def _validate_featured_cases(snapshot: dict[str, Any]) -> None:
     for case in snapshot["featured_cases"]:
         before = case["before"]
         after = case["after"]
+        walkthrough = case.get("walkthrough") or {}
+        if (
+            walkthrough.get("schema_version") != "ax-frozen-poc-walkthrough-v1"
+            or walkthrough.get("label") != "검증된 동결 예시"
+            or walkthrough.get("read_only") is not True
+            or walkthrough.get("snapshot_id") != "phase6-v4"
+            or walkthrough.get("recommendation") != "CONDITIONAL_GO"
+            or walkthrough.get("approved_task_id") != "TASK_POLICY_RETURN_WINDOW"
+            or walkthrough.get("successful_runs") != 3
+            or walkthrough.get("direct_evidence_runs") != 3
+            or walkthrough.get("direct_evidence_ratio") != 1.0
+            or not walkthrough.get("cited_source_ids")
+        ):
+            raise ValueError("Featured PoC walkthrough no longer matches verified facts")
+        gate_statuses = {
+            gate.get("code"): gate.get("status")
+            for gate in walkthrough.get("gates", [])
+        }
+        if gate_statuses != {
+            "EXECUTION_SAMPLE": "PASS",
+            "DIRECT_EVIDENCE": "PASS",
+            "MODEL_BOUNDARY": "WARN",
+            "COST_CONTROL": "WARN",
+            "AUDIT_RETENTION": "WARN",
+        }:
+            raise ValueError("Featured PoC gate summary no longer matches verified facts")
         for reference in (before, after):
             run = snapshot["runs"].get(reference["run_id"])
             evidence = snapshot["evidence"].get(reference["run_id"])
@@ -55,6 +81,13 @@ def _validate_featured_cases(snapshot: dict[str, Any]) -> None:
             step.get("cited_source_ids") for step in after_trace.get("steps", [])
         ):
             raise ValueError("Featured After run no longer has a cited retrieval path")
+        traced_source_ids = {
+            source_id
+            for step in after_trace.get("steps", [])
+            for source_id in step.get("cited_source_ids", [])
+        }
+        if not set(walkthrough["cited_source_ids"]).issubset(traced_source_ids):
+            raise ValueError("Featured PoC citations are not in the verified retrieval path")
 
         comparison = next(
             (

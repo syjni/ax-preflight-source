@@ -6,6 +6,9 @@ import json
 import os
 import re
 import shutil
+import hashlib
+from dataclasses import dataclass
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Literal
 from uuid import uuid4
@@ -38,6 +41,26 @@ class ResultStoreConfigurationError(RuntimeError):
 RunStorageOrigin = Literal["writable", "frozen"]
 
 
+@dataclass(frozen=True)
+class RecoveredRun:
+    run_id: str
+    project_id: str | None
+    previous_runtime_instance_id: str | None
+
+
+@dataclass(frozen=True)
+class QuarantinedRun:
+    run_id: str
+    quarantine_path: Path
+    error_code: str = "INVALID_RUN_RESERVATION"
+
+
+@dataclass(frozen=True)
+class RunRecoveryResult:
+    recovered: list[RecoveredRun]
+    quarantined: list[QuarantinedRun]
+
+
 class ResultStore:
     def __init__(self, root: str | Path = DEFAULT_RESULTS_ROOT):
         self.root = Path(root).resolve()
@@ -50,7 +73,9 @@ class ResultStore:
     def reserve(self, *, run_id: str, task_id: str | None, model: str,
                 dataset: str, task_key: str | None = None,
                 task_label: str | None = None,
-                request_type: str | None = None) -> Path:
+                request_type: str | None = None,
+                runtime_instance_id: str | None = None,
+                project_id: str | None = None) -> Path:
         """Atomically claim a run without publishing a final delivery result."""
         if not dataset or not dataset.strip() or dataset != dataset.strip():
             raise ValueError("dataset must be a nonblank, unpadded profile")
@@ -61,7 +86,18 @@ class ResultStore:
         try:
             state = temporary_dir / "state.json"
             with state.open("x", encoding="utf-8", newline="\n") as output:
-                json.dump({"run_id": run_id, "run_status": "RUNNING", "dataset": dataset}, output)
+                json.dump({
+                    "schema_version": "ax-run-reservation-v2",
+                    "run_id": run_id,
+                    "run_status": "RUNNING",
+                    "dataset": dataset,
+                    "task_id": task_id,
+                    "model": model,
+                    "project_id": project_id,
+                    "runtime_instance_id": runtime_instance_id,
+                    "reserved_at": datetime.now(timezone.utc).isoformat(),
+                    "resume_policy": "EXPLICIT_RETRY_ONLY",
+                }, output, ensure_ascii=False, sort_keys=True)
                 output.write("\n")
                 output.flush()
                 os.fsync(output.fileno())
@@ -132,6 +168,81 @@ class ResultStore:
         if not isinstance(dataset, str) or not dataset.strip() or dataset != dataset.strip():
             raise ValueError("invalid reserved dataset")
         return dataset
+
+    @staticmethod
+    def _reservation(state_path: Path) -> dict:
+        state = json.loads(state_path.read_text(encoding="utf-8"))
+        required = {"run_id", "run_status", "dataset"}
+        if not isinstance(state, dict) or not required.issubset(state):
+            raise ValueError("invalid run reservation")
+        if state["run_status"] != "RUNNING":
+            raise ValueError("invalid run reservation status")
+        for name in ("run_id", "dataset"):
+            value = state[name]
+            if not isinstance(value, str) or not value.strip() or value != value.strip():
+                raise ValueError(f"invalid run reservation {name}")
+        model = state.get("model", "UNKNOWN")
+        if not isinstance(model, str) or not model.strip() or model != model.strip():
+            raise ValueError("invalid run reservation model")
+        state["model"] = model
+        return state
+
+    def reconcile_interrupted(self, runtime_instance_id: str) -> RunRecoveryResult:
+        """Finalize reservations owned by a prior single-process runtime.
+
+        AX Preflight deliberately does not resume an external model call. A caller
+        must issue a new run ID after reviewing the interruption. This store is
+        single-process; sharing it between simultaneously live processes is not
+        supported.
+        """
+        if not runtime_instance_id.strip() or runtime_instance_id != runtime_instance_id.strip():
+            raise ValueError("runtime_instance_id must be nonblank and unpadded")
+        recovered: list[RecoveredRun] = []
+        quarantined: list[QuarantinedRun] = []
+        if not self.root.is_dir():
+            return RunRecoveryResult(recovered, quarantined)
+        for directory in sorted(self.root.iterdir()):
+            if not directory.is_dir() or directory.name.startswith("."):
+                continue
+            state_path = directory / "state.json"
+            if not state_path.is_file() or (directory / "delivery.json").is_file():
+                continue
+            try:
+                reservation = self._reservation(state_path)
+                if reservation["run_id"] != directory.name:
+                    raise ValueError("run reservation directory mismatch")
+            except (OSError, UnicodeError, json.JSONDecodeError, ValueError):
+                digest = hashlib.sha256(
+                    state_path.read_bytes() if state_path.is_file() else b""
+                ).hexdigest()[:16]
+                destination = self.root / f".quarantine-{directory.name}-{digest}"
+                suffix = 0
+                while destination.exists():
+                    suffix += 1
+                    destination = self.root / f".quarantine-{directory.name}-{digest}-{suffix}"
+                directory.rename(destination)
+                quarantined.append(QuarantinedRun(directory.name, destination))
+                continue
+            owner = reservation.get("runtime_instance_id")
+            if owner == runtime_instance_id:
+                continue
+            envelope = DeliveryEnvelope(
+                delivery_status="REJECTED",
+                run_id=reservation["run_id"],
+                task_id=reservation.get("task_id"),
+                model=reservation["model"],
+                reject_reason="INTERRUPTED_BY_RESTART",
+            )
+            try:
+                self.write(envelope)
+            except FinalResultExistsError:
+                continue
+            recovered.append(RecoveredRun(
+                run_id=reservation["run_id"],
+                project_id=reservation.get("project_id"),
+                previous_runtime_instance_id=(owner if isinstance(owner, str) else None),
+            ))
+        return RunRecoveryResult(recovered, quarantined)
 
     @staticmethod
     def _write_file_once(path: Path, envelope: DeliveryEnvelope) -> None:
@@ -310,12 +421,15 @@ class CompositeResultStore:
         self, *, run_id: str, task_id: str | None, model: str, dataset: str,
         task_key: str | None = None, task_label: str | None = None,
         request_type: str | None = None,
+        runtime_instance_id: str | None = None,
+        project_id: str | None = None,
     ) -> Path:
         if self.frozen is not None and self.frozen.contains(run_id):
             raise DuplicateRunError(run_id)
         return self.writable.reserve(
             run_id=run_id, task_id=task_id, model=model, dataset=dataset,
             task_key=task_key, task_label=task_label, request_type=request_type,
+            runtime_instance_id=runtime_instance_id, project_id=project_id,
         )
 
     def write(self, envelope: DeliveryEnvelope) -> Path:

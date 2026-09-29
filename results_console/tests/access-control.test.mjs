@@ -62,7 +62,10 @@ test('project governance shows retained records and requires exact-name deletion
   assert.match(source, /법적 보존/);
   assert.match(source, /법적 보존 · 삭제 차단/);
   assert.match(source, /감사 확인 필요/);
-  assert.match(source, /삭제 증명서/);
+  assert.match(source, /삭제 영수증/);
+  assert.match(source, /단계형 삭제/);
+  assert.match(source, /부분 삭제 영수증/);
+  assert.doesNotMatch(source, /완전 삭제|영구 삭제/);
   assert.match(styles, /\.governance-panel__metrics/);
   assert.match(styles, /\.governance-panel__audit-list/);
   assert.match(styles, /var\(--color-warn\)/);
@@ -72,4 +75,15 @@ test('local dataset selection follows its project access boundary', () => {
   const source = readFileSync(new URL('../src/App.tsx', import.meta.url), 'utf8');
   assert.match(source, /option\.origin === 'LOCAL' && option\.project_id/);
   assert.match(source, /selectedDatasetProject\?\.member_role === 'OWNER'/);
+});
+
+test('partial deletion receipts expose resumable operation identifiers', () => {
+  const app = readFileSync(new URL('../src/App.tsx', import.meta.url), 'utf8');
+  const local = readFileSync(new URL('../src/components/LocalDatasetPanel.tsx', import.meta.url), 'utf8');
+  assert.match(app, /PURGE PARTIAL/);
+  assert.match(app, /retryProjectPurge/);
+  assert.match(app, /remaining_records/);
+  assert.match(local, /부분 삭제 영수증 · 재개 필요/);
+  assert.match(local, /operation_id/);
+  assert.match(local, /retryDelete/);
 });

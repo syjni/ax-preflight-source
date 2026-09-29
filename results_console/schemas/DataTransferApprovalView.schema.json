@@ -33,6 +33,19 @@
       "title": "Dataset Profile",
       "type": "string"
     },
+    "dataset_revision_fingerprint": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Dataset Revision Fingerprint"
+    },
     "expires_at": {
       "format": "date-time",
       "title": "Expires At",

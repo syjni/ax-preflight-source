@@ -16,8 +16,11 @@ ExecutionBlocker = Literal[
     "RUNNER_EXECUTABLE_UNAVAILABLE",
     "EXECUTION_POLICY_REQUIRED",
     "DATASET_REQUIRED",
+    "BUNDLED_DATASET_READ_ONLY",
+    "APPROVED_TASK_REQUIRED",
     "DATA_TRANSFER_APPROVAL_REQUIRED",
     "DATA_TRANSFER_APPROVAL_EXPIRED",
+    "DATA_TRANSFER_APPROVAL_REVISION_MISMATCH",
     "MODEL_NOT_APPROVED",
     "BATCH_RUN_LIMIT_EXCEEDED",
     "DAILY_RUN_LIMIT_REACHED",
@@ -81,6 +84,9 @@ class DataTransferApprovalView(StrictProductModel):
     approval_id: str
     project_id: str
     dataset_profile: str
+    dataset_revision_fingerprint: str | None = Field(
+        default=None, pattern=r"^[0-9a-f]{64}$"
+    )
     provider: Literal["KIRO_CLI"] = "KIRO_CLI"
     model: str
     data_classification: Literal["PUBLIC", "INTERNAL", "CONFIDENTIAL"]
@@ -115,7 +121,9 @@ class ProjectExecutionUsage(StrictProductModel):
     window: Literal["ROLLING_24_HOURS"] = "ROLLING_24_HOURS"
     window_started_at: datetime
     reserved_runs: int = Field(ge=0)
+    finalized_runs: int = Field(default=0, ge=0)
     running_runs: int = Field(ge=0)
+    estimated_reserved_cents: int = Field(default=0, ge=0)
     estimated_spend_cents: int = Field(ge=0)
     remaining_run_capacity: int = Field(ge=0)
     remaining_budget_cents: int = Field(ge=0)

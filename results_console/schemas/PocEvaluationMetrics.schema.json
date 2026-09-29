@@ -16,6 +16,12 @@
       "title": "Approved Tasks",
       "type": "integer"
     },
+    "direct_evidence_ratio": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Direct Evidence Ratio",
+      "type": "number"
+    },
     "direct_evidence_runs": {
       "minimum": 0,
       "title": "Direct Evidence Runs",
@@ -56,6 +62,11 @@
       "title": "Rejected Runs",
       "type": "integer"
     },
+    "repeated_tasks": {
+      "minimum": 0,
+      "title": "Repeated Tasks",
+      "type": "integer"
+    },
     "stable_tasks": {
       "minimum": 0,
       "title": "Stable Tasks",
@@ -72,6 +83,8 @@
     "abstained_runs",
     "rejected_runs",
     "direct_evidence_runs",
+    "direct_evidence_ratio",
+    "repeated_tasks",
     "stable_tasks",
     "open_findings"
   ],

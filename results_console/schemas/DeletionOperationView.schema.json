@@ -6,12 +6,6 @@
       "title": "Attempt Count",
       "type": "integer"
     },
-    "batch_records_deleted": {
-      "default": 0,
-      "minimum": 0,
-      "title": "Batch Records Deleted",
-      "type": "integer"
-    },
     "completed_at": {
       "anyOf": [
         {
@@ -32,9 +26,22 @@
       "title": "Completed Stages",
       "type": "array"
     },
-    "deleted": {
-      "title": "Deleted",
-      "type": "boolean"
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "dataset_profile": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Dataset Profile"
     },
     "deletion_status": {
       "enum": [
@@ -68,19 +75,22 @@
       "default": null,
       "title": "Failure Detail"
     },
-    "managed_copy_deleted": {
-      "default": false,
-      "title": "Managed Copy Deleted",
-      "type": "boolean"
-    },
     "operation_id": {
       "pattern": "^del_[a-f0-9]{32}$",
       "title": "Operation Id",
       "type": "string"
     },
-    "profile": {
-      "title": "Profile",
-      "type": "string"
+    "project_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Project Id"
     },
     "remaining_records": {
       "items": {
@@ -96,16 +106,18 @@
       "title": "Remaining Stages",
       "type": "array"
     },
-    "run_records_deleted": {
-      "default": 0,
-      "minimum": 0,
-      "title": "Run Records Deleted",
-      "type": "integer"
-    },
     "schema_version": {
-      "const": "ax-local-dataset-delete-result-v1",
-      "default": "ax-local-dataset-delete-result-v1",
+      "const": "ax-deletion-operation-v1",
+      "default": "ax-deletion-operation-v1",
       "title": "Schema Version",
+      "type": "string"
+    },
+    "scope": {
+      "enum": [
+        "PROJECT",
+        "DATASET"
+      ],
+      "title": "Scope",
       "type": "string"
     },
     "source_files_deleted": {
@@ -114,23 +126,23 @@
       "title": "Source Files Deleted",
       "type": "boolean"
     },
-    "task_records_deleted": {
-      "default": 0,
-      "minimum": 0,
-      "title": "Task Records Deleted",
-      "type": "integer"
+    "updated_at": {
+      "format": "date-time",
+      "title": "Updated At",
+      "type": "string"
     }
   },
   "required": [
-    "profile",
     "operation_id",
+    "scope",
     "deletion_status",
     "completed_stages",
     "remaining_stages",
     "remaining_records",
     "attempt_count",
-    "deleted"
+    "created_at",
+    "updated_at"
   ],
-  "title": "LocalDatasetDeleteResult",
+  "title": "DeletionOperationView",
   "type": "object"
 }

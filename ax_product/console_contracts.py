@@ -119,6 +119,38 @@ class FeaturedRunReference(StrictProductModel):
     target: Literal["summary", "evidence"]
 
 
+class FrozenPocGate(StrictProductModel):
+    code: str = Field(pattern=r"^[A-Z][A-Z0-9_]*$")
+    label: str = Field(min_length=1)
+    status: Literal["PASS", "WARN", "BLOCK"]
+    detail: str = Field(min_length=1)
+
+
+class FrozenPocWalkthrough(StrictProductModel):
+    schema_version: Literal["ax-frozen-poc-walkthrough-v1"] = (
+        "ax-frozen-poc-walkthrough-v1"
+    )
+    label: Literal["검증된 동결 예시"] = "검증된 동결 예시"
+    read_only: Literal[True] = True
+    snapshot_id: Literal["phase6-v4"] = "phase6-v4"
+    recommendation: Literal["GO", "CONDITIONAL_GO", "NO_GO"]
+    recommendation_note: str = Field(min_length=1)
+    approved_task_id: str = Field(min_length=1)
+    approved_task_question: str = Field(min_length=1)
+    approval_scope: Literal["CONTROLLED_DEMO"] = "CONTROLLED_DEMO"
+    successful_runs: int = Field(ge=0)
+    direct_evidence_runs: int = Field(ge=0)
+    direct_evidence_ratio: float = Field(ge=0, le=1)
+    cited_source_ids: list[str]
+    model: str = Field(min_length=1)
+    failure_recovery: str = Field(min_length=1)
+    model_boundary: str = Field(min_length=1)
+    cost_control: str = Field(min_length=1)
+    audit_retention: str = Field(min_length=1)
+    gates: list[FrozenPocGate]
+    final_report_note: str = Field(min_length=1)
+
+
 class FeaturedCase(StrictProductModel):
     case_id: str = Field(min_length=1)
     title: str = Field(min_length=1)
@@ -126,6 +158,7 @@ class FeaturedCase(StrictProductModel):
     summary: str = Field(min_length=1)
     before: FeaturedRunReference
     after: FeaturedRunReference
+    walkthrough: FrozenPocWalkthrough | None = None
 
     @model_validator(mode="after")
     def validate_before_after(self) -> "FeaturedCase":

@@ -4,11 +4,13 @@
 
 [![Source verification](https://github.com/syjni/ax-preflight-source/actions/workflows/ci.yml/badge.svg)](https://github.com/syjni/ax-preflight-source/actions/workflows/ci.yml)
 
-AX Preflight는 실제 AI 업무를 반복 실행해 **어떤 데이터와 검색 경로가 업무를
-막거나 흔드는지** 찾고, 수정 전후의 변화를 근거와 함께 보여주는 서비스입니다.
+AX Preflight는 공개 동결 사례를 바로 탐색하고, 내려받은 로컬 reviewer에서 심사자의
+파일·폴더를 정적으로 점검하며, Kiro CLI를 연결한 opt-in live mode에서는 승인된 업무만
+모델·전달·예상 비용 통제 아래 반복 실행하는 서비스입니다. 재시작 중단 복구, 로컬 감사
+원장 검증·명시적 복구, 원본을 보존하는 단계형 삭제 영수증까지 한 화면에서 확인합니다.
 
 [공개 데모](https://syjni.github.io/ax-preflight-source/) ·
-[심사용 Release](https://github.com/syjni/ax-preflight-source/releases/tag/v0.4.0-submission) ·
+[심사용 Release](https://github.com/syjni/ax-preflight-source/releases/tag/v0.5.0-submission) ·
 [심사자 빠른 시작](docs/REVIEWER_QUICKSTART.md) ·
 [심사·제출 가이드](SUBMISSION.md) ·
 [소스 저장소](https://github.com/syjni/ax-preflight-source)
@@ -108,23 +110,60 @@ start-docker.cmd
    선택 자료의 분류와 모델 전달 경계를 승인한 뒤 열립니다.
 6. 결과의 **먼저 보완할 항목**과 **전체 준비도 보기**에서 파일별 조치와 다섯 점수
    차원, 온보딩 프리플라이트를 확인합니다.
-7. **이 점검 기록 제거**를 누르면 점검 보고서와 앱의 로컬 관리 사본이 함께
-   삭제됩니다. 컴퓨터에서 선택했던 원본 파일은 삭제하지 않습니다.
+7. **이 점검 기록 제거**를 누르면 단계형 삭제가 점검 보고서와 앱의 로컬 관리 사본을
+   제거합니다. 중간 오류에는 operation ID가 있는 부분 삭제 영수증과 재개 버튼을
+   표시합니다. 컴퓨터에서 선택했던 원본 파일은 삭제하지 않습니다.
 8. **구성원과 권한**에서 계정의 로그인 세션을 종료하거나 프로젝트 권한을 회수하고,
    **보관 항목과 삭제**에서 현재 프로젝트의 관리 데이터를 확인할 수 있습니다. 프로젝트
-   OWNER는 정확한 프로젝트명을 입력해 해당 프로젝트의 점검·업무·실행 기록을 한 번에
+   OWNER는 정확한 프로젝트명을 입력해 해당 프로젝트의 점검·업무·실행 기록을 단계별로
    지울 수 있으며, 실행 중인 run이나 batch 또는 법적 보존이 있으면 삭제가 차단됩니다.
-   삭제 후에는 프로젝트·구성원·업무·모델 승인·실행·배치·PoC 판단과 프로젝트 식별자가
-   감사 로그에서도 사라졌는지 서버가 다시 확인하고 삭제 증명서 ID를 반환합니다.
+   각 단계는 재실행 가능하고 중간 실패 시 같은 operation ID로 재개합니다. 완료 뒤에는
+   프로젝트·구성원·업무·모델 승인·실행·배치·PoC 판단의 제거를 다시 확인합니다. 원본
+   파일은 유지하며, 체인 연속성을 위한 opaque 프로젝트 식별자·최소 감사 tombstone과
+   삭제 영수증은 로컬 관리 volume에 남습니다.
 
-브라우저에서 선택한 파일은 인터넷 서비스가 아닌 같은 컴퓨터의 `localhost` API로만
-전달되어 앱의 로컬 관리 폴더에 복사됩니다. 경로 입력 방식을 선택하면 원본을 제자리에서
-읽고 복사하지 않습니다. 두 방식 모두 원본을 수정하지 않으며, 이 정적 점검은 모델을
-호출하지 않습니다. Docker 데이터는 `ax-preflight-data` 로컬 volume에, 직접 실행
+브라우저에서 선택한 파일은 인터넷 서비스가 아닌 같은 컴퓨터의 `localhost` Docker
+API로 전달되어 앱의 로컬 관리 폴더에 복사됩니다. **폴더 선택은 호스트의 폴더 경로를
+컨테이너가 직접 읽는 기능이 아니라 브라우저가 폴더 안 파일을 업로드하는 기능**입니다.
+따라서 기본 Docker 화면에는 `C:\...` 같은 서버 경로 입력을 표시하지 않습니다. 원본은
+수정하지 않으며, 이 정적 점검은 모델을 호출하지 않습니다. Docker 데이터는
+`ax-preflight-data` 로컬 volume에, 직접 실행
 데이터는 Git에서 제외된 `artifacts/local_datasets/`에 저장됩니다. 기본 안전 한도는
-5,000개 파일·1 GiB이며
-`AX_PRODUCT_LOCAL_SCAN_MAX_FILES`, `AX_PRODUCT_LOCAL_SCAN_MAX_BYTES`로 조정할 수
-있습니다.
+5,000개 파일·전체 1 GiB·파일당 100 MiB이며
+`AX_PRODUCT_LOCAL_SCAN_MAX_FILES`, `AX_PRODUCT_LOCAL_SCAN_MAX_BYTES`,
+`AX_PRODUCT_LOCAL_SCAN_MAX_FILE_BYTES`로 조정할 수 있습니다. 이 세 한도는 서버에서
+다시 검사합니다.
+
+관리자가 복사 없는 서버 경로 점검을 의도적으로 허용하려면 별도의 읽기 전용 bind
+mount와 `AX_ALLOWED_SCAN_ROOTS`를 함께 설정합니다. 이 기능은 일반 심사에는 필요하지
+않습니다. 아래 명령에서 화면에 입력할 경로는 호스트 경로가 아니라
+`/review-input/...`입니다.
+
+Windows 명령 프롬프트:
+
+```bat
+set "AX_REVIEW_INPUT=C:\review-data"
+docker compose -f compose.yaml -f compose.path-scan.yaml up --build
+```
+
+Windows PowerShell:
+
+```powershell
+$env:AX_REVIEW_INPUT = "C:\review-data"
+docker compose -f compose.yaml -f compose.path-scan.yaml up --build
+```
+
+macOS / Linux:
+
+```bash
+AX_REVIEW_INPUT=/absolute/path/to/review-data \
+  docker compose -f compose.yaml -f compose.path-scan.yaml up --build
+```
+
+직접 API를 실행할 때 여러 허용 루트가 필요하면 `AX_ALLOWED_SCAN_ROOTS`에 운영체제의
+경로 구분자(Windows `;`, macOS/Linux `:`)로 나열하거나 JSON 문자열 배열을 사용합니다.
+resolve된 실제 경로만 허용되며 `..`, 심볼릭 링크·junction을 통한 이탈, AX Preflight의
+상태·run·접근 제어 경로, 다른 프로젝트가 이미 사용하는 원본 경로는 거부됩니다.
 
 로컬·라이브 factory는 로그인, HttpOnly SameSite 세션, CSRF 검사와 프로젝트 역할
 `OWNER`·`EDITOR`·`VIEWER`를 적용합니다. 관리자 계정과 프로젝트 구성원은 화면의
@@ -135,18 +174,25 @@ start-docker.cmd
 않습니다. Docker volume을 지우면 이 로그인 상태도 함께 삭제되므로 새 관리자를 다시
  설정해야 합니다.
 
-프로젝트 OWNER는 **감사·보존·완전 삭제**에서 관리 데이터와 감사 이벤트의 검토 주기,
-법적 보존 상태를 기록할 수 있습니다. 감사 이벤트는 SHA-256 연결 해시로 순서를 봉인해
-변조를 탐지하며, 기존 비연결 기록이 있으면 화면에서 별도로 표시합니다. 이 검토 주기는
-자동 삭제 스케줄이 아닙니다. 실제 삭제는 OWNER의 프로젝트명 재입력과 서버 사후 검증을
-거쳐야 합니다.
+프로젝트 OWNER는 **감사·보존·관리 데이터 삭제**에서 관리 데이터와 감사 이벤트의 검토 주기,
+법적 보존 상태를 기록할 수 있습니다. 감사 이벤트는 단조 sequence, SHA-256 연결 해시와
+별도 checkpoint로 중간 수정·말미 삭제를 탐지하며, 외부 키 파일을 설정하면 HMAC도
+검증합니다. 키 없는 기본 모드는 OS 관리자에 대한 외부 불변 기준점이나 WORM 저장소가
+아님을 화면에 표시합니다. 손상 시 위험한 쓰기는 차단하고 inspect·repair·rotate 절차로
+원본을 quarantine한 뒤 새 복구 segment를 엽니다. 이 검토 주기는 자동 삭제 스케줄이
+아닙니다. 실제 삭제는 OWNER의 프로젝트명 재입력, 단계별 영속 operation, 서버 사후
+검증을 거쳐야 하며 실패하면 영수증에 남은 항목을 표시합니다.
 
-로컬 고객 자료를 선택하면 **PoC 평가·승인**이 정적 준비도, 온보딩, 승인 업무, 관측
-실행, `DIRECT_MATCH`, 열린 진단 신호, 모델 전달 경계와 감사 원장 상태를 함께 보여
-줍니다. GO·조건부·NO-GO 추천 규칙은 화면에 그대로 노출되며, OWNER 판단은 범위·위험
-확인과 메모를 포함해 저장됩니다. 이후 지표나 게이트가 바뀌거나 유효 기간이 끝나면 기존
-판단은 자동으로 재검토 상태가 됩니다. 이 보고서는 PoC 의사결정 지원이며 법률·보안 인증
-또는 업무 정답률 평가가 아닙니다.
+로컬 고객 자료를 선택하면 **PoC 평가·승인**이 정적 준비도, 온보딩, 승인 업무, 성공한
+최종 실행, `DIRECT_MATCH`, 열린 진단 신호, 모델 전달 경계와 감사 원장 상태를 함께
+보여 줍니다. 평가 모집단은 현재 승인된 업무의 `VERIFIED_BUSINESS_TASK` 실행 중
+`DELIVERED` 결과만 포함합니다. 승인 업무마다 성공 표본 3회 이상, 답변 표본 3회 이상과
+직접 근거 비율 80% 이상을 요구하며 반려·실패·중단·임시 질문·미승인 업무는 제외 사유와
+함께 표시합니다. 현재 실행 용량은 운영 상태로 따로 보이지만 이미 수집한 PoC 판단을
+뒤집지는 않습니다. GO·조건부·NO-GO 추천 규칙은 화면에 그대로 노출되며, OWNER 판단은
+범위·위험 확인과 메모를 포함해 저장됩니다. 이후 판단 관련 지표나 게이트가 바뀌거나 유효
+기간이 끝나면 기존 판단은 자동으로 재검토 상태가 됩니다. 이 보고서는 PoC 의사결정
+지원이며 법률·보안 인증 또는 업무 정답률 평가가 아닙니다.
 
 종료할 때는 `stop-docker.cmd`를 실행합니다. 점검 데이터를 함께 지우려면 먼저 화면에서
 각 점검 기록을 제거하십시오. `docker compose down --volumes`는 AX Preflight Docker
@@ -286,8 +332,9 @@ AX_PRODUCT_RUNNER=kiro AX_PRODUCT_RUN_TIMEOUT_SECONDS=300 \
 3. 선택 자료를 `PUBLIC`·`INTERNAL`·`CONFIDENTIAL`로 분류하고, 도구 출력의 모델
    전달·공급자 정책·민감정보 검토를 확인해 자료와 모델 조합을 승인합니다. 개인정보
    가능 패턴이 발견된 자료는 `PUBLIC`으로 승인할 수 없습니다.
-4. 단일·반복 실행 직전에 서버가 같은 정책과 승인, 만료, 잔여 실행 수·예상 비용,
-   동시 실행 수를 다시 검사합니다. 모델이 바뀌면 자료 전달 승인을 다시 받아야 합니다.
+4. 단일·반복 실행 직전에 서버가 같은 정책과 승인, 만료, 자료 리비전, 잔여 실행 수·예상 비용,
+   동시 실행 수를 다시 검사합니다. 모델이나 파일 내용·경로·마스킹 결과가 바뀌면 자료 전달
+   승인을 다시 받아야 하며, 표시 이름만 바뀐 재점검은 같은 리비전으로 유지됩니다.
 
 구성 형식과 실행 계약은 [제품 기술 문서](ax_product/README.md)에 설명되어 있습니다.
 
@@ -297,7 +344,7 @@ AX_PRODUCT_RUNNER=kiro AX_PRODUCT_RUN_TIMEOUT_SECONDS=300 \
 - 대표 결과는 30개 파일과 10개 업무를 두 상태에서 각 3회 실행한 탐색 snapshot입니다. 핵심 개선 주장은 실제로 수정한 반품 기간 업무의 0/3 → 3/3 변화에 한정합니다.
 - 근거와 답의 직접 일치는 인용된 구조화 응답에 답 값이 존재한다는 뜻입니다. 업무 정답률 평가는 별도의 기준 데이터와 검토가 필요합니다.
 - 라이브 실행에서는 OWNER가 자료 등급과 전달 경계를 승인해야 하며, 데이터 도구가 반환한 문서 일부와 구조화 값이 승인 모델의 처리 경계로 전달될 수 있습니다. 공급자 계정의 보존·학습·리전 정책은 OWNER가 별도로 확인해야 합니다.
-- 반복 실행은 단일 API 프로세스의 영속 큐에서 순차 처리합니다. 프로젝트별 최근 24시간 실행 수·예상 비용, 배치 크기와 동시 실행을 서버에서 제한합니다. 이 비용은 실제 토큰 청구액이 아닌 OWNER가 정한 예약 추정치이며, 분산 worker의 원자적 quota, 실제 사용량 정산, 자동 backoff·스케줄·알림은 후속 범위입니다.
+- 반복 실행은 단일 API 프로세스의 영속 큐에서 순차 처리합니다. 프로젝트별 최근 24시간 실행 수·예상 비용, 배치 크기와 동시 실행을 서버에서 제한합니다. 사용량은 프로젝트에 귀속되어 자료를 삭제·재등록해도 24시간 창이 끝날 때까지 유지됩니다. 이 비용은 실제 토큰 청구액이 아닌 OWNER가 정한 예약 추정치이며, 분산 worker의 원자적 quota, 실제 사용량 정산, 자동 backoff·스케줄·알림은 후속 범위입니다.
 - 민감정보 탐지는 데이터 준비 상태와 자료 분류 승인을 돕는 보조 신호입니다. 실제 고객 데이터에는 별도의 비식별화, DLP, 공급자 보안 검토가 필요합니다.
 - 현재 AWS 통합 범위는 Kiro CLI 기반 실행 오케스트레이션입니다. Amazon Bedrock 직접 연동과 AWS SDK 구성은 포함하지 않습니다.
 - 최종 패키지는 Windows 11에서 검증했고 공개 CI는 Ubuntu에서 통과했습니다. macOS와 WSL은 별도로 검증하지 않았습니다.

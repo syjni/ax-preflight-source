@@ -2,12 +2,18 @@
 
 이 문서는 문서 접근과 결과 저장을 로컬 경로에서 통제하는 AX Preflight 프로토타입의 실제 데이터 흐름과 구현되지 않은 통제를 구분합니다. 도구 응답은 설정된 모델 실행 경계로 전달되며, 이 문서는 프로덕션 보안 또는 규제 준수를 보장하지 않습니다.
 
+현재 심사용 고정본은
+[`v0.5.0-submission`](https://github.com/syjni/ax-preflight-source/releases/tag/v0.5.0-submission)입니다.
+공개 정적 데모와 기본 reviewer mode는 외부 모델을 호출하지 않으며, Kiro CLI live mode는
+프로젝트 OWNER가 승인한 자료 revision과 모델 경계 안에서만 도구 응답을 전달합니다.
+
 ## 처리되는 데이터
 
 `runtime_datasets.json`은 dataset profile을 로컬 source root와 scan report에 연결합니다. 문서와 실행 산출물은 로컬 경로에서 처리·저장됩니다.
 
-- 경로 방식의 `POST /api/local-datasets`는 같은 컴퓨터에서 실행 중인 API가 입력 폴더를 제자리에서 읽습니다. 원본 파일을 복사하거나 수정하지 않습니다.
+- 경로 방식의 `POST /api/local-datasets`는 기본적으로 비활성화됩니다. 관리자가 `AX_ALLOWED_SCAN_ROOTS`와 읽기 전용 bind mount를 명시한 경우에만 API가 resolve된 허용 루트 안의 입력 폴더를 제자리에서 읽습니다. 원본 파일을 복사하거나 수정하지 않습니다.
 - 선택 방식의 `POST /api/local-datasets/upload`는 브라우저가 선택한 파일을 같은 컴퓨터의 `localhost` API에 multipart로 전송합니다. 파일은 앱이 관리하는 로컬 폴더에 복사되며 외부 서비스로 전송되지 않습니다. 화면에서 점검 기록을 제거하면 이 관리 사본도 함께 삭제되고 사용자가 선택한 원본은 그대로 유지됩니다.
+- 업로드와 경로 점검은 기본 5,000개·전체 1 GiB·파일당 100 MiB 한도를 서버에서 적용합니다. 경로 점검은 심볼릭 링크·junction·`..` 이탈, AX Preflight 관리 경로와 다른 프로젝트가 사용하는 원본 경로를 거부합니다.
 - 이 로컬 정적 점검은 모델을 호출하지 않습니다. 마스킹된 추출문과 구조화된 파일 메타데이터가 `artifacts/local_datasets/` 아래에 저장되며 해당 경로는 Git에서 제외됩니다.
 - scanner와 Readiness v1은 로컬 문서 집합에서 생성된 scan report를 읽습니다.
 - product MCP의 `search_documents`, `read_document`, `lookup_value`, `query_table`은 질의에 필요한 문서 내용 또는 구조화 값을 모델에 반환합니다.
@@ -28,8 +34,9 @@ Kiro CLI는 opt-in 라이브 실행을 오케스트레이션합니다. 요청 �
 | 로컬 점검 보고서 | `artifacts/local_datasets/<profile>/scan-report.json` | 마스킹된 추출문·메타데이터 저장; 화면에서 기록 제거 가능 |
 | 브라우저 선택 관리 사본 | `artifacts/local_datasets/uploads/<upload-id>/` | localhost에서만 저장; 해당 점검 기록 제거 시 함께 삭제; 원본은 삭제하지 않음 |
 | Docker 로컬 데이터 | `ax-preflight-data` volume의 `/data/local-datasets/` | 보고서·registry·선택 관리 사본을 컨테이너 밖 로컬 volume에 보존 |
+| 삭제 operation·영수증 | `<local-datasets>/deletion_operations/<operation-id>.json` | 단계·시도·남은 항목과 프로젝트명 확인 digest를 원자 저장해 부분 실패를 재개; 프로젝트명 원문 없이 삭제 후에도 최소 영수증 유지 |
 | 계정·세션·로그인 시도·프로젝트·업무·PoC 판단 | `<local-datasets>/access_control/state.json` | 비밀번호는 Argon2id, 세션·CSRF 토큰과 로그인 식별자는 SHA-256 digest로만 저장; 프로젝트 구성원·역할·책임자 판단 저장 |
-| 실행 정책·자료 전달 승인·예상 비용 예약 | `<local-datasets>/access_control/state.json` | OWNER 지정 모델·실행 한도, dataset별 분류·model·승인 만료, 실행당 추정 비용을 저장; 모델 자격 증명 원문은 저장하지 않음 |
+| 실행 정책·자료 전달 승인·예상 비용 예약 | `<local-datasets>/access_control/state.json` | OWNER 지정 모델·실행 한도, dataset revision별 분류·model·승인 만료, 프로젝트 귀속 실행당 추정 비용을 저장; 모델 자격 증명 원문은 저장하지 않음 |
 | 보안 이벤트 | `<local-datasets>/access_control/security-audit.jsonl` | 로그인·권한·업무·전달 승인·실행 예산·보존·PoC 판단 이벤트를 SHA-256 연결 해시로 봉인; 비밀번호와 토큰 제외 |
 | 일반 실행 상태와 결과 | `artifacts/product_runs/<run_id>/` | 쓰기 가능한 run별 저장 |
 | 반복 실행 상태 | `artifacts/product_batches/<batch_id>/batch.json` | 선택 업무 질문·상태·시도·run ID·구조화 오류 코드를 원자 저장 |
@@ -47,14 +54,14 @@ assistant prose와 Kiro `finalText`는 권위 있는 제품 답도 Evidence Chec
 - 로컬 검토와 라이브 factory는 첫 관리자 설정 이후 로그인을 강제합니다. 비밀번호는 Argon2id로 해시하고, 무작위 서버 세션은 HttpOnly·SameSite=Strict 쿠키로 전달하며 서버에는 digest만 저장합니다.
 - 상태 변경 요청은 세션과 별도의 CSRF 토큰을 검사합니다. `OWNER`·`EDITOR`·`VIEWER` 역할에 따라 프로젝트 자료, 업무 등록과 승인을 제한하고, 미소속 프로젝트의 자료는 404로 숨깁니다.
 - 실패한 로그인은 기본 15분 창에서 5회까지 허용한 뒤 기본 15분간 제한합니다. 제한 상태는 로컬 상태 파일에 영속되며 식별자는 digest로만 저장합니다. 관리자는 사용자의 모든 서버 세션을 종료할 수 있고, OWNER는 OWNER가 아닌 구성원의 프로젝트 권한을 회수할 수 있습니다.
-- 프로젝트별 보관 항목을 화면에서 집계하며 OWNER가 보존 검토 주기와 법적 보존 상태를 기록합니다. 정확한 프로젝트명 재입력으로 점검 보고서, 앱 관리 사본, 구성원·업무·모델 승인, 완료된 쓰기 가능 run과 terminal batch, PoC 판단을 명시적으로 삭제합니다. 실행 중 작업, 법적 보존 또는 감사 원장 무결성 오류가 있으면 삭제하지 않습니다. 삭제 뒤 각 관리 저장소와 감사 로그의 원시 프로젝트 식별자 부재를 검사하고 증명서 ID를 반환합니다. 경로 입력 원본·브라우저에서 선택했던 원본과 frozen 결과는 삭제 대상이 아닙니다.
+- 프로젝트별 보관 항목을 화면에서 집계하며 OWNER가 보존 검토 주기와 법적 보존 상태를 기록합니다. 정확한 프로젝트명 재입력으로 점검 보고서, 앱 관리 사본, 구성원·업무·모델 승인, 완료된 쓰기 가능 run과 terminal batch, PoC 판단을 재개 가능한 단계로 삭제합니다. 각 operation은 완료 단계·남은 범주·시도 횟수를 별도 영수증에 원자 저장하며, 중간 실패는 같은 operation ID로 재개합니다. 실행 중 작업, 법적 보존 또는 감사 원장 무결성 오류가 있으면 시작하지 않습니다. 기존 감사 원장은 다시 쓰지 않으며 최소 tombstone, 체인 연속성, opaque 프로젝트 식별자와 삭제 영수증은 유지합니다. 경로 입력 원본·브라우저에서 선택했던 원본과 frozen 결과는 삭제 대상이 아닙니다.
 - 로컬 고객 dataset의 AI 실행은 OWNER가 모델·자료 전달 경계를 승인해야 합니다. 승인은 만료되며 모델 변경 시 일치하지 않는 승인을 사용할 수 없습니다. 개인정보 가능 패턴이 발견된 자료의 `PUBLIC` 분류 승인은 거절하지만, 이 패턴 검사는 DLP나 법적 개인정보 판정을 대체하지 않습니다.
-- 서버는 단일 run 예약과 배치 생성·재개·재시도 전에 최근 24시간 실행 수·예상 비용, 배치 크기와 동시 실행 한도를 검사합니다. 비용은 실제 토큰 사용량이나 청구액이 아닌 OWNER가 지정한 실행당 추정치입니다.
+- 서버는 단일 run 예약과 배치 생성·재개·재시도 전에 현재 자료 revision에 대한 전달 승인, 최근 24시간 실행 수·예상 비용, 배치 크기와 동시 실행 한도를 검사합니다. 파일 내용·상대 경로·마스킹 결과·PII 신호가 바뀌면 revision이 바뀌어 재승인이 필요하고, 표시 이름은 revision에 영향을 주지 않습니다. 사용량은 프로젝트에 귀속되어 자료 삭제로 초기화되지 않으며 24시간 창이 지난 기록만 집계에서 제외됩니다. 비용은 실제 토큰 사용량이나 청구액이 아닌 OWNER가 지정한 실행당 추정치입니다.
 - 현재 격리는 한 AX Preflight 인스턴스 안의 프로젝트 수준 접근 제어입니다. 별도 데이터베이스·스토리지 계정에 의한 조직 tenant 물리 격리나 암호화 경계는 아닙니다.
 - SSO·MFA, 계정 복구, 중앙 identity provider와 분산·네트워크 수준 rate limit은 아직 없습니다. 인터넷 또는 사내망에 공개할 때는 TLS와 reverse proxy 통제를 함께 구성해야 합니다.
 - 현재 보존 방식은 OWNER가 검토 날짜를 기록하고 명시적으로 삭제하는 `MANUAL_DELETE / OWNER_REVIEW`입니다. 법적 보존 중 삭제는 차단하지만 날짜 도래 시 자동 만료를 실행하지 않으며 백업 연계 삭제와 복구 절차도 아직 제품화되지 않았습니다.
 - 로컬 파일 권한, 장치 보안과 실행 계정의 권한이 현재 주요 경계입니다.
-- 로컬 감사 원장은 연결 해시로 사후 변조를 탐지하지만 OS 관리자에 대한 변경 불가능성을 보장하는 WORM 저장소는 아닙니다. 네트워크 배포, TLS termination, secret manager와 중앙 감사 수집은 이 프로토타입 범위가 아닙니다.
+- 로컬 감사 원장은 sequence·연결 해시·별도 checkpoint로 중간 변경, 말미 삭제와 빈 파일 교체를 탐지합니다. `AX_AUDIT_HMAC_KEY_FILE`에 저장소 밖 키를 설정한 경우 HMAC도 확인합니다. 키 없는 기본 모드는 로컬 파일을 함께 다시 쓸 수 있는 OS 관리자에 대한 외부 진실 기준이나 변경 불가능성을 제공하지 않으며 WORM 저장소가 아닙니다. `python -m ax_product.audit_ledger inspect|repair|rotate --root <access-root>`로 명시적으로 검사·복구하고, repair는 손상 원본을 hash가 포함된 quarantine 파일로 보존합니다. 네트워크 배포, TLS termination, secret manager와 중앙 감사 수집은 이 프로토타입 범위가 아닙니다.
 - 민감정보 탐지는 readiness 신호이며 완전한 탐지, 마스킹, 유출 방지 또는 접근 통제를 의미하지 않습니다.
 - 신규 실행의 Evidence Checker v3는 frozen v2의 제한된 결정론적 검사를 먼저 적용하고, 명시적으로 폐기된 수량을 현재 직접 근거로 승격하지 않습니다. frozen v1·v2 결과는 비변조 보존합니다. `UNCONFIRMED`는 확인되지 않음을 뜻하며 오답이나 보안 위반 판정이 아닙니다.
 - 일반 후보 catalog는 고객 데이터가 아닌 제품 기본값입니다. 기본 공개 기록은 `CONTROLLED_DEMO`이고, 프로젝트 OWNER가 화면에서 승인한 로컬 업무만 `CUSTOMER` 범위로 분리해 기록합니다. 실제 조직에서는 승인 책임자 지정과 변경 관리 절차를 함께 운영해야 합니다.

@@ -336,7 +336,7 @@ class BatchApiTests(unittest.TestCase):
         self.assertEqual(response.json()["detail"], "TASK_CANDIDATE_MISMATCH")
         self.assertFalse((self.batch_root / "invalid-batch").exists())
 
-    def test_runner_free_app_cannot_recover_or_control_live_batch(self) -> None:
+    def test_runner_free_app_recovers_stale_batch_but_cannot_resume_it(self) -> None:
         created_at = "2026-09-28T00:00:00Z"
         store = BatchStore(self.batch_root)
         store.create(BatchStatus(
@@ -367,12 +367,17 @@ class BatchApiTests(unittest.TestCase):
         read_only = self.client(None)
         self.assertEqual(
             read_only.get("/api/batches/live-elsewhere").json()["state"],
-            "RUNNING",
+            "PAUSED",
         )
-        blocked = read_only.post("/api/batches/live-elsewhere/cancel")
+        recovered = store.read("live-elsewhere")
+        self.assertEqual(recovered.items[0].status, "FAILED")
+        self.assertEqual(
+            recovered.items[0].error_code, "INTERRUPTED_BY_RESTART"
+        )
+        blocked = read_only.post("/api/batches/live-elsewhere/retry")
         self.assertEqual(blocked.status_code, 503)
         self.assertEqual(blocked.json()["detail"], "RUNNER_UNAVAILABLE")
-        self.assertEqual(store.read("live-elsewhere").state, "RUNNING")
+        self.assertEqual(store.read("live-elsewhere").state, "PAUSED")
 
 
 if __name__ == "__main__":

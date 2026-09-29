@@ -150,7 +150,8 @@
             "INVALID_RUN",
             "MODEL_FALLBACK",
             "FORBIDDEN_TOOL",
-            "RUNTIME_ERROR"
+            "RUNTIME_ERROR",
+            "INTERRUPTED_BY_RESTART"
           ],
           "type": "string"
         },

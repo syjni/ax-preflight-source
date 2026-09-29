@@ -6,6 +6,19 @@
       "minLength": 1,
       "title": "Confirmation",
       "type": "string"
+    },
+    "operation_id": {
+      "anyOf": [
+        {
+          "pattern": "^del_[a-f0-9]{32}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Operation Id"
     }
   },
   "required": [

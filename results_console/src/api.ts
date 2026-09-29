@@ -1,4 +1,4 @@
-import type { AuthSessionResponse, BatchCreateRequest, BatchStatus, BootstrapRequest, CreateUserRequest, DataTransferApprovalRequest, DataTransferApprovalView, DatasetsResponse, DeliveryEnvelope, EvidenceCheckResult, ExecutionPolicyUpdate, FeaturedCase, FeaturedCasesResponse, FeaturedRunReference, FindingsResponse, LocalDatasetDeleteResult, LocalDatasetRequest, LocalDatasetScanResult, LoginRequest, OnboardingAssessment, PocDecisionUpdate, PocEvaluationReport, ProductCapabilities, ProjectAuditLog, ProjectCreateRequest, ProjectDataInventory, ProjectExecutionControl, ProjectExecutionPolicyView, ProjectMemberRequest, ProjectMemberView, ProjectPurgeResult, ProjectRetentionPolicyUpdate, ProjectRetentionPolicyView, ProjectTaskView, ProjectView, ReadinessResponse, RetrievalTrace, RunRequest, RunningRun, SessionRevocationResult, TaskCreateRequest, TasksResponse, UserView } from './generated/api';
+import type { AuthSessionResponse, BatchCreateRequest, BatchStatus, BootstrapRequest, CreateUserRequest, DataTransferApprovalRequest, DataTransferApprovalView, DatasetsResponse, DeletionOperationView, DeliveryEnvelope, EvidenceCheckResult, ExecutionPolicyUpdate, FeaturedCase, FeaturedCasesResponse, FeaturedRunReference, FindingsResponse, LocalDatasetDeleteResult, LocalDatasetRequest, LocalDatasetScanResult, LoginRequest, OnboardingAssessment, PocDecisionUpdate, PocEvaluationReport, ProductCapabilities, ProjectAuditLog, ProjectCreateRequest, ProjectDataInventory, ProjectExecutionControl, ProjectExecutionPolicyView, ProjectMemberRequest, ProjectMemberView, ProjectPurgeResult, ProjectRetentionPolicyUpdate, ProjectRetentionPolicyView, ProjectTaskView, ProjectView, ReadinessResponse, RetrievalTrace, RunRequest, RunningRun, SessionRevocationResult, TaskCreateRequest, TasksResponse, UserView } from './generated/api';
 
 export type RunResult = RunningRun | DeliveryEnvelope;
 export type { FeaturedCase, FeaturedRunReference };
@@ -121,7 +121,8 @@ export const api = {
   projectDataInventory: (projectId: string): Promise<ProjectDataInventory> => request<ProjectDataInventory>(`/api/projects/${encodeURIComponent(projectId)}/data-inventory`),
   projectAuditLog: (projectId: string): Promise<ProjectAuditLog> => request<ProjectAuditLog>(`/api/projects/${encodeURIComponent(projectId)}/audit-log`),
   updateRetentionPolicy: (projectId: string, body: ProjectRetentionPolicyUpdate): Promise<ProjectRetentionPolicyView> => request<ProjectRetentionPolicyView>(`/api/projects/${encodeURIComponent(projectId)}/retention-policy`, { method: 'PUT', body: JSON.stringify(body) }),
-  purgeProject: (projectId: string, confirmation: string): Promise<ProjectPurgeResult> => request<ProjectPurgeResult>(`/api/projects/${encodeURIComponent(projectId)}/purge`, { method: 'POST', body: JSON.stringify({ confirmation }) }),
+  purgeProject: (projectId: string, confirmation: string, operationId?: string): Promise<ProjectPurgeResult> => request<ProjectPurgeResult>(`/api/projects/${encodeURIComponent(projectId)}/purge`, { method: 'POST', body: JSON.stringify({ confirmation, ...(operationId ? { operation_id: operationId } : {}) }) }),
+  deletionOperation: (operationId: string): Promise<DeletionOperationView> => request<DeletionOperationView>(`/api/deletions/${encodeURIComponent(operationId)}`),
   pocEvaluation: (projectId: string, datasetProfile: string): Promise<PocEvaluationReport> => request<PocEvaluationReport>(`/api/projects/${encodeURIComponent(projectId)}/poc-evaluation?dataset_profile=${encodeURIComponent(datasetProfile)}`),
   recordPocDecision: (projectId: string, datasetProfile: string, body: PocDecisionUpdate): Promise<PocEvaluationReport> => request<PocEvaluationReport>(`/api/projects/${encodeURIComponent(projectId)}/poc-evaluation/decision?dataset_profile=${encodeURIComponent(datasetProfile)}`, { method: 'PUT', body: JSON.stringify(body) }),
   projectExecutionControl: (projectId: string, datasetProfile?: string): Promise<ProjectExecutionControl> => {
@@ -142,12 +143,14 @@ export const api = {
         mode: 'STATIC_DEMO',
         local_dataset_scan: false,
         local_file_upload: false,
+        local_path_scan: false,
         ai_task_execution: false,
         bundled_demo: true,
         source_files_stay_local: true,
         supported_extensions: ['.txt', '.pdf', '.docx', '.csv', '.xlsx'],
         max_upload_files: 5000,
         max_upload_bytes: 1073741824,
+        max_upload_file_bytes: 104857600,
         pdf_table_extraction: true,
         ocr_available: false,
         ocr_languages: [],
@@ -207,9 +210,9 @@ export const api = {
   localDataset: (profile: string) => staticMode
     ? Promise.reject(new ApiError(403, 'LOCAL_SCAN_UNAVAILABLE'))
     : request<LocalDatasetScanResult>(`/api/local-datasets/${encodeURIComponent(profile)}`),
-  deleteLocalDataset: (profile: string) => staticMode
+  deleteLocalDataset: (profile: string, operationId?: string) => staticMode
     ? Promise.reject(new ApiError(403, 'LOCAL_SCAN_UNAVAILABLE'))
-    : request<LocalDatasetDeleteResult>(`/api/local-datasets/${encodeURIComponent(profile)}`, { method: 'DELETE' }),
+    : request<LocalDatasetDeleteResult>(`/api/local-datasets/${encodeURIComponent(profile)}${operationId ? `?operation_id=${encodeURIComponent(operationId)}` : ''}`, { method: 'DELETE' }),
 };
 
 export function runState(run: RunResult): 'RUNNING' | 'DELIVERED' | 'REJECTED' {

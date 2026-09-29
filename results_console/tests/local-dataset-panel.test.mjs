@@ -7,9 +7,10 @@ import { LocalDatasetPanel } from '../src/components/LocalDatasetPanel.tsx';
 
 const capabilities = {
   mode: 'LOCAL_REVIEW', local_dataset_scan: true, ai_task_execution: false,
-  local_file_upload: true, bundled_demo: true, source_files_stay_local: true,
+  local_file_upload: true, local_path_scan: true, bundled_demo: true, source_files_stay_local: true,
   supported_extensions: ['.txt', '.pdf', '.docx', '.csv', '.xlsx'],
   max_upload_files: 5000, max_upload_bytes: 1073741824,
+  max_upload_file_bytes: 104857600,
   pdf_table_extraction: true, ocr_available: false, ocr_languages: [],
   ocr_install_hint: 'Docker 실행에는 OCR이 포함됩니다.',
 };
@@ -95,7 +96,7 @@ test('reviewer can scan a local folder and inspect actionable file results', asy
   })));
 
   await act(async () => {
-    [...container.querySelectorAll('[role="tab"]')].find((button) => /경로 입력/.test(button.textContent)).click();
+    [...container.querySelectorAll('[role="tab"]')].find((button) => /허용된 서버 폴더/.test(button.textContent)).click();
   });
 
   const pathInput = container.querySelector('#local-source-path');
@@ -156,6 +157,19 @@ test('reviewer can choose browser files and send them only to the local upload e
   assert.ok(requests[0].init.body instanceof dom.window.FormData);
   assert.deepEqual(JSON.parse(requests[0].init.body.get('relative_paths')), ['orders.csv']);
   assert.match(container.textContent, /로컬 관리 복사본/);
+});
+
+test('Docker-safe reviewer mode defaults to browser folder upload and hides server paths', async () => {
+  await act(async () => root.render(React.createElement(LocalDatasetPanel, {
+    capabilities: { ...capabilities, local_path_scan: false },
+    capabilitiesError: '', selectedDataset: null,
+    onScanned: () => {}, onDeleted: () => {},
+  })));
+
+  assert.match(container.textContent, /호스트 폴더의 파일을 브라우저가 로컬 Docker API로 전송/);
+  assert.match(container.textContent, /파일·폴더 선택/);
+  assert.doesNotMatch(container.textContent, /폴더 경로 입력/);
+  assert.equal(container.querySelector('#local-source-path'), null);
 });
 
 test('public demo preserves the example while clearly routing local review to source', async () => {

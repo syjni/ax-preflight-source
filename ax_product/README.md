@@ -318,8 +318,9 @@ dataset and run-ID pairs in the [representative README](../README.md).
 
 `create_local_review_app_from_env` combines the verified frozen example with a
 local-only dataset store. It has no model runner and leaves run and batch
-mutation disabled, while `POST /api/local-datasets` accepts an absolute folder
-path on the same computer. `POST /api/local-datasets/upload` accepts browser
+mutation disabled. `POST /api/local-datasets` accepts a server folder only when
+`AX_ALLOWED_SCAN_ROOTS` explicitly contains its resolved root.
+`POST /api/local-datasets/upload` accepts browser
 file selection at localhost and stores it under the managed `uploads/` root.
 The scanner writes a PII-masked report and registry below
 `artifacts/local_datasets/`, and exposes the new profile through the existing
@@ -333,10 +334,13 @@ python -m uvicorn ax_product.api:create_local_review_app_from_env --factory --ho
 ```
 
 `AX_PRODUCT_LOCAL_DATASETS_ROOT` changes the generated store location.
-`AX_PRODUCT_LOCAL_SCAN_MAX_FILES` and `AX_PRODUCT_LOCAL_SCAN_MAX_BYTES` set
-positive safety limits; the defaults are 5,000 files and 1 GiB. Drive roots,
-symlinks, missing directories, and paths overlapping the generated store are
-rejected before scanning. Deleting a local profile removes only generated
+`AX_PRODUCT_LOCAL_SCAN_MAX_FILES`, `AX_PRODUCT_LOCAL_SCAN_MAX_BYTES`, and
+`AX_PRODUCT_LOCAL_SCAN_MAX_FILE_BYTES` set positive server-enforced safety
+limits; the defaults are 5,000 files, 1 GiB total, and 100 MiB per file. With no
+`AX_ALLOWED_SCAN_ROOTS`, path scanning is disabled and browser upload remains
+available. Drive roots, paths outside resolved allowed roots, symlinks,
+junctions, management paths, and sources already assigned to another project
+are rejected before scanning. Deleting a local profile removes only generated
 records and reports, never source files.
 
 `GET /api/projects/{project_id}/data-inventory` reports project-scoped local
@@ -354,11 +358,26 @@ but automatic expiry execution, WORM audit storage, backup deletion, and
 recovery are not.
 
 `GET /api/projects/{project_id}/poc-evaluation?dataset_profile=...` combines
-readiness, onboarding, approved tasks, completed writable runs, direct evidence,
-findings, execution control, and audit integrity into explicit decision gates.
+readiness, onboarding, approved tasks, successful final writable runs, direct
+evidence, findings, model-boundary control, and audit integrity into explicit
+decision gates. Criteria version `AX_POC_GATES_V2` includes only `DELIVERED`
+`VERIFIED_BUSINESS_TASK` runs for tasks currently approved in the project. It
+requires at least three included runs per approved task, at least three answered
+runs in the direct-evidence denominator, and an 80% `DIRECT_MATCH` ratio.
+Rejected, failed, interrupted, ad-hoc, candidate, unapproved-task, and malformed
+context runs are reported as excluded populations. Current runner/capacity state
+is returned as non-decision-relevant operational information and does not change
+the recommendation or assessment fingerprint.
 `PUT /api/projects/{project_id}/poc-evaluation/decision` stores an OWNER decision,
 note, scope/risk acknowledgements, expiry, and the assessment fingerprint. A
 decision becomes stale when the evaluated metrics or gate statuses change.
+
+The frozen featured case also exposes a read-only reviewer walkthrough backed by
+the verified phase6-v4 artifacts. It connects the approved return-policy task,
+three successful runs, three direct-evidence checks, cited source IDs, failure
+recovery, model/data boundary, cost, audit/retention, and gate summary. It is
+explicitly not a live run and remains `CONDITIONAL_GO` where organization-specific
+approvals are absent.
 
 `AX_PRODUCT_OCR_MODE=auto` enables OCR only for low-text PDF pages when
 Tesseract is available. `AX_PRODUCT_OCR_MAX_PAGES` defaults to 50. PDF tables

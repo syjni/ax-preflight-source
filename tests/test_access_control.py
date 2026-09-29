@@ -29,6 +29,7 @@ class AccessControlApiTests(unittest.TestCase):
         self.local_store = LocalDatasetStore(
             base_config=ROOT / "runtime_datasets.json",
             root=self.root / "local",
+            allowed_scan_roots=[self.root],
         )
         self.access_store = AccessControlStore(self.root / "access", secure_cookie=False)
         self.client = TestClient(create_app(

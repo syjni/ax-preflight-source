@@ -6,13 +6,84 @@
       "title": "Code",
       "type": "string"
     },
+    "decision_relevant": {
+      "default": true,
+      "title": "Decision Relevant",
+      "type": "boolean"
+    },
+    "denominator": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Denominator"
+    },
     "detail": {
       "title": "Detail",
       "type": "string"
     },
+    "excluded": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Excluded"
+    },
     "label": {
       "title": "Label",
       "type": "string"
+    },
+    "minimum_ratio": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Minimum Ratio"
+    },
+    "minimum_sample": {
+      "anyOf": [
+        {
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Minimum Sample"
+    },
+    "numerator": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Numerator"
     },
     "status": {
       "enum": [

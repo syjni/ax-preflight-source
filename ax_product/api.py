@@ -11,10 +11,12 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from threading import RLock
-from typing import Literal, Protocol
+from typing import Callable, Literal, Protocol
 from uuid import uuid4
 
-from fastapi import FastAPI, File, Form, HTTPException, Request, Response, UploadFile
+from fastapi import FastAPI, HTTPException, Request, Response
+from starlette.datastructures import UploadFile
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi.responses import JSONResponse
 from pydantic import Field, model_validator
 
@@ -40,7 +42,7 @@ from .console_contracts import (
     DatasetsResponse, FeaturedCasesResponse, ReadinessResponse, TasksResponse,
 )
 from .featured_cases import verified_featured_cases
-from .findings import FindingsResponse, aggregate_findings, task_identity
+from .findings import FindingsResponse, RunContext, aggregate_findings, task_identity
 from .results import (
     CompositeResultStore, DEFAULT_RESULTS_ROOT, DuplicateRunError,
     FinalResultExistsError, RunInProgressError,
@@ -59,8 +61,10 @@ from .access_control import (
     ProjectTaskView, ProjectView, SessionRevocationResult, TaskCreateRequest,
     UserView,
 )
+from .audit_ledger import AuditLedgerIntegrityError
+from .deletion import DeletionOperation, DeletionOperationStore
 from .governance import (
-    ProjectAuditLog, ProjectDataInventory, ProjectPurgeRequest,
+    DeletionOperationView, ProjectAuditLog, ProjectDataInventory, ProjectPurgeRequest,
     ProjectPurgeResult, ProjectRetentionPolicyUpdate,
     ProjectRetentionPolicyView,
 )
@@ -70,8 +74,10 @@ from .execution_control import (
     ProjectExecutionPolicyView,
 )
 from .poc_evaluation import (
+    POC_DIRECT_EVIDENCE_MIN_RATIO, POC_DIRECT_EVIDENCE_MIN_SAMPLE,
+    POC_EVALUATION_CRITERIA_VERSION, POC_MIN_RUNS_PER_APPROVED_TASK,
     PocDecisionUpdate, PocEvaluationGate, PocEvaluationMetrics,
-    PocEvaluationReport,
+    PocEvaluationReport, PocEvaluationRunPopulation, PocEvaluationTaskSample,
 )
 from .local_datasets import (
     DEFAULT_LOCAL_DATASETS_ROOT,
@@ -104,6 +110,22 @@ CURATED_DATASETS = (
     ("demo-return-before", "반품 정책 · Before"),
     ("demo-return-after", "반품 정책 · After"),
 )
+
+EXECUTION_ERROR_ACTIONS = {
+    "BUNDLED_DATASET_READ_ONLY": "IMPORT_DATASET_INTO_PROJECT",
+    "APPROVED_TASK_REQUIRED": "SELECT_APPROVED_BUSINESS_TASK",
+    "EXECUTION_POLICY_REQUIRED": "CONFIGURE_PROJECT_EXECUTION_POLICY",
+    "DATA_TRANSFER_APPROVAL_REQUIRED": "APPROVE_DATA_TRANSFER",
+    "DATA_TRANSFER_APPROVAL_EXPIRED": "REAPPROVE_DATA_TRANSFER",
+    "DATA_TRANSFER_APPROVAL_REVISION_MISMATCH": (
+        "REAPPROVE_DATA_TRANSFER_FOR_CURRENT_REVISION"
+    ),
+    "MODEL_NOT_APPROVED": "USE_PROJECT_APPROVED_MODEL",
+    "DAILY_RUN_LIMIT_REACHED": "WAIT_FOR_ROLLING_WINDOW",
+    "DAILY_BUDGET_REACHED": "WAIT_FOR_ROLLING_WINDOW",
+    "CONCURRENCY_LIMIT_REACHED": "WAIT_FOR_RUNNING_EXECUTION",
+    "BATCH_RUN_LIMIT_EXCEEDED": "REDUCE_BATCH_SIZE",
+}
 
 
 class RunRequest(StrictProductModel):
@@ -164,13 +186,63 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
                finding_comparison_config: Path | None = None,
                task_catalog_path: Path = DEFAULT_TASK_CATALOG,
                task_approval_path: Path = DEFAULT_TASK_APPROVALS,
-               batch_root: Path | None = None,
-               local_dataset_store: LocalDatasetStore | None = None,
-               access_control: AccessControlStore | None = None) -> FastAPI:
+                batch_root: Path | None = None,
+                local_dataset_store: LocalDatasetStore | None = None,
+                access_control: AccessControlStore | None = None,
+                runtime_instance_id: str | None = None,
+                deletion_failure_injector: Callable[[str, str, str], None] | None = None,
+                ) -> FastAPI:
     app = FastAPI(title="AX Preflight API")
+    active_runtime_instance_id = runtime_instance_id or uuid4().hex
+    app.state.runtime_instance_id = active_runtime_instance_id
+
+    @app.exception_handler(StarletteHTTPException)
+    async def structured_http_error(_request: Request, exc: StarletteHTTPException) -> JSONResponse:
+        content: dict[str, object] = {"detail": exc.detail}
+        detail = str(exc.detail)
+        code = detail.split(" · ", 1)[0]
+        action = EXECUTION_ERROR_ACTIONS.get(code)
+        if action is not None:
+            content["error"] = {"code": code, "next_action": action}
+        return JSONResponse(
+            status_code=exc.status_code,
+            content=content,
+            headers=exc.headers,
+        )
+
+    @app.exception_handler(AuditLedgerIntegrityError)
+    async def audit_integrity_error(
+        _request: Request, _exc: AuditLedgerIntegrityError
+    ) -> JSONResponse:
+        return JSONResponse(
+            status_code=503,
+            content={
+                "detail": "AUDIT_LEDGER_INVALID",
+                "error": {
+                    "code": "AUDIT_LEDGER_INVALID",
+                    "next_action": "RUN_AUDIT_INSPECT_AND_REPAIR",
+                },
+            },
+        )
     lifecycle_lock = RLock()
+    deletion_store = (
+        DeletionOperationStore(
+            local_dataset_store.root / "deletion_operations",
+            failure_injector=deletion_failure_injector,
+        )
+        if local_dataset_store is not None else None
+    )
+    app.state.local_dataset_store = local_dataset_store
+    app.state.access_control = access_control
+    app.state.deletion_store = deletion_store
     if local_dataset_store is not None:
         dataset_config = local_dataset_store.config_path
+        local_dataset_store.protect_paths((
+            results_root,
+            frozen_results_root,
+            access_control.root if access_control is not None else None,
+            batch_root,
+        ))
     store = CompositeResultStore(results_root, frozen_results_root)
     evidence_lookup = EvidenceCheckLookup(store)
     task_catalog = BusinessTaskCatalog.model_validate_json(
@@ -180,6 +252,18 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
         Path(task_approval_path).read_text(encoding="utf-8")
     )
     validate_approval_registry(task_approvals, task_catalog)
+    startup_recovery = store.writable.reconcile_interrupted(
+        active_runtime_instance_id
+    )
+    if access_control is not None:
+        for recovered in startup_recovery.recovered:
+            access_control.record_runtime_recovery(
+                project_id=recovered.project_id, run_id=recovered.run_id
+            )
+        for quarantined in startup_recovery.quarantined:
+            access_control.record_runtime_recovery(
+                project_id=None, run_id=quarantined.run_id, quarantined=True
+            )
 
     def raise_access_error(exc: AccessControlError) -> None:
         status = 404 if exc.code in {"PROJECT_NOT_FOUND", "TASK_NOT_FOUND", "USER_NOT_FOUND"} else (
@@ -455,6 +539,12 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
             blockers.append("DATA_TRANSFER_APPROVAL_REQUIRED")
         elif approval.expires_at <= datetime.now(timezone.utc):
             blockers.append("DATA_TRANSFER_APPROVAL_EXPIRED")
+        elif (
+            approval.dataset_revision_fingerprint is None
+            or approval.dataset_revision_fingerprint
+            != local_dataset_store.revision_fingerprint(dataset_profile)
+        ):
+            blockers.append("DATA_TRANSFER_APPROVAL_REVISION_MISMATCH")
         elif approval.model != model:
             blockers.append("MODEL_NOT_APPROVED")
         if policy is not None:
@@ -502,6 +592,9 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
         )
         if control.blockers:
             blocker = control.blockers[0]
+            access_control.record_execution_blocked(
+                identity.user, project_id=project_id, code=blocker
+            )
             status = 503 if blocker in {
                 "RUNNER_UNAVAILABLE", "RUNNER_EXECUTABLE_UNAVAILABLE"
             } else 409
@@ -516,12 +609,26 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
         # state prevents a project purge until the run reaches a final result.
         with lifecycle_lock:
             project_id = ensure_dataset_access(request.dataset, identity, write=True)
+            if access_control is not None and project_id is None:
+                access_control.record_execution_blocked(
+                    identity.user if identity is not None else None,
+                    project_id=None,
+                    code="BUNDLED_DATASET_READ_ONLY",
+                )
+                raise HTTPException(status_code=409, detail="BUNDLED_DATASET_READ_ONLY")
             onboarding = onboarding_for(request.dataset, identity)
             if not onboarding.can_run:
                 raise HTTPException(status_code=409, detail="ONBOARDING_BLOCKED")
             if runner is None:
                 raise HTTPException(status_code=503, detail="RUNNER_UNAVAILABLE")
             resolved_request = resolve_execution_request(request, identity)
+            if access_control is not None and request.request_type != "VERIFIED_BUSINESS_TASK":
+                access_control.record_execution_blocked(
+                    identity.user if identity is not None else None,
+                    project_id=project_id,
+                    code="APPROVED_TASK_REQUIRED",
+                )
+                raise HTTPException(status_code=409, detail="APPROVED_TASK_REQUIRED")
             if (
                 project_id is not None
                 and access_control is not None
@@ -545,6 +652,8 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
                     task_key=task_key,
                     task_label=task_label,
                     request_type=request.request_type,
+                    runtime_instance_id=active_runtime_instance_id,
+                    project_id=project_id,
                 )
                 if (
                     project_id is not None
@@ -572,8 +681,18 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
             try:
                 verdict = gate.assess(request, run_id=run_id)
             except Exception:
+                if project_id is not None and access_control is not None:
+                    access_control.release_execution(
+                        identity.user if identity else None,
+                        project_id, run_id, reason="PRE_RUN_GATE_ERROR",
+                    )
                 return final_or_runtime_error(run_id, request)
             if verdict == "INVALID_RUN":
+                if project_id is not None and access_control is not None:
+                    access_control.release_execution(
+                        identity.user if identity else None,
+                        project_id, run_id, reason="PRE_RUN_GATE_REJECTED",
+                    )
                 store.write(DeliveryEnvelope(
                     delivery_status="REJECTED",
                     run_id=run_id,
@@ -583,7 +702,21 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
                 ))
                 return final_with_evidence(run_id)
             if verdict is not None:
+                if project_id is not None and access_control is not None:
+                    access_control.release_execution(
+                        identity.user if identity else None,
+                        project_id, run_id, reason="PRE_RUN_GATE_REJECTED",
+                    )
                 return final_or_runtime_error(run_id, request)
+        if project_id is not None and access_control is not None and identity is not None:
+            try:
+                access_control.finalize_execution(identity.user, project_id, run_id)
+            except Exception:
+                try:
+                    store.writable.discard_reservation(run_id)
+                except (FileNotFoundError, FinalResultExistsError):
+                    pass
+                raise
         try:
             runner.run(resolved_request, run_id=run_id, results_root=store.root)
         except Exception:
@@ -627,7 +760,8 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
             / f".{resolved_results_root.name}-product-batches"
         )
     batch_manager = BatchManager(
-        BatchStore(selected_batch_root), execute_batch_item, recover=runner is not None
+        BatchStore(selected_batch_root), execute_batch_item,
+        recover=True, runtime_instance_id=active_runtime_instance_id,
     )
 
     def project_data_inventory(
@@ -664,6 +798,100 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
         except AccessControlError as exc:
             raise_access_error(exc)
 
+    def deletion_operation_for(
+        identity: AccessIdentity | None,
+        operation_id: str,
+        *,
+        scope: Literal["PROJECT", "DATASET"] | None = None,
+        project_id: str | None = None,
+        dataset_profile: str | None = None,
+    ) -> DeletionOperation:
+        if deletion_store is None:
+            raise HTTPException(status_code=404, detail="DELETION_UNAVAILABLE")
+        try:
+            operation = deletion_store.get(operation_id)
+        except (KeyError, ValueError):
+            raise HTTPException(status_code=404, detail="DELETION_OPERATION_NOT_FOUND") from None
+        requester = identity.user.user_id if identity is not None else "LOCAL_REVIEW"
+        if not hmac.compare_digest(
+            operation.requested_by.encode("utf-8"), requester.encode("utf-8")
+        ):
+            raise HTTPException(status_code=404, detail="DELETION_OPERATION_NOT_FOUND")
+        if scope is not None and operation.scope != scope:
+            raise HTTPException(status_code=409, detail="DELETION_OPERATION_SCOPE_MISMATCH")
+        if project_id is not None and operation.project_id != project_id:
+            raise HTTPException(status_code=409, detail="DELETION_OPERATION_SCOPE_MISMATCH")
+        if dataset_profile is not None and operation.dataset_profile != dataset_profile:
+            raise HTTPException(status_code=409, detail="DELETION_OPERATION_SCOPE_MISMATCH")
+        return operation
+
+    def project_purge_result(
+        operation: DeletionOperation, *, project_name: str
+    ) -> ProjectPurgeResult:
+        assert access_control is not None
+        complete = operation.status == "COMPLETED"
+        counts = operation.counts
+        view = DeletionOperationStore.view(operation)
+        return ProjectPurgeResult(
+            project_id=operation.project_id or "",
+            project_name=project_name,
+            purge_receipt_id=operation.purge_receipt_id or operation.operation_id,
+            operation_id=operation.operation_id,
+            deletion_status="COMPLETED" if complete else "PARTIAL_FAILURE",
+            completed_stages=operation.completed_stages,
+            remaining_stages=operation.remaining_stages,
+            remaining_records=view.remaining_records,
+            attempt_count=operation.attempt_count,
+            failure_code=operation.failure_code,
+            failure_detail=operation.failure_detail,
+            completed_at=operation.completed_at,
+            verification_status="VERIFIED" if complete else "PARTIAL",
+            project_deleted=(
+                operation.project_id is not None
+                and not access_control.project_exists(operation.project_id)
+            ),
+            local_datasets_deleted=counts.get("local_datasets_deleted", 0),
+            managed_copies_deleted=counts.get("managed_copies_deleted", 0),
+            business_tasks_deleted=counts.get("business_tasks_deleted", 0),
+            writable_runs_deleted=counts.get("writable_runs_deleted", 0),
+            batches_deleted=counts.get("batches_deleted", 0),
+            project_memberships_deleted=counts.get("project_memberships_deleted", 0),
+            execution_policies_deleted=counts.get("execution_policies_deleted", 0),
+            transfer_approvals_deleted=counts.get("transfer_approvals_deleted", 0),
+            execution_usage_records_deleted=counts.get(
+                "execution_usage_records_deleted", 0
+            ),
+            poc_decisions_deleted=counts.get("poc_decisions_deleted", 0),
+            audit_events_deleted=0,
+        )
+
+    def dataset_delete_result(operation: DeletionOperation) -> LocalDatasetDeleteResult:
+        assert local_dataset_store is not None
+        complete = operation.status == "COMPLETED"
+        view = DeletionOperationStore.view(operation)
+        return LocalDatasetDeleteResult(
+            profile=operation.dataset_profile or "",
+            operation_id=operation.operation_id,
+            deletion_status=view.deletion_status,
+            completed_stages=view.completed_stages,
+            remaining_stages=view.remaining_stages,
+            remaining_records=view.remaining_records,
+            attempt_count=view.attempt_count,
+            failure_code=view.failure_code,
+            failure_detail=view.failure_detail,
+            completed_at=view.completed_at,
+            deleted=(
+                operation.dataset_profile is not None
+                and not local_dataset_store.contains(operation.dataset_profile)
+            ),
+            managed_copy_deleted=(
+                complete and bool(operation.counts.get("managed_copy_deleted", 0))
+            ),
+            task_records_deleted=operation.counts.get("task_records_deleted", 0),
+            run_records_deleted=operation.counts.get("run_records_deleted", 0),
+            batch_records_deleted=operation.counts.get("batch_records_deleted", 0),
+        )
+
     def poc_evaluation_for(
         identity: AccessIdentity, project_id: str, dataset_profile: str
     ) -> PocEvaluationReport:
@@ -684,47 +912,140 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
             project_tasks = access_control.tasks(
                 identity.user, project_id, dataset_profile=dataset_profile
             )
-            deliveries = store.writable.deliveries_for_datasets({dataset_profile})
-            direct_evidence_runs = 0
-            for delivery in deliveries:
+            approved_tasks = {
+                task.task_id: task for task in project_tasks
+                if task.status == "APPROVED"
+            }
+            all_deliveries = store.writable.deliveries_for_datasets({dataset_profile})
+            included: list[tuple[DeliveryEnvelope, RunContext]] = []
+            excluded_rejected = 0
+            excluded_runtime_failure = 0
+            excluded_non_verified = 0
+            excluded_unapproved = 0
+            excluded_missing_context = 0
+            for delivery in all_deliveries:
+                context_path = (
+                    store.writable.path(delivery.run_id).parent / "run-context.json"
+                )
                 try:
-                    if evidence_lookup.writable.read(delivery.run_id).verdict == "DIRECT_MATCH":
+                    context = RunContext.model_validate_json(
+                        context_path.read_text(encoding="utf-8")
+                    )
+                    if (
+                        context.run_id != delivery.run_id
+                        or context.dataset != dataset_profile
+                    ):
+                        raise ValueError("run context does not match delivery")
+                except (FileNotFoundError, ValueError):
+                    excluded_missing_context += 1
+                    continue
+                if context.request_type != "VERIFIED_BUSINESS_TASK":
+                    excluded_non_verified += 1
+                    continue
+                if context.task_id != delivery.task_id:
+                    excluded_missing_context += 1
+                    continue
+                if context.task_id not in approved_tasks:
+                    excluded_unapproved += 1
+                    continue
+                if delivery.delivery_status != "DELIVERED":
+                    if delivery.reject_reason == "RUNTIME_ERROR":
+                        excluded_runtime_failure += 1
+                    else:
+                        excluded_rejected += 1
+                    continue
+                included.append((delivery, context))
+
+            included_ids = {delivery.run_id for delivery, _context in included}
+            included_deliveries = [delivery for delivery, _context in included]
+            answered_deliveries = [
+                delivery for delivery in included_deliveries
+                if delivery.payload is not None and delivery.payload.status == "ANSWERED"
+            ]
+            abstained_deliveries = [
+                delivery for delivery in included_deliveries
+                if delivery.payload is not None and delivery.payload.status == "ABSTAINED"
+            ]
+            direct_evidence_runs = 0
+            evidence_verdicts: dict[str, str] = {}
+            for delivery in answered_deliveries:
+                try:
+                    verdict = evidence_lookup.writable.read(delivery.run_id).verdict
+                    evidence_verdicts[delivery.run_id] = verdict
+                    if verdict == "DIRECT_MATCH":
                         direct_evidence_runs += 1
                 except (FileNotFoundError, ValueError):
+                    evidence_verdicts[delivery.run_id] = "MISSING"
                     continue
+            direct_evidence_denominator = len(answered_deliveries)
+            direct_evidence_ratio = (
+                direct_evidence_runs / direct_evidence_denominator
+                if direct_evidence_denominator else 0.0
+            )
+            run_counts = {
+                task_id: sum(
+                    context.task_id == task_id for _delivery, context in included
+                )
+                for task_id in approved_tasks
+            }
+            task_samples = [
+                PocEvaluationTaskSample(
+                    task_id=task.task_id,
+                    task_label=task.question,
+                    included_runs=run_counts[task.task_id],
+                    minimum_runs=POC_MIN_RUNS_PER_APPROVED_TASK,
+                    sample_complete=(
+                        run_counts[task.task_id] >= POC_MIN_RUNS_PER_APPROVED_TASK
+                    ),
+                )
+                for task in project_tasks if task.status == "APPROVED"
+            ]
             findings_result = aggregate_findings(
                 store,
                 dataset_profile,
                 comparison_config=finding_comparison_config,
                 include_inconsistency_findings=include_inconsistency_findings,
+                comparison_version="v2",
+                include_run_ids=included_ids,
             )
+            repeated_task_ids = {
+                task_id for task_id, count in run_counts.items()
+                if count >= POC_MIN_RUNS_PER_APPROVED_TASK
+            }
+            open_findings = [
+                item for item in findings_result.findings
+                if item.comparison_status != "NOT_REPRODUCED_AFTER"
+            ]
+            finding_task_ids = {
+                task_id
+                for item in open_findings
+                for task_id in item.affected_task_ids
+            }
             metrics = PocEvaluationMetrics(
                 readiness_score=readiness_result.readiness.readiness_score,
                 onboarding_status=onboarding_result.status,
                 registered_tasks=len(project_tasks),
-                approved_tasks=sum(task.status == "APPROVED" for task in project_tasks),
-                observed_runs=len(deliveries),
-                answered_runs=sum(
-                    delivery.delivery_status == "DELIVERED"
-                    and delivery.payload is not None
-                    and delivery.payload.status == "ANSWERED"
-                    for delivery in deliveries
-                ),
-                abstained_runs=sum(
-                    delivery.delivery_status == "DELIVERED"
-                    and delivery.payload is not None
-                    and delivery.payload.status == "ABSTAINED"
-                    for delivery in deliveries
-                ),
-                rejected_runs=sum(
-                    delivery.delivery_status == "REJECTED" for delivery in deliveries
-                ),
+                approved_tasks=len(approved_tasks),
+                observed_runs=len(included_deliveries),
+                answered_runs=len(answered_deliveries),
+                abstained_runs=len(abstained_deliveries),
+                rejected_runs=excluded_rejected + excluded_runtime_failure,
                 direct_evidence_runs=direct_evidence_runs,
-                stable_tasks=findings_result.diagnostics.processable_task_count,
-                open_findings=sum(
-                    item.comparison_status != "NOT_REPRODUCED_AFTER"
-                    for item in findings_result.findings
-                ),
+                direct_evidence_ratio=direct_evidence_ratio,
+                repeated_tasks=len(repeated_task_ids),
+                stable_tasks=len(repeated_task_ids - finding_task_ids),
+                open_findings=len(open_findings),
+            )
+            run_population = PocEvaluationRunPopulation(
+                total_final_runs=len(all_deliveries),
+                included_runs=len(included_deliveries),
+                included_answered_runs=len(answered_deliveries),
+                included_abstained_runs=len(abstained_deliveries),
+                excluded_rejected_runs=excluded_rejected,
+                excluded_runtime_failure_runs=excluded_runtime_failure,
+                excluded_non_verified_request_runs=excluded_non_verified,
+                excluded_unapproved_task_runs=excluded_unapproved,
+                excluded_missing_context_runs=excluded_missing_context,
             )
             execution_control = execution_control_for(
                 identity, project_id, dataset_profile
@@ -733,10 +1054,37 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
                 identity.user, project_id
             )
 
-            def gate(code: str, label: str, status: str, detail: str) -> PocEvaluationGate:
+            def gate(
+                code: str, label: str, status: str, detail: str, **counts: object
+            ) -> PocEvaluationGate:
                 return PocEvaluationGate(
-                    code=code, label=label, status=status, detail=detail
+                    code=code, label=label, status=status, detail=detail, **counts
                 )
+
+            excluded_total = len(all_deliveries) - len(included_deliveries)
+            samples_complete = bool(task_samples) and all(
+                sample.sample_complete for sample in task_samples
+            )
+            evidence_complete = (
+                direct_evidence_denominator >= POC_DIRECT_EVIDENCE_MIN_SAMPLE
+                and direct_evidence_ratio >= POC_DIRECT_EVIDENCE_MIN_RATIO
+            )
+            approval = execution_control.transfer_approval
+            policy = execution_control.policy
+            boundary_ready = bool(
+                policy is not None
+                and approval is not None
+                and approval.expires_at > datetime.now(timezone.utc)
+                and approval.model == policy.model
+            )
+            capacity_blockers = [
+                blocker for blocker in execution_control.blockers
+                if blocker in {
+                    "RUNNER_UNAVAILABLE", "RUNNER_EXECUTABLE_UNAVAILABLE",
+                    "DAILY_RUN_LIMIT_REACHED", "DAILY_BUDGET_REACHED",
+                    "CONCURRENCY_LIMIT_REACHED",
+                }
+            ]
 
             gates = [
                 gate(
@@ -753,27 +1101,55 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
                 ),
                 gate(
                     "BUSINESS_SCOPE", "업무 범위 승인",
-                    "BLOCK" if metrics.registered_tasks == 0
+                    "BLOCK" if metrics.registered_tasks == 0 or metrics.approved_tasks == 0
                     else "PASS" if metrics.approved_tasks == metrics.registered_tasks
                     else "WARN",
                     f"승인 {metrics.approved_tasks}/{metrics.registered_tasks}개",
                 ),
                 gate(
                     "EXECUTION_SAMPLE", "관측 실행 표본",
-                    "PASS" if metrics.observed_runs >= 3
-                    else "WARN" if metrics.observed_runs > 0 else "BLOCK",
-                    f"완료 실행 {metrics.observed_runs}회 · 최소 검토 표본 3회",
+                    "PASS" if samples_complete else "BLOCK",
+                    f"승인 업무별 성공 최종 실행 최소 {POC_MIN_RUNS_PER_APPROVED_TASK}회 · 포함 {metrics.observed_runs}회 · 제외 {excluded_total}회",
+                    numerator=metrics.observed_runs,
+                    denominator=sum(
+                        max(POC_MIN_RUNS_PER_APPROVED_TASK, sample.included_runs)
+                        for sample in task_samples
+                    ) if task_samples else POC_MIN_RUNS_PER_APPROVED_TASK,
+                    excluded=excluded_total,
+                    minimum_sample=POC_MIN_RUNS_PER_APPROVED_TASK,
                 ),
                 gate(
                     "DIRECT_EVIDENCE", "직접 근거 연결",
-                    "PASS" if metrics.direct_evidence_runs > 0 else "BLOCK",
-                    f"DIRECT_MATCH {metrics.direct_evidence_runs}회 · 답변 {metrics.answered_runs}회",
+                    "PASS" if evidence_complete else "BLOCK",
+                    f"DIRECT_MATCH {metrics.direct_evidence_runs}/{direct_evidence_denominator}회 · {direct_evidence_ratio * 100:.1f}% · 기준 {POC_DIRECT_EVIDENCE_MIN_SAMPLE}회 이상 및 {POC_DIRECT_EVIDENCE_MIN_RATIO * 100:.0f}% 이상",
+                    numerator=metrics.direct_evidence_runs,
+                    denominator=direct_evidence_denominator,
+                    excluded=excluded_total,
+                    minimum_sample=POC_DIRECT_EVIDENCE_MIN_SAMPLE,
+                    minimum_ratio=POC_DIRECT_EVIDENCE_MIN_RATIO,
+                ),
+                gate(
+                    "REPEAT_STABILITY", "반복 안정성",
+                    "BLOCK" if not repeated_task_ids
+                    else "PASS" if metrics.stable_tasks == metrics.repeated_tasks
+                    else "WARN",
+                    f"실제 {POC_MIN_RUNS_PER_APPROVED_TASK}회 이상 반복 업무 {metrics.repeated_tasks}개 · 열린 신호 없는 업무 {metrics.stable_tasks}개",
+                    numerator=metrics.stable_tasks,
+                    denominator=metrics.repeated_tasks,
+                    minimum_sample=POC_MIN_RUNS_PER_APPROVED_TASK,
                 ),
                 gate(
                     "MODEL_BOUNDARY", "모델·데이터 전달 경계",
-                    "PASS" if execution_control.can_execute else "BLOCK",
-                    "실행 가능" if execution_control.can_execute
-                    else f"차단: {', '.join(execution_control.blockers)}",
+                    "PASS" if boundary_ready else "BLOCK",
+                    "모델 정책과 유효한 자료 전달 승인이 일치합니다."
+                    if boundary_ready else "모델 정책·자료 전달 승인 또는 유효 기간을 확인하세요.",
+                ),
+                gate(
+                    "EXECUTION_CAPACITY", "현재 실행 용량",
+                    "WARN" if capacity_blockers else "PASS",
+                    "현재 신규 실행 차단: " + ", ".join(capacity_blockers)
+                    if capacity_blockers else "현재 신규 실행 용량이 남아 있습니다.",
+                    decision_relevant=False,
                 ),
                 gate(
                     "AUDIT_INTEGRITY", "감사 원장 무결성",
@@ -788,17 +1164,54 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
                     f"열린 신호 {metrics.open_findings}건 · 안정 처리 업무 {metrics.stable_tasks}개",
                 ),
             ]
+            decision_gates = [item for item in gates if item.decision_relevant]
             recommendation = (
-                "NO_GO" if any(item.status == "BLOCK" for item in gates)
-                else "CONDITIONAL_GO" if any(item.status == "WARN" for item in gates)
+                "NO_GO" if any(item.status == "BLOCK" for item in decision_gates)
+                else "CONDITIONAL_GO" if any(item.status == "WARN" for item in decision_gates)
                 else "GO"
             )
             fingerprint_payload = {
+                "criteria_version": POC_EVALUATION_CRITERIA_VERSION,
                 "project_id": project_id,
                 "dataset_profile": dataset_profile,
-                "metrics": metrics.model_dump(mode="json"),
+                "readiness": readiness_result.model_dump(mode="json"),
+                "onboarding": onboarding_result.model_dump(mode="json"),
+                "approved_tasks": [
+                    approved_tasks[task_id].model_dump(mode="json")
+                    for task_id in sorted(approved_tasks)
+                ],
+                "included_runs": [
+                    {
+                        "delivery": delivery.model_dump(mode="json"),
+                        "context": context.model_dump(mode="json"),
+                        "evidence_verdict": evidence_verdicts.get(
+                            delivery.run_id,
+                            "NOT_APPLICABLE" if delivery.payload is not None
+                            and delivery.payload.status == "ABSTAINED" else "MISSING",
+                        ),
+                    }
+                    for delivery, context in sorted(
+                        included, key=lambda item: item[0].run_id
+                    )
+                ],
+                "findings": findings_result.model_dump(mode="json"),
+                "model_boundary": {
+                    "policy_model": policy.model if policy else None,
+                    "approval_id": approval.approval_id if approval else None,
+                    "approval_model": approval.model if approval else None,
+                    "approval_expires_at": (
+                        approval.expires_at.isoformat() if approval else None
+                    ),
+                },
+                "audit_status": audit_status,
                 "gates": [
-                    {"code": item.code, "status": item.status} for item in gates
+                    {
+                        "code": item.code,
+                        "status": item.status,
+                        "numerator": item.numerator,
+                        "denominator": item.denominator,
+                    }
+                    for item in decision_gates
                 ],
                 "recommendation": recommendation,
             }
@@ -831,6 +1244,8 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
                 generated_at=datetime.now(timezone.utc),
                 assessment_fingerprint=assessment_fingerprint,
                 metrics=metrics,
+                run_population=run_population,
+                task_samples=task_samples,
                 gates=gates,
                 recommendation=recommendation,
                 decision=decision,
@@ -1091,6 +1506,11 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
                 project_id,
                 request_body,
                 pii_affected_file_count=pii_count,
+                dataset_revision_fingerprint=(
+                    local_dataset_store.revision_fingerprint(
+                        request_body.dataset_profile
+                    )
+                ),
             )
         except AccessControlError as exc:
             raise_access_error(exc)
@@ -1209,72 +1629,173 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
     def purge_project(
         project_id: str, request_body: ProjectPurgeRequest, request: Request
     ) -> ProjectPurgeResult:
-        if access_control is None or local_dataset_store is None:
+        if (
+            access_control is None
+            or local_dataset_store is None
+            or deletion_store is None
+        ):
             raise HTTPException(status_code=404, detail="PROJECT_GOVERNANCE_UNAVAILABLE")
         identity = identity_for(request)
         with lifecycle_lock:
-            try:
-                projects = access_control.projects(identity.user)
-                project = next(
-                    (item for item in projects if item.project_id == project_id), None
+            if request_body.operation_id is not None:
+                operation = deletion_operation_for(
+                    identity,
+                    request_body.operation_id,
+                    scope="PROJECT",
+                    project_id=project_id,
                 )
+                if not hmac.compare_digest(
+                    hashlib.sha256(
+                        request_body.confirmation.encode("utf-8")
+                    ).hexdigest(),
+                    operation.project_name_digest or "",
+                ):
+                    raise HTTPException(
+                        status_code=422,
+                        detail="PROJECT_NAME_CONFIRMATION_MISMATCH",
+                    )
+            else:
+                try:
+                    projects = access_control.projects(identity.user)
+                    project = next(
+                        (item for item in projects if item.project_id == project_id),
+                        None,
+                    )
+                    access_control.require_project(
+                        identity.user, project_id, owner=True
+                    )
+                except AccessControlError as exc:
+                    raise_access_error(exc)
+                if project is None:
+                    raise HTTPException(status_code=404, detail="PROJECT_NOT_FOUND")
+                if not hmac.compare_digest(
+                    request_body.confirmation.encode("utf-8"),
+                    project.name.encode("utf-8"),
+                ):
+                    raise HTTPException(
+                        status_code=422,
+                        detail="PROJECT_NAME_CONFIRMATION_MISMATCH",
+                    )
+                inventory = project_data_inventory(identity, project_id)
+                if inventory.running_run_count or inventory.active_batch_count:
+                    raise HTTPException(status_code=409, detail="PROJECT_DATA_IN_USE")
+                if inventory.retention_policy.legal_hold:
+                    raise HTTPException(status_code=409, detail="PROJECT_LEGAL_HOLD")
+                audit_status, _audit_count = access_control.audit_integrity(
+                    identity.user, project_id
+                )
+                if audit_status == "INVALID":
+                    raise HTTPException(status_code=409, detail="AUDIT_LEDGER_INVALID")
+                records = local_dataset_store.project_records(project_id)
+                profiles = [profile for profile, _managed in records]
+                operation = deletion_store.create(
+                    scope="PROJECT",
+                    requested_by=identity.user.user_id,
+                    project_id=project_id,
+                    project_name_digest=hashlib.sha256(
+                        project.name.encode("utf-8")
+                    ).hexdigest(),
+                    purge_receipt_id=f"purge_{uuid4().hex}",
+                    dataset_profiles=profiles,
+                    stages=(
+                        "AUDIT_REQUEST_RECORDED",
+                        "VALIDATED",
+                        "RUN_RESULTS_REMOVED",
+                        "BATCH_RESULTS_REMOVED",
+                        "MANAGED_DATA_REMOVED",
+                        "ACCESS_RECORDS_REMOVED",
+                        "VERIFIED",
+                    ),
+                    counts={
+                        "local_datasets_deleted": inventory.local_dataset_count,
+                        "managed_copies_deleted": inventory.managed_copy_count,
+                        "business_tasks_deleted": inventory.business_task_count,
+                        "writable_runs_deleted": inventory.writable_run_count,
+                        "batches_deleted": inventory.batch_count,
+                        "project_memberships_deleted": inventory.project_membership_count,
+                        "execution_policies_deleted": inventory.execution_policy_count,
+                        "transfer_approvals_deleted": inventory.transfer_approval_count,
+                        "execution_usage_records_deleted": inventory.execution_usage_count,
+                        "poc_decisions_deleted": inventory.poc_decision_count,
+                    },
+                )
+
+            profiles = set(operation.dataset_profiles)
+
+            def validate_project_deletion() -> None:
                 access_control.require_project(identity.user, project_id, owner=True)
-            except AccessControlError as exc:
-                raise_access_error(exc)
-            if project is None:
-                raise HTTPException(status_code=404, detail="PROJECT_NOT_FOUND")
-            if not hmac.compare_digest(
-                request_body.confirmation.encode("utf-8"), project.name.encode("utf-8")
-            ):
-                raise HTTPException(status_code=422, detail="PROJECT_NAME_CONFIRMATION_MISMATCH")
-            inventory = project_data_inventory(identity, project_id)
-            if inventory.running_run_count or inventory.active_batch_count:
-                raise HTTPException(status_code=409, detail="PROJECT_DATA_IN_USE")
-            if inventory.retention_policy.legal_hold:
-                raise HTTPException(status_code=409, detail="PROJECT_LEGAL_HOLD")
-            audit_status, _audit_count = access_control.audit_integrity(
-                identity.user, project_id
-            )
-            if audit_status == "INVALID":
-                raise HTTPException(status_code=409, detail="AUDIT_LEDGER_INVALID")
-            records = local_dataset_store.project_records(project_id)
-            profiles = {profile for profile, _managed in records}
-            purge_receipt_id = f"purge_{uuid4().hex}"
-            try:
-                runs_deleted = store.writable.delete_for_datasets(profiles)
-                batches_deleted = batch_manager.store.delete_for_datasets(profiles)
-                for profile, _managed in records:
-                    local_dataset_store.delete(profile)
-                project_name, access_deleted = access_control.delete_project(
+                current = project_data_inventory(identity, project_id)
+                if current.running_run_count or current.active_batch_count:
+                    raise RuntimeError("PROJECT_DATA_IN_USE")
+                if current.retention_policy.legal_hold:
+                    raise RuntimeError("PROJECT_LEGAL_HOLD")
+                status, _count = access_control.audit_integrity(
+                    identity.user, project_id
+                )
+                if status == "INVALID":
+                    raise RuntimeError("AUDIT_LEDGER_INVALID")
+
+            def remove_project_runs() -> None:
+                store.writable.delete_for_datasets(profiles)
+
+            def remove_project_batches() -> None:
+                batch_manager.store.delete_for_datasets(profiles)
+
+            def remove_project_datasets() -> None:
+                for profile in operation.dataset_profiles:
+                    local_dataset_store.delete(profile, missing_ok=True)
+
+            def remove_project_access() -> None:
+                access_control.delete_project(
                     identity.user,
                     project_id,
-                    purge_receipt_id=purge_receipt_id,
+                    purge_receipt_id=operation.purge_receipt_id
+                    or operation.operation_id,
                 )
-            except (RunInProgressError, BatchStateError) as exc:
-                raise HTTPException(status_code=409, detail="PROJECT_DATA_IN_USE") from exc
-            except AccessControlError as exc:
-                raise_access_error(exc)
-            remaining_records = local_dataset_store.project_records(project_id)
-            remaining_runs, _ = store.writable.inventory_for_datasets(profiles)
-            remaining_batches, _ = batch_manager.store.inventory_for_datasets(profiles)
-            if (
-                remaining_records
-                or remaining_runs
-                or remaining_batches
-                or access_control.project_exists(project_id)
-                or access_control.audit_contains(project_id)
+
+            def verify_project_deletion() -> None:
+                remaining_runs, _ = store.writable.inventory_for_datasets(profiles)
+                remaining_batches, _ = batch_manager.store.inventory_for_datasets(
+                    profiles
+                )
+                if (
+                    local_dataset_store.project_records(project_id)
+                    or remaining_runs
+                    or remaining_batches
+                    or access_control.project_exists(project_id)
+                ):
+                    raise RuntimeError("PROJECT_PURGE_VERIFICATION_FAILED")
+
+            operation = deletion_store.run(operation.operation_id, {
+                "AUDIT_REQUEST_RECORDED": lambda: (
+                    access_control.record_deletion_event(
+                        "PROJECT_PURGE_REQUESTED",
+                        actor=identity.user,
+                        operation_id=operation.operation_id,
+                        project_id=project_id,
+                    )
+                ),
+                "VALIDATED": validate_project_deletion,
+                "RUN_RESULTS_REMOVED": remove_project_runs,
+                "BATCH_RESULTS_REMOVED": remove_project_batches,
+                "MANAGED_DATA_REMOVED": remove_project_datasets,
+                "ACCESS_RECORDS_REMOVED": remove_project_access,
+                "VERIFIED": verify_project_deletion,
+            })
+            if operation.status == "PARTIAL_FAILURE" and access_control.project_exists(
+                project_id
             ):
-                raise HTTPException(status_code=500, detail="PROJECT_PURGE_VERIFICATION_FAILED")
-            return ProjectPurgeResult(
-                project_id=project_id,
-                project_name=project_name,
-                purge_receipt_id=purge_receipt_id,
-                completed_at=datetime.now(timezone.utc),
-                local_datasets_deleted=len(records),
-                managed_copies_deleted=sum(managed for _profile, managed in records),
-                writable_runs_deleted=runs_deleted,
-                batches_deleted=batches_deleted,
-                **access_deleted,
+                try:
+                    access_control.record_deletion_event(
+                        "PROJECT_PURGE_PARTIAL_FAILURE",
+                        actor=identity.user,
+                        operation_id=operation.operation_id,
+                        project_id=project_id,
+                    )
+                except (AuditLedgerIntegrityError, OSError):
+                    pass
+            return project_purge_result(
+                operation, project_name=request_body.confirmation
             )
 
     @app.get("/api/datasets", response_model=DatasetsResponse)
@@ -1309,6 +1830,10 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
             ),
             local_dataset_scan=local_dataset_store is not None,
             local_file_upload=local_dataset_store is not None,
+            local_path_scan=(
+                local_dataset_store.path_scan_enabled
+                if local_dataset_store is not None else False
+            ),
             ai_task_execution=runner is not None,
             bundled_demo=frozen_results_root is not None,
             supported_extensions=list(SUPPORTED_EXTENSIONS),
@@ -1317,6 +1842,10 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
             ),
             max_upload_bytes=(
                 local_dataset_store.max_bytes if local_dataset_store else 1_073_741_824
+            ),
+            max_upload_file_bytes=(
+                local_dataset_store.max_file_bytes
+                if local_dataset_store else 104_857_600
             ),
             ocr_available=ocr.available,
             ocr_engine=ocr.engine,
@@ -1344,6 +1873,8 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
     ) -> LocalDatasetScanResult:
         if local_dataset_store is None:
             raise HTTPException(status_code=403, detail="LOCAL_SCAN_UNAVAILABLE")
+        if not local_dataset_store.path_scan_enabled:
+            raise HTTPException(status_code=403, detail="PATH_SCAN_UNAVAILABLE")
         if access_control is not None:
             if request_body.project_id is None:
                 raise HTTPException(status_code=422, detail="PROJECT_REQUIRED")
@@ -1376,14 +1907,49 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
     )
     async def upload_local_dataset(
         request: Request,
-        files: list[UploadFile] = File(...),
-        relative_paths: str = Form(...),
-        display_name: str | None = Form(default=None),
-        source_root_name: str | None = Form(default=None),
-        project_id: str | None = Form(default=None),
     ) -> LocalDatasetScanResult:
         if local_dataset_store is None:
             raise HTTPException(status_code=403, detail="LOCAL_SCAN_UNAVAILABLE")
+        try:
+            form = await request.form(
+                max_files=local_dataset_store.max_files,
+                max_fields=10,
+                max_part_size=16 * 1024 * 1024,
+            )
+        except StarletteHTTPException as exc:
+            detail = str(exc.detail)
+            if "Too many files" in detail:
+                raise HTTPException(
+                    status_code=422,
+                    detail=(
+                        "FILE_LIMIT_EXCEEDED · 파일이 "
+                        f"{local_dataset_store.max_files:,}개를 초과합니다. 점검 범위를 나눠 주세요."
+                    ),
+                ) from exc
+            raise HTTPException(
+                status_code=422,
+                detail=f"INVALID_UPLOAD_FORM · multipart 요청을 읽지 못했습니다: {detail}",
+            ) from exc
+        files = [
+            value for value in form.getlist("files")
+            if isinstance(value, UploadFile)
+        ]
+
+        def optional_text(name: str) -> str | None:
+            value = form.get(name)
+            return value if isinstance(value, str) and value else None
+
+        relative_paths = optional_text("relative_paths")
+        display_name = optional_text("display_name")
+        source_root_name = optional_text("source_root_name")
+        project_id = optional_text("project_id")
+        if relative_paths is None or not files:
+            for upload in files:
+                await upload.close()
+            raise HTTPException(
+                status_code=422,
+                detail="INVALID_UPLOAD_MANIFEST · 파일과 상대 경로 목록이 필요합니다.",
+            )
         if access_control is not None:
             if project_id is None:
                 raise HTTPException(status_code=422, detail="PROJECT_REQUIRED")
@@ -1409,9 +1975,17 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
             try:
                 for upload, destination in zip(files, destinations, strict=True):
                     destination.parent.mkdir(parents=True, exist_ok=True)
+                    file_bytes = 0
                     with destination.open("xb") as stream:
                         while chunk := await upload.read(1024 * 1024):
+                            file_bytes += len(chunk)
                             total_bytes += len(chunk)
+                            if file_bytes > local_dataset_store.max_file_bytes:
+                                raise LocalDatasetError(
+                                    "FILE_SIZE_LIMIT_EXCEEDED",
+                                    f"개별 파일 {upload.filename or destination.name}이 "
+                                    f"{local_dataset_store.max_file_bytes / 1_048_576:.1f} MiB를 초과합니다.",
+                                )
                             if total_bytes > local_dataset_store.max_bytes:
                                 raise LocalDatasetError(
                                     "SIZE_LIMIT_EXCEEDED",
@@ -1475,43 +2049,177 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
     @app.delete(
         "/api/local-datasets/{profile}", response_model=LocalDatasetDeleteResult
     )
-    def delete_local_dataset(profile: str, request: Request) -> LocalDatasetDeleteResult:
-        if local_dataset_store is None:
+    def delete_local_dataset(
+        profile: str, request: Request, operation_id: str | None = None
+    ) -> LocalDatasetDeleteResult:
+        if local_dataset_store is None or deletion_store is None:
             raise HTTPException(status_code=403, detail="LOCAL_SCAN_UNAVAILABLE")
         with lifecycle_lock:
             identity = identity_for(request) if access_control is not None else None
-            project_id = ensure_dataset_access(profile, identity, write=True)
-            if access_control is not None and identity is not None and project_id is not None:
-                try:
-                    access_control.require_project(identity.user, project_id, owner=True)
-                except AccessControlError as exc:
-                    raise_access_error(exc)
-            _run_count, running_count = store.writable.inventory_for_datasets({profile})
-            _batch_count, active_batch_count = batch_manager.store.inventory_for_datasets({profile})
-            if running_count or active_batch_count:
-                raise HTTPException(status_code=409, detail="DATASET_IN_USE")
-            try:
-                runs_deleted = store.writable.delete_for_datasets({profile})
-                batches_deleted = batch_manager.store.delete_for_datasets({profile})
-                task_records_deleted = (
-                    access_control.delete_dataset_tasks(identity.user, project_id, profile)
+            if operation_id is not None:
+                operation = deletion_operation_for(
+                    identity,
+                    operation_id,
+                    scope="DATASET",
+                    dataset_profile=profile,
+                )
+                project_id = operation.project_id
+            else:
+                project_id = ensure_dataset_access(profile, identity, write=True)
+                if access_control is not None and identity is not None and project_id is not None:
+                    try:
+                        access_control.require_project(
+                            identity.user, project_id, owner=True
+                        )
+                        retention = access_control.retention_policy(
+                            identity.user, project_id
+                        )
+                    except AccessControlError as exc:
+                        raise_access_error(exc)
+                    if retention.legal_hold:
+                        raise HTTPException(
+                            status_code=409, detail="PROJECT_LEGAL_HOLD"
+                        )
+                run_count, running_count = store.writable.inventory_for_datasets(
+                    {profile}
+                )
+                batch_count, active_batch_count = (
+                    batch_manager.store.inventory_for_datasets({profile})
+                )
+                if running_count or active_batch_count:
+                    raise HTTPException(status_code=409, detail="DATASET_IN_USE")
+                task_count = (
+                    len(access_control.tasks(
+                        identity.user, project_id, dataset_profile=profile
+                    ))
                     if access_control is not None and identity is not None and project_id is not None
                     else 0
                 )
-                result = local_dataset_store.delete(profile)
-                return result.model_copy(update={
-                    "task_records_deleted": task_records_deleted,
-                    "run_records_deleted": runs_deleted,
-                    "batch_records_deleted": batches_deleted,
-                })
-            except LocalDatasetError as exc:
-                raise HTTPException(status_code=404, detail=f"{exc.code} · {exc}") from exc
-            except (RunInProgressError, BatchStateError) as exc:
-                raise HTTPException(status_code=409, detail="DATASET_IN_USE") from exc
+                managed = local_dataset_store.managed_copy(profile)
+                operation = deletion_store.create(
+                    scope="DATASET",
+                    requested_by=(
+                        identity.user.user_id if identity is not None else "LOCAL_REVIEW"
+                    ),
+                    project_id=project_id,
+                    dataset_profile=profile,
+                    dataset_profiles=(profile,),
+                    stages=(
+                        "AUDIT_REQUEST_RECORDED",
+                        "VALIDATED",
+                        "RUN_RESULTS_REMOVED",
+                        "BATCH_RESULTS_REMOVED",
+                        "ACCESS_RECORDS_REMOVED",
+                        "MANAGED_DATA_REMOVED",
+                        "VERIFIED",
+                    ),
+                    counts={
+                        "task_records_deleted": task_count,
+                        "run_records_deleted": run_count,
+                        "batch_records_deleted": batch_count,
+                        "managed_copy_deleted": int(managed),
+                    },
+                )
+
+            def validate_dataset_deletion() -> None:
+                if access_control is not None and identity is not None and project_id is not None:
+                    access_control.require_project(
+                        identity.user, project_id, owner=True
+                    )
+                    if access_control.retention_policy(
+                        identity.user, project_id
+                    ).legal_hold:
+                        raise RuntimeError("PROJECT_LEGAL_HOLD")
+                _runs, running = store.writable.inventory_for_datasets({profile})
+                _batches, active = batch_manager.store.inventory_for_datasets(
+                    {profile}
+                )
+                if running or active:
+                    raise RuntimeError("DATASET_IN_USE")
+
+            def remove_dataset_access() -> None:
+                if access_control is not None and identity is not None and project_id is not None:
+                    access_control.delete_dataset_tasks(
+                        identity.user, project_id, profile
+                    )
+
+            def verify_dataset_deletion() -> None:
+                runs, _ = store.writable.inventory_for_datasets({profile})
+                batches, _ = batch_manager.store.inventory_for_datasets({profile})
+                remaining_tasks = (
+                    access_control.tasks(
+                        identity.user, project_id, dataset_profile=profile
+                    )
+                    if access_control is not None and identity is not None and project_id is not None
+                    else []
+                )
+                if (
+                    local_dataset_store.contains(profile)
+                    or runs
+                    or batches
+                    or remaining_tasks
+                ):
+                    raise RuntimeError("DATASET_DELETE_VERIFICATION_FAILED")
+
+            was_complete = operation.status == "COMPLETED"
+            operation = deletion_store.run(operation.operation_id, {
+                "AUDIT_REQUEST_RECORDED": lambda: (
+                    access_control.record_deletion_event(
+                        "DATASET_DELETE_REQUESTED",
+                        actor=identity.user,
+                        operation_id=operation.operation_id,
+                        project_id=project_id,
+                    )
+                    if access_control is not None and identity is not None
+                    else None
+                ),
+                "VALIDATED": validate_dataset_deletion,
+                "RUN_RESULTS_REMOVED": lambda: store.writable.delete_for_datasets(
+                    {profile}
+                ),
+                "BATCH_RESULTS_REMOVED": lambda: (
+                    batch_manager.store.delete_for_datasets({profile})
+                ),
+                "ACCESS_RECORDS_REMOVED": remove_dataset_access,
+                "MANAGED_DATA_REMOVED": lambda: local_dataset_store.delete(
+                    profile, missing_ok=True
+                ),
+                "VERIFIED": verify_dataset_deletion,
+            })
+            if (
+                not was_complete
+                and access_control is not None
+                and identity is not None
+                and project_id is not None
+            ):
+                try:
+                    access_control.record_deletion_event(
+                        (
+                            "DATASET_DELETE_COMPLETED"
+                            if operation.status == "COMPLETED"
+                            else "DATASET_DELETE_PARTIAL_FAILURE"
+                        ),
+                        actor=identity.user,
+                        operation_id=operation.operation_id,
+                        project_id=project_id,
+                    )
+                except (AccessControlError, AuditLedgerIntegrityError, OSError):
+                    pass
+            return dataset_delete_result(operation)
+
+    @app.get(
+        "/api/deletions/{operation_id}", response_model=DeletionOperationView
+    )
+    def get_deletion_operation(
+        operation_id: str, request: Request
+    ) -> DeletionOperationView:
+        identity = identity_for(request) if access_control is not None else None
+        operation = deletion_operation_for(identity, operation_id)
+        return DeletionOperationStore.view(operation)
 
     @app.get("/api/featured-cases", response_model=FeaturedCasesResponse)
     def featured_cases() -> FeaturedCasesResponse:
-        return verified_featured_cases(store, evidence_lookup)
+        return verified_featured_cases(store, evidence_lookup, task_approvals)
 
     @app.get("/api/readiness/{dataset}", response_model=ReadinessResponse)
     def readiness(dataset: str, request: Request) -> dict:
@@ -1629,6 +2337,13 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
             project_id = ensure_dataset_access(
                 request_body.dataset, identity, write=True
             )
+            if access_control is not None and project_id is None:
+                access_control.record_execution_blocked(
+                    identity.user if identity is not None else None,
+                    project_id=None,
+                    code="BUNDLED_DATASET_READ_ONLY",
+                )
+                raise HTTPException(status_code=409, detail="BUNDLED_DATASET_READ_ONLY")
             onboarding = onboarding_for(request_body.dataset, identity)
             if not onboarding.can_run:
                 raise HTTPException(status_code=409, detail="ONBOARDING_BLOCKED")
@@ -1650,6 +2365,13 @@ def create_app(*, results_root: Path = DEFAULT_RESULTS_ROOT,
                 )
             resolved_questions = {}
             for task in request_body.tasks:
+                if access_control is not None and task.request_type != "VERIFIED_BUSINESS_TASK":
+                    access_control.record_execution_blocked(
+                        identity.user if identity is not None else None,
+                        project_id=project_id,
+                        code="APPROVED_TASK_REQUIRED",
+                    )
+                    raise HTTPException(status_code=409, detail="APPROVED_TASK_REQUIRED")
                 resolved = resolve_execution_request(RunRequest(
                     dataset=request_body.dataset,
                     request_type=task.request_type,
